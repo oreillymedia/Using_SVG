@@ -1,8 +1,5 @@
-/* styles adapted from the Adobe Brackets auto-generated index pages */
 body {
-  margin: 0 auto;
-  padding: 0.5rem;
-  max-width: 70rem;
+  margin: 0;
   font: 0.9rem/1.4 "Helvetica Neue", "Lucida Grande", "Arial";
   -webkit-font-smoothing: antialiased;
   color: #303030;
@@ -16,36 +13,65 @@ html {
       #ECE9E9 calc(100% - 5em)) 
       0 0/ 100% 100vh fixed;
 }
+body > * {
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+:link {
+  color: #248;
+}
+:visited {
+  color: #62A;
+}
+.filename:link {
+  text-decoration: none;
+  font-style: italic;
+}
+header, footer {
+  background: hsla(0, 0%, 100%, 0.5);
+  max-width: 50rem;
+}
+header p {
+  font-style: italic;
+}
+header nav {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 h1, h2, h3 {
   line-height: 1.1;
 }
-.directory {
+.columns {
   margin: 0;
   padding: 0;
-  width: 100%;
+  column-gap: 1em;
+}
+.columns.narrow {
   column-width: 15em;
 }
-.directory li {
-  margin: 0 0 0.4em;
+.columns.wide {
+  column-width: 31em;
+}
+.columns > p:first-child {
+  margin-top: 0;
+}
+li, dt, dd {
+  margin:  0 0 0.5em;
+  line-height: 1.1;  
+}
+dd {
+  margin-top: -0.5em;
+}
+dt {
+  break-inside: avoid;
+  break-after: avoid;
+}
+.directory li, .example-list > li {
   list-style: none;
   break-inside: avoid;
 }
-.directory li a {
-  display: block;
-  color: #404040;
-  text-decoration: none;
-  min-height: 1.1em;
-  line-height: 1.1;
-  padding: 0.1em;
-  padding-left: 0.6em;
+.directory li {
+  padding-left: 0.5em;
   text-indent: -0.5em;
-  border: 1px solid transparent;
-  border-radius: 5px;
-}
-.directory li a:focus,
-.directory li a:hover {
-  outline: none; 
-  color: #303030;
-  border-color: lightBlue;  /* border instead of outline to get round corners */
-  background: rgba(255,255,255,0.65);
 }

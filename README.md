@@ -10,7 +10,9 @@ This repository contains:
 - *(Not ready yet)* Reference sections for quickly looking up SVG syntax
 - *(Not ready yet)* Online extras: sections and tutorials that we couldn't fit in the book, with extra examples and explanation
 
-You can download all the files as a zip using the "Clone or Download" button on the main repository page, or you can click through the file listings to view the code directly in GitHub.  To view the live versions of the code in your web browser, without downloading, start from the [GitHub Pages version of this repository](https://oreillymedia.github.io/Using_SVG/).  For example, you can [play the final version of the gem-collecting game from Chapter 18 here](https://oreillymedia.github.io/Using_SVG/ch18-interaction-files/gem-click-game-misses.svg).
+You can download all the files as a zip using the "Clone or Download" button on the main repository page, or you can click through the file listings to view the code directly in GitHub.
+
+To view the live versions of the code in your web browser, without downloading, start from the [GitHub Pages version of this repository](https://oreillymedia.github.io/Using_SVG/).  For example, you can [play the final version of the gem-collecting game from Chapter 18 here](https://oreillymedia.github.io/Using_SVG/ch18-interaction-files/gem-click-game-misses.svg).
 
 (I'll update the index pages soon, so that it is easier to match the file names in the repo with the Example and Figure numbers in the book.)
 

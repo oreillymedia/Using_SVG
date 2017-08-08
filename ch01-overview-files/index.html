@@ -1,40 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><meta charset="utf-8" />
-    <title>ch01-overview-files/</title>
-    <link rel="stylesheet" href="../index-pages.css" />
-  </head>
-  <body>
-    <div id="wrapper">
-      <h2>All files in ch01-overview-files</h2>
-      <ul class="directory"><li><a href="../" title="Parent folder">..</a></li>
-<li><a href="animated-stoplight-broken.png" title="animated-stoplight-broken.png">animated-stoplight-broken.png</a></li>
-<li><a href="animated-stoplight-broken.svg" title="animated-stoplight-broken.svg">animated-stoplight-broken.svg</a></li>
-<li><a href="animated-stoplight-css.1.png" title="animated-stoplight-css.1.png">animated-stoplight-css.1.png</a></li>
-<li><a href="animated-stoplight-css.2.png" title="animated-stoplight-css.2.png">animated-stoplight-css.2.png</a></li>
-<li><a href="animated-stoplight-css.3.png" title="animated-stoplight-css.3.png">animated-stoplight-css.3.png</a></li>
-<li><a href="animated-stoplight-css.png" title="animated-stoplight-css.png">animated-stoplight-css.png</a></li>
-<li><a href="animated-stoplight-css.svg" title="animated-stoplight-css.svg">animated-stoplight-css.svg</a></li>
-<li><a href="animated-stoplight.svg" title="animated-stoplight.svg">animated-stoplight.svg</a></li>
-<li><a href="browser-tab-titles.png" title="browser-tab-titles.png">browser-tab-titles.png</a></li>
-<li><a href="gradients-stoplight.png" title="gradients-stoplight.png">gradients-stoplight.png</a></li>
-<li><a href="gradients-stoplight.svg" title="gradients-stoplight.svg">gradients-stoplight.svg</a></li>
-<li><a href="grouped-stoplight.svg" title="grouped-stoplight.svg">grouped-stoplight.svg</a></li>
-<li><a href="inline-svg-boilerplate-annotated.html" title="inline-svg-boilerplate-annotated.html">inline-svg-boilerplate-annotated.html</a></li>
-<li><a href="inline-svg-boilerplate.html" title="inline-svg-boilerplate.html">inline-svg-boilerplate.html</a></li>
-<li><a href="labelled-stoplight-css.1.png" title="labelled-stoplight-css.1.png">labelled-stoplight-css.1.png</a></li>
-<li><a href="labelled-stoplight-css.2.png" title="labelled-stoplight-css.2.png">labelled-stoplight-css.2.png</a></li>
-<li><a href="labelled-stoplight-css.3.png" title="labelled-stoplight-css.3.png">labelled-stoplight-css.3.png</a></li>
-<li><a href="labelled-stoplight-css.png" title="labelled-stoplight-css.png">labelled-stoplight-css.png</a></li>
-<li><a href="labelled-stoplight-css.svg" title="labelled-stoplight-css.svg">labelled-stoplight-css.svg</a></li>
-<li><a href="rasterization.png" title="rasterization.png">rasterization.png</a></li>
-<li><a href="rasterization.svg" title="rasterization.svg">rasterization.svg</a></li>
-<li><a href="reuse-stoplight.png" title="reuse-stoplight.png">reuse-stoplight.png</a></li>
-<li><a href="reuse-stoplight.svg" title="reuse-stoplight.svg">reuse-stoplight.svg</a></li>
-<li><a href="simple-stoplight-inline.html" title="simple-stoplight-inline.html">simple-stoplight-inline.html</a></li>
-<li><a href="simple-stoplight.png" title="simple-stoplight.png">simple-stoplight.png</a></li>
-<li><a href="simple-stoplight.svg" title="simple-stoplight.svg">simple-stoplight.svg</a></li>
-<li><a href="styled-stoplight.svg" title="styled-stoplight.svg">styled-stoplight.svg</a></li></ul>
+<head>
+  <meta charset="utf-8" />
+  <title>Chapter 01, Graphics from Vectors: 
+    Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <link rel="stylesheet" href="../index-pages.css" />
+</head>
+
+<body>
+  <header>
+    <h2>Using SVG with CSS3 and HTML5 — Supplementary Material</h2>
+    <p>Example code and online extras for the <a href="http://shop.oreilly.com/product/0636920037972.do">O'Reilly Media book</a> by Amelia Bellamy-Royds, Kurt Cagle, and Dudley Storey.</p>
+    <nav>
+      <a>Previous Chapter</a>
+      <a href="../ch02-bigpicture-files/">Next Chapter</a>
+    </nav>
+  </header>
+  <main>
+    <h1><div>Chapter 1</div> Graphics from Vectors: <i>An Overview of SVG</i></h1>
+    <div class="columns wide">
+      <p>
+        There's a fundamental chicken-and-egg quality to creating SVG that can make teaching it a challenge. Shapes without styles are not terribly attractive; styles without shapes cannot be seen. To work with an SVG, you need to display the graphic on the web; to display a graphic, you need some SVG code to display!
+      </p>
+      <p>
+        This chapter presents a rough sketch of the chicken <em>and</em> the egg, so that subsequent chapters can fill in the details one topic at a time, without feeling like large parts of the picture are missing.
+      </p>
+      <p>
+        The chapter starts with a simple SVG graphic and then adapts it, to use different techniques and to add new functionality. The examples will introduce many key features of SVG, but will skip over many others. At the end, you should have a good idea of what an SVG file looks like, how the key elements relate to each other, and how you can edit the file to make simple changes.
+      </p>
     </div>
-  
+    <h2>Figures and Examples</h2>
+    <p>The file names link to the code view on GitHub. <em>Beware: the linked screenshots are hi-resolution; some have very large file sizes.</em></p>
+    <dl class="columns wide example-list">
+      <dt>Example 1-1 (Defining an inline SVG element in an HTML file)</dt>
+      <dd>
+        <ul>
+          <li><a href="inline-svg-boilerplate.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/inline-svg-boilerplate.html">inline-svg-boilerplate.html</a> (Note: this will be a blank page; this is just the markup structure, with no content!)
+          </li>
+          <li>See also the <a>Online Extra</a> (not yet ready) describing the elements and attributes</li>
+        </ul>
+      </dd>
+      <dt>Figure 1-1 (Primary color stoplight graphic)</dt>
+      <dt>Example 1-3 (Drawing a primary color stoplight in a stand-alone SVG file)</dt>
+      <dd>
+        <ul>
+          <li><a href="simple-stoplight.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/simple-stoplight.svg">simple-stoplight.svg</a>
+          </li>
+          <li><a href="simple-stoplight.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/simple-stoplight.png">simple-stoplight.png</a></li>
+        </ul>
+      </dd>
+      <dt>Example 1-2 (Drawing a primary color stoplight in inline SVG)</dt>
+      <dd>
+        <ul>
+          <li><a href="simple-stoplight-inline.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/simple-stoplight-inline.html">simple-stoplight-inline.html</a>
+          </li>
+        </ul>
+      </dd>
+      <dt>Figure 1-2 (SVG and HTML files open in multiple web browser tabs)</dt>
+      <dd>
+        <ul>
+          <li><a href="browser-tab-titles.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/browser-tab-titles.png">browser-tab-titles.png</a></li>
+        </ul>
+      </dd>
+      <dt>Example 1-4 (Grouping elements within an SVG stoplight)</dt>
+      <dd>
+        <ul>
+          <li><a href="grouped-stoplight.svg">SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/grouped-stoplight.svg">grouped-stoplight.svg</a>
+          </li>
+        </ul>
+      </dd>
+      <dt>Example 1-5 (Using inline styles in the SVG stoplight)</dt>
+      <dd>
+        <ul>
+          <li><a href="styled-stoplight.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/styled-stoplight.svg">styled-stoplight.svg</a>
+          </li>
+        </ul>
+      </dd>
+      <dt>Example 1-6 (Re-using elements to draw an SVG stoplight)</dt>
+      <dt>Figure 1-3 (Stoplight drawn with re-used elements)</dt>
+      <dd>
+        <ul>
+          <li><a href="reuse-stoplight.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/reuse-stoplight.svg">reuse-stoplight.svg</a>
+          </li>
+          <li><a href="reuse-stoplight.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/reuse-stoplight.png">reuse-stoplight.png</a>
+          </li>
+        </ul>
+      </dd>
+      <dt>Example 1-7 (Using gradient fills to enhance a vector graphic stoplight)</dt>
+      <dt>Figure 1-4 (Stoplight with gradient fills)</dt>
+      <dd>
+        <ul>
+          <li><a href="gradients-stoplight.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/gradients-stoplight.svg">gradients-stoplight.svg</a>
+          </li>
+          <li><a href="gradients-stoplight.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/gradients-stoplight.png">gradients-stoplight.png</a>
+          </li>
+        </ul>
+      </dd>
+      <dt>Example 1-8 (Animating the stoplight using CSS keyframes)</dt>
+      <dt>Figure 1-5 (Three stages of an animated stoplight with gradient fills)</dt>
+      <dd>
+        <ul>
+          <li><a href="animated-stoplight-css.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/animated-stoplight-css.svg">animated-stoplight-css.svg</a>
+          </li>
+          <li><a href="animated-stoplight-css.png">Composite PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/animated-stoplight-css.png">animated-stoplight-css.png</a>
+          </li>
+        </ul>
+      </dd>
+      <dt>Example 1-9 (Adding text labels to the animated stoplight)</dt>
+      <dt>Figure 1-6 (Three stages of a labelled, animated stoplight)</dt>
+      <dd>
+        <ul>
+          <li><a href="labelled-stoplight-css.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/labelled-stoplight-css.svg">labelled-stoplight-css.svg</a>
+          </li>
+          <li><a href="labelled-stoplight-css.png">Composite PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/labelled-stoplight-css.png">labelled-stoplight-css.png</a>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+    <h2>Online Extras (not yet ready)</h2>
+    <ul class="columns wide example-list">
+      <li><a>“HTML Syntax, Lazy or Long”</a></li>
+      <li><a>“XML Prologs and Document Types”</a></li>
+      <li><a>“Understanding Vector Graphics”</a></li>
+      <li>Reference: <a>SVG Elements and Attributes</a></li>
+    </ul>
+    <h2>All files in ch01-overview-files</h2>
+    <p><a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files">View on GitHub</a>, or go directly to the live file:</p>
+    <ul class="columns narrow directory">
+      <li><a href="../" class="filename" title="Parent folder">..</a></li>
+      <li><a href="animated-stoplight-broken.png" class="filename" title="animated-stoplight-broken.png">animated-stoplight-broken.png</a></li>
+      <li><a href="animated-stoplight-broken.svg" class="filename" title="animated-stoplight-broken.svg">animated-stoplight-broken.svg</a></li>
+      <li><a href="animated-stoplight-css.1.png" class="filename" title="animated-stoplight-css.1.png">animated-stoplight-css.1.png</a></li>
+      <li><a href="animated-stoplight-css.2.png" class="filename" title="animated-stoplight-css.2.png">animated-stoplight-css.2.png</a></li>
+      <li><a href="animated-stoplight-css.3.png" class="filename" title="animated-stoplight-css.3.png">animated-stoplight-css.3.png</a></li>
+      <li><a href="animated-stoplight-css.png" class="filename" title="animated-stoplight-css.png">animated-stoplight-css.png</a></li>
+      <li><a href="animated-stoplight-css.svg" class="filename" title="animated-stoplight-css.svg">animated-stoplight-css.svg</a></li>
+      <li><a href="animated-stoplight.svg" class="filename" title="animated-stoplight.svg">animated-stoplight.svg</a></li>
+      <li><a href="browser-tab-titles.png" class="filename" title="browser-tab-titles.png">browser-tab-titles.png</a></li>
+      <li><a href="gradients-stoplight.png" class="filename" title="gradients-stoplight.png">gradients-stoplight.png</a></li>
+      <li><a href="gradients-stoplight.svg" class="filename" title="gradients-stoplight.svg">gradients-stoplight.svg</a></li>
+      <li><a href="grouped-stoplight.svg" class="filename" title="grouped-stoplight.svg">grouped-stoplight.svg</a></li>
+      <li><a href="inline-svg-boilerplate-annotated.html" class="filename" title="inline-svg-boilerplate-annotated.html">inline-svg-boilerplate-annotated.html</a></li>
+      <li><a href="inline-svg-boilerplate.html" class="filename" title="inline-svg-boilerplate.html">inline-svg-boilerplate.html</a></li>
+      <li><a href="labelled-stoplight-css.1.png" class="filename" title="labelled-stoplight-css.1.png">labelled-stoplight-css.1.png</a></li>
+      <li><a href="labelled-stoplight-css.2.png" class="filename" title="labelled-stoplight-css.2.png">labelled-stoplight-css.2.png</a></li>
+      <li><a href="labelled-stoplight-css.3.png" class="filename" title="labelled-stoplight-css.3.png">labelled-stoplight-css.3.png</a></li>
+      <li><a href="labelled-stoplight-css.png" class="filename" title="labelled-stoplight-css.png">labelled-stoplight-css.png</a></li>
+      <li><a href="labelled-stoplight-css.svg" class="filename" title="labelled-stoplight-css.svg">labelled-stoplight-css.svg</a></li>
+      <li><a href="rasterization.png" class="filename" title="rasterization.png">rasterization.png</a></li>
+      <li><a href="rasterization.svg" class="filename" title="rasterization.svg">rasterization.svg</a></li>
+      <li><a href="reuse-stoplight.png" class="filename" title="reuse-stoplight.png">reuse-stoplight.png</a></li>
+      <li><a href="reuse-stoplight.svg" class="filename" title="reuse-stoplight.svg">reuse-stoplight.svg</a></li>
+      <li><a href="simple-stoplight-inline.html" class="filename" title="simple-stoplight-inline.html">simple-stoplight-inline.html</a></li>
+      <li><a href="simple-stoplight.png" class="filename" title="simple-stoplight.png">simple-stoplight.png</a></li>
+      <li><a href="simple-stoplight.svg" class="filename" title="simple-stoplight.svg">simple-stoplight.svg</a></li>
+      <li><a href="styled-stoplight.svg" class="filename" title="styled-stoplight.svg">styled-stoplight.svg</a></li>
+    </ul>
+  </main>
+
 </body></html>

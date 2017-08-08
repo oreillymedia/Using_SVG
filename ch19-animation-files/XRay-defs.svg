@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 384 512" width="384" height="512">
+    <title>X-Ray Scanner</title>
+    <defs>
+        <circle id="c" r="100" cx="200" cy="100">
+            <animateTransform attributeName="transform"
+                type="translate" values="0,0;0,400;0,0" 
+                dur="10s" repeatCount="indefinite"/>
+        </circle>
+        <clipPath id="cp">
+            <use xlink:href="#c" />
+        </clipPath>
+    </defs>
+    <image xlink:href="TopHatKurt.jpg" width="384" height="512"/> 
+    <image xlink:href="TopHatSkull.jpg" width="384" height="512"
+           clip-path="url(#cp)" /> 
+    <use xlink:href="#c" fill="green" fill-opacity="0.4" 
+         stroke="green" stroke-width="4" />
+</svg>                  

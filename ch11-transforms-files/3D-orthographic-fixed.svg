@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="300px" viewBox="0 0 40 30" >
+    <title>3D transformations</title>
+    <style type="text/css">
+        .box {
+            /*transform-style: preserve-3d;*/              <!--1-->
+        }
+        rect {
+            stroke-width: 0.3;
+            stroke-linejoin: round;
+        }
+        .inside {
+            fill: burlywood;
+            stroke: saddleBrown;
+        }
+        .outside {
+            fill: lightGray;
+            stroke: gray;
+        }
+    </style>
+    <g class="box" transform="translate(5,10)">            <!--2-->
+        <rect class="inside" width="25" height="15" 
+              transform="translate(5,-5)"
+              style="transform: rotate3d(1,1,0,-30deg)
+                                translateZ(-10px)"/>       <!--3-->
+        <rect class="inside" width="10" height="15" 
+              transform="skewY(-45) scale(0.5,1)"
+              style="transform: rotate3d(1,1,0,-30deg)
+                                rotateY(90deg)"/>          <!--4-->
+        <rect class="outside" width="25" height="15" 
+              style="transform: rotate3d(1,1,0,-30deg)"/>  <!--5-->
+        <rect class="outside" width="10" height="15" 
+              transform="translate(25,0) skewY(-45) scale(0.5,1)"
+              style="transform: rotate3d(1,1,0,-30deg)
+                                translate(25px,0) rotateY(90deg)"/> 
+    </g>
+    
+</svg>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink" 
+     width="200px" height="200px" viewBox="0 0 40 40"> 
+    <title>Basic Markers</title>
+    <style>
+        circle { 
+            fill: tomato; 
+            stroke: firebrick; 
+            fill-opacity: 0.7; 
+        }
+        path   { 
+            fill: none; 
+            stroke: indigo; 
+            stroke-linecap: round; 
+        }
+    </style>
+    <marker id="m" overflow="visible">
+        <circle r="2.5" />
+    </marker>
+    <path d="M5,5 Q5,35 35,35" marker-start="url(#m)" />
+</svg>     

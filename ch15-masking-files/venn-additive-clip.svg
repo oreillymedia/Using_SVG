@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="240px" width="360px" viewBox="-18 -12 36 24">
+    <title>Gradient Clipped to Two Circles</title>
+    <defs>
+        <circle id="circle" r="12" />
+    </defs>
+    <radialGradient id="grad" r="0.1" spreadMethod="reflect">
+        <stop offset="0.1" stop-color="royalBlue" />
+        <stop offset="0.9" stop-color="lightGreen" />
+    </radialGradient>
+    <clipPath id="clip-either">
+        <use xlink:href="#circle" x="-6" />
+        <use xlink:href="#circle" x="+6" />
+    </clipPath>
+    <rect x="-50%" y="-50%" width="100%" height="100%"
+          fill="url(#grad)" clip-path="url(#clip-either)" />
+</svg>

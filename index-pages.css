@@ -1,0 +1,51 @@
+/* styles adapted from the Adobe Brackets auto-generated index pages */
+body {
+  margin: 0 auto;
+  padding: 0.5rem;
+  max-width: 70rem;
+  font: 0.9rem/1.4 "Helvetica Neue", "Lucida Grande", "Arial";
+  -webkit-font-smoothing: antialiased;
+  color: #303030;
+}
+html {
+  background: #ECE9E9;
+  background: linear-gradient(to bottom right, 
+      #E0E9E9 5em,
+      #F8F0F0 calc(50% - 5em),
+      #F8F0E0 calc(50% + 5em),
+      #ECE9E9 calc(100% - 5em)) 
+      0 0/ 100% 100vh fixed;
+}
+h1, h2, h3 {
+  line-height: 1.1;
+}
+.directory {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  column-width: 15em;
+}
+.directory li {
+  margin: 0 0 0.4em;
+  list-style: none;
+  break-inside: avoid;
+}
+.directory li a {
+  display: block;
+  color: #404040;
+  text-decoration: none;
+  min-height: 1.1em;
+  line-height: 1.1;
+  padding: 0.1em;
+  padding-left: 0.6em;
+  text-indent: -0.5em;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+.directory li a:focus,
+.directory li a:hover {
+  outline: none; 
+  color: #303030;
+  border-color: lightBlue;  /* border instead of outline to get round corners */
+  background: rgba(255,255,255,0.65);
+}

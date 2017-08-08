@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="240px" width="360px" viewBox="-18 -12 36 24">
+    <title>Two-Circle Venn Diagram</title>
+    <style>
+        .left  { fill: royalBlue; }
+        .right { fill: lightGreen; }
+        .outlines {
+            fill: none;
+            stroke: indigo;
+        }
+    </style>
+    <defs>
+        <circle id="circle" r="11.5" />
+        <use id="left" xlink:href="#circle" x="-6"/>
+        <use id="right" xlink:href="#circle" x="6"/>
+    </defs>
+    <clipPath id="clip-left">
+        <use xlink:href="#circle" x="-6" />
+    </clipPath>
+    <pattern id="stripes" patternUnits="userSpaceOnUse"
+             width="2" height="100%"
+             patternTransform="rotate(30)">
+        <rect width="2" height="100%" class="left" />
+        <rect width="1" height="100%" class="right" />
+    </pattern>
+    <use xlink:href="#left"  class="left" />
+    <use xlink:href="#right" class="right" />
+    <g clip-path="url(#clip-left)">
+        <use xlink:href="#circle" x="+6" fill="url(#stripes)" />
+    </g>
+    <g class="outlines">
+        <use xlink:href="#left" />
+        <use xlink:href="#right" />
+    </g>
+</svg>

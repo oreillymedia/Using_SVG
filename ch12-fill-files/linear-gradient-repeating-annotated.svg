@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="200px" viewBox="0 0 400 200">
+    <title>Repeating Linear Gradient, Annotated</title>
+    <svg width="200px" height="200px" viewBox="-100 -100 200 200">
+    <linearGradient id="purple-stripes"
+                    gradientUnits="userSpaceOnUse"
+                    x1="-20" x2="+20" spreadMethod="repeat">
+        <stop stop-color="purple" offset="0.4"/>
+        <stop stop-color="plum" offset="0.9"/>
+    </linearGradient>
+    <circle r="50%"
+            fill="url(#purple-stripes)" />
+    </svg>
+    <style>
+        :root {
+            background: #222;
+        }
+        .vector, .normal {
+            stroke: aquamarine;
+        }
+        marker {
+            fill: aquamarine;
+            stroke: none;
+            overflow: hidden;
+        }
+        .vector {
+            stroke-width: 5px;
+            marker-start: url(#base);
+            marker-end: url(#point);
+        }
+        .normal {
+            stroke-width: 2px;
+            stroke-dasharray: 5px 3px;
+        }
+    </style>
+    <marker id="base" orient="auto" viewBox="0 -1.5 3 3">
+        <circle r="1.5" />
+    </marker>
+    <marker id="point" orient="auto" viewBox="-3 -1.5 3 3">
+        <path d="M0,-0.5 V0.5 L-3,1.5 -3,-1.5 Z"/>
+    </marker>
+    <svg width="200px" height="200px" x="200px" viewBox="-100 -100 200 200">
+        <circle r="50%" fill="url(#purple-stripes)" />
+        <g id="annotations">
+            <path class="normal" d="M-200,0 L200,0"
+                  transform="translate(-4,0) rotate(90)"/>
+            <path class="normal" d="M-200,0 L200,0"
+                  transform="translate(16,0) rotate(90)"/>
+            <line class="vector"
+                  x1="-20" x2="20" />
+        </g>
+        <g filter="hue-rotate(240deg)">
+            <use xlink:href="#annotations" x="-40%"/>
+            <use xlink:href="#annotations" x="-20%"/>
+            <use xlink:href="#annotations" x="+20%"/>
+            <use xlink:href="#annotations" x="+40%"/>
+        </g>
+    </svg>
+</svg>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>preserveAspectRatio options</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        .wrapper { 
+            position: relative;
+            height: 10em; 
+            width: 10em;
+            resize: both;
+            overflow: hidden;
+            border: thin solid;
+        }
+        svg { 
+            display: block;
+            position: absolute;
+            height: 90%;
+            width: 90%;
+            top: 5%;
+            left: 5%;
+            
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <form id="preserve-options">
+        <fieldset id="preserve-set">
+            <legend><code>preserveAspectRatio</code> mode</legend>
+            <label><input type="radio" name="preserve" 
+                          value="none" />none</label>
+            <label><input type="radio" name="preserve" 
+                          value="meet" checked />meet</label>
+            <label><input type="radio" name="preserve" 
+                          value="slice" />slice</label>            
+        </fieldset>
+        <fieldset id="x-align-set">
+            <legend><i>x</i>-alignment</legend>
+            <label><input type="radio" name="x-align" 
+                          value="xMin" />min</label>
+            <label><input type="radio" name="x-align" 
+                          value="xMid" checked />mid</label>
+            <label><input type="radio" name="x-align" 
+                          value="xMax" />max</label>
+        </fieldset>
+        <fieldset id="y-align-set">
+            <legend><i>y</i>-alignment</legend>
+            <label><input type="radio" name="y-align" 
+                          value="YMin" />min</label>
+            <label><input type="radio" name="y-align" 
+                          value="YMid" checked />mid</label>
+            <label><input type="radio" name="y-align" 
+                          value="YMax" />max</label>            
+        </fieldset>
+    </form>
+    <div class="wrapper">
+        <svg id="preserve-svg" viewBox="0,0 20,20">
+            <title>Spade</title>
+            <path fill="black"
+                  d="M 9,15 
+                     C 9,20 0,21 0,16 
+                     S 6,9 10,0
+                     C 14,9 20,11 20,16 
+                     S 11,20 11,15
+                     Q 11,20 13,20  
+                     H 7 
+                     Q 9,20 9,15 Z" />
+        </svg>
+    </div>
+    <script>
+    window.onload = function(){
+        var doc = document;
+        var svg = doc.getElementById("preserve-svg");
+        
+        var xAlign = doc.getElementById("x-align-set");
+        var yAlign = doc.getElementById("y-align-set");
+        
+        var form = doc.getElementById("preserve-options");
+        form.addEventListener("change", update);
+        
+        function update(event) {
+            var p, x, y, string;
+            p = getSelectedValue("preserve");
+            if (p == "none") {
+                xAlign.disabled = yAlign.disabled = true;
+                string = p;
+            }
+            else {
+                xAlign.disabled = yAlign.disabled = false;
+                x = getSelectedValue("x-align");
+                y = getSelectedValue("y-align");
+                string = x+y+" "+p;
+            }
+            svg.setAttribute("preserveAspectRatio", string);
+        }
+        
+        function getSelectedValue(name) {            
+            var options = doc.querySelectorAll(
+                                "[name='" + name + "']" );
+            for (var i = 0, l = options.length; i < l; i++) {
+                if (options[i].checked) {
+                    return options[i].value;
+                }
+            }
+            return null; /* nothing selected */
+        }
+        
+        update();
+    };
+    </script>
+</body>
+</html>

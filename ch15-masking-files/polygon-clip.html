@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>HTML file with Inline SVG</title>
+    <style>
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+body { 
+    font-family: Roboto, sans-serif;
+    margin: 0;
+    padding: 0.5px 2rem 0 0;
+}
+h1 { 
+  font-weight: 100;
+    font-size: 300%;
+}
+img#penetrator {
+    width: 50%;
+    margin-left: -12%;
+    margin-right: 0.5em;
+    float: left;
+    clip-path: polygon(24% 0, 24% 100%, 100% 54%); 
+    shape-margin: 0.5em;
+    shape-outside: polygon(24% 0, 24% 100%, 100% 54%, 100% 0) border-box;
+}
+p { 
+  line-height: 1.5;
+  margin-left: 1rem;
+}
+    </style>
+</head>
+<body>
+<img src="fa-18-hornet.jpg" alt="A jet breaking the sound barrier" id="penetrator">
+<h1>The Need For Speed</h1>
+    <p>The urge to go faster than the speed of sound is probably as old as Kitty Hawk, as old as mankind’s first realization that there was a barrier to break. Of course, that speed limit had been broken long before powered flight - every crack of a whip is a minuature sonic boom - but it look 50 years of research and development and two World Wars before it could be exceeded in an aircraft.</p>
+    <p>Prop-driven aircraft can never break the sound barrier purposefully: the propeller tip will always reach the speed of sound before the rest of the aircraft, setting up shockwaves and turbulence that often overpowered the pilot or ripped the airframe apart in mid-air.</p>
+    <p>It’s possible that early jet-engine aircraft broke the sound barrier in powered dives during WWII II, but no verifiable data has ever been extracted from such claims.</p>
+
+<svg id="svgpath" width="1" height="1">
+	<defs>
+		<clipPath id="delta" clipPathUnits="objectBoundingBox">
+			<polygon points=".24,0 .24,1 1,.54" />
+		</clipPath>
+	</defs>
+</svg>
+    </body>
+</html>

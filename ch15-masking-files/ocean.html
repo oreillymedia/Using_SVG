@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>Video-filled Text with a Knockout Mask</title>
+<style class="cp-pen-styles">
+@font-face {
+  font-family: Biko;
+  font-weight: 700;
+  src:url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/biko-black.woff");
+}
+body {
+    background: lightcyan;
+    margin: 0;
+}
+header { 
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1200px;
+    overflow: hidden;
+    background: #223; /* same color as SVG overlay */
+}
+@media (min-width: 1200px) {
+    header {
+        padding: 0 calc(50% - 600px); 
+    /* add side-padding if available width is greater 1200px */
+    }
+}
+.header-wrap {
+    position: relative;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding-bottom: 56.25%; /* = 100% * 9/16 */
+    max-width: calc( (100vh - 2em) * 16 /9);
+}
+header, header video, header svg {
+    max-height: calc(100vh - 2em); 
+}
+header video, header svg { 
+    display: block;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    top: 0;
+    left: 0;
+}
+header svg {
+    box-sizing: content-box;
+    padding: 5px; /* cover up edges of video completely */
+    top: -5px; left: -5px;
+    overflow: visible;
+}
+.heading-text {
+    font-family: Biko, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 38px;
+}
+.transparent-text {
+    fill-opacity: 0;
+    stroke: cyan;
+    stroke-opacity: 0.5;
+}
+.header-backdrop {
+    fill: #223; /* matches the header background color */
+}
+</style></head>
+<body>
+<header>
+  <h1 class="header-wrap" >
+    <video auto*play playsinline muted loop preload 
+           poster="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/oceanshot.jpg">
+        <source type="video/webm"
+                src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/ocean-small.webm" />
+        <source type="video/mp4"
+                src="http://thenewcode.com/assets/videos/ocean-small.mp4" />
+    </video>
+    <svg viewBox="0 0 160 90">
+        <g class="header-backdrop" mask="url(#header-mask)">
+            <rect id="cover"
+                  x="-5%" y="-5%" width="110%" height="110%" />
+        </g> 
+        <g class="transparent-text">
+            <text id="heading" class="heading-text" 
+                  text-anchor="middle"
+                  x="50%"  y="50%" dy="0.3em">OCEAN</text>
+        </g>
+        <mask id="header-mask">
+            <use xlink:href="#cover" style="fill: white" />
+            <use xlink:href="#heading" />
+        </mask>
+    </svg>
+  </h1>
+</header>
+    
+<script>
+const video = document.querySelector("video");
+if (window.matchMedia('(prefers-reduced-motion)').matches) {
+  video.removeAttribute("autoplay");
+  video.pause();
+}
+</script>
+</body></html>

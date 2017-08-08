@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="400px" viewBox="0 0 80 80" >  <!--1-->
+    <title>Scaling with transformations</title>
+    <style type="text/css">
+        use                 { fill: darkRed; }
+        use:nth-of-type(2n) { fill: lightSkyBlue; }
+    </style>
+    <defs>                                               <!--2-->
+        <path id="heart" 
+              d="M10,6 Q10,0 15,0T20,6Q20,10 15,14 
+                 T10,20Q10,18 5,14T0,6Q0,0 5,0T10,6Z" />
+    </defs>
+    
+    <use xlink:href="#heart" transform="scale(4)"/>      <!--3-->
+    <use xlink:href="#heart" transform="scale(3.5)" />   
+    <use xlink:href="#heart" transform="scale(3)" />
+    <use xlink:href="#heart" transform="scale(2.5)" />
+    <use xlink:href="#heart" transform="scale(2)" />
+    <use xlink:href="#heart" transform="scale(1.5)" />
+    <use xlink:href="#heart" transform="scale(1.1)" />
+    <use xlink:href="#heart" transform="scale(0.75)" />
+    <use xlink:href="#heart" transform="scale(0.5)" />
+</svg>

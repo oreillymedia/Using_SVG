@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 410 410" width="4in" height="4in">
+    <title>feMorphology Applied to a Blurred Photograph</title>
+    <filter id="dilate">
+        <feGaussianBlur stdDeviation="3" />
+        <feMorphology operator="dilate" radius="5"/>
+    </filter>
+    <filter id="erode">
+        <feGaussianBlur stdDeviation="3" />
+        <feMorphology operator="erode" radius="5"/>
+    </filter>
+  <image xlink:href="sleepy-siamese.jpg"
+         x="5" width="400px" height="200px" 
+         filter="url(#erode)" />
+  <image xlink:href="sleepy-siamese.jpg"
+         x="5" width="400px" height="200px" y="205px" 
+         filter="url(#dilate)" />
+</svg>

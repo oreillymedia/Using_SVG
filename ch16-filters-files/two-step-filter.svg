@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 450 225" width="4in" height="2in"
+     color-interpolation-filters="sRGB" >
+    <title>A two-step filter, decomposed</title>
+<filter id="step-1">
+    <feGaussianBlur stdDeviation="2" />
+</filter> 
+<filter id="blur-desaturate">
+    <feGaussianBlur stdDeviation="2" />
+    <feColorMatrix type="saturate" values="0.3"/>
+</filter> 
+    <defs>
+        <image id="i"
+               x="5" y="7.5" width="140" height="210"
+               xlink:href="heron.jpg"/>
+    </defs>
+    
+    <use xlink:href="#i" filter="none" />
+    <use xlink:href="#i" x="150" filter="url(#step-1)" />
+    <use xlink:href="#i" x="300" filter="url(#blur-desaturate)" />
+</svg>

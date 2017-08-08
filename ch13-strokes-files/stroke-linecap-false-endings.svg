@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="390" height="260" viewBox="0 0 390 260">
+    <title>Stroke Linecap Options</title>
+    <symbol id="open-path" viewBox="0 0 30 30"
+            style="overflow: visible">
+        <path id="p" d="M25,5 H5 V15 H25 H5 V25 H25" 
+              fill="none"/>
+        <use xlink:href="#p" stroke="coral" stroke-width="0.5" 
+             stroke-linecap="initial" stroke-linejoin="initial" />
+    </symbol>
+    <rect height="100%" width="100%" fill="lightcoral" />
+
+    <g stroke="indigo" 
+       stroke-width="5" stroke-opacity="0.75">
+        <g stroke-linecap="butt" >
+            <use xlink:href="#open-path" 
+                 width="30%" height="50%" x="1%" />
+            <use xlink:href="#open-path" 
+                 width="30%" height="50%" x="1%" y="50%" 
+                 stroke-linejoin="bevel" />
+        </g>
+        <g stroke-linecap="round" >
+            <use xlink:href="#open-path" 
+                 width="30%" height="50%" x="35%" />
+            <use xlink:href="#open-path" 
+                 width="30%" height="50%" x="35%" y="50%" 
+                 stroke-linejoin="round" />
+        </g>
+        <g stroke-linecap="square" >
+            <use xlink:href="#open-path" 
+                 width="30%" height="50%" x="69%" />
+            <use xlink:href="#open-path" 
+                 width="30%" height="50%" x="69%" y="50%" 
+                 stroke-linejoin="miter" />
+        </g>
+    </g>
+</svg>

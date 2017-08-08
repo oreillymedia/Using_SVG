@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="180px" viewBox="0 0 400 180" >      <!--1-->
+    <title>Playing Cards</title>
+    <style type="text/css">
+        svg:root {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        svg {
+            overflow: visible;
+        }
+        .card {
+            stroke: gray;
+            fill: linen;
+        }
+        .diamond, .heart {
+            fill: red;
+        }
+        .club, .spade {
+            fill: black;
+        }                                                      <!--2-->
+    </style>
+    <defs>    
+        <svg height="20" width="20" viewBox="0 0 20 20"
+             id="diamond">                                     <!--3-->
+            <title>Diamond</title>
+            <path d="M3,10L10,0 17,10 10,20Z 
+                     M9,11L10,18V10H15L11,9 10,2V10H5Z" />
+        </svg>
+
+        <svg height="20" width="20" viewBox="0 0 20 20"
+             id="club">  
+            <title>Club</title>
+            <path d="M9,15.5A5,5 0 1 1 5.5, 7.5 
+                     A5,5 0 1 1 14.5, 7.5A5,5 0 1 1 11, 15.5
+                     Q11,20 13,20H7Q9,20 9,15.5Z" />
+        </svg>
+
+        <svg height="20" width="20" viewBox="0 0 20 20"
+             id="spade">
+            <title>Spade</title>
+            <path d="M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+                     S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z" />
+        </svg>
+
+        <svg height="20" width="20" viewBox="0 0 20 20"
+             id="heart">
+            <title>Heart</title>
+            <path d="M10,6 Q10,0 15,0T20,6Q20,10 15,14 
+                     T10,20Q10,18 5,14T0,6Q0,0 5,0T10,6Z" />
+        </svg>
+        
+        <rect id="card-front" class="card" 
+              width="120" height="160" rx="20" />              <!--4-->
+    </defs>
+    
+    <svg width="140" height="180"
+         class="club" id="club5">                              <!--5-->
+        <title>5 of clubs</title>
+        <use xlink:href="#card-front" x="10" y="10" />
+        <text x="15" y="35">5</text>
+        <text x="105" y="160">5</text>
+        <use xlink:href="#club" x="40" y="40" />
+        <use xlink:href="#club" x="80" y="40" />
+        <use xlink:href="#club" x="60" y="80" />
+        <use xlink:href="#club" x="40" y="120" />
+        <use xlink:href="#club" x="80" y="120" />              <!--6-->
+    </svg>
+    
+    <svg x="130" width="140" height="180"
+         class="heart" id="heart3">
+        <title>3 of hearts</title>
+        <use xlink:href="#card-front" x="10" y="10" />
+        <text x="15" y="35">3</text>
+        <text x="105" y="160">3</text>
+        <use xlink:href="#heart" x="60" y="40" />
+        <use xlink:href="#heart" x="60" y="80" />
+        <use xlink:href="#heart" x="60" y="120" />
+    </svg>
+    
+    <svg x="260" width="140" height="180"
+         class="spade" id="spadeA">
+        <title>Ace of spades</title>
+        <use xlink:href="#card-front" x="10" y="10" />
+        <text x="15" y="35">A</text>
+        <text x="105" y="160">A</text>
+        <use xlink:href="#spade" x="30" y="50" 
+             width="80" height="80" />                         <!--7-->
+    </svg>
+    
+    <!-- and many more, to draw the rest of the cards -->
+</svg>

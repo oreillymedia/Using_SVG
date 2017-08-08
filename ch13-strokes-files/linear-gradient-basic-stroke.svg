@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     width="400px" height="200px" viewBox="0 0 400 200">
+    <title>Simple Linear Gradient</title>
+    <linearGradient id="green-gradient"
+                    x1="20%" y1="20%" x2="80%" y2="80%">
+        <stop stop-color="mediumSpringGreen" offset="0"/>
+        <stop stop-color="forestGreen" offset="0.3"/>
+        <stop stop-color="lightBlue" offset="1"/>
+    </linearGradient>
+    <rect width="180" height="180" ry="18" x="10" y="10"
+          fill="darkSlateGray"
+          stroke="url(#green-gradient)" stroke-width="20" />
+    <g transform="translate(200,0)">
+        <rect width="200" height="200" ry="20"
+              fill="url(#green-gradient)" />
+    </g>
+</svg>

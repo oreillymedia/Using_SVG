@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     viewBox="0 0 120 60" width="4in" height="2in">
+    <title>Merge Stroke with feMorphology</title>
+    <filter id="outline">
+        <feMorphology in="SourceAlpha"
+                      operator="dilate" radius="3"/>
+        <feComposite in="SourceGraphic"/>
+    </filter>
+    <style>
+@font-face {
+    font-family: 'BadaboomBB';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/badaboombb.woff2') format('woff2'),
+    url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/badaboombb.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+text { 
+    font-size: 60px;
+    font-family: BadaboomBB, Impact, sans-serif; 
+    text-anchor: middle;
+}
+    </style>
+    <rect fill="aqua" width="100%" height="100%" />
+    <text fill="yellow" filter="url(#outline)" 
+          x="50%" y="50%" dy="0.35em"
+          dx="0, -10, -10, -12">
+        BOOM
+    </text>
+</svg>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Image Masked with CSS Gradients</title>
+    <style>
+        body {margin: 0;}
+        img {
+            
+            -webkit-mask-image: 
+                linear-gradient(to right, transparent, red),
+                radial-gradient(ellipse 120% 156% at 120% -30%, 
+                    transparent 70%, red),
+                radial-gradient(ellipse 120% 156% at 120% 130%, 
+                    transparent 70%, red);
+            -webkit-mask-size: 20% 100%, 80% 50%, 80% 50%;
+            -webkit-mask-position: left top, right top, right bottom;
+            -webkit-mask-repeat: no-repeat;
+            
+            mask-image: 
+                linear-gradient(to right, transparent, red),
+                radial-gradient(ellipse 120% 156% at 120% -30%, 
+                    transparent 70%, red),
+                radial-gradient(ellipse 120% 156% at 120% 130%, 
+                    transparent 70%, red);
+            mask-size: 20% 100%, 80% 50%, 80% 50%;
+            mask-position: left top, right top, right bottom;
+            mask-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <img src="fa-18-hornet-2x1.jpg">
+</body>
+</html>

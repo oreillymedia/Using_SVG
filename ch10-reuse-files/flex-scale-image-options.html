@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>preserveAspectRatio for Images</title>
+    <style>
+        body { margin: 0; }
+        form {
+            max-width: 400px;
+            text-align: right;
+        }
+        label {
+            display: block;
+            margin: 0.2em 0;
+        }
+        svg {
+            display: block;
+            max-height: calc(100vh - 5em);
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <form id="preserve-options">                             <!--1-->
+        <label><code>preserveAspectRatio</code>
+                mode
+            <select id="preserve">
+                <option value="none" >none</option>
+                <option value="meet" selected >meet</option>
+                <option value="slice" >slice</option>            
+            </select>
+        </label>
+        <label><i>x</i>-alignment
+            <select id="x-align">
+                <option value="xMin" >min</option>
+                <option value="xMid" selected >mid</option>
+                <option value="xMax" >max</option>
+            </select>
+        </label>
+        <label><i>y</i>-alignment
+            <select id="y-align">
+                <option value="YMin" >min</option>
+                <option value="YMid" selected >mid</option>
+                <option value="YMax" >max</option>            
+            </select>
+        </label>
+    </form><svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400" height="600" viewBox="0 0 400 600">       <!--2-->
+    <style>
+        text { 
+            font: 20px Tahoma, sans-serif; 
+            text-anchor: middle;
+            fill: darkRed;
+        }
+        .bird-colors rect { fill: #5f6cb9; }
+        .bird-colors text { fill: #bbde60; }
+        .theme-colors rect { fill: #00aaa9; }
+        .theme-colors text { fill: white; }
+    </style>
+    <svg viewBox="50 5 500 750" width="50%" height="50%">
+        <image height="900" width="600"
+               class="preserve-image"
+               aria-label="Using SVG cover image"
+               xlink:href="using_svg_cover.png"/>          <!--3-->
+    </svg>
+    <g class="bird-colors">
+        <rect x="50%" height="50%" width="50%" />
+        <text x="75%" y="45" dy="-0.5em">Amelia 
+            <tspan x="75%" dy="1em">Bellamy-Royds</tspan></text>
+        <image x="50%" y="80" height="220" width="200"
+               class="preserve-image"
+               aria-label="Amelia in the sunshine"
+               xlink:href="Amelia.jpg"/>                   <!--4-->
+    </g>
+    <g class="bird-colors">
+        <rect y="50%" height="50%" width="50%" />
+        <text x="25%" y="345">Kurt Cagle</text>
+        <image y="380" height="220" width="200"
+               class="preserve-image"
+               aria-label="Kurt in a top hat"
+               xlink:href="Kurt.jpg"/>
+    </g>
+    <g class="theme-colors">
+        <rect x="50%" y="50%" height="50%" width="50%" />
+        <text x="75%" y="345">Dudley Storey</text>
+        <image x="50%" y="380" height="220" width="200"
+               class="preserve-image"
+               aria-label="Dudley, re-imagined as a tiny warrior"
+               xlink:href="Dudley.jpg"/>
+    </g>
+    </svg>
+    <script>
+    window.addEventListener("load", function(){
+        var doc = document;
+        var images = doc.getElementsByClassName("preserve-image");
+        
+        var preserve = doc.getElementById("preserve");
+        var xAlign = doc.getElementById("x-align");
+        var yAlign = doc.getElementById("y-align");
+        
+        doc.getElementById("preserve-options")
+           .addEventListener("change", update);
+        
+        function update(event) {
+            var p, string;
+            p = preserve.value;
+            if (p == "none") {
+                xAlign.disabled = yAlign.disabled = true;
+                string = p;
+            }
+            else {
+                xAlign.disabled = yAlign.disabled = false;
+                string = xAlign.value + yAlign.value + " " + p;
+            }
+            for (var i=0, n=images.length; i<n; i++) {
+                images[i].setAttribute(
+                    "preserveAspectRatio", string);          //<5>
+            }
+        }
+        
+        update();
+    });
+    </script>
+</body>
+</html>

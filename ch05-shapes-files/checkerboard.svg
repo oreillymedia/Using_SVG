@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" height="9in" width="9in">
+    <title>Checkerboard</title>
+    <style type="text/css">
+        .board { fill: saddleBrown; }
+        .white { fill: linen; }
+        .black { fill: #222; }
+    </style>
+    <script><![CDATA[
+        var squares = 8;
+        var doc = document;
+        var svg = doc.documentElement;
+        var svgNS = svg.namespaceURI;
+
+        if (!(svg.classList && svg.classList.contains("initialized") ) ) 
+            draw();
+
+        function draw(){
+            var board =  doc.createElementNS(svgNS, "rect");
+            board.setAttribute("width", "100%");
+            board.setAttribute("height", "100%");
+            board.setAttribute("class", "board");
+            svg.appendChild(board);
+
+            var square;
+            for (var i = 0; i < squares; i++) {
+                for (var j = 0; j < squares; j++) {
+                    square = doc.createElementNS(svgNS, "rect");
+                    square.setAttribute("x", (i+0.5) + "in" );
+                    square.setAttribute("y", (j+0.5) + "in" );
+                    square.setAttribute("width", "1in" );
+                    square.setAttribute("height", "1in" );
+                    square.setAttribute("class", 
+                                        (i+j)%2 ? "black" : "white" );
+                    svg.appendChild(square);
+                }
+            }
+            svg.classList.add("initialized");
+        }
+]]></script>
+</svg>

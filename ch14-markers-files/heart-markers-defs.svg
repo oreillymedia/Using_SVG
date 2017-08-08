@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="250px" height="250px" viewBox="-2 -2 24 24">
+    <title>Heart-shaped Markers on a Heart Shape</title>
+    <defs>
+        <path id="heart" 
+              d="M10,6 Q10,0 15,0T20,6Q20,10 15,14 
+                 T10,20Q10,18 5,14T0,6Q0,0 5,0T10,6Z" />
+    </defs>
+    <marker id="heart-marker" viewBox="0 0 20 20" 
+            markerHeight="0.9" markerWidth="0.9" orient="auto"
+            refX="10" refY="10" 
+            fill="darkRed" stroke="none">
+        <use xlink:href="#heart" width="20" height="20" />
+    </marker>
+    
+    <use xlink:href="#heart" stroke-width="4" 
+         fill="indianRed" stroke="lightCoral"
+         marker-mid="url(#heart-marker)" />
+    
+
+</svg>

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 384 643" width="384px" height="643px">
+    <title>X-Ray Scanner</title>
+    <image xlink:href="TopHatKurt.jpg" width="100%" height="100%"/> 
+    <image xlink:href="TopHatSkull.jpg" width="100%" height="100%"
+           clip-path="url(#cp)" />                         <!--1-->
+    <path id="goggles"
+          d="M0-30 A75,75 0 1,1 0,30 A75,75 0 1,1 0,-30Z"
+          fill="green" fill-opacity="0.4" 
+          stroke="green" stroke-width="4">                 <!--2-->
+        <animateTransform attributeName="transform"
+            type="translate" values="200,40;200,600;200,40" 
+            dur="10s" repeatCount="indefinite" />          <!--3-->
+        <animateTransform attributeName="transform"
+            type="translate" values="-50,0;50,0;-50,0" 
+            dur="3s" repeatCount="indefinite"
+            additive="sum"/>                               <!--4-->
+        <animateTransform attributeName="transform"
+            type="rotate" values="-10;10;-10" 
+            dur="7s" repeatCount="indefinite"
+            additive="sum"/>                               <!--5-->
+    </path>
+    <clipPath id="cp">
+        <use xlink:href="#goggles" />                      <!--6-->
+    </clipPath>
+</svg>                  

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="390px" height="130px" viewBox="0 0 300 100">
+    <title>Strokes with Different Linejoin Options</title>
+    <symbol id="shape" viewBox="-18 -12 36 24">
+        <path d="M-5,-10 H5  V-5 H10  L15,0  L10,5   H5  V10 
+                         H-5 V5  H-10 L-15,0 L-10,-5 H-5 V-10 Z" />
+    </symbol>
+    <g fill="deepskyblue"
+       stroke="blueViolet" stroke-width="4" stroke-opacity="0.8">
+        <use xlink:href="#shape" width="100" height="75" 
+             stroke-linejoin="round"
+             role="img" aria-labelledby="round-label" />   
+        <use xlink:href="#shape" width="100" height="75" x="100"
+             stroke-linejoin="bevel"
+             role="img" aria-labelledby="bevel-label" />     
+        <use xlink:href="#shape" width="100" height="75" x="200"
+             stroke-linejoin="miter"
+             role="img" aria-labelledby="miter-label" />
+    </g>
+    <g fill="blueViolet" 
+       font-family="Consolas, monospace" font-size="20"
+       text-anchor="middle">
+        <text id="round-label" x="50"  y="95">round</text>
+        <text id="bevel-label" x="150" y="95">bevel</text>
+        <text id="miter-label" x="250" y="95">miter</text>
+    </g>
+</svg>

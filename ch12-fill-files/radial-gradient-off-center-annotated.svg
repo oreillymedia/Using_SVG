@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="200px" viewBox="0 0 400 200">
+    <title>Asymmetrical Reflected Radial Gradient, Annotated</title>
+    <svg width="200px" height="200px" viewBox="0 0 200 200">
+        <radialGradient id="ripples" spreadMethod="reflect" 
+                        cx="20%" cy="50%" r="10%"
+                        fx="15%" >
+            <stop stop-color="lightBlue" offset="0.2"/>
+            <stop stop-color="lightSlateGray" offset="0.6"/>
+            <stop stop-color="darkSlateBlue" offset="1"/>
+        </radialGradient>
+        <rect width="100%" height="100%" rx="10%"
+              fill="url(#ripples)" />
+    </svg>
+    <style>
+        .vector, .normal {
+            fill: none;
+            stroke: darkRed;
+        }
+        .normal {
+            stroke: tomato;
+        }
+        marker {
+            fill: darkRed;
+            stroke: none;
+            overflow: hidden;
+        }
+        .vector {
+            stroke-width: 3px;
+            marker-start: url(#base);
+            marker-end: url(#point);
+        }
+        circle.vector { marker: none; }
+        .normal {
+            stroke-width: 2px;
+            stroke-dasharray: 3px 1px;
+        }
+        .repeats {
+            filter: hue-rotate(100deg);
+        }
+    </style>
+    <marker id="base" orient="auto" viewBox="-1.5 -1.5 3 3">
+        <circle r="1" />
+    </marker>
+    <marker id="point" orient="auto" viewBox="-3 -1.5 3 3">
+        <path d="M0,-0.5 V0.5 L-3,1.5 -3,-1.5 Z"/>
+    </marker>
+    <svg width="200px" height="200px" x="200px" viewBox="0 0 200 200">
+        <rect width="100%" height="100%" rx="10%"
+              fill="url(#ripples)" />
+        <g transform="translate(30,100)">
+            <g class="vector">
+                <line id="vector" x2="15%" />
+                <g class="repeats">
+                    <use xlink:href="#vector" x="-30%" transform="scale(-1)"/>
+                    <use xlink:href="#vector" x="30%"/>
+                    <use xlink:href="#vector" x="-60%" transform="scale(-1)"/>
+                    <use xlink:href="#vector" x="60%"/>
+                    <use xlink:href="#vector" x="-90%" transform="scale(-1)"/>
+                    <use xlink:href="#vector" x="90%"/>
+                </g>
+            </g>
+            <g class="vector" transform="rotate(-30)">
+                <line id="vector2" x2="14.013%" />
+                <g class="repeats">
+                    <use xlink:href="#vector2" x="-28.026%" transform="scale(-1)"/>
+                    <use xlink:href="#vector2" x="28.026%"/>
+                    <use xlink:href="#vector2" x="-56.052%" transform="scale(-1)"/>
+                    <use xlink:href="#vector2" x="56.052%"/>
+                    <use xlink:href="#vector2" x="-84.078%" transform="scale(-1)"/>
+                    <use xlink:href="#vector2" x="84.078%"/>
+                </g>                
+            </g>
+            <g class="vector" transform="rotate(90)">
+                <line id="vector3" x2="8.66%" />
+                <g class="repeats">
+                    <use xlink:href="#vector3" x="-17.32%" transform="scale(-1)"/>
+                    <use xlink:href="#vector3" x="17.32%"/>
+                    <use xlink:href="#vector3" x="-34.64%" transform="scale(-1)"/>
+                    <use xlink:href="#vector3" x="34.64%"/>
+                    <use xlink:href="#vector3" x="-51.96%" transform="scale(-1)"/>
+                    <use xlink:href="#vector3" x="51.96%"/>
+                </g>                
+                
+            </g>
+        </g>
+        <g transform="translate(0,100)">
+            <g>
+                <circle class="vector" cx="20%" r="10%"/>
+                <circle class="normal" cx="16%" r="2%"/>
+                <circle class="normal" cx="18%" r="6%"/>
+                <circle class="normal" cx="20%" r="10%"/>
+            </g>
+            <g class="repeats">
+                <circle class="normal" cx="22%" r="14%"/>
+                <circle class="normal" cx="24%" r="18%"/>
+            </g>
+            <g class="repeats">
+                <circle class="normal" cx="26%" r="22%"/>
+                <circle class="normal" cx="28%" r="26%"/>
+                <circle class="normal" cx="30%" r="30%"/>
+            </g>
+            <g class="repeats">
+                <circle class="normal" cx="32%" r="34%"/>
+                <circle class="normal" cx="34%" r="38%"/>
+            </g>
+            <g class="repeats">
+                <circle class="normal" cx="36%" r="42%"/>
+                <circle class="normal" cx="38%" r="46%"/>
+                <circle class="normal" cx="40%" r="50%"/>
+            </g>
+            <g class="repeats">
+                <circle class="normal" cx="42%" r="54%"/>
+                <circle class="normal" cx="44%" r="58%"/>
+            </g>
+            <g class="repeats">
+                <circle class="normal" cx="46%" r="62%"/>
+                <circle class="normal" cx="48%" r="66%"/>
+                <circle class="normal" cx="50%" r="70%"/>
+            </g>
+        </g>
+    </svg>
+</svg>

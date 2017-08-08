@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="400px" width="400px" viewBox="-5 -5 30 30">
+    <title>Club, showing path points</title>
+    <use xlink:href="graphing.svg#grid" opacity="0.7"/>
+    <path fill="black"
+          fill-opacity="0.8"
+          d="M 9,15.5 
+             A 5,5 0 1 1 5.5, 7.5 
+             A 5,5 0 1 1 14.5, 7.5
+             A 5,5 0 1 1 11, 15.5
+             Q 11,20 13,20  
+             H 7 
+             Q 9,20 9,15.5 Z" />
+    <style>
+        .handles {
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 0.2;
+        }
+        .handles.reflected {
+            stroke-dasharray: 0.1 0.4;
+            stroke-linecap: round;
+            stroke-width: 0.3;
+        }
+    </style>
+    <g color="mediumOrchid" style="--accentColor: indigo">
+        <path class="handles"
+              d="
+                 M 11,20 L 11,15
+                 L 11,20 L 13,20  
+                 M 7,20 
+                 L 9,20  L 9,15"  />
+        <path class="reflected handles"
+              d="M 9,15.5 
+                 A 5,5 0 1 1 5.5, 7.5
+                 A 5,5 0 0 1 9,15.5 
+                 M 5.5, 7.5 
+                 A 5,5 0 1 1 14.5, 7.5
+                 A 5,5 0 0 1  5.5, 7.5
+                 M 14.5, 7.5
+                 A 5,5 0 1 1 11, 15.5
+                 A 5,5 0 0 1 14.5, 7.5
+                 "/>
+        
+    <path fill="none"
+          d="M 9,15.5 
+             A 5,5 0 1 1 5.5, 7.5 
+             A 5,5 0 1 1 14.5, 7.5
+             A 5,5 0 1 1 11, 15.5
+             Q 11,20 13,20  
+             H 7 
+             Q 9,20 9,15.5 Z" />
+        <use xlink:href="graphing.svg#control-point"     x="11" y="20" />
+        <use xlink:href="graphing.svg#control-point"     x="9"  y="20" />
+        
+        <use xlink:href="graphing.svg#vertex" x="9"    y="15.5" />
+        <use xlink:href="graphing.svg#vertex" x="5.5"  y="7.5" />
+        <use xlink:href="graphing.svg#vertex" x="14.5" y="7.5" />
+        <use xlink:href="graphing.svg#vertex" x="11"   y="15.5" />
+        <use xlink:href="graphing.svg#vertex" x="13"   y="20" />
+        <use xlink:href="graphing.svg#vertex" x="7"    y="20" />
+        <use xlink:href="graphing.svg#vertex" x="9"    y="15.5" />
+    </g>
+</svg>

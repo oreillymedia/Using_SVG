@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>SVG Images within HTML</title>
+    <style>
+        body {
+            background-color: #222;
+            color: white;
+            margin: 0; padding: 0;
+            font-family: sans-serif;
+        }
+        header, main {
+            border-bottom: dashed yellow;
+        }
+        header {
+            min-height: 12em;
+            font-family: serif;
+        }
+        header h1 {
+            margin: 0;
+            color: red;
+            text-shadow: yellow 0 0 4px, orange 0 0 2px;
+            font-size: 500%;
+        }
+        header img {
+            height: 10em;
+            float: left;
+            margin: 1em 2em;
+        }
+        p { padding: 0.5em; }
+    </style>
+</head>
+<body>
+    <header>
+        <picture>
+          <source type="image/svg+xml" 
+                  srcset="../ch01-overview-files/animated-stoplight-css.svg" />
+          <img src="../ch01-overview-files/animated-stoplight-css.1.png" 
+               alt="Traffic light" />
+        </picture>
+        <h1>Tony’s Towing</h1>
+    </header>
+    <main>
+        <p>Main text goes here, but <em>WOW</em> 
+           look at that image in the header!</p>
+    </main>
+</body>
+</html>

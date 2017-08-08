@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     viewBox="0 0 20 20" width="20px" height="20px">
+    <title>A tiny stroked icon</title>
+    <path fill="none" stroke="darkMagenta"
+          d="M2,2 H18 V18 H2 Z
+             M4,4 L16,16
+             M4,16 L16,4" />
+</svg>

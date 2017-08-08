@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     width="390px" height="260px" viewBox="-18 -12 36 24">
+    <title>Strokes without Linejoins</title>
+    <path fill="deepskyblue"
+          d="M-5,-10 H5  V-5 H10  L15,0  L10,5   H5  V10 
+                     H-5 V5  H-10 L-15,0 L-10,-5 H-5 V-10 Z" />
+    <path stroke="blueViolet" stroke-width="3" stroke-opacity="0.8"
+          d="M-5,-10 H5 m0,0 V-5 m0,0 H10 m0,0  L15,0 m0,0  L10,5 m0,0   H5 m0,0  V10 m0,0 
+                     H-5 m0,0 V5 m0,0  H-10 m0,0 L-15,0 m0,0 L-10,-5 m0,0 H-5 m0,0 V-10 m0,0 Z" />
+</svg>

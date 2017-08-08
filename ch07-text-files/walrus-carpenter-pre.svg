@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="420" height="630"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 420 630" >
+    <defs>
+        <path d="M10,10  q50,25 100,0 t100,0 100,0 100,0" id="wave"/>
+    </defs>
+    <mask id="image-mask" maskUnits="userSpaceOnUse">
+        <rect width="100%" height="100%" fill="white" />
+        <image xlink:href="walrus-carpenter-glass22.png"
+               width="100%" height="100%"
+               opacity="0.2"
+               preserveAspectRatio="xMidYMax meet" />
+    </mask>
+    <rect width="100%" height="100%" fill="darkSlateGray" />
+    <rect width="100%" height="100%"  fill="azure"
+          mask="url(#image-mask)" />
+    <g font-size="18px"
+       font-family="Georgia, serif" 
+       fill="midnightBlue">
+<text transform="translate(0,25)"><textPath xlink:href="#wave" startOffset="0%">“The time has come,” the Walrus said,</textPath></text>
+<text transform="translate(0,50)"><textPath xlink:href="#wave" startOffset="5%">“To talk of many things: </textPath></text>
+<text transform="translate(0,75)"><textPath xlink:href="#wave" startOffset="0%">Of shoes—and ships—and sealing wax—</textPath></text>
+<text transform="translate(0,100)"><textPath xlink:href="#wave" startOffset="5%">Of cabbages—and kings— </textPath></text>
+<text transform="translate(0,125)"><textPath xlink:href="#wave" startOffset="0%">And why the sea is boiling hot— </textPath></text>
+<text transform="translate(0,150)"><textPath xlink:href="#wave" startOffset="5%">And whether pigs have wings.”</textPath></text>
+
+<text transform="translate(0,175)"><textPath xlink:href="#wave" startOffset="25%">“But wait a bit,” the Oysters cried,</textPath></text>
+<text transform="translate(0,200)"><textPath xlink:href="#wave" startOffset="30%">“Before we have our chat;</textPath></text>
+<text transform="translate(0,225)"><textPath xlink:href="#wave" startOffset="25%">For some of us are out of breath,</textPath></text>
+<text transform="translate(0,250)"><textPath xlink:href="#wave" startOffset="30%">And all of us are fat!”</textPath></text>
+<text transform="translate(0,275)"><textPath xlink:href="#wave" startOffset="25%">“No hurry!” said the Carpenter.</textPath></text>
+<text transform="translate(0,300)"><textPath xlink:href="#wave" startOffset="30%">They thanked him much for that.</textPath></text>
+
+<text transform="translate(0,325)"><textPath xlink:href="#wave" startOffset="0%">“A loaf of bread,” the Walrus said,</textPath></text>
+<text transform="translate(0,350)"><textPath xlink:href="#wave" startOffset="5%">“Is what we chiefly need:</textPath></text>
+<text transform="translate(0,375)"><textPath xlink:href="#wave" startOffset="0%">Pepper and vinegar besides</textPath></text>
+<text transform="translate(0,400)"><textPath xlink:href="#wave" startOffset="5%">Are very good indeed—</textPath></text>
+<text transform="translate(0,425)"><textPath xlink:href="#wave" startOffset="0%">Now if you're ready, Oysters dear,</textPath></text>
+<text transform="translate(0,450)"><textPath xlink:href="#wave" startOffset="5%">We can begin to feed.”</textPath></text>
+
+<text transform="translate(0,475)"><textPath xlink:href="#wave" startOffset="25%">“But not on us!” the Oysters cried,</textPath></text>
+<text transform="translate(0,500)"><textPath xlink:href="#wave" startOffset="30%">Turning a little blue.</textPath></text>
+<text transform="translate(0,525)"><textPath xlink:href="#wave" startOffset="25%">“After such kindness, that would be</textPath></text>
+<text transform="translate(0,550)"><textPath xlink:href="#wave" startOffset="30%">A dismal thing to do!”</textPath></text>
+<text transform="translate(0,575)"><textPath xlink:href="#wave" startOffset="25%">“The night is fine,” the Walrus said.</textPath></text>
+<text transform="translate(0,600)"><textPath xlink:href="#wave" startOffset="30%">“Do you admire the view? …</textPath></text>
+    </g>
+</svg>

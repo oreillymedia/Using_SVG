@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 300 150" width="4in" height="2in">
+    <title>Gooey Filter</title>
+    <style>
+svg {
+    filter: blur(5.5px) brightness(75%) contrast(700%) 
+            brightness(130%) hue-rotate(-60deg);
+    overflow: visible;
+}
+    </style>
+    <rect x="5%" y="7%" width="90%" height="86%" 
+          fill="white" stroke="red" stroke-width="8" />
+    <g fill="cyan">
+        <g id="dots">
+            <circle r="6" cx="10%" cy="50%" />
+            <circle r="6" cx="90%" cy="50%" />
+        </g>
+        <use xlink:href="#dots" y="-60" />
+        <use xlink:href="#dots" y="-45" />
+        <use xlink:href="#dots" y="-30" />
+        <use xlink:href="#dots" y="-15" />
+        <use xlink:href="#dots" y="+15" />
+        <use xlink:href="#dots" y="+30" />
+        <use xlink:href="#dots" y="+45" />
+        <use xlink:href="#dots" y="+60" />
+    </g>
+    <text id="t"
+          font-size="76px" font-family="Stencil, Stencil Std, 
+                                        Copperplate, sans-serif"
+          fill="blue"
+          x="50%" y="50%" dy="-0.05em" text-anchor="middle"
+          >Gooey<tspan dy="0.75em" x="50%"
+               >Text</tspan></text>
+</svg>

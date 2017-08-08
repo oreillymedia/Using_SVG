@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="4in" height="4in" viewBox="-220 -220 440 440">
+    <title>Circle Games Logo (without animation)</title>
+    <circle id="c" r="190" 
+            fill="darkOrchid" stroke="plum" stroke-width="16" /> <!--1-->
+    <defs>
+        <path id="p" d="M0,125 A125,125 0 0,1 0,-125
+                               A125,125 0 0,1 0, 125Z" />
+    </defs>                                                      <!--2-->
+    <text id="t" dy="0.7ex" text-anchor="middle" 
+          font-size="48pt" font-family="Verdana"
+          fill="white">
+        <textPath id="tp" xlink:href="#p"
+                  startOffset="50%">Circle Games</textPath></text>
+</svg>

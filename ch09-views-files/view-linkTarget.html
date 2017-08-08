@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Using SVG link targets: self vs replace</title>
+    <style>
+        object, svg {
+            border: thin blue solid;
+        }
+    </style>
+</head>
+<body>
+    <object type="image/svg+xml" data="view-linkTarget.svg"></object>
+    <svg 
+     viewBox="0 0 20 20"
+     font-size="3">    
+    <title>The `target` attribute</title>
+    <a xlink:href="cards.svg" target="_self">
+        <text dy="1em" x="2">S</text>
+    </a>
+    <a xlink:href="cards.svg" target="_replace">
+        <text dy="1em" x="17">R</text>
+    </a>
+    <a xlink:href="#alt" target="_self">
+        <text y="20" x="2">S</text>
+    </a>
+    <a xlink:href="#alt" target="_replace">
+        <text y="20" x="17">R</text>
+    </a>
+        <path id="club" fill="black"
+              d="M 9,15.5 
+                 A 5,5 0 1 1 5.5, 7.5 
+                 A 5,5 0 1 1 14.5, 7.5
+                 A 5,5 0 1 1 11, 15.5
+                 Q 11,20 13,20  
+                 H 7 
+                 Q 9,20 9,15.5 Z" />
+    <view id="alt" viewBox="-20 -20 60 60" />
+</svg>
+</body>
+</html>

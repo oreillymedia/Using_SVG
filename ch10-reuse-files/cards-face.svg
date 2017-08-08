@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="270px" viewBox="0 0 267 180" >
+    <title>Playing Cards</title>
+    <style type="text/css">
+        svg:root {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        svg {
+            overflow: visible;
+        }
+        .card {
+            stroke: gray;
+            fill: linen;
+        }
+        .diamond, .heart {
+            fill: red;
+        }
+        .club, .spade {
+            fill: black;
+        } 
+    </style>
+    <defs>    
+        <svg height="20" width="20" viewBox="0 0 20 20"
+             id="diamond">  
+            <title>Diamond</title>
+            <path d="M3,10L10,0 17,10 10,20Z 
+                     M9,11L10,18V10H15L11,9 10,2V10H5Z" />
+        </svg>
+
+        <svg height="20" width="20" viewBox="0 0 20 20"
+             id="club">  
+            <title>Club</title>
+            <path d="M9,15.5A5,5 0 1 1 5.5, 7.5 
+                     A5,5 0 1 1 14.5, 7.5A5,5 0 1 1 11, 15.5
+                     Q11,20 13,20H7Q9,20 9,15.5Z" />
+        </svg>
+
+        <svg height="20" width="20" viewBox="0 0 20 20"
+             id="spade">
+            <title>Spade</title>
+            <path d="M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+                     S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z" />
+        </svg>
+
+        <svg height="20" width="20" viewBox="0 0 20 20"
+             id="heart">
+            <title>Heart</title>
+            <path d="M10,6 Q10,0 15,0T20,6Q20,10 15,14 
+                     T10,20Q10,18 5,14T0,6Q0,0 5,0T10,6Z" />
+        </svg>
+        
+        <rect id="card-front" class="card" 
+              width="120" height="160" rx="20" />
+    </defs>
+    
+    <svg width="140" height="180"
+         class="diamond" id="diamondQ">
+        <title>Queen of Diamonds</title>
+        <use xlink:href="#card-front" x="10" y="10" />
+        <text x="15" y="35">Q</text>
+        <text x="105" y="160">Q</text>
+        <use xlink:href="#diamond" x="105" y="20"/>
+        <use xlink:href="#diamond" x="15" y="140"/>
+        <image x="35" y="40" width="70" height="100"
+               xlink:href="Elizabeth_I.jpg" />
+    </svg>
+    
+    <svg x="130" width="140" height="180"
+         class="spade" id="spadeQ">
+        <title>Queen of Spades</title>
+        <use xlink:href="#card-front" x="10" y="10" />
+        <text x="15" y="35">Q</text>
+        <text x="105" y="160">Q</text>
+        <use xlink:href="#spade" x="105" y="20"/>
+        <use xlink:href="#spade" x="15" y="140"/>
+        <image x="35" y="40" width="70" height="100"
+               xlink:href="Marie-Antoinette.jpg" />
+    </svg>
+</svg>

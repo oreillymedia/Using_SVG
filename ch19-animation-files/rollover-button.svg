@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>    
+    <style>
+text {
+	alignment-baseline: middle;
+	text-anchor: middle;
+	font-family: Arial, sans-serif;
+	pointer-events: none;
+}
+rect {
+	stroke: #000;
+    stroke-width:3;
+    fill:yellow;
+}   
+a:hover {
+    cursor:pointer;
+}
+a:hover rect {
+	fill:#FFFFE0;
+}
+a:active text {
+    font-style:italic;
+}
+a:active rect {
+    stroke-width:5;
+}
+    </style>
+</defs>
+    <a xlink:href="#" transform="translate(50,50)">
+        <rect width="120" height="30" rx="10" ry="10" />
+        <text x="60" y="15">Button 1</text>
+    </a>
+</svg>

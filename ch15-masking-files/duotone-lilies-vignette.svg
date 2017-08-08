@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="4in" height="3in" viewBox="0 0 4 3">
+    <title>A Faded Photograph from a Masked Mask</title>
+    <radialGradient id="dark-corners" r="0.6">
+        <stop offset="0.7" stop-color="white" />
+        <stop offset="1" stop-color="#222" />
+    </radialGradient>
+    <mask id="vignette" maskContentUnits="objectBoundingBox">
+         <rect width="1" height="1" fill="url(#dark-corners)"/>
+    </mask>
+    <mask id="photo-mask">
+         <image xlink:href="lilies-large.jpg" width="4" height="3"
+                mask="url(#vignette)" />
+    </mask>
+    <g>
+        <rect width="4" height="3" fill="#402020"/> 
+        <rect width="4" height="3" fill="#FFC480" 
+              mask="url(#photo-mask)"/>
+    </g>
+</svg>

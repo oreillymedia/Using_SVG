@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     viewBox="0 0 550 200">
+    <title>Deadpool—Comic Book text</title>
+    <style>
+@font-face {
+    font-family: 'SequentialistBB';
+    src: url('fonts/SequentialistBB.woff2') format('woff2'),
+         url('fonts/SequentialistBB.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'SequentialistBB';
+    src: url('fonts/SequentialistBB-italic.woff2') format('woff2'),
+         url('fonts/SequentialistBB-italic.woff') format('woff');
+    font-style: italic;
+    font-weight: 400;
+}
+path { 
+    fill: #fff; 
+    stroke: #000; 
+    stroke-width: 2;
+}
+text { 
+    font-family: SequentialistBB, 
+                 Papyrus-condensed, Impact, 
+                 sans-serif-condensed, sans-serif; 
+    font-stretch: condensed;
+    font-size: 36px;
+}
+.shatner {
+    font-style: italic;
+    font-weight: bolder;
+    font-size: 40px;
+}
+    </style>
+    <path d="M131.6,121.2c-13.8-0.2-12.5-25.6-28.9-30.7c-12-3.7-23,7.9-29,18.9
+c-4.7,8.5-8.5,17.5-11.6,26.7c-1.1-12.6,2.7-24.7,8.3-36c2.4-4.7,6.2-9.2,10.3-12.6c6.9-5.6,13.9-8.2,22.8-8.7
+c6.8-0.4,13.9-0.2,19.8,3.1c5.9,3.3,10.1,10.5,7.9,17c4.2,1.8,8.6-2.5,9.9-6.9c1.4-4.3,2.4-8.5,4.9-12.3c4.1-6.2,11.7-7.4,19.1-7.2
+c8.5,0.2,17.1,0.5,25.6,0.7c4.3-8.8,13.7-19.8,22.5-24c17.1-8.2,35.2-7.2,53.6-11.5c15.3-3.5,11.3-5.3,26.6-8.8
+c12.9-3,34.2-5.2,48.9-5.4c8.2-0.2,25.5,2.5,33.4,4.7c6.3,1.8,13.9,1,20.3,2.1c7.2,1.2,13.1,4.3,20.5,4.6c11.2,0.6,23.4,0,33.7,4.3
+c10.4,4.3,21.5,17.2,21.4,16.6c4.2,6.6,6.3,13.4,11.1,20.5c5.4,8,7.9,30,5.3,40.3c-3.8,14.6-15.2,14.4-29.5,19.1
+c-18.3,6.1-20.3,6.1-39.4,9.2c-11.3,1.8-25.6,8.3-40,9.1c-24.1,1.2-49.4,3.6-68.8,3.6c-16.7,0-30.9-0.4-50.8-1.8
+c-16-2.6-27.1-4.8-41.4-10.8c-4.1-1.7-8.2-3.5-11.2-6.8c-2.9-3.2-15.6-24.2-17.8-28c-4.7-8-6.5-7.9-20.6-12.6
+c-2.6-0.9-5.4-1.5-8.1-1c-2,0.4-3.6,2-5.6,2.7C140.4,104.6,142.4,117.5,131.6,121.2z"/>
+    <text x="220" y="80" dy="0 0 -5 5 5 0 0 -5 5 0 0 0 -3 5 0 3 -3 -3 3 3 -2">
+        …TALKING… LIKE
+        <tspan x="250" y="120" class="shatner">SHATNER…</tspan>
+    </text>
+</svg>

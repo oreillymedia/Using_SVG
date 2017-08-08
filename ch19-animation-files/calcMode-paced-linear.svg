@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400" height="360" viewBox="0 0 100 90"
+     onclick="this.pauseAnimations()">
+    <title>Paced vs Normal Animation Timing</title>
+    <defs>
+        <polygon id="route" points="0,30 40,0 80,30"
+                 fill="none" stroke="darkSlateBlue" 
+                 stroke-linecap="round"
+                 stroke-dasharray="3 2" stroke-dashoffset="-1"/>
+        <polygon id="car" points="0,0 -2,-2 4,0 -2,2"
+                 fill="darkRed" stroke="tomato"
+                 stroke-width="0.5" />
+    </defs>
+    <style>
+        text {
+            fill: darkSlateBlue;
+            font: 6px sans-serif;
+        }
+        text[role="heading"] {
+            fill: #264;
+            font: 8px Consolos, monospace;
+        }
+    </style>
+    <g transform="translate(5,5)">
+        <use xlink:href="#route"/>
+        <text x="18" y="15" text-anchor="end">3s</text>
+        <text x="62" y="15" text-anchor="start">3s</text>
+        <text x="40" y="30" dy="1em" text-anchor="middle">3s</text>
+        <use xlink:href="#car">
+            <animateMotion values="0,30;40,0;80,30;0,30"
+                           rotate="auto"
+                           dur="9s" repeatCount="indefinite"
+                           calcMode="linear"/>
+        </use>
+        <text x="90" y="5" text-anchor="end" 
+              role="heading">linear</text>
+    </g>
+    <g transform="translate(5,50)">
+        <use xlink:href="#route"/>
+        <text x="18" y="15" text-anchor="end">2.5s</text>
+        <text x="62" y="15" text-anchor="start">2.5s</text>
+        <text x="40" y="30" dy="1em" text-anchor="middle">4s</text>
+        <use xlink:href="#car">
+            <animateMotion values="0,30;40,0;80,30;0,30"
+                           rotate="auto"
+                           dur="9s" repeatCount="indefinite"
+                           calcMode="paced"/>
+        </use>
+        <text x="90" y="5" text-anchor="end" 
+              role="heading">paced</text>
+    </g>
+</svg>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="100%" height="100%">
+    <desc></desc>
+    <defs>
+        <animate 
+            attributeName="r" 
+            attributeType="XML" 
+            values="0;100;0"
+            dur="3s" xlink:href="#ball" 
+            repeatCount="indefinite" 
+            id="ballGrow"/>
+        <animate 
+            attributeName="r" 
+            attributeType="XML" 
+            values="0;100;0"
+            dur="3s" xlink:href="#ball2" 
+            repeatDur="10s" 
+            id="ball2Grow"/>
+        <animate 
+            attributeName="r" 
+            attributeType="XML" 
+            values="0;100;0"
+            dur="3s" xlink:href="#ball3"
+            repeatCount="2"
+            repeatDur="10s" 
+            id="ball3Grow"/>
+        <animate 
+            attributeName="r" 
+            attributeType="XML" 
+            values="0;100;0"
+            xlink:href="#ball4"
+            repeatCount="indefinite"
+            repeatDur="18s"
+            end="ball4.click"
+            begin="0s"
+            dur="3s"
+            id="ball4Grow"/>
+    </defs>
+    <g alignment-baseline="baseline"></g>
+    <circle id="ball" r="10" cx="100" cy="100" fill="blue"/>
+    <circle id="ball2" r="10" cx="300" cy="100" fill="red"/>
+    <circle id="ball3" r="10" cx="500" cy="100" fill="green"/>
+    <circle id="ball4" r="10" cx="700" cy="100" fill="yellow"/>
+</svg>

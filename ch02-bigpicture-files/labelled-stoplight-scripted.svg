@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="320px" width="400px" >
+    <title>Labelled Animated Stoplight</title>
+    <defs>
+        <circle id="light" cx="70" r="30" />
+        <!-- Gradient definitions omitted
+ifdef::unicorns[]
+-->
+        <circle id="light" cx="70" r="30" />
+        <radialGradient id="red-light-on" fx="0.45" fy="0.4">
+           <stop stop-color="orange" offset="0.1"/>
+           <stop stop-color="red" offset="0.8"/>
+           <stop stop-color="brown" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="red-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="maroon" offset="0"/>
+            <stop stop-color="#220000" offset="0.7"/>
+            <stop stop-color="black" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="yellow-light-on" fx="0.45" fy="0.4">
+            <stop stop-color="yellow" offset="0.1"/>
+            <stop stop-color="orange" offset="0.6"/>
+            <stop stop-color="darkOrange" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="yellow-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="#A06000" offset="0"/>
+            <stop stop-color="#804000" offset="0.7"/>
+            <stop stop-color="#502000" offset="1"/>
+        </radialGradient>
+        <radialGradient id="green-light-on" fx="0.45" fy="0.4">
+            <stop stop-color="#88FF00" offset="0.1"/>
+            <stop stop-color="forestGreen" offset="0.7"/>
+            <stop stop-color="darkGreen" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="green-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="#007000" offset="0"/>
+            <stop stop-color="#004000" offset="0.6"/>
+            <stop stop-color="#001000" offset="1.0"/>
+        </radialGradient>
+        <linearGradient id="metal" spreadMethod="repeat"
+                        gradientTransform="scale(0.7) rotate(75)">
+            <stop stop-color="#808080" offset="0"/>
+            <stop stop-color="#404040" offset="0.25"/>
+            <stop stop-color="#C0C0C0" offset="0.35"/>
+            <stop stop-color="#808080" offset="0.5"/>
+            <stop stop-color="#E0E0E0" offset="0.7"/>
+            <stop stop-color="#606060" offset="0.75"/>
+            <stop stop-color="#A0A0A0" offset="0.9"/>
+            <stop stop-color="#808080" offset="1"/>
+        </linearGradient>
+<!-- 
+endif::unicorns[]
+        -->
+    </defs>
+    <style type="text/css">
+        text {
+            font-size: 60px; 
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+    </style>
+    <rect x="20" y="20" width="100" height="280" 
+          fill="url(#metal)" stroke="black" stroke-width="3" /> 
+    <g stroke="black" stroke-width="2">
+        <g class="red light">
+            <use xlink:href="#light" y="80" fill="url(#red-light-off)" />
+            <g class="lit" fill="url(#red-light-on)">
+                <use xlink:href="#light" y="80" />
+                <text x="140" y="100" 
+                      stroke="darkRed">STOP</text>
+            </g>
+        </g>
+        <g class="yellow light">
+            <use xlink:href="#light" y="160" fill="url(#yellow-light-off)" />
+            <g class="lit" visibility="hidden" fill="url(#yellow-light-on)" >
+                <use xlink:href="#light" y="160" />
+                <text x="140" y="180" 
+                      stroke="darkOrange">SLOW</text>
+            </g>
+        </g>
+        <g class="green light">
+            <use xlink:href="#light" y="240" fill="url(#green-light-off)" />
+            <g class="lit" visibility="hidden" fill="url(#green-light-on)" >
+                <use xlink:href="#light" y="240" />
+                <text x="140" y="260" 
+                      stroke="darkGreen">GO!</text>
+            </g>
+        </g>
+    </g>
+    <script><![CDATA[
+    (function(){/*Create a closure to encapsulate variables*/
+
+        var lights = ["green", "yellow", "red"];
+            /* the class names that distinguish each light */
+        var nLights = lights.length;
+            /* the number of lights */
+        var lit = 2; 
+            /* index within the lights array of the light
+               that is initially lit */
+
+        function cycle() {
+            lit = (lit + 1) % nLights; /* advance the cycle */
+
+            var litElement, selector;
+
+            for (var i=0; i < nLights; i++ ) {
+                selector = "." + lights[i] + " .lit";
+                /* selector of form ".red .lit" will select 
+                   the first element of class "lit" that is
+                   a child of an element with class "red" */
+
+                litElement = document.querySelector(selector);
+                litElement.style.setProperty("visibility",
+                    (i==lit)? "visible" : "hidden",
+                    null);
+                /* modifying the style property sets an inline style, 
+                   which over-rides the presentation attribute */
+            }
+        }
+
+        cycle()
+        setInterval(cycle, 3000); 
+            /* start a 3-second (3000ms) timer */
+
+    })() /* run the closure code */
+]]></script>
+</svg>

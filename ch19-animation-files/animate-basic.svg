@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="100%" height="100%" viewBox="-200 -200 400 400">
+    <title>Animated Logo</title>
+    <circle r="0" 
+            fill="darkOrchid" stroke="plum" stroke-width="16">
+        <animate attributeName="r" to="190" fill="freeze" 
+                 dur="5s" />
+    </circle>
+    <defs>
+        <path id="p" d="M0,125 A125,125 0 0,1 0,-125
+                               A125,125 0 0,1 0, 125Z" />
+    </defs>
+    <text id="t" dy="0.7ex" text-anchor="middle" 
+          font-size="48pt" font-family="Verdana, sans-serif"
+          fill="white" opacity="0">
+        <textPath id="tp" xlink:href="#p"
+                  startOffset="-20%">Circle Games</textPath></text>
+    <animate xlink:href="#tp" 
+             attributeName="startOffset" to="50%" fill="freeze" 
+             dur="4s" begin="5s" />
+    <animate xlink:href="#t" 
+             attributeName="opacity" to="1" fill="freeze" 
+             dur="2s" begin="5s" />
+</svg>

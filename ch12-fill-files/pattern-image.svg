@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="200px" height="200px" viewBox="0 0 200 200">
+    <title>Image Fill using a Pattern</title>
+    <pattern id="image-fill" width="1" height="1" 
+             viewBox="0 0 800 600"
+             preserveAspectRatio="xMidYMid slice">   <!--1-->
+        <image width="800" height="600" 
+               xlink:href="lake-ontario.jpg" />      <!--2-->
+    </pattern>
+    <symbol viewBox="0 0 20 20" id="club" 
+            style="overflow: visible">
+        <title>Club</title>                          <!--3-->
+        <path d="M9,15.5A5,5 0 1 1 5.5, 7.5 
+                 A5,5 0 1 1 14.5, 7.5A5,5 0 1 1 11, 15.5
+                 Q11,20 13,20H7Q9,20 9,15.5Z" />
+    </symbol>
+    <use xlink:href="#club" fill="url(#image-fill)" /> <!--4-->
+</svg>

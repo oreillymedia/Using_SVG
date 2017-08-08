@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="200px" viewBox="0 0 400 200">
+    <title>SVG Navigation Links</title>
+    <defs>
+        <path id="p" d="M30,220 C50,40 350,40 380,220" />
+    </defs>
+    <style>
+    svg {
+        background: #222;
+        margin: 0 auto;
+    }
+    text {
+        font: bold 28px Pacifico, sans-serif;
+        text-anchor: middle;
+        fill: orangeRed;           
+    }
+    svg a:link, svg a:visited {
+        text-decoration: underline;
+        fill: royalBlue;
+    }
+    svg a:focus {
+        outline: none;
+        stroke: lightSkyBlue;
+        stroke-width: 2px;
+        paint-order: stroke;
+    }
+    </style>
+    <style>
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+    </style>
+    <text x="200" y="30"
+          role="heading" aria-level="1"
+          >Welcome<tspan x="200" y="180">
+        to my website! </tspan></text>
+    <text role="navigation">
+        <textPath xlink:href="#p" startOffset="50%">
+            <a aria-current="page">Home</a>
+            <a xlink:href="/archives.html">Archives</a>
+            <a xlink:href="/about.html">About Me</a>
+        </textPath>
+    </text>
+</svg>

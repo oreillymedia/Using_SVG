@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="400px" viewBox="-27 -27 54 54" >  <!--1-->
+    <title>Rotations around the origin</title>
+    <style type="text/css">
+        use                 { fill: slateBlue; }
+        use:nth-of-type(2n) { fill: lightGreen; }
+        use:last-of-type    { stroke: darkSlateGray; }
+    </style>
+    <defs>
+        <path id="spade"
+              d="M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+                 S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z" />   <!--2-->
+    </defs>
+     
+    <use xlink:href="#spade" transform="rotate(30)"/>        <!--3-->
+    <use xlink:href="#spade" transform="rotate(60)"/> 
+    <use xlink:href="#spade" transform="rotate(90)"/> 
+    <use xlink:href="#spade" transform="rotate(120)"/>
+    <use xlink:href="#spade" transform="rotate(150)"/> 
+    <use xlink:href="#spade" transform="rotate(180)"/> 
+    <use xlink:href="#spade" transform="rotate(210)"/> 
+    <use xlink:href="#spade" transform="rotate(240)"/> 
+    <use xlink:href="#spade" transform="rotate(270)"/> 
+    <use xlink:href="#spade" transform="rotate(300)"/> 
+    <use xlink:href="#spade" transform="rotate(330)"/> 
+    <use xlink:href="#spade" />                              <!--4-->
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="260px" width="380px" viewBox="0 0 38 26">
+    <title>Linked Rings, with Gradients and Filters</title>
+    <defs>
+        <circle id="circle" r="10" cy="13"
+                stroke-width="4" fill="none"/>
+    </defs>
+    <radialGradient id="metal-ring" r="12.1" cx="0" cy="13"
+                    gradientUnits="userSpaceOnUse" >
+        <stop offset="0.6" stop-color="darkgoldenrod"/>
+        <stop offset="0.8" stop-color="gold"/>
+        <stop offset="1"   stop-color="darkgoldenrod"/>
+    </radialGradient>
+    <clipPath id="clip-top">
+        <rect width="100%" height="50%" />
+    </clipPath>
+    <mask id="half-ring" maskUnits="userSpaceOnUse">
+        <rect width="100%" height="100%" fill="#fff"/>
+        <g clip-path="url(#clip-top)">
+            <use xlink:href="#circle" x="13" stroke="black" />
+        </g>
+    </mask>
+    <rect width="100%" height="100%" fill="#222"/>
+    <g filter="drop-shadow(0 0 1.5px rgba(100%, 100%, 50%, 0.4))">
+        <use xlink:href="#circle" x="13" stroke="url(#metal-ring)" />
+        <g mask="url(#half-ring)">
+            <use xlink:href="#circle" x="25" stroke="url(#metal-ring)"/>
+        </g>
+    </g>
+</svg>

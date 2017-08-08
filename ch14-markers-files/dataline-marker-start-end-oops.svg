@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     width="4.3in" height="3in">
+    <title>First effort at Starting-Closing Horizontal Marker Lines</title>
+    <svg x="0.6in" y="0.5in" width="3.6in" height="2in"
+         viewBox="0 0 180 100"
+         style="overflow: visible; font: 10px sans-serif;">    <!--1-->
+        <linearGradient id="status" y1="100%" y2="0%" x2="0%"
+                        gradientUnits="userSpaceOnUse">        <!--2-->
+            <stop stop-color="limegreen" offset="0.4"/>
+            <stop stop-color="yellow"    offset="0.8"/>        <!--3-->
+            <stop stop-color="red"       offset="0.95"/>
+        </linearGradient>
+        <marker id="datapoint" overflow="visible">
+            <circle r="1" fill="none" stroke="skyBlue"
+                    stroke-width="0.7" />
+        </marker>
+        <marker id="opening" overflow="visible">
+            <line x2="100%" stroke="mediumOrchid" />
+            <circle r="1" fill="mediumOrchid" stroke="skyBlue"
+                    stroke-width="0.7" />
+        </marker>
+        <marker id="closing" overflow="visible">
+            <line x2="-100%" stroke="mediumBlue" />
+            <circle r="1" fill="mediumBlue" stroke="skyBlue"
+                    stroke-width="0.7" />
+        </marker>
+        
+        <rect stroke="black" fill="dimGray"
+              width="100%" height="100%" />
+        <g text-anchor="end" dominant-baseline="middle"
+           transform="translate(-2,0)">                        <!--4-->
+            <desc>Y-axis tick labels</desc>
+            <text y="100">0%</text>
+            <text y="80">20%</text>
+            <text y="60">40%</text>
+            <text y="40">60%</text>
+            <text y="20">80%</text>
+            <text y="0">100%</text>
+        </g>
+        <g text-anchor="middle">
+            <text x="50%" dy="-1em" font-size="12px"
+                  text-decoration="underline"
+                  >Status monitor</text>
+            <text x="50%" y="100%" dy="1em">Time</text>
+        </g>
+    
+        <polyline id="dataline"  
+                  style="stroke: url(#status); fill: none;
+                         stroke-linejoin: bevel;
+                         stroke-width: 2.5px;  
+                         marker-mid: url(#datapoint);
+                         marker-start: url(#opening);
+                         marker-end: url(#closing);" />            <!--5-->
+        
+    </svg>
+    <script><![CDATA[
+(function(){
+    var n = 19,
+        dx = 10,
+        maxY = 100;                                        //<6>
+        
+    var data = new Array(n),
+        points = new Array(n);
+    for (var i=0; i<n; i++) {
+        data[i] = [i, Math.random()];
+        points[i] = [i*dx, maxY * (1 - data[i][1])];       //<7>
+    }
+
+    var dataline = document.getElementById("dataline");
+    dataline.setAttribute("points", points.toString() );   //<8>
+})()    
+]]> </script>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Warning Icons</title>
+    <defs>
+        <path id="triangle" d="M10,4 18,18 2,18 Z"
+              stroke-linejoin="round" />                       <!--1-->
+        <g id="triangle-sign">
+            <use xlink:href="#triangle"
+                 fill="currentColor" 
+                 stroke="currentColor" stroke-width="4" />     <!--2-->
+            <use xlink:href="#triangle"
+                 fill="none"
+                 stroke="white" stroke-width="1" />
+        </g>
+    </defs>
+    
+    <symbol id="important" viewBox="0 0 20 20" overflow="visible">
+        <use xlink:href="#triangle-sign" />                    <!--3-->
+        <text text-anchor="middle" 
+              fill="white" stroke="none"
+              x="10" y="16" font-size="10">!</text>            <!--4-->
+    </symbol>
+    <rect x="5" y="5" width="40" height="40" fill="lightBlue" />
+    <use xlink:href="#important" color="indigo"
+         x="5" y="5" width="40" height="40" />                 <!--5-->
+    
+    <symbol id="electricity" viewBox="0 0 20 20" overflow="visible">
+        <use xlink:href="#triangle-sign" />
+        <polygon points="10.5,7.5 8,11.5 10.5,13 
+                         9.5,16.5 12,12.5 9.5,11"  
+                 fill="white" stroke="none" />                 <!--6-->
+    </symbol>
+    <rect x="55" y="5" width="40" height="40" fill="lightBlue" />
+    <use xlink:href="#electricity" color="indigo"
+         x="55" y="5" width="40" height="40" />
+    
+    <!-- and more, using similar coloring -->
+</svg>

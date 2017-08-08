@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Using slice and padding to scale inline SVG</title>
+    <style>
+/* page styles */
+body {
+    padding: 0.5em 2em;
+    font-family: sans-serif;
+    background-color: lightSteelBlue;
+    color: indigo;
+}
+svg  { background-color: plum; }
+figure {
+    margin: 0.5em 0;
+    padding: 4%;
+    border: gray thin solid;
+    background-color: white;
+}
+figcaption {
+    text-align: center;
+    font-style: italic;
+    margin-top: 0.5em;
+    margin-bottom: -0.3em;
+}
+
+/* aspect-ratio control styles */
+.sliced-svg { 
+    display: block;
+    width: 100%;
+    height: 1px;
+    box-sizing: content-box;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+}
+.sliced-svg.square {
+    padding-bottom: 100%;
+    padding-bottom: calc(100% - 1px);
+}
+.sliced-svg.ratio-2-1 {
+    padding-bottom: 50%;
+    padding-bottom: calc(50% - 1px);
+}
+    </style>
+</head>
+<body>
+    <h1>Symbols on the Slopes</h1>
+    <figure>
+        <svg class="sliced-svg ratio-2-1" viewBox="0,0 40,20" 
+             preserveAspectRatio="xMidYMin slice">
+            <title>Double Diamond</title>
+            <path fill="black"
+                  d="m3,10 l7,-10 l7,10 l-7,10 l-7,-10z
+               M20,0 m3,10 l7,-10 l7,10 l-7,10 l-7,-10z" />
+        </svg>
+        <figcaption>A double black diamond symbol indicates
+            an expert-level ski trail.
+        </figcaption>
+    </figure>
+    <p>Before you go skiing, make sure you know what the trail signs mean!</p>
+    <!--
+    <figure>
+        <svg class="sliced-svg square" viewBox="-10,-10 20,20" 
+             preserveAspectRatio="xMidYMin slice">
+            <title>Green Circle</title>
+            <circle r="9" fill="seaGreen" />
+        </svg>
+        <figcaption>A green circle marks beginner-friendly slopes.
+        </figcaption>
+    </figure><!-- -->
+</body>
+</html>

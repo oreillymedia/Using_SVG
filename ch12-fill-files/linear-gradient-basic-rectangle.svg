@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="200px" viewBox="0 0 400 200">
+    <title>Simple Linear Gradient</title>
+    <linearGradient id="green-gradient"
+                    x1="20%" y1="20%" x2="80%" y2="80%">
+        <stop stop-color="mediumSpringGreen" offset="0"/>
+        <stop stop-color="forestGreen" offset="0.3"/>
+        <stop stop-color="lightBlue" offset="1"/>
+    </linearGradient>
+    <style>
+        .vector, .normal {
+            stroke: crimson;
+        }
+        marker {
+            fill: crimson;
+            overflow: hidden;
+        }
+        .vector {
+            stroke-width: 5px;
+            marker-start: url(#base);
+            marker-end: url(#point);
+        }
+        .normal {
+            stroke-width: 2px;
+            stroke-dasharray: 5px 3px;
+        }
+    </style>
+    <marker id="base" orient="auto" viewBox="0 -1.5 3 3">
+        <circle r="1.5" />
+    </marker>
+    <marker id="point" orient="auto" viewBox="-3 -1.5 3 3">
+        <path d="M0,-0.5 V0.5 L-3,1.5 -3,-1.5 Z"/>
+    </marker>
+    <rect width="100%" height="100%" ry="10%"
+          fill="url(#green-gradient)" />
+    <svg width="400px" height="200px" 
+         viewBox="0 0 200 200" preserveAspectRatio="none">
+        <path class="normal" d="M-200,-200 L200,200"
+              transform="translate(40,40) rotate(90)"/>
+        <path class="normal" d="M-200,-200 L200,200"
+              transform="translate(76,76) rotate(90)"/>
+        <path class="normal" d="M-200,-200 L200,200"
+              transform="translate(160,160) rotate(90)"/>
+        <line class="vector" 
+              x1="20%" y1="20%" x2="80%" y2="80%" />
+    </svg>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     width="4in" height="5px">
+    <title>Dashed SVG Lines</title> 
+    <style type="text/css">
+        svg {
+            fill: none;
+            stroke-width: 3px;
+            font-size: 16px;
+        }
+        .B {
+            stroke: blueViolet;
+            stroke-dasharray: 1em 10px 1em;
+        }
+    </style>
+    <line class="B" x2="100%" transform="translate(0,2.5)" />
+</svg>

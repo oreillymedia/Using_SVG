@@ -1,0 +1,30 @@
+body {
+    font-family: serif;
+    background-color: #CDF;
+}
+figure {
+    padding: 0;
+    margin: 0;
+}
+.icon {
+    width: 1em;
+    height: 1em;
+}
+.icon.big {
+    width: 4em;
+    height: 4em;
+}
+.icon.float {
+    display: block;
+    float: left;
+    clear: left;
+    margin: 0 0.5em 0.5em 0;
+    padding: 0.2em;
+    border: gray solid thin;
+    background-color: white;
+}
+.icon.inline {
+    display: inline;
+    vertical-align: middle;
+    padding: 0.1em;
+}

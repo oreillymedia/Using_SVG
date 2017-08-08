@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stoplight Drawn Using CSS Styles</title>
+    <style>
+        figure {
+            margin: 0;
+            padding: 0;
+        }
+        .stoplight-frame {
+            margin: 20px;
+            width: 100px;
+            height: 280px;
+            background-color: blue;
+            border: solid black 3px;
+            position: relative;
+        }
+        .stoplight-light {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            border: solid black 2px;
+            position: absolute;
+            left: 20px;
+        }
+        .stoplight-light.red {
+            background-color: red;
+            top: 30px;
+        }
+        .stoplight-light.yellow {
+            background-color: yellow;
+            top: 110px;
+        }
+        .stoplight-light.green {
+            background-color: #40CC40;
+            top: 190px;
+        }
+    </style>
+</head>
+<body>
+    <figure>
+        <div class="stoplight-frame" >
+            <div class="stoplight-light red" ></div>
+            <div class="stoplight-light yellow" ></div>
+            <div class="stoplight-light green" ></div>
+        </div>
+    </figure>
+</body>
+</html>

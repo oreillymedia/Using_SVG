@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     width="4in" height="2in" viewBox="-35 -10 240 120">   <!--1-->
+    <title>DataPoint Markers on a Data Line</title>
+    <path stroke="lightSkyBlue"
+          d="M0, 0H200 M0,20H200 M0,40H200
+             M0,60H200 M0,80H200 M0,100H200"/>             <!--2-->
+    <g text-anchor="end"
+       style="font: 8px sans-serif; fill: currentColor" >
+        <desc>Y-axis tick labels</desc>
+        <text x="-7" dy="0.7ex" y="100">0%</text>
+        <text x="-7" dy="0.7ex" y="80">20%</text>
+        <text x="-7" dy="0.7ex" y="60">40%</text>
+        <text x="-7" dy="0.7ex" y="40">60%</text>
+        <text x="-7" dy="0.7ex" y="20">80%</text>
+        <text x="-7" dy="0.7ex" y="0">100%</text>
+    </g>    
+
+    <style>
+        .dataline {
+            fill: none;
+            stroke: currentColor;
+            stroke-linejoin: bevel;
+            stroke-width: 2;
+            paint-order: markers stroke;
+        }
+        .data-marker {
+            stroke: currentColor;
+            stroke-width: 1.5px;
+            fill: currentColor;
+            fill-opacity: 0.5;
+        }
+    </style>
+    <marker id="datapoint-1" overflow="visible" markerUnits="userSpaceOnUse">
+        <circle class="data-marker" r="2.5" color="tomato" />   <!--3-->
+    </marker>
+    <polyline id="dataline-1" class="dataline" color="darkRed"
+              style="marker: url(#datapoint-1)" />              <!--4-->
+    
+    <marker id="datapoint-2" overflow="visible" markerUnits="userSpaceOnUse">
+        <polygon class="data-marker" points="-3,0 0,3 3,0 0,-3"
+                 color="mediumSeaGreen" />                      <!--5-->
+    </marker>
+    <polyline id="dataline-2" class="dataline" color="seagreen" 
+              style="marker: url(#datapoint-2)" />
+    <script><![CDATA[
+(function(){
+    var datalines = ["dataline-1", "dataline-2"],
+        nLines = datalines.length,
+        nPoints = 14,
+        dx = 15,
+        maxY = 100;                                            //<6>
+        
+    for (var l=0; l<nLines; l++ ) {
+        var data = new Array(nPoints),
+            points = new Array(nPoints);
+        for (var i=0; i<nPoints; i++) {
+            data[i] = [i, Math.random()];
+            points[i] = [i*dx, maxY * (1 - data[i][1])];       //<7>
+        }
+
+        document.getElementById(datalines[l])
+                .setAttribute("points", points.toString() );   //<8>
+    }
+})()    
+]]> </script>
+</svg>

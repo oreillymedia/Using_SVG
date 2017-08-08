@@ -1,0 +1,18 @@
+body {
+    background-color: lightSkyBlue;
+    margin: 0; padding: 0;
+}
+svg {
+    display: block;
+    margin: 0.5em auto;
+    overflow: hidden;
+    border: thin solid gray;
+}
+.target {
+    stroke: tomato;
+    fill: none;
+    stroke-width: 5px;
+}
+.backdrop {
+    fill: #324;
+}

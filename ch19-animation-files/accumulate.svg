@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     viewBox="-80 -80 160 160" width="4in">
+    <title>Accumulative Animations</title>
+    <circle r="75" fill="crimson">
+        <animate attributeName="r"
+                 from="0"
+                 by="10"
+                 calcMode="spline"
+                 keyTimes="0;1"
+                 keySplines="0.1,1 0.9,0"
+                 dur="1s"
+                 repeatCount="7.5"
+                 accumulate="sum" />
+    </circle>
+</svg>

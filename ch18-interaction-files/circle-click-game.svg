@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     id="gameboard" width="8in" height="6in">
+    <title>Confetti Collector Game</title>
+    <desc>
+        Click or tap as many circles as you can
+        before the timer runs out.
+    </desc>
+    <style>
+        #gameboard {
+            max-height: 100vh;
+            max-width: 100%;
+            background: #224;
+        }
+        .count {
+            fill: lightYellow;
+            font: 20px Consolas, monospace;
+        }
+        #timer, #scoreboard {
+            font-size: 300%;
+            transition: font-size 1s;
+        }
+        .clicked {
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .game-over #scoreboard {
+            font-size: 800%;
+            animation: flash-color 0.5s 16 alternate;
+        }
+        @keyframes flash-color {
+            to { fill: tomato; }
+        }
+        .game-over .clickable { fill: black; }
+        .game-over .clicked {
+            opacity: 1;
+            filter: drop-shadow(0 0 3px gold);
+        }
+    </style>
+    <text class="count" role="timer" aria-atomic="true"
+          x="100%" y="0.9em" text-anchor="end"
+          >Time remaining:<tspan x="0">
+        </tspan><tspan id="timer" x="100%" dy="0.9em"
+                       >00.0</tspan>s
+    </text>
+    <text class="count" role="status" aria-atomic="true"
+          y="100%" dy="-0.1em" text-anchor="start"
+          ><tspan id="scoreboard">0</tspan> collected
+    </text>
+    <script xlink:href="circle-click-game.js" />
+</svg>

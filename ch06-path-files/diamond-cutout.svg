@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     height="20px" width="20px" viewBox="0 0 20 20">
+    <title>Diamond</title>
+    <path fill="red"
+          d="M3,10 L10,0 17,10 10,20Z 
+             M9,11 L10,18 10,10 15,10 11,9 10,2 10,10 5,10 Z" />
+</svg>

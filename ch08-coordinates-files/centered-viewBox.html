@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Default and centered SVG coordinate systems</title>
+    <link rel="stylesheet" href="centered-viewBox.css">      <!--1-->
+</head>
+<body>
+    <svg width="400px" height="200px">                       <!--2-->
+        <title>Default coordinates</title>
+        <g id="content">
+            <rect class="backdrop" width="100%" height="100%" /> <!--3-->
+            <g class="target">
+                <circle r="10" />                            <!--4-->
+                <circle r="30" />
+                <circle r="50" />
+                <circle r="70" />
+                <circle r="90" />
+            </g>
+        </g>
+    </svg>
+    <svg width="400px" height="200px" 
+         viewBox="-200 -100 400 200">                        <!--5-->
+        <title>Centered coordinates</title>
+        <use xlink:href="#content" />                        <!--6-->
+    </svg>
+</body>
+</html>

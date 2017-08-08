@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" height="10cm" width="10cm" class="initialized">
+    <title>Line Art</title>
+    <style>
+        line {
+            stroke: purple;
+        }
+        svg {
+            margin: 1cm;
+        }
+    </style>
+    <script><![CDATA[
+(function(){
+        var size = 10;
+        var doc = document;
+        var svg = doc.documentElement;
+        var svgNS = svg.namespaceURI;
+
+        if (!(svg.classList && svg.classList.contains("initialized") ) ) 
+            draw();
+
+        function draw(){
+            var l1, l2;
+            for (var i = 0; i <= size; i++) {
+                l1 = doc.createElementNS(svgNS, "line");
+                l1.setAttribute("x1", i + "cm" );
+                l1.setAttribute("x2", size + "cm" );
+                l1.setAttribute("y2", i + "cm" );
+                svg.insertBefore(l1, null);
+
+                l2 = doc.createElementNS(svgNS, "line");
+                l2.setAttribute("y1", i + "cm" );
+                l2.setAttribute("x2", i + "cm" );
+                l2.setAttribute("y2", size + "cm" );
+                svg.insertBefore(l2, null);
+            }
+            if (svg.classList)
+                svg.classList.add("initialized");
+        }
+})()
+]]></script>
+    <line x1="0cm" x2="10cm" y2="0cm"/><line y1="0cm" x2="0cm" y2="10cm"/>
+    <line x1="1cm" x2="10cm" y2="1cm"/><line y1="1cm" x2="1cm" y2="10cm"/>
+    <line x1="2cm" x2="10cm" y2="2cm"/><line y1="2cm" x2="2cm" y2="10cm"/>
+    <line x1="3cm" x2="10cm" y2="3cm"/><line y1="3cm" x2="3cm" y2="10cm"/>
+    <line x1="4cm" x2="10cm" y2="4cm"/><line y1="4cm" x2="4cm" y2="10cm"/>
+    <line x1="5cm" x2="10cm" y2="5cm"/><line y1="5cm" x2="5cm" y2="10cm"/>
+    <line x1="6cm" x2="10cm" y2="6cm"/><line y1="6cm" x2="6cm" y2="10cm"/>
+    <line x1="7cm" x2="10cm" y2="7cm"/><line y1="7cm" x2="7cm" y2="10cm"/>
+    <line x1="8cm" x2="10cm" y2="8cm"/><line y1="8cm" x2="8cm" y2="10cm"/>
+    <line x1="9cm" x2="10cm" y2="9cm"/><line y1="9cm" x2="9cm" y2="10cm"/>
+    <line x1="10cm" x2="10cm" y2="10cm"/><line y1="10cm" x2="10cm" y2="10cm"/>
+</svg>

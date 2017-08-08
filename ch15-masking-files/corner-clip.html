@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>Object Bounding-Box Clipping paths, 
+        on SVG and HTML elements</title>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Fugaz+One');
+svg {
+    display: block;
+}
+body {
+    background-color: #432;
+    margin: 0.5em;
+}
+header {
+    background: darkSeaGreen;
+    position: relative;
+    z-index: 0;
+    padding: 0.1rem;
+}
+header::before {
+    background: indigo;
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    top: 0.5rem; bottom: 0.5rem;
+    left: 1.5rem; right: 1.5rem;
+}
+h1 {
+    background: plum;
+    color: indigo;
+    text-align: center;
+    padding: 10%;
+    margin: 2rem 4rem;
+    font-size: 300%;
+    font-family: "Fugaz One", sans-serif;
+    font-weight: normal;
+}
+header, header::before, h1, image {
+    clip-path: polygon(0 30px, 30px 0, 
+        calc(100% - 30px) 0, 100% 30px,
+        100% calc(100% - 30px), calc(100% - 30px) 100%,
+        30px 100%, 0 calc(100% - 30px) );
+}
+</style></head>
+<body>
+<header>
+  <h1>Polygon Clipping Paths</h1>
+</header>
+<svg viewBox="0 0 400 300" role="img"
+     aria-label="Blue and white violets,
+                 in a garden filled with autumn leaves">
+    <image xlink:href="violets.jpg" width="100%" height="100%"
+           preserveAspectRatio="xMidYMid slice" />
+</svg>
+</body>
+</html>

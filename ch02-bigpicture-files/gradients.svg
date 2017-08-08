@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="0px" width="0px" >
+    <title>Gradients For Use in Stoplight Examples</title>
+    <defs>        
+        <radialGradient id="red-light-on" fx="0.45" fy="0.4">
+           <stop stop-color="orange" offset="0.1"/>
+           <stop stop-color="red" offset="0.8"/>
+           <stop stop-color="brown" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="red-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="maroon" offset="0"/>
+            <stop stop-color="#220000" offset="0.7"/>
+            <stop stop-color="black" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="yellow-light-on" fx="0.45" fy="0.4">
+            <stop stop-color="yellow" offset="0.1"/>
+            <stop stop-color="orange" offset="0.6"/>
+            <stop stop-color="darkOrange" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="yellow-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="#A06000" offset="0"/>
+            <stop stop-color="#804000" offset="0.7"/>
+            <stop stop-color="#502000" offset="1"/>
+        </radialGradient>
+        <radialGradient id="green-light-on" fx="0.45" fy="0.4">
+            <stop stop-color="#88FF00" offset="0.1"/>
+            <stop stop-color="forestGreen" offset="0.7"/>
+            <stop stop-color="darkGreen" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="green-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="#007000" offset="0"/>
+            <stop stop-color="#004000" offset="0.6"/>
+            <stop stop-color="#001000" offset="1.0"/>
+        </radialGradient>
+        <linearGradient id="metal" spreadMethod="repeat"
+                        gradientTransform="scale(0.7) rotate(75)">
+            <stop stop-color="#808080" offset="0"/>
+            <stop stop-color="#404040" offset="0.25"/>
+            <stop stop-color="#C0C0C0" offset="0.35"/>
+            <stop stop-color="#808080" offset="0.5"/>
+            <stop stop-color="#E0E0E0" offset="0.7"/>
+            <stop stop-color="#606060" offset="0.75"/>
+            <stop stop-color="#A0A0A0" offset="0.9"/>
+            <stop stop-color="#808080" offset="1"/>
+        </linearGradient>
+    </defs>
+</svg>

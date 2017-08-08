@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     viewBox="0 0 260 310" width="4in" height="4.8in">
+  <title>Fill-rule shapes, opened up slightly</title>
+  <style>
+.shape {
+  fill: lightSkyBlue;
+  stroke: darkRed;
+  stroke-width: 4;
+}
+text {
+  fill: indigo;
+  font: bold 16px Segoe UI, sans-serif;
+}
+  </style>
+  <path class="shape"
+        d="M 10,5 
+           l 100,10 -80,80 0,-60 80,80 -100,10 z" />
+  <text x="10" y="144">crossing</text>
+  
+  <path class="shape"
+        d="M 150,5 
+           l 100,10 -50,45 -30,-25 0,60 30,-25 50,45 -100,10 z" />
+  <text x="150" y="144">reversing</text>
+  
+  <path class="shape"
+        d="M 10,160 
+           l 100,10 -40,50 40,50 -100,10 z
+           m 50,60 
+           l-30,30 0,-60 z" />
+  <text x="10" y="304">same-direction</text>
+    
+  <path class="shape"
+        d="M 150,160 
+           l 100,10 -40,50 40,50 -100,10 z
+           m 50,60 
+           l -30,-30 0,60 z" />
+  <text x="150" y="304">opposite</text>
+</svg>

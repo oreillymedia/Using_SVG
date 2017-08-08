@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Including SVG Objects within HTML</title>
+    <style>
+header {
+    height: 10em;
+    background: #444;
+}
+header h1 {
+    color: red;
+    text-shadow: yellow 0 0 4px, 
+                 orange 0 0 2px;
+    font-size: 400%;
+}
+header object {
+    height: 8em;
+    width: 3em;
+    float: left;
+    margin: 1em 2em;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <object data="animated-stoplight-scripted.svg"
+                type="image/svg+xml" >
+        </object>
+        <h1>Tony’s Towing</h1>
+    </header>
+    <main>
+        <p>Main text goes here, but <em>WOW</em> look at that image in the header!</p>
+    </main>
+</body>
+</html>

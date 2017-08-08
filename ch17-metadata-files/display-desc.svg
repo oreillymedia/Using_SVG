@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 400 400">
+    <title>Displaying Titles and Descs 
+        with Scripting and foreignObject</title>
+    <style type="text/css">
+#display {
+    background: white;
+    padding: 1em;
+    box-sizing: border-box;
+    overflow: auto;
+}        
+    </style>
+    <defs>
+        <g id="gem">
+            <polygon points="0,25 35,0 65,0 100,25 50,100" />
+            <g fill="white" fill-opacity="0.3">
+                <polygon points="0,25 30,30 50,100" />
+                <polygon points="100,25 30,70 50,100" />
+                <polygon points="28,5 35,0 65,0 72,5 50,10" />
+                <polygon points="50,10 30,30 50,35 70,30" />
+                <polygon points="72,5 70,30 100,25" />
+            </g>
+            <g stroke="white" stroke-opacity="0.5" fill-opacity="0.5">
+                <polygon points="100,25 70,30 50,100" />
+                <polygon points="28,5 30,30 0,25" />
+            </g>
+        </g>
+    </defs>
+    <linearGradient id="background" y2="100%">
+        <stop offset="0" stop-color="#446" />
+        <stop offset="0.3" stop-color="#333" />
+        <stop offset="0.8" stop-color="#333" />
+        <stop offset="1" stop-color="#456" />
+    </linearGradient>
+    <rect fill="url(#background)" width="100%" height="100%" />
+    <g>
+        <use xlink:href="#gem" x="50" y="10" fill="red" 
+             class="gem" tabindex="0" role="img">
+            <title>Red</title>
+            <desc>
+                <p xmlns="http://www.w3.org/1999/xhtml">
+                <span style="color:red">Red</span> is the color 
+                of blood, rubies and strawberries. It is the color
+                of the wavelength of light from approximately 
+                620–740nm on the electromagnetic spectrum.
+                </p>
+            </desc>
+        </use>
+        <use xlink:href="#gem" x="150" y="10" fill="limeGreen" 
+             class="gem" tabindex="0" role="img">
+            <title>Green</title>
+            <desc>
+                <p xmlns="http://www.w3.org/1999/xhtml">
+                <span style="color:green">Green</span> is the color 
+                of growing grass and leaves, of emeralds, and of 
+                jade. In the continuum of colors of visible light, 
+                it is located between yellow and blue. It is the 
+                color of the wavelength of light from approximately
+                520–570nm on the electromagnetic spectrum.
+                </p>
+            </desc>
+        </use>
+        <use xlink:href="#gem" x="250" y="10" fill="blue" 
+             class="gem" tabindex="0" role="img">
+            <title>Blue</title>
+            <desc>
+                <p xmlns="http://www.w3.org/1999/xhtml">
+                <span style="color:blue">Blue</span> is the colour 
+                of the clear sky and the deep sea. On the optical 
+                spectrum, blue is located between violet and green. 
+                It is the color of the wavelength of light from 
+                approximately 450–495nm on the electromagnetic 
+                spectrum.
+                </p>
+            </desc>
+        </use>
+    </g>
+    <foreignObject width="380" height="260" x="10" y="120" id="fo">
+        <div xmlns="http://www.w3.org/1999/xhtml" id="display"
+             style="max-height: 260px"></div>
+    </foreignObject>
+    <script>//<![CDATA[
+window.onload=function(evt){
+    var gems = document.getElementsByClassName("gem"),
+        fo = document.getElementById("fo"),
+        display = document.getElementById("display"),
+        displayedElement;
+
+    for (var index=0; index < gems.length; index++){
+        var gem = gems.item(index);
+        gem.addEventListener("mouseover", showTitle);
+        gem.addEventListener("focus", showTitle);
+        gem.addEventListener("touchStart", showTitle);
+    };
+    function showTitle(evt){
+        var element = evt.currentTarget,
+            title = element.getElementsByTagName("title")[0],
+            desc = element.getElementsByTagName("desc")[0];
+        if (displayedElement) {
+            displayedElement.removeAttribute("aria-describedby");
+        }
+
+        display.innerHTML = "<h2>"+title.textContent+"</h2>";
+        display.appendChild( desc.firstElementChild.cloneNode(true) );
+        displayedElement = element;
+        element.setAttribute("aria-describedby", "display");
+        forceRepaint();
+    }
+    function forceRepaint() {
+        fo.style.width = fo.style.width;
+    }
+};
+//]]></script>
+</svg>

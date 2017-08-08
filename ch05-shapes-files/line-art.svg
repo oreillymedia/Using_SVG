@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     height="10cm" width="10cm">
+    <title>Line Art</title>
+    <style type="text/css">
+        line {
+            stroke: purple;
+        }
+        svg {
+            margin: 1cm;
+        }
+    </style>
+    <script><![CDATA[
+(function(){
+        var size = 10;
+        var doc = document;
+        var svg = doc.documentElement;
+        var svgNS = svg.namespaceURI;
+
+        if (!(svg.classList && svg.classList.contains("initialized") ) ) 
+            draw();
+
+        function draw(){
+            var l1, l2;
+            for (var i = 0; i <= size; i++) {
+                l1 = doc.createElementNS(svgNS, "line");
+                l1.setAttribute("x1", i + "cm" );
+                l1.setAttribute("x2", size + "cm" );    
+                l1.setAttribute("y2", i + "cm" );
+                svg.appendChild(l1);
+
+                l2 = doc.createElementNS(svgNS, "line");
+                l2.setAttribute("y1", i + "cm" );
+                l2.setAttribute("x2", i + "cm" );
+                l2.setAttribute("y2", size + "cm" );
+                svg.appendChild(l2);
+            }
+            if (svg.classList)
+                svg.classList.add("initialized");        
+        }
+})()
+]]></script>
+</svg>

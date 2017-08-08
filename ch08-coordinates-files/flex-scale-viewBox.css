@@ -1,0 +1,22 @@
+html, body {
+    height: 100%;
+}
+.wrapper { 
+    position: relative;
+    height: 10em; 
+    width: 10em;
+    resize: both;
+    overflow: hidden;
+    border: thin solid;
+}
+svg { 
+    display: block;
+    position: absolute;
+    height: 90%;
+    width: 90%;
+    top: 5%;
+    left: 5%;
+
+    background-color: darkSeaGreen;
+}
+path { fill: darkslateblue; }

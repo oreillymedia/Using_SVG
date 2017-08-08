@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="100px" height="50px"
+     viewBox="0 0 100 50" color="royalBlue">
+    <title>Warning Icons</title>
+    <use xlink:href="warning-icons.svg#important" 
+         x="5" y="5" width="40" height="40" />    
+    <use xlink:href="warning-icons.svg#electricity" 
+         x="55" y="5" width="40" height="40" />
+</svg>

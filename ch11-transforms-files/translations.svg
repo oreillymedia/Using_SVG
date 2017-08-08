@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="400px" viewBox="0 0 40 40" >      <!--1-->
+    <title>Translation transformations</title>
+    <style type="text/css">
+        use {
+            fill: darkGreen;
+            stroke: seaGreen;
+            stroke-width: 0.2;
+        }
+        use:nth-of-type(2n) {
+            fill: lightGreen;                                <!--2-->
+        }
+    </style>
+    <defs>
+        <path id="club"
+              d="M9,15.5A5,5 0 1 1 5.5, 7.5 
+                 A5,5 0 1 1 14.5, 7.5A5,5 0 1 1 11, 15.5
+                 Q11,20 13,20H7Q9,20 9,15.5Z" />             <!--3-->
+    </defs>
+    
+    <use xlink:href="#club" transform="translate(-10)"/>     <!--4-->
+    <use xlink:href="#club" transform="translate(0)"/>    
+    <use xlink:href="#club" transform="translate(10)" />   
+    <use xlink:href="#club" transform="translate(20)" />
+    <use xlink:href="#club" transform="translate(30)" />
+    <use xlink:href="#club" transform="translate(-10,10)"/>  <!--5--> 
+    <use xlink:href="#club" transform="translate(0,10)"/>    
+    <use xlink:href="#club" transform="translate(10,10)" />   
+    <use xlink:href="#club" transform="translate(20,10)" />
+    <use xlink:href="#club" transform="translate(30,10)" />
+    <use xlink:href="#club" transform="translate(-10,20)"/>  
+    <use xlink:href="#club" transform="translate(0,20)"/>    
+    <use xlink:href="#club" transform="translate(10,20)" />   
+    <use xlink:href="#club" transform="translate(20,20)" />
+    <use xlink:href="#club" transform="translate(30,20)" />
+</svg>

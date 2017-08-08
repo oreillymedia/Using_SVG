@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="200px" viewBox="0 0 400 200">
+    <title>Rotated userSpaceOnUse Patterns</title>
+    <pattern id="wallpaper" patternUnits="userSpaceOnUse"
+             patternTransform="rotate(45)"
+             width="2" height="2" viewBox="0 0 24 24">
+        <rect fill="indigo"
+              width="24" height="24" />
+        <path id="pink-diamond"
+              d="M3,10L10,0 17,10 10,20Z 
+                 M9,11L10,18V10H15L11,9 10,2V10H5Z"
+              fill="hotPink" transform="translate(2,2)"/>         
+    </pattern>
+    <pattern id="wallpaper2" xlink:href="#wallpaper">
+        <rect fill="indigo" stroke="gold" stroke-width="2"
+              x="0" y="0" width="24" height="24" />
+        <use xlink:href="#pink-diamond" /> 
+    </pattern>
+    <symbol viewBox="0 0 20 20" id="spade" 
+         style="overflow: visible">
+        <title>Spade</title>
+        <path d="M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+                 S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z" />
+    </symbol>
+    <use fill="url(#wallpaper)" width="200" xlink:href="#spade"/>
+    <use fill="url(#wallpaper2)" x="200" width="200"
+         xlink:href="#spade"/>
+</svg>

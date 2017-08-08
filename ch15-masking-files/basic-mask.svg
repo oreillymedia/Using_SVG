@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="520px" width="420px" viewBox="0 0 420 520">
+    <title>Masks, Deconstructed</title>
+    <symbol id="image" viewBox="0 0 10 8">
+        <image xlink:href="fa-18-hornet-trimmed.jpg" width="10" height="8" />
+    </symbol>
+    <linearGradient id="fade-left">
+        <stop offset="0"/>
+        <stop offset="1" stop-color="white" />
+    </linearGradient>
+    <radialGradient id="fade-bottom-right" xlink:href="#fade-left"
+                    cx="1.2" cy="1" r="1.2"
+                    gradientTransform="scale(1,1.3)">
+        <stop offset="0.7"/>
+        <stop offset="1" stop-color="white" />
+    </radialGradient>
+    <radialGradient id="fade-top-right" xlink:href="#fade-bottom-right"
+                    gradientTransform="scale(1,-1) translate(0,-1) scale(1,1.3) "/>
+    <mask id="mask" maskContentUnits="objectBoundingBox">
+        <g id="mask-contents">
+            <rect fill="url(#fade-left)" 
+                  width="0.2" height="1" />
+            <rect fill="url(#fade-top-right)" 
+                  x="0.2" width="0.8" height="0.5" />
+            <rect fill="url(#fade-bottom-right)" 
+                  x="0.2" y="0.5" width="0.8" height="0.5" />
+        </g>
+    </mask>
+    <symbol id="mask-image" viewBox="0 0 1 1" preserveAspectRatio="none">
+        <use xlink:href="#mask-contents" />
+    </symbol>
+    <style>
+        text {
+            fill: royalBlue;
+            text-anchor: middle;
+            font: bold 28px sans-serif;
+        }
+        .math {
+            font-size: 36px;
+            dominant-baseline: central;
+        }
+        .final {
+            font-size: 42px;
+            text-anchor: end;
+            dominant-baseline: text-after-edge;
+        }
+    </style>
+    <use xlink:href="#image" width="200" height="160" />
+    <text x="100" y="160" dy="0.8em">graphic</text>
+    
+    <rect fill="black" x="220" width="200" height="160" />
+    <use xlink:href="#mask-image" x="220" width="200" height="160" />
+    <text x="320" y="160" dy="0.8em">mask</text>
+    
+    <text x="210" y="80" class="math">+</text>
+    
+    
+    <text x="30" y="360" class="math">=</text>
+    <use xlink:href="#image" x="20" y="200" width="400" height="320" 
+         mask="url(#mask)" />
+    <text x="420" y="520" dy="-1em" class="final"
+          >masked<tspan x="420" dy="1em"> graphic</tspan></text>
+</svg>

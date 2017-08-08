@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Scaling inline SVG using a padded wrapper</title>
+    <link rel="stylesheet" href="fixed-ratio-wrapper.css" />
+</head>
+<body>
+    <div class="svg-wrapper square">               <!--1-->
+        <svg viewBox="0,0 20,20">              <!--2-->           
+            <title>Spade</title>
+            <path d="M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+                     S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z" />
+        </svg>
+    </div>
+    <p>The above SVG will always be square.</p>
+    <div class="svg-wrapper ratio-2-1">           <!--3-->
+        <svg viewBox="0,0 40,20">                         
+            <title>Double Diamond</title>
+            <path d="m3,10 l7,-10 l7,10 l-7,10 l-7,-10z
+               M20,0 m3,10 l7,-10 l7,10 l-7,10 l-7,-10z" />
+        </svg>
+    </div>
+    <p>The second SVG will be twice as wide as it is tall.</p>
+</body>
+</html>

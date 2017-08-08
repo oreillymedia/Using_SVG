@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="1.5in" height="1.5in">
+    <style type="text/css">
+        line {
+            stroke: royalblue;
+            stroke-width: 10;
+        }
+        svg {
+            background: gold;
+        }
+    </style>
+    <line x1="0" y1="100" x2="100" y2="0" />
+</svg>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Transparent Face versus Transparent Shapes</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+        }
+        svg {
+            background: repeating-linear-gradient(-45deg, green, cyan, green 2em);
+            width: 4.3in;
+            height: 4.8in;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="4.3in" height="4.8in" id="face">
+    <title>Quizzical Elliptical Face</title>
+    <ellipse fill="chocolate"
+             rx="55%" ry="60%" cx="50%" cy="50%" />
+    <g fill="sienna">
+        <ellipse cx="1.1in" cy="1.3in" rx="1in" ry="48pt" />
+        <ellipse cx="3.2in" cy="1.3in" rx="1in" ry="40pt" />
+        <ellipse cx="50%" cy="55%" rx="8%" ry="22%" />
+        <circle cx="45%" cy="71%" r="6%"/>
+        <circle cx="56%" cy="68%" r="6%"/>
+    </g>
+    <g fill="white">
+        <ellipse cx="1.1in" cy="1.3in" rx="70pt" ry="38pt" />
+        <ellipse cx="3.2in" cy="1.3in" rx="70pt" ry="24pt" />
+    </g>
+    <g fill="black" 
+       stroke="blue" stroke-width="16pt" stroke-opacity="0.6">
+        <circle cx="1.6in" cy="1.3in" r="16pt" />
+        <circle cx="3.5in" cy="1.3in" r="16pt" />
+    </g>
+    <ellipse fill="white"
+             stroke="crimson" stroke-width="20pt"
+             cx="2.8in" cy="4in" rx="32pt" ry="18pt" />
+    <g fill="none" stroke="#310" stroke-width="6pt">
+      <ellipse cx="45%" cy="22pt" rx="30pt" ry="22pt" />
+      <ellipse cx="40%" cy="10pt" rx="30pt" ry="20pt" />
+      <ellipse cx="30%" cy="16pt" rx="30pt" ry="22pt" />
+      <ellipse cx="20%" cy="16pt" rx="24pt" ry="20pt" />
+      <ellipse cx="15%" cy="22pt" rx="22pt" ry="16pt" />
+      <ellipse cx="50%" cy="16pt" rx="24pt" ry="22pt" />
+      <ellipse cx="55%" cy="22pt" rx="30pt" ry="20pt" />
+      <ellipse cx="60%" cy="10pt" rx="30pt" ry="22pt" />
+      <ellipse cx="75%" cy="16pt" rx="34pt" ry="18pt" />
+      <ellipse cx="80%" cy="12pt" rx="24pt" ry="22pt" />
+      <ellipse cx="85%" cy="24pt" rx="22pt" ry="16pt" />
+    </g>
+</svg>
+<svg><use xlink:href="#face" 
+          fill-opacity="0.7" stroke-opacity="0.7"/></svg>
+<svg><use xlink:href="#face" opacity="0.7"/></svg>
+
+</html>

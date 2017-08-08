@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="4in" height="4.65in" viewBox="-25 -70 430 480">
+    <title>A custom viewport with viewBox</title>   
+    <style type="text/css">
+        text {
+            font: 24px sans-serif;
+        }
+    </style>
+    <defs>
+        <rect id="row" width="1000" height="100" />
+        <rect id="column" width="100" height="1000" />
+
+        <g id="grid">
+            <g fill="cornflowerBlue">
+                <use xlink:href="#row" y="0"/> 
+                <use xlink:href="#row" y="200"/> 
+                <use xlink:href="#row" y="400"/> 
+                <use xlink:href="#row" y="600"/> 
+                <use xlink:href="#row" y="800"/>
+            </g>
+
+            <g fill="firebrick" fill-opacity="0.5">
+                <use xlink:href="#column" x="0"/> 
+                <use xlink:href="#column" x="200"/> 
+                <use xlink:href="#column" x="400"/> 
+                <use xlink:href="#column" x="600"/> 
+                <use xlink:href="#column" x="800"/>  
+            </g>
+            
+            <circle r="3" cx="0" cy="0"/>
+            <circle r="3" cx="100" cy="100"/>
+            <circle r="3" cx="200" cy="200"/>
+            <circle r="3" cx="300" cy="300"/>
+            <circle r="3" cx="400" cy="400"/>
+            <circle r="3" cx="500" cy="500"/>
+            <circle r="3" cx="600" cy="600"/>
+            <circle r="3" cx="700" cy="700"/>
+            <circle r="3" cx="800" cy="800"/>
+            <circle r="3" cx="900" cy="900"/>
+            
+            <text x="0" y="0">(0,0)</text>
+            <text x="100" y="100">(100,100)</text>
+            <text x="200" y="200">(200,200)</text>
+            <text x="300" y="300">(300,300)</text>
+            <text x="400" y="400">(400,400)</text>
+            <text x="500" y="500">(500,500)</text>
+            <text x="600" y="600">(600,600)</text>
+            <text x="700" y="700">(700,700)</text>
+            <text x="800" y="800">(800,800)</text>
+            <text x="900" y="900">(900,900)</text>
+        </g>
+    </defs>
+    
+    <g>
+        <rect fill="gray" x="-20" y="-60" 
+              width="4.4in" height="4.8in"/>
+        <rect fill="white" width="4in" height="4in"/>
+        <text y="-35">&lt;svg width="4in" height="4in" 
+            <tspan x="60" y="-10">viewBox="0,0 1000,1000"&gt;</tspan></text>
+        <svg width="4in" height="4in" viewBox="0,0 1000,1000">
+            <use xlink:href="#grid" />
+        </svg>
+    </g>
+</svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="200px" viewBox="0 0 400 200">
+    <title>Bulls-eye Repeating Radial Gradient, Annotated</title>
+    <svg width="200px" height="200px" viewBox="-100 -100 200 200">
+        <radialGradient id="bullseye" 
+                        spreadMethod="repeat" r="0.2">
+            <stop stop-color="tomato" offset="50%"/>
+            <stop stop-color="#222" offset="50%"/>
+        </radialGradient>
+        <circle r="50%" fill="url(#bullseye)" />
+    </svg>
+    <style>
+        :root {
+            background: royalBlue;
+        }
+        .vector, .normal {
+            fill: none;
+            stroke: lightSkyBlue;
+        }
+        marker {
+            fill: lightSkyBlue;
+            stroke: none;
+            overflow: hidden;
+        }
+        .vector {
+            stroke-width: 5px;
+            marker-start: url(#base);
+            marker-end: url(#point);
+        }
+        .normal {
+            stroke-width: 2px;
+            stroke-dasharray: 5px 3px;
+        }
+        .repeats {
+            filter: hue-rotate(-160deg);
+            marker-start: none;
+        }
+    </style>
+    <marker id="base" orient="auto" viewBox="-1.5 -1.5 3 3">
+        <circle r="1" />
+    </marker>
+    <marker id="point" orient="auto" viewBox="-3 -1.5 3 3">
+        <path d="M0,-0.5 V0.5 L-3,1.5 -3,-1.5 Z"/>
+    </marker>
+    <svg width="200px" height="200px" x="200px" viewBox="-100 -100 200 200">
+        <circle r="50%" fill="url(#bullseye)" />
+        <circle class="vector" r="40" style="marker: none"/>
+        <circle class="normal" r="20"/>
+        <g class="repeats">
+            <circle class="normal" r="60"/>
+            <circle class="normal" r="100"/>
+        </g>
+        <g id="ray" class="vector">
+            <line id="vector" x2="40" />
+            <g class="repeats">
+                <use xlink:href="#vector" x="40"/>
+                <use xlink:href="#vector" x="80"/>
+            </g>
+        </g>
+        <use xlink:href="#ray" transform="rotate(45)" />
+        <use xlink:href="#ray" transform="rotate(240)" />
+    </svg>
+</svg>

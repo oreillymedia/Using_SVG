@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="200px" height="200px" viewBox="-100 -100 200 200">
+    <title>WebKit-friendly Reflecting Linear Gradient</title>
+    <linearGradient id="reflected-stripe">
+        <stop stop-color="purple" offset="0.2"/>
+        <stop stop-color="plum" offset="0.45"/>
+        <stop stop-color="plum" offset="0.55"/>
+        <stop stop-color="purple" offset="0.8"/>
+    </linearGradient>
+    <pattern id="purple-reflections"
+             patternUnits="userSpaceOnUse"
+             x="-20" width="80" height="100%">
+        <rect width="80" height="100%" 
+              fill="url(#reflected-stripe)"/>
+    </pattern>
+    <circle r="50%" fill="url(#purple-reflections)" />
+</svg>

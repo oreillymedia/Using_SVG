@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="300px" viewBox="0 0 400 300">
+    <title>Bounding Boxes</title>
+    <style>
+        .bbox { 
+            fill: none; 
+            stroke: tomato; 
+            stroke-width: 2px; 
+            stroke-dasharray: 4px 2px;
+        }
+        svg { background: lightSkyBlue; }
+        text { fill: indigo; }
+    </style>
+    <circle class="shape" fill="brown"
+            cx="60" cy="50" r="40" />
+    <rect class="shape" fill="darkSlateGray"
+          x="120" y="30" width="80" height="70" rx="10" />
+    <path class="shape" fill="darkOrange"
+          d="M215,180 q35,0 35,-35 t35,-35 t35,-35 t35,-35 t35,-35Z" />
+    
+    <path class="shape" fill="royalblue"
+          d="M10,100 h40 l-20,30z
+             M40,120 h40 l-20,30z
+             M60,150 h40 l-20,30z
+             M50,180 h40 l-20,30z" />
+    
+    <polygon class="shape" fill="crimson"
+             points="140,140 200,200 180,220 120,160" />
+    <g transform="translate(20,210) skewY(18)">
+        <text dy="1em">Skewed Coordinates</text>
+        <ellipse class="shape" fill="darkSlateBlue"
+                 cx="60" cy="40" rx="40" ry="15" />
+    </g>
+    <g transform="translate(220,260) rotate(-30)">
+        <text dx="0.5em" dy="1em">Rotated Coordinates</text>
+        <circle class="shape" fill="mediumSeaGreen"
+                 cx="95" cy="50" r="30" />
+    </g>
+    
+    <script><![CDATA[
+var svgns = "http://www.w3.org/2000/svg";
+var shapes = document.getElementsByClassName("shape");
+for (var i=0, n=shapes.length; i<n; i++) {
+    var shape = shapes[i];
+    var bbox = shape.getBBox();
+    var rect = document.createElementNS(svgns, "rect");
+    rect.setAttribute("class", "bbox");
+    rect.setAttribute("x", bbox.x);
+    rect.setAttribute("y", bbox.y);
+    rect.setAttribute("width", bbox.width);
+    rect.setAttribute("height", bbox.height);
+    if (shape.hasAttribute("transform")) {
+        rect.setAttribute("transform", shape.getAttribute("transform"));
+    }
+    shape.parentElement.insertBefore(rect, shape)
+}
+
+]]> </script>
+</svg>

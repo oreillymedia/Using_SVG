@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     viewBox="0 0 20 20" width="100%" height="200px">   <!--1--> 
+    <title>Club, with alternate views</title>    
+    <view id="padding" viewBox="-1 -1 22 22" />         <!--2-->
+    <view id="stretch" viewBox="0 0 20 20" 
+          preserveAspectRatio="none" />    
+    <path fill="black"
+          d="M9,15.5 A5,5 0 1 1 5.5,7.5 
+             A5,5 0 1 1 14.5,7.5 A5,5 0 1 1 11,15.5
+             Q11,20 13,20 H7 Q9,20 9,15.5Z" />          <!--3-->
+</svg>

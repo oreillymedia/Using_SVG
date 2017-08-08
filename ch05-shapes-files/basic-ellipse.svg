@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="1.5in" height="1.5in">
+    <style type="text/css">
+        rect {
+            fill: darkOrchid;
+        }
+        rect[rx] {
+            fill: deepSkyBlue;
+        }
+        ellipse {
+            fill: indigo;
+        }
+        line {
+            stroke: royalBlue;
+            stroke-width: 10;
+        }
+        svg {
+            background: gold;
+        }
+    </style>
+    <line x1="0" y1="100" x2="100" y2="0" />
+    <rect x="1cm" y="12pt" width="1in" height="1in" />
+    <rect x="1cm" y="18pt" width="1in" height="5pc" 
+          rx="18pt" ry="5mm" />
+    <ellipse cx="64pt" cy="88px" rx="1cm" ry="0.5in" />
+</svg>

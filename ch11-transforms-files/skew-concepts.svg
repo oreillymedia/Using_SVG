@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="300px" viewBox="0 0 60 45" >  <!--1-->
+    <title>Skewing a grid, in reality vs SVG</title>
+    <style type="text/css">
+        line {
+            stroke-linecap: round;
+        }
+        .vertical {
+            stroke: saddleBrown;
+        }
+        .horizontal {
+            stroke: peru;
+        }
+        text {
+            font: 5px sans-serif;
+            fill: navy;
+            text-anchor: middle;
+        }
+        .separator {
+            stroke: navy;
+            stroke-width: 0.5;
+        }
+    </style>
+    <g>
+        <g id="original" transform="translate(2,2)">
+            <g class="horizontal">
+                <line x2="20" />
+                <line x2="20" transform="translate(0,5)"/>
+                <line x2="20" transform="translate(0,10)"/>
+            </g>
+            <g class="vertical">
+                <line y2="10" />
+                <line y2="10" transform="translate(5,0)"/>
+                <line y2="10" transform="translate(10,0)"/>
+                <line y2="10" transform="translate(15,0)"/>
+                <line y2="10" transform="translate(20,0)"/>
+            </g>
+        </g>
+        <g transform="translate(30,4)">
+            <g class="horizontal">
+                <line x2="20" />
+                <line x2="20" transform="rotate(-50) translate(0,5) rotate(50)"/>
+                <line x2="20" transform="rotate(-50) translate(0,10) rotate(50)"/>
+            </g>
+            <g class="vertical">
+                <line y2="10" transform="rotate(-50)"/>
+                <line y2="10" transform="translate(5,0) rotate(-50)"/>
+                <line y2="10" transform="translate(10,0) rotate(-50)"/>
+                <line y2="10" transform="translate(15,0) rotate(-50)"/>
+                <line y2="10" transform="translate(20,0) rotate(-50)"/>
+            </g>
+        </g> 
+        <text x="30" y="18">Cardboard</text>
+    </g>
+    
+    <line class="separator" x2="100%" y1="22" y2="22" />
+    
+    <g transform="translate(0,25)">
+        <use xlink:href="#original" />
+        <g transform="translate(22,0)">
+            <use xlink:href="#original" transform="skewX(50)"/>
+        </g>
+        <text x="30" y="18">SVG skew</text>
+    </g>
+</svg>

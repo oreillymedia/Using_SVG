@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fill rule and CSS shapes</title>
+  <style>
+body {
+  background: royalblue;
+  margin: 0;
+}
+div {
+  height: 100vh;
+  background: linear-gradient(tomato, gold);
+  clip-path: polygon(evenodd,
+      0 0, 50% calc(100% - 2em), 100% 0, 50% 0, 
+      50% 2em, 0 100%, 100% 100%, 50% 2em, 50% 0); 
+}
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+</html>

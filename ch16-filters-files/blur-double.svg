@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 300 120" width="4in" height="1.6in">
+    <filter id="double-vision">
+        <feGaussianBlur stdDeviation="1 0.7" result="blur"/>
+        <feOffset in="blur" dx="-3" dy="+1" result="left"/>
+        <feOffset in="blur" dx="+3" dy="-1" result="right"/>
+        <feComposite in="left" in2="right" operator="arithmetic"
+                     k2="0.5" k3="0.5"/>
+    </filter>
+    
+    <text id="t" filter="url(#double-vision)"
+          font-size="60px" font-family="Stencil, Stencil Std, 
+                                        Copperplate, sans-serif"
+          fill="orchid" stroke="indigo"
+          stroke-width="6px" paint-order="stroke"
+          x="10" y="107" dy="-0.9em" text-anchor="start"
+          dx="6 6 6 6 6 6 6 6 6 6 6 6 6 "
+          >Double 
+        <tspan dy="0.9em" x="290" text-anchor="end"
+               >Vision</tspan></text>
+</svg>

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="4.3in" height="4.3in">
+    <title>Coordinate systems</title>
+    <style type="text/css">
+    svg {
+        overflow: visible;
+        font-family: sans-serif;
+    }
+    .axis {
+        fill: none;
+        stroke: black;
+        stroke-width: 4;
+        marker-end: url(#arrow);
+        stroke-linecap: square;
+        stroke-dasharray: 5 5;
+        stroke-dashoffset: -2.5;
+    }
+    text[role="heading"] {
+        font-size: 30pt;
+        text-anchor: middle;
+        fill: navy;
+    }
+    text.axis-label {
+        font-style: italic;
+        font-family: serif;
+        font-size: 12pt;
+    }
+    path.sample {
+        stroke: tomato;
+        fill: none;
+        stroke-width: 3;
+        stroke-linecap: round;
+    }
+    .divider {
+        stroke: navy;
+        stroke-width: 3;
+        fill: none;
+    }
+    </style>
+    <defs>
+        <marker id="arrow" overflow="visible" orient="auto">
+          <polygon points="0,2 3,0 0,-2"/>
+        </marker>
+        <path id="squiggle" class="sample" d="M0,0 C10,60 40,-10 50,50" />
+    </defs>
+    <g>
+        <text role="heading" x="50%" dy="1em">Algebra</text>
+        <svg x="0.25in" y="0.25in" width="1.5in" height="1.5in" 
+             viewBox="0 -100 100 100">
+            <polyline class="x axis" points="0,0 100,0" />
+            <polyline class="x axis" points="0,0 0,-100" />
+            <text class="axis-label" dy="-.5em" dx="-1em" x="100">+x</text>
+            <text class="axis-label" dy=".5em" dx=".5em" y="-100">+y</text>
+            <use xlink:href="#squiggle" transform="scale(1,-1)" />
+        </svg>
+        <svg x="2.5in" y="0.25in" width="1.5in" height="1.5in" 
+             viewBox="-50 -50 100 100">
+            <polyline class="x axis" points="-50,0 50,0" />
+            <polyline class="x axis" points="0,50 0,-50" />
+            <text class="axis-label" dy="-.5em" dx="-1em" x="50">+x</text>
+            <text class="axis-label" dy=".5em" dx=".5em" y="-50">+y</text>
+            <text class="axis-label" dy="-.5em" dx="0em" x="-50">−x</text>
+            <text class="axis-label" dy="0em" dx=".5em" y="50">−y</text>
+            <use xlink:href="#squiggle" transform="scale(1,-1)" />
+        </svg>
+    </g>
+    <line class="divider" x1="0.15in" y1="2.15in" y2="2.15in" x2="4.15in" />
+    <g>
+        <text role="heading" x="50%" y="100%" dy="-.8em">SVG</text>
+        <svg x="0.25in" y="2.5in" width="1.5in" height="1.5in" 
+             viewBox="0 0 100 100">
+            <polyline class="x axis" points="0,0 100,0" />
+            <polyline class="x axis" points="0,0 0,100" />
+            <text class="axis-label" dy="-.5em" dx="-1em" x="100">+x</text>
+            <text class="axis-label" dy="0em" dx=".5em" y="100">+y</text>
+            <use xlink:href="#squiggle" />
+        </svg>
+        <svg x="2.5in" y="2.5in" width="1.5in" height="1.5in" 
+             viewBox="-50 -50 100 100">
+            <polyline class="x axis" points="-50,0 50,0" />
+            <polyline class="x axis" points="0,-50 0,50" />
+            <text class="axis-label" dy="-.5em" dx="-1em" x="50">+x</text>
+            <text class="axis-label" dy="0em" dx=".5em" y="50">+y</text>
+            <text class="axis-label" dy="-.5em" dx="0em" x="-50">−x</text>
+            <text class="axis-label" dy=".5em" dx=".5em" y="-50">−y</text>
+            <use xlink:href="#squiggle" />
+        </svg>
+    </g>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     id="gameboard" width="4in" height="2in">
+    <text id="timer" role="timer" aria-atomic="true"
+          x="100%" y="0.9em" text-anchor="end"
+          font-size="64" font-family="Consolas, monospace">00.0
+    </text>
+    <script><![CDATA[
+var timeLimit = 15,
+    timer = document.getElementById("timer");
+var endTime;
+requestAnimationFrame(updateTime);
+function updateTime(t) {
+    if (!endTime) {
+        endTime = t + timeLimit*1000;
+    }
+    var timeLeft = endTime - t;
+    if (timeLeft <= 0) {
+        //endGame();
+        timeLeft = 0;
+    }
+    else {
+        requestAnimationFrame(updateTime);
+    }
+    timer.textContent = (timeLeft/1000).toFixed(1);
+}
+]]> </script>
+</svg>

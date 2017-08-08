@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="100%" height="100%" viewBox="-220 -220 440 440">
+    <title>Reveal and Disappear Animated Logo</title>
+    <circle id="c" r="190" 
+            fill="darkOrchid" stroke="plum" stroke-width="16" /> <!--1-->
+    <defs>
+        <path id="p" d="M0,125 A125,125 0 0,1 0,-125
+                               A125,125 0 0,1 0, 125Z" />
+    </defs>                                                      <!--2-->
+    <text id="t" dy="0.7ex" text-anchor="middle" 
+          font-size="48pt" font-family="Verdana"
+          fill="white">
+        <textPath id="tp" xlink:href="#p"
+                  startOffset="50%">Circle Games</textPath></text>
+    
+    <set     id="textHide" xlink:href="#t"
+             attributeName="visibility" to="hidden" 
+             end="textFadeIn.begin" />                   <!--3-->
+    <animate id="circleGrow" xlink:href="#c" 
+             attributeName="r" 
+             values="0;215;100;205;140;195;170;190"
+             dur="5s"/>                                  <!--4-->
+    <animate id="textPathSlide" xlink:href="#tp" 
+             attributeName="startOffset" 
+             from="-20%" to="50%" 
+             dur="4s" begin="circleGrow.end - 1s" />     <!--5-->
+    <animate id="textFadeIn" xlink:href="#t" 
+             attributeName="opacity" from="0" to="1"
+             dur="3s" begin="textPathSlide.begin" />     <!--6-->
+    <animate id="textFadeOut" xlink:href="#t" 
+             attributeName="opacity" to="0" fill="freeze"
+             dur="2s" begin="textPathSlide.end + 3s" />  <!--7-->
+    <animate id="circleShrink" xlink:href="#c"
+             attributeName="r" to="8" fill="freeze"
+             dur="3s" begin="textFadeOut.end + 0.1s"
+             calcMode="spline" keyTimes="0;1"
+             keySplines="0.2,0.9,0.9,0.5" />             <!--8-->
+    <animate id="circleMove" xlink:href="#c"
+             attributeName="cx" by="-500" fill="freeze" 
+             dur="3s" begin="circleShrink.end"
+             calcMode="spline" keyTimes="0;1"
+             keySplines="0.5,0,0.8,0" />                 <!--9-->
+</svg>

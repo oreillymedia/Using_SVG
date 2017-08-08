@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="4.3in" height="5.3in" >
+    <title>Diagonal Percentages</title>
+    <style type="text/css">
+    svg {
+        font-family: sans-serif;
+        background: white;
+    }
+    svg > svg {
+        overflow: visible;
+    }
+    .frame {
+        stroke:  firebrick;
+        fill: royalBlue;
+        stroke-width: 8px;
+        stroke-linecap: round;
+        stroke-dasharray: 86px 10px;
+        stroke-dashoffset: -5px;
+    }
+    .sample-path {
+    fill: none;
+      stroke-width: 1.5%;
+      stroke-linecap: round;
+      stroke: gold;
+      stroke-dasharray: 12%  2.1%;
+      stroke-dashoffset: -1%;
+    }
+    </style>
+    <svg x="0.15in" y="0.15in"
+      width="4in" height="5in">
+      <rect class="frame" width="100%" height="100%" />
+    </svg>
+    <svg x="0.15in" y="0.15in"
+         width="4in" height="1in">
+    <line class="sample-path" x2="100%" y2="100%"
+      />
+    </svg>
+    <svg x="0.15in" y="0.15in"
+         width="4in" height="2in">
+    <line class="sample-path" x2="100%" y2="100%" />
+    </svg>
+    <svg x="0.15in" y="0.15in"
+         width="4in" height="3in">
+    <line class="sample-path" x2="100%" y2="100%" />
+    </svg>
+    <svg x="0.15in" y="0.15in"
+         width="4in" height="4in">
+    <line class="sample-path" x2="100%" y2="100%" />
+    </svg>
+    <svg x="0.15in" y="0.15in"
+         width="4in" height="5in">
+    <line class="sample-path" x2="100%" y2="100%" />
+    </svg>
+    <svg x="0.15in" y="0.15in"
+         width="3in" height="5in">
+    <line class="sample-path" x2="100%" y2="100%" />
+    </svg>
+    <svg x="0.15in" y="0.15in"
+         width="2in" height="5in">
+    <line class="sample-path" x2="100%" y2="100%" />
+    </svg>
+    <svg x="0.15in" y="0.15in"
+         width="1in" height="5in">
+    <line class="sample-path" x2="100%" y2="100%" />
+    </svg>
+</svg>

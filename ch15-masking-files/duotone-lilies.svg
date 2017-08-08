@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="4in" height="3in" viewBox="0 0 8 6">
+    <title>Duotone Photographs from Masked Rectangles</title>
+    <mask id="photo-mask" maskContentUnits="userSpaceOnUse">
+         <image xlink:href="lilies.jpg" width="4" height="3"/>
+    </mask>
+    <g>
+        <title>#FFC480 (cream) over #402020 (dark brown)</title>
+        <rect width="4" height="3" fill="#402020"/> 
+        <rect width="4" height="3" fill="#FFC480" 
+              mask="url(#photo-mask)"/>
+    </g>
+    <g transform="translate(4,0)">
+        <title>#402020 (dark brown) over #FFC480 (cream)</title>
+        <rect width="4" height="3" fill="#FFC480"/> 
+        <rect width="4" height="3" fill="#402020" 
+              mask="url(#photo-mask)"/>
+    </g>
+    <g transform="translate(0,3)">
+        <title>hotPink over royalBlue</title>
+        <rect width="4" height="3" fill="royalBlue"/> 
+        <rect width="4" height="3" fill="hotPink" 
+              mask="url(#photo-mask)"/>
+    </g>
+    <g transform="translate(4,3)">
+        <title>3-color radial gradient over indigo</title>
+        <radialGradient id="pink-grad" r="0.6">
+            <stop offset="0" stop-color="gold" />
+            <stop offset="0.4" stop-color="hotPink" />
+            <stop offset="1" stop-color="papayaWhip" />
+        </radialGradient>
+        <rect width="4" height="3" fill="indigo"/> 
+        <rect width="4" height="3" fill="url(#pink-grad)" 
+              mask="url(#photo-mask)"/>
+    </g>
+</svg>

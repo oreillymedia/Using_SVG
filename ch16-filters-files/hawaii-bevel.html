@@ -1,0 +1,66 @@
+
+<!DOCTYPE html><html class=''>
+<head>
+    <meta charset='UTF-8'>
+    <title>Bevelled text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Arvo:700);
+body {
+    background: #0e98bd;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    width: 80%;
+    margin: 0 auto;
+}
+
+svg {
+    width: 100%;
+}
+
+svg text {
+    font-family: Arvo, Rockwell, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 65px;
+    stroke: #fff;
+    stroke-width: 1px;
+    filter: url(#hawaiifilter);
+    fill: url(#beach) black;
+}
+</style></head><body>
+<header>
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 80" contentEditable>
+    <defs>
+      <pattern id="beach" patternUnits="userSpaceOnUse" width="285" height="80">
+        <image xlink:href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/hawaii-beach.jpg" x="0" y="-50" width="300" height="200" />
+          <!-- photo by Daniel Ramirez, licensed under Creative Commons. 
+               Original: https://www.flickr.com/photos/danramarch/6225153931 -->
+    </pattern>
+    <filter id="hawaiifilter">
+      <feConvolveMatrix order="4,4" preserveAlpha="true"
+                        targetX="1" targetY="1"
+         kernelMatrix="
+         1 0 0 0
+         0 1 0 0
+         0 0 1 0 
+         0 0 0 1" in="SourceGraphic" result="BEVEL" />
+      <feOffset dx="2" dy ="2" in="SourceAlpha" result="OFFSET" />
+      <feMerge>
+         <feMergeNode in="OFFSET" />
+         <feMergeNode in="BEVEL" />
+      </feMerge>
+    </filter>
+</defs>
+		<text x="0" y="55">Hawaii</text>
+	</svg>
+</header>
+
+</body></html>

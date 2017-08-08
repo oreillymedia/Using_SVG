@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 200 200" width="2.5in" height="2.5in">
+    <title>Golden Halo Glow</title>
+    <filter id="halo-gold">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="5"
+                        result="blur" />
+        <feFlood flood-color="#fe7" />
+        <feComposite in2="blur" operator="in" />
+        <feMerge>
+            <feMergeNode />
+            <feMergeNode />
+            <feMergeNode />
+            <feMergeNode in="SourceGraphic" />
+        </feMerge>
+    </filter>
+
+    <rect fill="#222" width="100%" height="100%" />
+    
+    <use xlink:href="../ch10-reuse-files/suits-symbols.svg#heart"
+         fill="mediumVioletRed" filter="url(#halo-gold)"
+         x="10" y="10" width="180" height="180" />
+</svg>

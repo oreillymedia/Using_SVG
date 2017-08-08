@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>HTML radio-buttons to control SVG styles</title>
+    <style>
+        figure {
+            max-width: 100vh;
+            padding: 0;
+            margin: 1em auto;
+        }
+        figcaption {
+            text-align: center;
+            font-style: italic;
+        }
+        svg { 
+            display: block;
+            margin: 1em 0;
+        }
+        .shape {
+            fill: deepSkyBlue;
+            stroke: blueViolet;
+            stroke-width: 4px;
+            stroke-opacity: 0.8;
+        }
+        .option {
+            position: absolute;
+            clip: rect(0,0, 1px,1px);            
+        }        
+        .option-set { 
+            display: flex; 
+            text-align: center;
+            justify-content: space-around;
+            padding: 1em;
+        }
+        .option-label { 
+            display: inline-block; /* fallback for no flexbox */
+            flex-basis: 8em;
+            color: blueViolet; 
+            font: 20px Consolas, monospace;
+        }
+        #round:checked ~ svg .shape { stroke-linejoin: round; }
+        #bevel:checked ~ svg .shape { stroke-linejoin: bevel; }
+        #miter:checked ~ svg .shape { stroke-linejoin: miter; }
+        
+        #round:checked ~ .option-set .option-label[for="round"],
+        #bevel:checked ~ .option-set .option-label[for="bevel"],
+        #miter:checked ~ .option-set .option-label[for="miter"] {
+            color: indigo;
+            text-decoration: underline;
+        }
+        #round:focus ~ .option-set .option-label[for="round"],
+        #bevel:focus ~ .option-set .option-label[for="bevel"],
+        #miter:focus ~ .option-set .option-label[for="miter"],
+        .option-label:hover { 
+            outline: none;
+            text-decoration: underline;
+            text-decoration-color: indigo;
+        }
+        .option:focus { outline: none; }
+        .option:focus ~ .option-set { outline: solid indigo 2px; }
+    </style>
+</head>
+<body>
+<figure>
+    <figcaption>
+        Selecting one of the stroke-linejoin options
+        will apply that effect to the sample shape.
+    </figcaption>
+    <input id="round" class="option" type="radio" name="linejoin"/>
+    <input id="bevel" class="option" type="radio" name="linejoin"/>
+    <input id="miter" class="option" type="radio" name="linejoin"/>
+    <svg viewBox="-18 -12 36 24">
+        <path class="shape" 
+              d="M-5,-10 H5  V-5 H10  L15,0  L10,5   H5  V10 
+                         H-5 V5  H-10 L-15,0 L-10,-5 H-5 V-10 Z" />
+    </svg>
+    <div class="option-set">
+        <label for="round" class="option-label">round</label>
+        <label for="bevel" class="option-label">bevel</label>
+        <label for="miter" class="option-label">miter</label>
+    </div>
+</figure>
+</body>
+</html>

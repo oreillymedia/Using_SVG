@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink" 
+     width="400px" height="300px" viewBox="0 0 400 300"> 
+    <title>Arrow Markers using Size and Position Attributes</title>
+    <style type="text/css">
+        .arrow {
+            fill: none;
+            stroke: darkMagenta;
+            stroke-width: 6;
+            marker-start: url(#start);
+            marker-end: url(#end);
+            marker-mid: url(#mid);
+        }
+        marker {
+            fill: darkMagenta;                             <!--1-->
+            stroke: none;
+        }
+    </style>
+    <marker id="start" markerWidth="2" markerHeight="2" 
+            refX="1" refY="1" orient="45">                 <!--2-->
+        <rect width="2" height="2" />
+    </marker>
+    <marker id="end" viewBox="0 -2 3 4" orient="auto" 
+            markerHeight="4">                              <!--3-->
+        <polygon points="0,-2 3,0 0,2" />  
+    </marker>
+    <marker id="mid" orient="auto" viewBox="-1 -1.5 2 3">  <!--4-->
+        <ellipse rx="1" ry="1.5" />
+    </marker>
+  
+    <path class="arrow" d="M30,50 Q100,0 200,50 T370,50" />
+    <path class="arrow" d="M370,250 Q300,200 200,250 T30,250" />
+    <path class="arrow" d="M30,100 L80,150 30,200" />
+    <path class="arrow" d="M370,200 L320,150 370,100" />
+    <path class="arrow" d="M150,100 C150,150 200,250 280,180" />
+    <path class="arrow" d="M250,100 C250,150 200,250 120,180" />
+</svg>     

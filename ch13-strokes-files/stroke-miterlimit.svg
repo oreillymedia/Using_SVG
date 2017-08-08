@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400" height="160" viewBox="0 0 400 160">
+    <title>Stroke Miter Limit Effects</title>
+    <symbol id="diamonds-4" viewBox="0 0 36 20"
+            style="overflow: visible">
+        <title>4 Diamond</title>
+        <path d="M3,10 L10,0 17,10 10,20 Z 
+                 M9,11 L10,18 V10 H15 L11,9 10,2 V10 H5 Z" />
+        <text x="35" y="20" font-size="20" 
+              font-family="Times New Roman, Times, Georgia, serif"
+              style="font-variant-numeric: lining-nums"
+              text-anchor="end">4</text>
+    </symbol>
+    <rect height="100%" width="100%" fill="lavender" />
+    <g fill="indigo" stroke="deepPink" 
+       stroke-width="2.5" stroke-opacity="0.5">
+        <use xlink:href="#diamonds-4" 
+             width="180" height="100" x="0" y="15"
+             stroke-linejoin="miter" />
+        <use xlink:href="#diamonds-4" 
+             width="180" height="100" x="220" y="15"
+             stroke-linejoin="miter" stroke-miterlimit="10"/>
+    </g>
+    <g fill="blueViolet" 
+       font-family="Consolas, monospace" font-size="16">
+        <text x="5" text-anchor="start" y="155"
+              >stroke-miterlimit: 4</text>
+        <text x="395" text-anchor="end" y="155"
+              >stroke-miterlimit: 10</text>
+    </g>
+</svg>

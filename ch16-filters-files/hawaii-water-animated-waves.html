@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='UTF-8'>
+    <title>Wave-filtered text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Arvo:700);
+body {
+    background: darkSlateGray;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    width: 80%;
+    margin: 0 auto;
+}
+
+svg {
+    width: 100%;
+}
+
+svg text {
+    font-family: Arvo, Rockwell, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 65px;
+    stroke: darkSlateGray;
+    stroke-width: 3px;
+    filter: url(#hawaiifilter);
+    fill: url(#beach) black;
+}
+</style></head><body>
+<header>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 285 65">
+    <title>Wave-filtered text</title>
+    <pattern id="beach" 
+             patternUnits="userSpaceOnUse" width="285" height="65">
+        <image x="0" y="-50" width="300" height="200"
+               xlink:href="hawaii-beach.jpg"
+               transform="rotate(0.5)" />
+        <!-- photo by Daniel Ramirez, licensed CC-BY 
+          https://www.flickr.com/photos/danramarch/6225153931 -->
+    </pattern>
+    <filter id="hawaiifilter">
+        <feOffset result="top" y="0" height="36px" />
+        
+        <feTurbulence y="30px" height="40px"
+                      type="turbulence" baseFrequency="0.01 .1"
+                      numOctaves="1" seed="53" />  
+        <feDisplacementMap in="SourceGraphic" result="waves"
+                           y="36px" height="30px"
+                           scale="4" 
+                           xChannelSelector="R" 
+                           yChannelSelector="B" />
+        <feGaussianBlur result="bottom" 
+                        y="34px" height="32px"
+                        stdDeviation="0.4" />
+        
+        <feMerge>
+            <feMergeNode in="top" />
+            <feMergeNode in="bottom" />
+        </feMerge>
+    </filter>
+    <style>
+svg text {
+    font-family: Arvo, Rockwell, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 64px;
+    fill: url(#beach) azure;
+    stroke: darkSlateGray;
+    stroke-width: 3px;
+    filter: url(#hawaiifilter);
+}
+    </style>
+    <style>
+@import url(https://fonts.googleapis.com/css?family=Arvo:700);
+    </style>
+    <rect width="100%" height="100%" fill="lightSkyBlue" />
+    <rect width="100%" y="36px" height="30px" fill="lightseagreen" />
+    <text x="50%" y="56" text-anchor="middle"
+          kerning="0" style="font-kerning: none"
+          dx="-1 3 -7 -7 2 2">Hawaii</text>
+    <script>
+var fe = document.querySelector("feTurbulence"),
+frames = 0,
+rad = Math.PI / 180;
+
+function AnimateBaseFrequency() {
+  bfx = 0.01;
+  bfy = .1;
+  frames += .25
+  bfx += 0.001 * Math.cos(frames * rad);
+  bfy += 0.005 * Math.sin(frames * rad);
+
+  bf = bfx.toString() + ' ' + bfy.toString();
+  fe.setAttribute('baseFrequency', bf);
+
+  window.requestAnimationFrame(AnimateBaseFrequency);
+}
+window.requestAnimationFrame(AnimateBaseFrequency);
+    </script>
+	</svg>
+</header>
+
+</body></html>

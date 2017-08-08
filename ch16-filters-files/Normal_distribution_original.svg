@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg id="normal_distribution"
+   version="1.1"
+   baseProfile="full"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:ev="http://www.w3.org/2001/xml-events"
+   width="480"
+   height="180">
+
+  <title>Normal_distribution.svg - a nice plot of the gaussian normal distribution</title>
+  <desc>
+     Normal distribution
+     phi(x) = \frac 1{\sqrt{2\pi}} e^{-\frac{1}{2}x^2}
+     from Wikimedia Commons
+     plot-range: -4 to 4
+     plotted with cubic bezier-curves
+     the bezier-controll-points are calculated to give a very accurate result.
+     accuracy is 0.000001 units
+     symbols in "Computer Modern" (TeX) font embedded
+     created with a plain text editor using GNU/Linux
+
+     about: http://commons.wikimedia.org/wiki/Image:normal_distribution.svg
+     source: http://commons.wikimedia.org/
+     rights: GNU Free Documentation license,
+             Creative Commons Attribution ShareAlike license
+  </desc>
+
+  <defs>
+    <!-- pstricks-style arrow, zoom 1.5 -->
+    <marker id="Arrow" refX="2.52" refY="2.25" markerUnits="strokeWidth"
+       markerWidth="6" markerHeight="4.5" orient="auto">
+      <path d="M 2.52 2.25 L 0 4.5 L 6 2.25 L 0 0 z" />
+    </marker>
+
+    <!-- now the used chars in "Computer Modern" font. They are implemented
+         as plain paths and not as glyphs just because it didn't work -->
+
+    <!-- phi: horiz-adv-x="654.2"-->
+    <path id="phi"
+       d="M 50 0 m 120 -170 c -4 -13 -5 -15 -5 -20 c 0 -22 19 -28 29 -28
+          c 5 0 27 3 37 26 c 3 8 8 41 35 183 c 9 -1 16 -2 33 -2
+          c 166 0 320 157 320 315 c 0 78 -39 138 -114 138
+          c -145 0 -205 -194 -265 -389 c -108 20 -164 76 -164 148
+          c 0 28 23 138 83 207 c 8 9 8 11 8 13 c 0 4 -2 10 -12 10
+          c -28 0 -105 -145 -105 -241 c 0 -94 66 -167 173 -192 z M 223 -2
+          m 85 49 c -8 0 -10 0 -18 1 c -12 0 -13 1 -13 4 c 0 2 17 93 20 108
+          c 31 128 109 224 198 224 c 69 0 96 -54 96 -102
+          c 0 -113 -129 -235 -283 -235 z"/>
+    <!-- (: horiz-adv-x="388.9"-->
+    <path id="parleft"
+       d="M 99 0 m 232 -240 c 0 3 0 5 -17 22 c -125 126 -157 315 -157 468
+          c 0 174 38 348 161 473 c 13 12 13 14 13 17 c 0 7 -4 10 -10 10
+          c -10 0 -100 -68 -159 -195 c -51 -110 -63 -221 -63 -305
+          c 0 -78 11 -199 66 -312 c 60 -123 146 -188 156 -188 c 6 0 10 3 10 10
+          z"/>
+    <!-- ): horiz-adv-x="388.9"-->
+    <path id="parright"
+       d="M 57 0 m 232 250 c 0 78 -11 199 -66 312 c -60 123 -146 188 -156 188
+          c -6 0 -10 -4 -10 -10 c 0 -3 0 -5 19 -23 c 98 -99 155 -258 155 -467
+          c 0 -171 -37 -347 -161 -473 c -13 -12 -13 -14 -13 -17
+          c 0 -6 4 -10 10 -10 c 10 0 100 68 159 195 c 51 110 63 221 63 305 z"/>
+    <!-- x: horiz-adv-x="527.8"-->
+    <path id="x"
+       d="M 29 0 m 305 302 c 6 26 29 118 99 118 c 5 0 29 0 50 -13
+          c -28 -5 -48 -30 -48 -54 c 0 -16 11 -35 38 -35 c 22 0 54 18 54 58
+          c 0 52 -59 66 -93 66 c -58 0 -93 -53 -105 -76 c -25 66 -79 76 -108 76
+          c -104 0 -161 -129 -161 -154 c 0 -10 10 -10 12 -10 c 8 0 11 2 13 11
+          c 34 106 100 131 134 131 c 19 0 54 -9 54 -67 c 0 -31 -17 -98 -54 -238
+          c -16 -62 -51 -104 -95 -104 c -6 0 -29 0 -50 13 c 25 5 47 26 47 54
+          c 0 27 -22 35 -37 35 c -30 0 -55 -26 -55 -58 c 0 -46 50 -66 94 -66
+          c 66 0 102 70 105 76 c 12 -37 48 -76 108 -76 c 103 0 160 129 160 154
+          c 0 10 -9 10 -12 10 c -9 0 -11 -4 -13 -11
+          c -33 -107 -101 -131 -133 -131 c -39 0 -55 32 -55 66
+          c 0 22 6 44 17 88 z"/>
+    <!-- minus: horiz-adv-x="700"-->
+    <path id="minus"
+       d="M 83 0 m 578 230 c 14 0 33 0 33 20 c 0 20 -19 20 -33 20 h -467.2
+          c -14 0 -33 0 -33 -20 c 0 -20 19 -20 33 -20 z"/>
+    <!-- 0: horiz-adv-x="500"-->
+    <path id="zero"
+       d="M 39 0 m 421 320 c 0 80 -5 160 -40 234 c -46 96 -128 112 -170 112
+          c -60 0 -133 -26 -174 -119 c -32 -69 -37 -147 -37 -227
+          c 0 -75 4 -165 45 -241 c 43 -81 116 -101 165 -101
+          c 54 0 130 21 174 116 c 32 69 37 147 37 226 z M 460 320 m -211 -320
+          c -39 0 -98 25 -116 121 c -11 60 -11 152 -11 211 c 0 64 0 130 8 184
+          c 19 119 94 128 119 128 c 33 0 99 -18 118 -117
+          c 10 -56 10 -132 10 -195 c 0 -75 0 -143 -11 -207
+          c -15 -95 -72 -125 -117 -125 z"/>
+    <!-- 1: horiz-adv-x="500"-->
+    <path id="one"
+       d="M 89 0 m 205 640 c 0 24 0 26 -23 26 c -62 -64 -150 -64 -182 -64 v -31
+          c 20 0 79 0 131 26 v -518 c 0 -36 -3 -48 -93 -48 h -32 v -31
+          c 35 3 122 3 162 3 c 40 0 127 0 162 -3 v 31 h -32
+          c -90 0 -93 11 -93 48 z"/>
+    <!-- 3: horiz-adv-x="500"-->
+    <path id="three"
+       d="M 42 0 m 248 352 c 82 27 140 97 140 176 c 0 82 -88 138 -184 138
+          c -101 0 -177 -60 -177 -136 c 0 -33 22 -52 51 -52 c 31 0 51 22 51 51
+          c 0 50 -47 50 -62 50 c 31 49 97 62 133 62 c 41 0 96 -22 96 -112
+          c 0 -12 -2 -70 -28 -114 c -30 -48 -64 -51 -89 -52
+          c -8 -1 -32 -3 -39 -3 c -8 -1 -15 -2 -15 -12 c 0 -11 7 -11 24 -11
+          h 44 c 82 0 119 -68 119 -166 c 0 -136 -69 -165 -113 -165
+          c -43 0 -118 17 -153 76 c 35 -5 66 17 66 55 c 0 36 -27 56 -56 56
+          c -24 0 -56 -14 -56 -58 c 0 -91 93 -157 202 -157
+          c 122 0 213 91 213 193 c 0 82 -63 160 -167 181 z"/>
+    <!-- 2: horiz-adv-x="500"-->
+    <path id="two"
+       d="M 50 0 m 399 174 h -25 c -5 -30 -12 -74 -22 -89 c -7 -8 -73 -8 -95 -8
+          h -180 l 106 103 c 156 138 216 192 216 292 c 0 114 -90 194 -212 194
+          c -113 0 -187 -92 -187 -181 c 0 -56 50 -56 53 -56 c 17 0 52 12 52 53
+          c 0 26 -18 52 -53 52 c -8 0 -10 0 -13 -1 c 23 65 77 102 135 102
+          c 91 0 134 -81 134 -163 c 0 -80 -50 -159 -105 -221 l -192 -214
+          c -11 -11 -11 -13 -11 -37 h 371 z"/>
+    <!-- 4: horiz-adv-x="500"-->
+    <path id="four"
+       d="M 28 0 m 0 165 h 266 v -87 c 0 -36 -2 -47 -76 -47 h -21 v -31
+          c 41 3 93 3 135 3 c 42 0 95 0 136 -3 v 31 h -21 c -74 0 -76 11 -76 47
+          v 87 h 100 v 31 h -100 v 455 c 0 20 0 26 -16 26 c -9 0 -12 0 -20 -12
+          l -307 -469 z M 28 196 m 272 0 h -244 l 244 373 z"/>
+    <!-- .: horiz-adv-x="277.8"-->
+    <path id="dot"
+       d="M 192 378 m 0 -325 c 0 29 -24 53 -53 53 c -29 0 -53 -24 -53 -53
+          c 0 -29 24 -53 53 -53 c 29 0 53 24 53 53 z"/>
+  </defs>
+
+
+
+  <rect id="background" x="0" y="0" width="480" height="180" fill="white"/>
+
+  <g transform="translate(234.5, 148.5)">
+    <!-- grid -->
+    <g id="grid"
+       transform="scale(1,-1)"
+       style="stroke:black; opacity:0.4; stroke-width:0.5; stroke-linecap:butt">
+      <path id="gridx"
+         d="M -200,0 V 112.5
+            M -150,0 V 112.5
+            M -100,0 V 112.5
+            M  -50,0 V 112.5
+            M   50,0 V 112.5
+            M  100,0 V 112.5
+            M  150,0 V 112.5
+            M  200,0 V 112.5"/>
+      <path id="gridy"
+         d="M -200, 50 H 200
+            M -200,100 H 200"/>
+    </g>
+
+    <!-- ticks -->
+    <g id="ticks"
+       transform="scale(1,-1)"
+       style="stroke:black; stroke-width:1; stroke-linecap:square">
+      <path id="ticksx"
+         d="M -200,-5 V 5
+            M -150,-5 V 5
+            M -100,-5 V 5
+            M  -50,-5 V 5
+            M    0,-5 V 5
+            M   50,-5 V 5
+            M  100,-5 V 5
+            M  150,-5 V 5
+            M  200,-5 V 5"/>
+      <path id="ticksy"
+         d="M -5, 50 H 5
+            M -5,100 H 5"/>
+    </g>
+
+    <!-- axes -->
+    <line id="x-axis" x1="-228" x2="228" y1="0" y2="0" stroke="black"
+       stroke-width="2" stroke-linecap="butt" marker-end="url(#Arrow)" />
+    <line id="y-axis" x1="0" x2="0" y1="0" y2="-127.5" stroke="black"
+       stroke-width="2" stroke-linecap="butt" marker-end="url(#Arrow)" />
+
+    <!-- label shadings -->
+    <g stroke="white" stroke-width="310px" stroke-linejoin="round">
+      <g id="ylabels_s" transform="translate(-9,7)">
+        <g id="y02_s" transform="translate(0,-50) scale(0.02,-0.02)">
+          <use xlink:href="#zero" x="-1277.8" y="0" />
+          <use xlink:href="#dot" x="-777.8" y="0" />
+          <use xlink:href="#two" x="-500" y="0" />
+        </g>
+        <g id="y04_s" transform="translate(0,-100) scale(0.02,-0.02)">
+          <use xlink:href="#zero" x="-1277.8" y="0" />
+          <use xlink:href="#dot" x="-777.8" y="0" />
+          <use xlink:href="#four" x="-500" y="0" />
+        </g>
+      </g>
+    </g>    
+    
+    <!-- labels -->
+    <g id="xl" transform="translate(237,17) scale(0.02,-0.02)">
+      <use xlink:href="#x" x="-285.75" y="0" />
+    </g>
+    <g id="phix" transform="translate(-9,-129) scale(0.02,-0.02)">
+      <use xlink:href="#phi" x="-1959.8" y="0" />
+      <use xlink:href="#parleft" x="-1305.6" y="0" />
+      <use xlink:href="#x" x="-916.7" y="0" />
+      <use xlink:href="#parright" x="-388.9" y="0" />
+    </g>
+    <g id="xlabels" transform="translate(0,25)">
+      <g id="xm4" transform="translate(-200,0) scale(0.02,-0.02)">
+        <use xlink:href="#minus" x="-1000" y="0" />
+        <use xlink:href="#four" x="-250" y="0" />
+      </g>
+      <g id="xm3" transform="translate(-150,0) scale(0.02,-0.02)">
+        <use xlink:href="#minus" x="-1000" y="0" />
+        <use xlink:href="#three" x="-250" y="0" />
+      </g>
+      <g id="xm2" transform="translate(-100,0) scale(0.02,-0.02)">
+        <use xlink:href="#minus" x="-1000" y="0" />
+        <use xlink:href="#two" x="-250" y="0" />
+      </g>
+      <g id="xm1" transform="translate(-50,0) scale(0.02,-0.02)">
+        <use xlink:href="#minus" x="-1000" y="0" />
+        <use xlink:href="#one" x="-250" y="0" />
+      </g>
+
+      <g id="x0" transform="translate(0,0) scale(0.02,-0.02)">
+        <use xlink:href="#zero" x="-250" y="0" />
+      </g>
+      <g id="x1" transform="translate(50,0) scale(0.02,-0.02)">
+        <use xlink:href="#one" x="-250" y="0" />
+      </g>
+      <g id="x2" transform="translate(100,0) scale(0.02,-0.02)">
+        <use xlink:href="#two" x="-250" y="0" />
+      </g>
+      <g id="x3" transform="translate(150,0) scale(0.02,-0.02)">
+        <use xlink:href="#three" x="-250" y="0" />
+      </g>
+      <g id="x4" transform="translate(200,0) scale(0.02,-0.02)">
+        <use xlink:href="#four" x="-250" y="0" />
+      </g>
+    </g>
+    <g id="ylabels" transform="translate(-9,7)">
+      <g id="y02" transform="translate(0,-50) scale(0.02,-0.02)">
+        <use xlink:href="#zero" x="-1277.8" y="0" />
+        <use xlink:href="#dot" x="-777.8" y="0" />
+        <use xlink:href="#two" x="-500" y="0" />
+      </g>
+      <g id="y04" transform="translate(0,-100) scale(0.02,-0.02)">
+        <use xlink:href="#zero" x="-1277.8" y="0" />
+        <use xlink:href="#dot" x="-777.8" y="0" />
+        <use xlink:href="#four" x="-500" y="0" />
+      </g>
+    </g>
+
+    <!-- the controll points lie on the tangents of the function.
+         they are furthermore positioned in a way to minimize the average
+         quadratic distance between the bezier-curve and the function. -->
+         
+    <!-- normal distribution curve -->
+    <g transform="scale(50, -50)">
+      <path id="ndist-curve" fill="none" stroke="red"
+         stroke-width="0.064px" stroke-linecap="butt"
+         d="M -4.000000,0.000669
+            C -3.690002,0.001499 -3.459493,0.003549 -3.266249,0.009622
+            C -3.019777,0.017368 -2.811702,0.032370 -2.623992,0.063790
+            C -2.368130,0.106616 -2.141617,0.181404 -1.919938,0.315820
+            C -1.755910,0.415280 -1.606331,0.540234 -1.459488,0.687596
+            C -1.292032,0.855645 -1.137945,1.042985 -0.988212,1.224115
+            C -0.785177,1.469723 -0.592034,1.701583 -0.394466,1.845403
+            C -0.263125,1.941013 -0.133946,1.994711 0.000000,1.994711
+            C 0.133946,1.994711 0.263125,1.941013 0.394466,1.845403
+            C 0.592034,1.701583 0.785177,1.469723 0.988212,1.224115
+            C 1.137945,1.042985 1.292032,0.855645 1.459488,0.687596
+            C 1.606331,0.540234 1.755910,0.415280 1.919938,0.315820
+            C 2.141617,0.181404 2.368130,0.106616 2.623992,0.063790
+            C 2.811702,0.032370 3.019777,0.017368 3.266249,0.009622
+            C 3.459493,0.003549 3.690002,0.001499 4.000000,0.000669" />
+    </g>
+  </g>
+</svg>
+

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="500px" height="600px">
+    <title>SVG Color Keywords</title>
+    <style type="text/css">
+        svg, symbol { overflow: visible; }
+        circle {
+            fill-opacity: 0.8;
+        }
+        .flash {
+            animation: flash 5s infinite alternate;
+        }
+        @keyframes flash {
+            0%, 10% { opacity: 1; }
+            90%, 100% { opacity: 0; }
+        }
+    </style>
+    <symbol id="hexagon" viewBox="-100,-120 200,240">
+        <polygon
+                 points="-100,57.7 -100,-57.7  0,-115.4
+                          100,-57.7  100,57.7  0,+115.4"/>
+    </symbol>
+    <rect fill="#888" width="100%" height="100%" />  
+    <g>
+        <use xlink:href="#hexagon" fill="#ddd" /> 
+        <use xlink:href="#hexagon" fill="none" stroke="#222" 
+             x="5%" y="5%" width="90%" height="90%" />
+    </g>   
+    <g class="flash">
+        <use xlink:href="#hexagon" fill="#222" />
+        <use xlink:href="#hexagon" fill="none" stroke="#ddd" 
+             x="5%" y="5%" width="90%" height="90%" />
+    </g>
+    <svg id="plot" 
+         x="5%" y="5%" width="90%" height="90%" 
+         viewBox="-100,-120 200,240">
+    </svg>
+    
+    <script><![CDATA[
+(function(){
+    var svgNS = "http://www.w3.org/2000/svg";
+    var xlinkNS = "http://www.w3.org/1999/xlink";
+    var radius = 4;
+
+    var dataFileURL = "color-keywords.csv"
+
+    var request = new XMLHttpRequest();
+    request.addEventListener("load", draw);
+    request.overrideMimeType("text/csv");
+    request.open("GET", dataFileURL);
+    request.send();
+
+    function parseColor( CSVString ) {
+        var a = CSVString.split(",");
+        var c = {};
+        c.name = a[0].trim();
+        c.R = +a[1];
+        c.G = +a[2];
+        c.B = +a[3];
+        return c;
+    }
+
+    function draw() {
+        var colors = request.responseText
+                          .split("\n")
+                          .map( parseColor );
+        var vR = {x:0, y:-115.4},
+            vG = {x:100, y:57.7},
+            vB = {x:-100, y:57.7};
+
+        for (var i=0, n=colors.length; i<n; i++){
+            var c = colors[i];
+            var min = Math.min(c.R, c.G, c.B);
+            var max = Math.max(c.R, c.G, c.B);
+            var mean = (min+max)/2;
+            
+            var dot = document.createElementNS(svgNS, "circle");
+            dot.id = c.name;
+            dot.setAttribute("r", radius);
+            dot.setAttribute("cx", (vR.x*c.R + vG.x*c.G + vB.x*c.B)/255 );
+            dot.setAttribute("cy", (vR.y*c.R + vG.y*c.G + vB.y*c.B)/255 );
+
+            var rgb = "rgb("+[c.R, c.G, c.B]+")"
+            dot.style.setProperty("fill", rgb);
+
+            var tip = document.createElementNS(svgNS, "title");
+            tip.textContent = c.name +": " + rgb;
+            dot.appendChild(tip);
+
+            document.getElementById("plot").appendChild(dot);
+        }
+    }
+})();
+]]> </script>
+</svg>

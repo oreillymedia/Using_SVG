@@ -1,0 +1,18 @@
+<!DOCTYPE html>     <!--1-->
+<html lang="en">    <!--2-->
+    <head>          <!--3-->
+        <meta charset="utf-8" />    <!--4-->
+        <title>HTML file with Inline SVG</title>    <!--5-->
+        <style>
+        </style>    <!--6-->
+    </head>
+    <body>          <!--7-->
+        <svg>
+<defs>
+    <path id="path-for-text" d="M50,100 Q100,0 250,100" />
+</defs>
+<text><textPath xlink:href="#path-for-text"
+            >Text for path</textPath></text>
+        </svg>      <!--8-->
+    </body>
+</html>             <!--9-->

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+  <marker id="m" overflow="visible" orient="auto">
+    <polygon fill="red" fill-opacity="0.8" points="-2,0 0,-4 2,0" />
+  </marker>
+  <path fill="none" marker-mid="url(&quot;#m&quot;)" stroke="navy" d="M 0 5 L 2 4 Q 10 0 10 6 Q 10 0 18 4 L 19 8" />
+  
+  <path fill="none" marker-mid="url(&quot;#m&quot;)" stroke="seagreen" d="M 0 15 L 2 16 Q 10 20 10 14 Q 10 20 18 16 L 19 12" />
+</svg>

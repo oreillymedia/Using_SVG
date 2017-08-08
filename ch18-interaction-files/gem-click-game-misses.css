@@ -1,0 +1,54 @@
+#gameboard {
+    max-height: 100vh;
+    max-width: 100%;
+    background: #224;
+}
+.count { /* class for all the text elements */
+    fill: lightYellow; /* or use `color` if using HTML text */
+    font: 20px Consolas, monospace;
+}
+#timer, #scoreboard { /* the specific numbers being updated */
+    font-size: 300%;
+}
+#scoreboard {
+    transition: font-size 1s;        <1>
+}
+.clicked {
+    opacity: 0.1;
+    pointer-events: none;
+}
+.miss {
+    color: #88f;
+    stroke: currentColor;
+    stroke-width: 4px;
+    stroke-opacity: 0.5;
+    fill: currentColor;
+    fill-opacity: 0.5;
+    animation: flicker-fade ease-in-out 3s forwards;       <2>
+}
+@keyframes flicker-fade {
+    from { opacity: 1; 
+           animation-timing-function: ease-out;            <3>
+         }
+    60%  { opacity: 0.2; }
+    70%  { opacity: 0.3; }
+    80%  { opacity: 0.1; }
+    90%  { opacity: 0.2; }
+    to   { opacity: 0.0; visibility: hidden; }
+}
+#timer[aria-live] {
+    animation: flash-color 0.3s alternate infinite;        <4>    
+}
+@keyframes flash-color { /* again, use `color` for HTML text */
+    to { fill: tomato; }                                   <5>
+}
+
+.game-over #scoreboard {
+    font-size: 800%;
+    animation: flash-color 0.5s 16 alternate;              <6>
+}
+.game-over .clickable { fill: black; }
+.game-over .clicked {
+    opacity: 1;
+    filter: drop-shadow(0 0 3px gold);
+}

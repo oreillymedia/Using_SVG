@@ -1,0 +1,38 @@
+<svg viewBox="0 0 480 350"
+     xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink" >
+    <style>
+        text {
+            font-family: Tahoma, sans-serif;
+            text-anchor: middle;
+            font-size: 18px;
+            fill: currentColor;
+        }
+        path {
+            stroke: dimgray; 
+            stroke-width: 4;
+            stroke-dasharray: 8 4;
+        }
+    </style>
+    <pattern id="low-res" patternUnits="userSpaceOnUse"
+             width="20" height="20">
+        <g id="dots">
+            <circle fill="red" r="5" cx="10" cy="5" />
+            <circle fill="lime" r="5" cx="5" cy="15" />
+            <circle fill="blue" r="5" cx="15" cy="15" />
+        </g>
+    </pattern>
+    <pattern id="high-res" patternUnits="userSpaceOnUse"
+             width="8" height="8" viewBox="0 0 20 20">
+        <use xlink:href="#dots" />
+    </pattern>
+    <g fill="url(#low-res)">
+        <text x="120" y="100%" dy="-1em" >Low-Resolution Display</text>
+        <path id="shape" 
+              d="M100,10 C200,0 300,250 120,200 S50,300 200,300 C0,200 0,20 100,10Z" />
+    </g>
+    <g transform="translate(240,0)" fill="url(#high-res)">
+        <text x="120" y="100%" dy="-1em" >High-Resolution Display</text>
+        <use xlink:href="#shape" />
+    </g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="100px" height="100px">
+    <linearGradient id="g" x2="0.05" y2="0.05" spreadMethod="reflect">
+        <stop stop-color="darkred" offset="0.1" />
+        <stop stop-color="white" offset="0.5" />
+        <stop stop-color="black" offset="0.9" />
+    </linearGradient>
+    <rect height="100" width="100" fill="url(#g)" rx="10" />
+</svg>

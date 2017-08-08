@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Using svgView fragments to create views</title>
+    <style>
+        img, iframe, object {
+            display: block;
+            width: 90%;
+            height: 80px;
+            margin: 10px auto;
+            background-color: lightgreen;
+        }
+        h2 { margin: 0.3em 0 0; }
+        a  { display: block; }
+    </style>
+</head>
+<body>
+    <h2><code>img</code></h2>
+    <img src="../ch06-path-files/heart.svg#svgView(viewBox(-1,-1,22,22))" />
+    <img src="../ch06-path-files/heart.svg#svgView(viewBox(0,0,20,20);preserveAspectRatio(none))" />
+    
+    <h2><code>iframe</code></h2>
+    <iframe name="frame1" src="../ch06-path-files/heart.svg">
+    </iframe>
+    <a href="../ch06-path-files/heart.svg#svgView(viewBox(-1,-1,22,22))" 
+       target="frame1">Add padding to the icon in the iframe</a>
+    <a href="../ch06-path-files/heart.svg#svgView(viewBox(0,0,20,20);preserveAspectRatio(none))" 
+       target="frame1">Stretch the icon in the iframe</a>
+    
+    <h2><code>object</code></h2>
+    <object name="object1" type="image/svg+xml" 
+            data="../ch06-path-files/heart.svg">
+    </object>
+    <a href="../ch06-path-files/heart.svg#svgView(viewBox(-1,-1,22,22))" 
+       target="object1">Add padding to the icon in the object</a>
+    <a href="../ch06-path-files/heart.svg#svgView(viewBox(0,0,20,20);preserveAspectRatio(none))" 
+       target="object1">Stretch the icon in the object</a>
+</body>
+</html>

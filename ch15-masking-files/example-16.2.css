@@ -1,0 +1,7 @@
+svg a image { 
+  opacity: 0.5;
+  transition: 1s opacity;
+}
+svg a:hover image {
+  opacity: 1;
+}

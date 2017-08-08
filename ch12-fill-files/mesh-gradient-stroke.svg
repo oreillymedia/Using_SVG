@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="400"
+   height="400"
+   viewBox="0 0 106 106"
+   version="1.1"
+   id="svg22979"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="mesh-gradient-stroke.svg"
+   inkscape:export-filename="C:\Users\ABR\Documents\OReilly\SVG-CSS3-HTML5\SVG-CSS3-HTML5-Book\ch12-fill-files\mesh-gradient-stroke.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300">
+  <title
+     id="title45454">Mesh Gradient on a Stroke</title>
+  <defs
+     id="defs22973">
+    <meshgradient
+       inkscape:collect="always"
+       id="meshgradient23528"
+       gradientUnits="userSpaceOnUse"
+       x="5.47"
+       y="202"
+       type="bicubic">
+      <meshrow
+         id="meshrow50460">
+        <meshpatch
+           id="meshpatch50462">
+          <stop
+             path="c 7.74044,-6.03763  11.6772,-13.1071  35.0221,-16.0942"
+             style="stop-color:#ffffff;stop-opacity:1"
+             id="stop50464" />
+          <stop
+             path="c 46.2727,26.5788  5.9538,16.9918  -6.71987,31.9466"
+             style="stop-color:#9a8bb7;stop-opacity:1"
+             id="stop50466" />
+          <stop
+             path="c -22.827,19.8957  -2.1855,43.09  -35.0967,24.8811"
+             style="stop-color:#beddff;stop-opacity:1"
+             id="stop50468" />
+          <stop
+             path="c -0.000289919,-10.0066  -0.7355,-31.5017  6.79447,-40.7335"
+             style="stop-color:#9a8bb7;stop-opacity:1"
+             id="stop50470" />
+        </meshpatch>
+        <meshpatch
+           id="meshpatch50472">
+          <stop
+             path="c 10.1085,1.47023  51.547,5.72105  59.0794,11.8856"
+             id="stop50474" />
+          <stop
+             path="c 7.73691,9.10516  9.38702,54.662  6.03285,64.0651"
+             style="stop-color:#2c0080;stop-opacity:1"
+             id="stop50476" />
+          <stop
+             path="c -20.2374,-29.5274  -66.5767,-3.08158  -71.8321,-44.0041"
+             style="stop-color:#9a8bb7;stop-opacity:1"
+             id="stop50478" />
+        </meshpatch>
+      </meshrow>
+      <meshrow
+         id="meshrow50480">
+        <meshpatch
+           id="meshpatch50482">
+          <stop
+             path="c -7.70287,34.1531  -12.038,43.8586  28.1801,79.6358"
+             id="stop50484" />
+          <stop
+             path="c -9.90547,1.47053  -45.4905,-4.29755  -53.2351,-13.6566"
+             style="stop-color:#9a8bb7;stop-opacity:1"
+             id="stop50486" />
+          <stop
+             path="c -7.52532,-5.91048  -10.0422,-31.0914  -10.0417,-41.0981"
+             style="stop-color:#2c0080;stop-opacity:1"
+             id="stop50488" />
+        </meshpatch>
+        <meshpatch
+           id="meshpatch50490">
+          <stop
+             path="c 0.102494,11.4768  -4.5819,14.3295  -12.2169,21.9648"
+             id="stop50492" />
+          <stop
+             path="c -7.63488,7.63512  -21.3259,15.1375  -31.4351,13.6669"
+             style="stop-color:#ffffff;stop-opacity:1"
+             id="stop50494" />
+        </meshpatch>
+      </meshrow>
+    </meshgradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.22"
+     inkscape:cx="272"
+     inkscape:cy="200"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1304"
+     inkscape:window-height="745"
+     inkscape:window-x="-8"
+     inkscape:window-y="250"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata22976">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Mesh Gradient on a Stroke</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-191)">
+    <ellipse
+       style="fill:#361870;fill-opacity:1;fill-rule:evenodd;stroke:url(#meshgradient23528);stroke-width:26.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path23524"
+       cx="52.8"
+       cy="244"
+       rx="39.1"
+       ry="39.1" />
+  </g>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="300px" viewBox="0 0 400 300">
+    <title>Single-tile objectBoundingBox Patterns</title>
+    <pattern id="p1" width="1" height="1"
+             patternContentUnits="objectBoundingBox">
+        <rect width="1" height="1" fill="royalBlue" />
+        <path stroke="paleTurquoise" fill="none"
+              stroke-width="0.1"
+              d="M0,0 L1,1 M0,1 L1,0" />
+    </pattern>
+    <pattern id="p2" width="1" height="1"
+             viewBox="0 0 10 10" preserveAspectRatio="none">
+        <rect width="10" height="10" fill="royalBlue" />
+        <path stroke="paleTurquoise" fill="none"
+              d="M0,0 L10,10 M0,10 L10,0" />
+    </pattern>
+    <style>
+        g *:nth-child(odd) {
+            fill: url(#p1);
+        }
+        g *:nth-child(even) {
+            fill: url(#p2);
+        }
+    </style>
+    <g>  
+        <path id="swoosh" 
+              d="M5,5 Q 185,50 5,95 Q 100,50 5,5 Z" />
+        <path id="swoosh2" 
+              d="M105,105 Q 465,150 105,195 Q 300,150 105,105 Z" />
+        <path id="swoosh-transformed"
+              d="M5,5 Q 185,50 5,95 Q 100,50 5,5 Z"
+              transform="translate(300,200) rotate(90)" />
+        
+        <polygon id="plaque" 
+                 points="105,30 140,5 260,5 295,30 
+                         295,70 260,95 140,95 105,70"/>
+        <use xlink:href="#plaque" 
+             transform="translate(-100,+200)" />
+        <polygon id="plaque2" 
+                 points="330,105 370,105 395,140 395,260 
+                         370,295 330,295 305,260 305,140" />
+        
+        <path id="cross" d="M5,105 m10,0 
+                            l35,35 l35,-35 l10,10
+                            l-35,35 l35,35 l-10,10
+                            l-35,-35 l-35,35 l-10,-10
+                            l35,-35 l-35,-35 z" />
+        <use xlink:href="#cross" x="300" y="-100" />
+    </g>
+</svg>

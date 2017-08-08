@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="100" height="100">
+    <title>External Resources for Chrome Bug Test Case</title>
+    <desc>
+Chrome (as of 58, possibly earlier) will not apply
+paint server fill or stroke to content cloned from 
+an external file.
+
+The symbol and rect defined here are used in the other file,
+and the shapes should inherit the gradient or
+pattern set in that file.  But they don't.
+The fallback fill color is used instead.
+
+My first guess: the browser was looking for the paint 
+server in the external file, or in the shadow tree.
+Both possibilities are tested here, but neither are used
+when the shape is cloned in the other file.
+    </desc>
+    <symbol id="symbol" viewBox="-5 -5 10 10">
+        <polygon points="0,-5 -5,0 0,5 5,0" />
+        <circle r="3" fill="url(#grad) gold" />
+        <linearGradient id="grad">
+            <stop offset="0" stop-color="orange" />
+            <stop offset="1" stop-color="darkRed" />
+        </linearGradient>
+    </symbol>
+    <pattern id="pattern" width="10" height="10"
+             patternUnits="userSpaceOnUse">
+        <rect width="10" height="10" fill="darkRed"/>
+        <rect width="5" height="5" fill="orange"/>
+        <rect x="5" y="5" width="5" height="5" fill="orange"/>
+    </pattern>
+    
+    <rect id="rect" width="50" height="50" />
+    <use xlink:href="#symbol" x="50" width="50" height="50"/>
+    
+</svg>

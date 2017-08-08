@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Warning Notice</title>
+    <style>
+        .icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.1em;    <!--1-->
+        }
+        .warning {
+            max-width: 30em;
+            margin: 0 auto;
+            padding: 1em;
+            border: double 6px;
+            
+            background-color: #eee;
+            color: darkRed;            <!--2-->
+        }
+        h1 {
+            font: bold small-caps 200% sans-serif;
+            margin: 0 0 0.5em;
+        }
+        code {
+            font: 100% Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+    <section class="warning">
+        <h1>
+            <svg class="icon" role="img">      <!--3-->
+                <title>Attention</title>
+                <use xlink:href="warning-icons.svg#important" />
+            </svg>
+            Accessibility Warning
+        </h1>
+        <p>The markings on the warning icon are always white,
+           so the inherited <code>color</code> value 
+           needs to be dark enough to ensure contrast.
+        </p>
+    </section>
+</body>
+</html>

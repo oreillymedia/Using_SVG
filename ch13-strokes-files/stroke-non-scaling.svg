@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400" height="200" viewBox="0 0 400 200">
+    <title>Non-Scaling Stroke Vector Effect</title>
+    <style>
+        * { vector-effect: inherit; }                 <!--1-->
+    </style>
+    <symbol id="club-symbol" viewBox="0 0 20 20"
+            style="overflow: visible">                <!--2-->
+        <path id="club-path"
+              stroke="rebeccaPurple" fill="cadetBlue"
+              stroke-width="2"
+              stroke-linejoin="round"
+              d="M 9,15.5 A 5,5 0 1 1 5.5,7.5 
+                 A 5,5 0 1 1 14.5,7.5 A 5,5 0 1 1 11,15.5
+                 Q 11,20 13,20 H 7 Q 9,20 9,15.5 Z" />
+    </symbol>
+    <rect height="100%" width="100%" fill="lightCyan" />
+    <g id="layout">
+        <use xlink:href="#club-path" x="90" y="10"/>  <!--3-->
+        <use xlink:href="#club-symbol" 
+             width="80" height="80" x="10" y="10"/>   <!--4-->
+        <use xlink:href="#club-symbol" 
+             width="10" height="10" x="95" y="85"/>   <!--5-->
+        <use xlink:href="#club-path"
+             transform="translate(110,10) scale(4)" />   <!--6-->
+        <use xlink:href="#club-path"
+             transform="translate(10,110) scale(9,3)" /> <!--7-->
+    </g>
+    <use xlink:href="#layout" x="200" 
+         style="vector-effect: non-scaling-stroke" /> <!--8-->
+    <g fill="rebeccaPurple" 
+       font-family="Consolas, monospace" font-size="18">
+        <text x="10" text-anchor="start" y="195"
+              >no vector-effect</text>
+        <text x="390" text-anchor="end" y="195"
+              >non-scaling-stroke</text>
+    </g>
+</svg>

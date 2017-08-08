@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Sepia-toned Photograph with CSS masks</title>
+    <style>
+        body {margin: 0;}
+        figure {
+            background: #402020;
+            position: relative;
+            width: 4in;  /* or create the correct aspect ratio */
+            height: 3in; /* using the padding-bottom hack */
+            margin: 0;
+        }
+        figure::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            
+            background: #FFC480;
+            mask-image: url(lilies-large.jpg),
+                radial-gradient(60% 60%, white 70%, #222);
+            mask-size: cover;
+            mask-mode: luminance, luminance;
+                /* the repetition is required for now,
+                   due to a Firefox bug */
+            mask-composite: intersect;
+        }
+    </style>
+</head>
+<body>
+    <figure></figure>
+</body>
+</html>

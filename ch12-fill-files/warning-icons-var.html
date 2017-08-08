@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Warning Notice</title>
+    <style>
+        .icon {
+            height: 1em;
+            width: 1em;
+            vertical-align: -0.1em;
+        }
+        .warning {
+            max-width: 30em;
+            margin: 0 auto;
+            padding: 1em;
+            border: double 6px;
+            
+            background-color: #222;
+            color: gold;
+            
+            --icon-sign-text: black;
+        }
+        .warning .icon {
+            color: darkGoldenrod; 
+            /* fallback, if CSS variables aren't supported */
+        }
+        @supports (--css: var(--iables)) {
+            .warning .icon { color: inherit; }
+        }
+        h1 {
+            font: bold small-caps 200% sans-serif;
+            margin: 0 0 0.5em;
+        }
+        code {
+            font: 100% Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+    <section class="warning">
+        <h1>
+            <svg class="icon" role="img">
+                <title>Danger! Electricity</title>
+                <use xlink:href="warning-icons-var.svg#electricity" />
+            </svg>
+            Live Wires
+        </h1>
+        <p>Both colors on the icons can be controlled, if needed.
+           The presentation attributes in the SVG
+           and the <code>@supports</code> test in the CSS 
+           ensure contrast even for the fallback,
+           except in MS Edge 15.
+        </p>
+    </section>
+</body>
+</html>

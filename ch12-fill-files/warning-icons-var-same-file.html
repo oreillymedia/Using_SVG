@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Warning Notice</title>
+    <style>
+        .icon {
+            height: 1em;
+            width: 1em;
+            vertical-align: -0.1em;
+        }
+        .warning {
+            max-width: 30em;
+            margin: 0 auto;
+            padding: 1em;
+            border: double 6px;
+            
+            background-color: #222;
+            color: gold;
+            
+            --icon-sign-text: black;
+        }
+        .warning .icon {
+            color: darkGoldenrod; 
+            /* fallback, if CSS variables aren't supported */
+        }
+        @supports (--css: var(--iables)) {
+            .warning .icon { color: inherit; }
+        }
+        h1 {
+            font: bold small-caps 200% sans-serif;
+            margin: 0 0 0.5em;
+        }
+        code {
+            font: 100% Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+<svg aria-hidden="true" width="0" height="0" 
+     style="position: absolute; left:-10px">
+    <defs>
+        <path id="triangle" 
+              stroke-linejoin="round"
+              d="M10,4 18,18 2,18 Z"/>
+        <g id="triangle-sign">
+            <use xlink:href="#triangle"
+                 fill="currentColor" 
+                 stroke="currentColor" stroke-width="4" 
+                 style="fill: var(--icon-sign-bg, currentColor);
+                        stroke: var(--icon-sign-bg, currentColor)" />
+            <use xlink:href="#triangle"
+                 fill="none"
+                 stroke="white" stroke-width="1" 
+                 style="stroke: var(--icon-sign-text, white)" />
+        </g>
+    </defs>
+    <symbol id="electricity" viewBox="0 0 20 20">
+        <use xlink:href="#triangle-sign" />
+        <polygon points="10.5,7.5 8,11.5 10.5,13 
+                         9.5,16.5 12,12.5 9.5,11" 
+                 fill="white" stroke="none"
+                 style="fill: var(--icon-sign-text, white)" />
+    </symbol>
+</svg>
+    <section class="warning">
+        <h1>
+            <svg class="icon" role="img">
+                <title>Danger! Electricity</title>
+                <use xlink:href="warning-icons-var.svg#electricity" />
+            </svg>
+            Live Wires
+        </h1>
+        <p>Both colors on the icons can be controlled, if needed.
+           The presentation attributes in the SVG
+           and the <code>@supports</code> test in the CSS 
+           ensure contrast even for the fallback.
+        </p>
+    </section>
+</body>
+</html>

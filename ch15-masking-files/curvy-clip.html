@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>Object Bounding-Box Clipping paths, 
+        on SVG and HTML elements</title>
+<style>
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+svg {
+    display: block;
+}
+body {
+    background-color: #432;
+    margin: 0.5em;
+}
+header {
+    background: darkSeaGreen;
+    position: relative;
+    z-index: 0;
+    padding: 0.1rem;
+}
+header::before {
+    background: indigo;
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    top: 0.5rem; bottom: 0.5rem;
+    left: 1.5rem; right: 1.5rem;
+}
+h1 {
+    background: plum;
+    color: indigo;
+    text-align: center;
+    padding: 10%;
+    margin: 2rem 4rem;
+    font-size: 300%;
+    font-family: Pacifico, sans-serif;
+    font-weight: normal;
+}
+header, header::before, h1 {
+    -webkit-clip-path: url(#wave-edges);
+    clip-path: url(#wave-edges);
+}
+</style></head>
+<body>
+<header>
+  <h1>Curvy Clipping Paths</h1>
+</header>
+<svg viewBox="0 0 400 300" role="img"
+     aria-label="Blue and white violets,
+                 in a garden filled with autumn leaves">
+    <clipPath id="wave-edges" clipPathUnits="objectBoundingBox">
+        <path d="M0.05,0.01 
+                 Q0.15,0.15 0.5,0.05 T0.99,0.05
+                 Q0.85,0.15 0.95,0.5 T0.95,0.99
+                 Q0.85,0.85 0.5,0.95 T0.01,0.95
+                 Q0.15,0.85 0.05,0.5 T0.05,0.01
+                 Z"/>
+    </clipPath>
+    <image xlink:href="violets.jpg" width="100%" height="100%"
+           preserveAspectRatio="xMidYMid slice"
+           clip-path="url(#wave-edges)" />
+</svg>
+</body>
+</html>

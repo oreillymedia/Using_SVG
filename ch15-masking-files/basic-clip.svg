@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="520px" width="420px" viewBox="0 0 420 520">
+    <title>Clipping Paths, Deconstructed</title>
+    <symbol id="image" viewBox="0 0 10 8">
+        <image xlink:href="fa-18-hornet-trimmed.jpg" width="10" height="8" />
+    </symbol>
+    <clipPath id="clip" clipPathUnits="objectBoundingBox">
+        <polygon id="p" points="0.1,0 1,0.5 0.1,1" />
+    </clipPath>
+    <symbol id="triangle" viewBox="0 0 1 1" preserveAspectRatio="none">
+        <use xlink:href="#p" />
+    </symbol>
+    <style>
+        text {
+            fill: royalBlue;
+            text-anchor: middle;
+            font: bold 28px sans-serif;
+        }
+        .math {
+            font-size: 36px;
+            dominant-baseline: central;
+        }
+        .final {
+            font-size: 42px;
+            text-anchor: end;
+            dominant-baseline: text-after-edge;
+        }
+    </style>
+    <use xlink:href="#image" width="200" height="160" />
+    <text x="100" y="160" dy="0.9em">graphic</text>
+    
+    <rect fill="lightGray" x="220" width="200" height="160" />
+    <use xlink:href="#triangle" x="220" width="200" height="160" />
+    <text x="320" y="160" dy="0.9em">clipping path</text>
+    
+    <text x="210" y="80" class="math">+</text>
+    
+    <text x="30" y="360" class="math">=</text>
+    <use xlink:href="#image" x="20" y="200" width="400" height="320" 
+         clip-path="url(#clip)" />
+    <text x="420" y="520" dy="-1em" class="final"
+          >clipped<tspan x="420" dy="1em"> graphic</tspan></text>
+</svg>

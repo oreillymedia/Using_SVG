@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="400px" viewBox="-40 -40 80 80" >     <!--1-->
+    <title>Centering the scale effect using coordinates</title>
+    <style type="text/css">
+        use                 { fill: darkRed; }
+        use:nth-of-type(2n) { fill: lightSkyBlue; }
+    </style>
+    <defs>
+        <path id="heart" 
+              d="M0,-4 Q0,-10 5,-10T10,-4Q10,0 5,4 
+                 T0,10Q0,8 -5,4T-10,-4Q-10,-10 -5,-10T0,-4Z" /> <!--2-->
+    </defs>
+    
+    <use xlink:href="#heart" transform="scale(4)"/>             <!--3-->
+    <use xlink:href="#heart" transform="scale(3.5)" />   
+    <use xlink:href="#heart" transform="scale(3)" />
+    <use xlink:href="#heart" transform="scale(2.5)" />
+    <use xlink:href="#heart" transform="scale(2)" />
+    <use xlink:href="#heart" transform="scale(1.5)" />
+    <use xlink:href="#heart" transform="scale(1.1)" />
+    <use xlink:href="#heart" transform="scale(0.75)" />
+    <use xlink:href="#heart" transform="scale(0.5)" />
+</svg>

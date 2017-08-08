@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="420" height="630"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="-10 -10 420 630" >
+    <defs>
+        <path d="M0,25  q50,25 100,0 t100,0 100,0 100,0
+                 M0,50  q50,25 100,0 t100,0 100,0 100,0
+                 M0,75  q50,25 100,0 t100,0 100,0 100,0
+                 M0,100 q50,25 100,0 t100,0 100,0 100,0
+                 M0,125 q50,25 100,0 t100,0 100,0 100,0
+                 M0,150 q50,25 100,0 t100,0 100,0 100,0
+                 M0,175 q50,25 100,0 t100,0 100,0 100,0
+                 M0,200 q50,25 100,0 t100,0 100,0 100,0
+                 M0,225 q50,25 100,0 t100,0 100,0 100,0
+                 M0,250 q50,25 100,0 t100,0 100,0 100,0
+                 M0,275 q50,25 100,0 t100,0 100,0 100,0
+                 M0,300 q50,25 100,0 t100,0 100,0 100,0
+                 M0,325 q50,25 100,0 t100,0 100,0 100,0
+                 M0,350 q50,25 100,0 t100,0 100,0 100,0
+                 M0,375 q50,25 100,0 t100,0 100,0 100,0
+                 M0,400 q50,25 100,0 t100,0 100,0 100,0
+                 M0,425 q50,25 100,0 t100,0 100,0 100,0
+                 M0,450 q50,25 100,0 t100,0 100,0 100,0
+                 M0,475 q50,25 100,0 t100,0 100,0 100,0
+                 M0,500 q50,25 100,0 t100,0 100,0 100,0
+                 M0,525 q50,25 100,0 t100,0 100,0 100,0
+                 M0,550 q50,25 100,0 t100,0 100,0 100,0
+                 M0,575 q50,25 100,0 t100,0 100,0 100,0" id="waves"/>
+    </defs>
+    <mask id="image-mask" maskUnits="userSpaceOnUse">
+        <rect width="100%" height="100%" fill="white" />
+        <image xlink:href="walrus-carpenter-glass22.png"
+               width="100%" height="100%"
+               opacity="0.5"
+               preserveAspectRatio="xMidYMax meet" />
+    </mask>
+    <rect width="100%" height="100%" fill="darkSlateGray" />
+    <rect width="100%" height="100%"  fill="azure"
+          mask="url(#image-mask)" />
+    <text font-size="18px"
+          font-family="Georgia, serif" 
+          fill="darkSlateGray">
+        <textPath xlink:href="#waves">
+“The time has come,” the Walrus said,
+“To talk of many things:
+Of shoes—and ships—and sealing-wax—
+Of cabbages—and kings—
+And why the sea is boiling hot—
+And whether pigs have wings.”
+
+“But wait a bit,” the Oysters cried,
+“Before we have our chat;
+For some of us are out of breath,
+And all of us are fat!”
+“No hurry!” said the Carpenter.
+They thanked him much for that.
+
+“A loaf of bread,” the Walrus said,
+“Is what we chiefly need:
+Pepper and vinegar besides
+Are very good indeed—
+Now if you're ready, Oysters dear,
+We can begin to feed.”
+
+“But not on us!” the Oysters cried,
+Turning a little blue.
+“After such kindness, that would be
+A dismal thing to do!”
+“The night is fine,” the Walrus said.
+“Do you admire the view? …
+        </textPath>
+    </text>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="300px" height="200px" viewBox="2 3 21 14">
+    <title>A Smooth Quadratic Bézier Curve</title>
+    <use xlink:href="graphing.svg#grid" opacity="0.7"/>
+    <style>
+        .handles {
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 0.2;
+        }
+        .handles.reflected {
+            stroke-dasharray: 0.1 0.4;
+            stroke-linecap: round;
+            stroke-width: 0.3;
+        }
+    </style>
+    <g color="indigo" style="--accentColor: mediumOrchid">
+        <path fill="none" stroke="var(--accentColor)" 
+              d="M 3,10 Q 8,5 11,10 T 22,10 "/>
+        <path class="handles"
+              d="M 3,10 
+                 L 8,5 L 11,10" />
+        <path class="handles reflected"
+              d="M 11,10 
+                 L 14,15 L 22,10" />
+        <use xlink:href="graphing.svg#control-point"     x="8" y="5" />
+        <use xlink:href="graphing.svg#reflected-control" x="14" y="15" />
+        <use xlink:href="graphing.svg#vertex" x="3" y="10" />
+        <use xlink:href="graphing.svg#vertex" x="11" y="10" />
+        <use xlink:href="graphing.svg#vertex" x="22" y="10" />
+    </g>
+</svg>

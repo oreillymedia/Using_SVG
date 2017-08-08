@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="800" height="400"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 2000 1000" >
+    <defs>
+        <path d="M-300,0 C-300,0 -300,-275 0,-275 C0,-275 250,-275 250,0 
+            C250,0 250,225 0,225 C0,225 -225,200 -200,0 
+            C-200,0 -200,-175 0,-175 C0,-175 150,-175 125,0 
+            C125,0 125,100 0,100 C0,100 -75,100 -75,0 
+            C-75,0 -75,-50 0,-50 C0,-50 25,-50 25,0 
+            C25,0 25,10 0,0" id="spiral"/>
+    </defs>
+    <g transform="translate(400,400)">
+        <use xlink:href="#spiral" style="fill:none;stroke:blue;stroke-width:1"/>
+        <text style="font-size:32pt"><textPath xlink:href="#spiral">"The time has come," <tspan font-size="90%">the Walrus said, "to talk of many things. <tspan font-size="90%">Of shoes, and ships and sealing wax, <tspan font-size="90%">of cabbages and kings. <tspan font-size="90%">And why the sea is boiling hot, <tspan font-size="90%">and whether pigs have wings.</tspan></tspan></tspan></tspan></tspan></textPath></text>
+    </g>
+    <g transform="translate(1100,400)">
+        <use xlink:href="#spiral" style="fill:none;"/>
+        <text style="font-size:32pt"><textPath xlink:href="#spiral">"The time has come," <tspan font-size="90%">the Walrus said, "to talk of many things. <tspan font-size="90%">Of shoes, and ships and sealing wax, <tspan font-size="90%">of cabbages and kings. <tspan font-size="90%">And why the sea is boiling hot, <tspan font-size="90%">and whether pigs have wings.</tspan></tspan></tspan></tspan></tspan></textPath></text>
+    </g>
+</svg>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Using SVG Icons from an External File</title>
+    <script>
+window.addEventListener("load", function() {
+    var svgNS = "http://www.w3.org/2000/svg";
+    var xlinkNS = "http://www.w3.org/1999/xlink";
+    
+    var svg = document.getElementsByTagName("svg")[0];
+    
+    var extUse = document.querySelectorAll("use:not([*|href^='#'])");
+    var extFiles = {};
+    for (var i=0, n=extUse.length; i<n; i++) {
+        var use = extUse[i];
+        var ref = use.getAttributeNS(xlinkNS,"href")
+                      .split("#");
+        
+        var file = ref[0];
+        if (!extFiles[file]){
+            extFiles[file] = [];
+        }
+        extFiles[file].push({element:use, target:ref[1] });
+    }
+    console.log(extFiles);
+    var fileIndex = 0;
+    for (var fileURL in extFiles) {
+        console.log(fileURL);
+        fileIndex++;
+        var request = new XMLHttpRequest();
+        request.addEventListener("load",
+            createResponseHandler(request, 
+                    extFiles[fileURL], fileIndex) 
+        )
+        request.overrideMimeType("image/svg+xml");
+        request.open("GET", fileURL);
+        request.send();
+    }
+    
+    function createResponseHandler(request, 
+                                   elementList,
+                                   index) {
+        return function() {
+            //console.log(request, elementList, index);
+            var file = request.responseXML;
+            
+            var el = file.querySelectorAll("[id]");
+            
+            for (var i=0, n=el.length; i<n; i++) {
+                var id = el[i].getAttribute("id");
+                el[i].setAttribute("id", prefixID(id, index) );
+            }
+            
+            var defs = document.createElementNS(svgNS, "defs");
+            defs.insertBefore(file.documentElement, null);
+            svg.insertBefore(defs, null);
+            
+            for (var i=0, n=elementList.length; i<n; i++) {
+                var o = elementList[i];
+                o.element.setAttributeNS(xlinkNS, "href",
+                        "#" + prefixID(o.target, index) )
+            }
+        }
+    }
+    function prefixID(id, index){
+        return "file" + index + "-" + id;
+    }
+});
+    </script>
+    <style>
+        body {
+            font-family: serif;
+            background-color: #CDF;
+        }
+        svg {
+            width: 1em;
+            height: 1em;
+            overflow: visible;
+        }
+        svg.large {
+            width: 4em;
+            height: 4em;
+        }
+        svg.float {
+            display: block;
+            float: left;
+            clear: left;
+            margin: 0.5em;
+            padding: 0.25em;
+            border: gray solid thin;
+            border-radius: 50%;
+            background-color: white;
+        }
+        svg.inline {
+            display: inline;
+            vertical-align: middle;
+            padding: 0.1em;
+        }
+        .black {
+            fill: #222;
+        }
+        .red {
+            fill: #b00;
+        }
+        .large.black {
+            stroke: gray;
+        }
+        .large.red {
+            stroke: #d33;
+        }
+    </style>
+</head>
+<body>
+    <h2>Card suits</h2>
+    <svg class="float large black">
+        <use xlink:href="suits-symbols.svg#spade" 
+             x="10%" y="10%" width="80%" height="80%"/>
+    </svg>
+    <svg class="float large red">
+        <use xlink:href="suits-symbols.svg#heart" 
+             x="10%" y="10%" width="80%" height="80%" />
+    </svg>
+    <svg class="float large black">
+        <use xlink:href="suits-symbols.svg#club" 
+             x="10%" y="10%" width="80%" height="80%" />
+    </svg>
+    <svg class="float large red">
+        <use xlink:href="suits-symbols.svg#diamond" 
+             x="10%" y="10%" width="80%" height="80%" />
+    </svg>
+    <p>In playing cards, a suit is one of several categories into which the cards of a deck are divided. Most often, each card bears one of several symbols showing to which suit it belongs; the suit may alternatively or in addition be indicated by the color printed on the card. Most card decks also have a rank for each card and may include special cards in the deck that belong to no suit, often called jokers.</p>
+    <p>The four suits in the standard French deck&mdash;also used in most English-speaking countries&mdash;are 
+spades or <i lang="fr">piques</i> 
+<svg class="inline black"><use xlink:href="suits-symbols.svg#spade"/></svg>, 
+hearts or <i lang="fr">couers</i> 
+<svg class="inline red"><use xlink:href="suits-symbols.svg#heart" /></svg>,
+clubs or <i lang="fr">trèfles</i> 
+<svg class="inline black"><use xlink:href="suits-symbols.svg#club" /></svg>,
+and diamonds or <i lang="fr">carreaux</i>
+<svg class="inline red"><use xlink:href="suits-symbols.svg#diamond" /></svg>.
+    </p>
+    <small>Text adapted from <a href="http://en.wikipedia.org/wiki/Suit_(cards)">Wikipedia</a></small>
+</body>
+</html>

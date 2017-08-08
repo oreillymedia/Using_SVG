@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="410px" height="210px" viewBox="-5 -5 410 210">      <!--1-->
+    <title>Stroke Dash Offsets</title>
+    <style type="text/css">
+        svg {
+            stroke-width: 10px;
+        }
+    </style>
+    <rect width="400" height="200" 
+          fill="none" stroke="indigo"
+          stroke-dasharray="500 100" stroke-dashoffset="50" />  <!--2-->
+    <polyline points="0,75 50,125 100,75 150,125 200,75
+                      250,125 300,75 350,125 400,75"
+              fill="darkSeaGreen" stroke="seaGreen"
+              stroke-dasharray="70.71 25 20.71 25" 
+              stroke-dashoffset="-35.355" />                    <!--3-->
+</svg>

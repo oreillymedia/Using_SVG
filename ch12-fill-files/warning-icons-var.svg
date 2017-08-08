@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink" >
+    <title>Warning Icons</title>
+    <style>
+        :root {
+            /* defaults for this file */
+            --icon-sign-bg: gold;
+            --icon-sign-text: black;
+        }
+    </style>
+    <defs>
+        <path id="triangle" 
+              stroke-linejoin="round"
+              d="M10,4 18,18 2,18 Z"/>
+        <g id="triangle-sign">
+            <use xlink:href="#triangle"
+                 fill="currentColor" 
+                 stroke="currentColor" stroke-width="4" 
+                 style="fill: var(--icon-sign-bg, currentColor);
+                        stroke: var(--icon-sign-bg, currentColor)" />
+            <use xlink:href="#triangle"
+                 fill="none"
+                 stroke="white" stroke-width="1" 
+                 style="stroke: var(--icon-sign-text, white)" />
+        </g>
+    </defs>
+    
+    <symbol id="important" viewBox="0 0 20 20">
+        <use xlink:href="#triangle-sign" />
+        <text text-anchor="middle" 
+              fill="white" stroke="none"
+              style="fill: var(--icon-sign-text, white)"
+              x="10" y="16" font-size="10">!</text>
+    </symbol>
+    <rect x="5" y="5" width="40" height="40" fill="lightBlue" />
+    <use xlink:href="#important" 
+         x="5" y="5" width="40" height="40" />
+    
+    <symbol id="electricity" viewBox="0 0 20 20">
+        <use xlink:href="#triangle-sign" />
+        <polygon points="10.5,7.5 8,11.5 10.5,13 
+                         9.5,16.5 12,12.5 9.5,11" 
+                 fill="white" stroke="none"
+                 style="fill: var(--icon-sign-text, white)" />
+    </symbol>
+    <rect x="55" y="5" width="40" height="40" fill="lightBlue" />
+    <use xlink:href="#electricity" 
+         x="55" y="5" width="40" height="40" />
+    
+    <!-- and more, using similar coloring -->
+</svg>

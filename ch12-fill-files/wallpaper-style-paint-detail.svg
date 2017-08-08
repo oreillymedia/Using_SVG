@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="200px" height="200px" viewBox="2 0 10 10">
+    <pattern id="wallpaper" patternUnits="userSpaceOnUse"
+             width="2" height="2" viewBox="-2 -2 24 24">
+        <rect fill="indigo"
+              x="-2" y="-2" width="24" height="24" />
+        <path fill="hotPink"
+              d="M3,10L10,0 17,10 10,20Z 
+                 M9,11L10,18V10H15L11,9 10,2V10H5Z" />
+        
+    </pattern>
+    <linearGradient id="sky" y2="100%">
+        <stop stop-color="lightSkyBlue" offset="0.5"/>
+        <stop stop-color="cadetBlue" offset="1"/>
+    </linearGradient>
+    <linearGradient id="metal" spreadMethod="repeat"
+                    gradientTransform="scale(0.7) rotate(75)">
+        <stop stop-color="#808080" offset="0"/>
+        <stop stop-color="#404040" offset="0.25"/>
+        <stop stop-color="#C0C0C0" offset="0.35"/>
+        <stop stop-color="#808080" offset="0.5"/>
+        <stop stop-color="#E0E0E0" offset="0.7"/>
+        <stop stop-color="#606060" offset="0.75"/>
+        <stop stop-color="#A0A0A0" offset="0.9"/>
+        <stop stop-color="#808080" offset="1"/>
+    </linearGradient>
+    <defs>
+        <rect id="backdrop"
+              x="-6" y="-2" width="32px" height="32px" />
+        <polygon id="remaining" 
+                 points="-6,-2 5,-2 12,22 -6,22"/>
+        <path id="shape"
+              d="M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+                     S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z" />
+        <text id="scissors"
+              font-family="DejaVu Sans" font-size="12" 
+              text-anchor="middle" dy="0.4em"
+              transform="translate(7,5) rotate(100)">✂</text>
+    </defs>
+    
+    <use fill="url(#sky)" xlink:href="#backdrop" />
+    <g fill="black" fill-opacity="0.3">
+        <use xlink:href="#shape" x="0.3" y="0.2"/>
+        <use xlink:href="#scissors" x="0.5" y="0.1"/>
+    </g>
+    <use fill="url(#wallpaper)" xlink:href="#remaining" />
+    <use fill="url(#wallpaper)" xlink:href="#shape" />
+    <mask id="cut-out">
+        <use fill="white" xlink:href="#backdrop" />
+        <use xlink:href="#remaining" fill="black" />
+        <use xlink:href="#shape" fill="black" />
+    </mask>
+    <mask id="top-layer">
+        <use fill="white" xlink:href="#backdrop" />
+        <use xlink:href="#shape" fill="black" />
+    </mask>
+    <g style="perspective: 50px; transform-origin: 7px 5px;
+              transform:  rotate(-25deg) rotateY(130deg);"
+              mask="url(#cut-out)">
+        <use fill="lavenderblush" xlink:href="#backdrop"/>
+        <use fill="url(#wallpaper)" fill-opacity="0.2" 
+              xlink:href="#backdrop"/>
+    </g>
+    <use xlink:href="#scissors" 
+         fill="url(#metal)" stroke="dimGray" stroke-width="0.1"
+         mask="url(#top-layer)" />
+</svg>

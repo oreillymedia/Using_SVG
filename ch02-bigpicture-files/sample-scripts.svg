@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink" >  <!--1-->
+  <title>My Stand-Alone D3 Data Visualization</title>
+  <script xlink:href="/assets/d3.min.js" />        <!--2-->
+  <script><![CDATA[  //<3>
+    if (1 < 0) { 
+      console.log("Uh oh, math is broken. But my XML markup isn't."); 
+    }
+    /* more & more JS code */
+  ]]></script>
+</svg>

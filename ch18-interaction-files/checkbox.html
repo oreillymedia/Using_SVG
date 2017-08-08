@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Custom Accessible SVG Checkbox</title>
+    <style>
+body {
+    font-size: 250%;
+    font-family: sans-serif;
+    color: darkOrchid;
+}
+
+.hidden-check { 
+    position: absolute; 
+    clip: rect(0,0, 1px,1px); 
+}
+label > svg, label > .label-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+label > svg {
+    width: 1em; 
+    height: 1em;
+    margin: 0 0.5em;
+    overflow: visible;
+}
+label > .label-text {
+    max-width: calc(100% - 3em);
+}
+.hidden-check + label .visible-check { 
+    opacity: 0; 
+    transition: opacity 0.3s; 
+}
+.hidden-check:checked + label .visible-check {
+    opacity: 1;
+}
+.hidden-check:focus { 
+    outline: none; 
+}
+.hidden-check:focus + label > svg { 
+    outline: dotted deepSkyBlue;
+    outline-offset: 0.1em;
+}
+    </style>
+</head>
+<body>
+    <svg class="defs-only" width="0" height="0" 
+         aria-hidden="true" focusable="false">
+        <symbol id="checkbox-outline" viewBox="0 0 10 10"
+                overflow="visible">
+            <path stroke="currentColor" fill="none"
+                  d="M1,1 Q5,2 9,1 Q8,5 9,9 
+                          Q5,8 1,9 Q2,5 1,1Z" />
+        </symbol>
+        <symbol id="checkbox-checkmark" viewBox="0 0 10 10"
+                overflow="visible">
+            <path stroke="seaGreen" fill="none"
+                  stroke-width="2px" stroke-linecap="round"
+                  filter="drop-shadow(0.5px 0.5px 0.3px 
+                            rgba(0,0,0,0.5))"
+                  d="M2,5 L5,8 Q6,4 9,2" />
+        </symbol>
+    </svg>
+    <form>
+        <!-- The rest of the form goes here -->
+        <input class="hidden-check" type="checkbox" 
+               id="confirmation"/>
+        <label for="confirmation">
+            <svg aria-hidden="true">
+                <use xlink:href="#checkbox-outline" />
+                <use class="visible-check" 
+                     xlink:href="#checkbox-checkmark" />
+            </svg>
+            <span class="label-text">
+                <strong>Yes,</strong> I agree 
+                to the Terms &amp; Conditions
+            </span>
+        </label>
+        <!-- Submit button goes here -->
+    </form>
+</body>
+</html>

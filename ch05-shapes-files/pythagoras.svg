@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="4.3in" height="3.3in" >
+    <title>Pythagorean Triple</title>
+    <style type="text/css">
+    svg {
+        font-family: sans-serif;
+        background: white;
+    }
+    svg > svg {
+        overflow: visible;
+    }
+    .string {
+      stroke: royalBlue;
+      stroke-width: 2px;
+    }
+    .bead {
+        stroke: firebrick;
+        fill: none;
+        stroke-width: 8px;
+        stroke-linecap: round;
+        stroke-dasharray: 80px 16px;
+        stroke-dashoffset: -8px;
+    }
+    .bead:last-of-type {
+      stroke: tomato;
+    }
+    text {
+      font: bold 36pt "Segoe UI", sans-serif;
+      fill: royalBlue;
+    }
+    </style>
+    <svg x="0.15in" y="0.15in"
+         width="4in" height="3in">
+      <g>
+        <line class="string" y2="3in" />
+        <line class="string" x2="4in" />
+        <line class="string" y1="3in" x2="4in" />
+      </g>
+      <g>
+        <line class="bead" y2="3in" />
+        <line class="bead" x2="4in" />
+        <line class="bead" y1="3in" x2="4in" />
+      </g>
+      <text x="4in" y="3in" text-anchor="end">3² + 4² = 5²</text>
+    </svg>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="4in" height="120px">
+    <title>Dashed SVG Lines</title> 
+    <style type="text/css">
+        svg {
+            fill: none;
+            stroke-width: 3px;
+            font-size: 16px;
+        }
+        .A { 
+            stroke: seaGreen;
+            stroke-dasharray: 10px 2px;
+        }
+        .B {
+            stroke: blueViolet;
+            stroke-dasharray: 1em 10px 1em;
+        }
+        .C {
+            stroke: royalBlue;
+            stroke-dasharray: 3 3;
+        }
+    </style>
+    <g id="dashes">
+        <line class="A" x2="100%" transform="translate(0,5)" />
+        <line class="B" x2="100%" transform="translate(0,25)" />
+        <line class="C" x2="100%" transform="translate(0,45)" />
+    </g>
+    <use xlink:href="#dashes" stroke-width="15px"
+         y="65"/>
+</svg>

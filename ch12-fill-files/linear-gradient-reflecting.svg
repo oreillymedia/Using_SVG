@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="200px" height="200px" viewBox="-100 -100 200 200">
+    <title>Reflecting Linear Gradient</title>
+    <linearGradient id="purple-reflections" 
+                    gradientUnits="userSpaceOnUse"
+                    x1="-20" x2="+20" spreadMethod="reflect">
+        <stop stop-color="purple" offset="0.4"/>
+        <stop stop-color="plum" offset="0.9"/>
+    </linearGradient>
+    <circle r="50%" fill="url(#purple-reflections)" />
+</svg>

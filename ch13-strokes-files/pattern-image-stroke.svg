@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="200px" viewBox="0 0 400 200">
+    <title>Image Stroke, using a Pattern Sized to the Fill</title>
+    <pattern id="image-fill" width="1" height="1" 
+             viewBox="0 0 800 600"
+             preserveAspectRatio="xMidYMid slice">
+        <image width="800" height="600" 
+               xlink:href="../ch12-fill-files/lake-ontario.jpg" />
+    </pattern>
+    <symbol viewBox="0 0 20 20" id="club" 
+            style="overflow: visible">
+        <title>Club</title> 
+        <path d="M9,15.5A5,5 0 1 1 5.5, 7.5 
+                 A5,5 0 1 1 14.5, 7.5A5,5 0 1 1 11, 15.5
+                 Q11,20 13,20H7Q9,20 9,15.5Z" />
+    </symbol>
+    <use xlink:href="#club"
+         fill="none" stroke="url(#image-fill)" stroke-width="5"
+         x="20" y="20" width="160" height="160"/>
+    <use xlink:href="#club" fill="url(#image-fill)" 
+         x="20" y="20" width="160" height="160"
+         transform="translate(200,0)"/>
+</svg>

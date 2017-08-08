@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 -10 150 110">
+    <title>Testing Paint Servers applied to </title>
+    <desc>
+Chrome does not fetch 
+    </desc>
+    <symbol id="symbol" viewBox="-5 -5 10 10">
+        <polygon points="0,-5 -5,0 0,5 5,0" />
+    </symbol>
+    <symbol id="nested-symbol-local" viewBox="0 0 10 10">
+        <use xlink:href="#symbol"/>
+    </symbol>
+    <symbol id="nested-symbol-external" viewBox="0 0 10 10">
+        <use xlink:href="Chrome-bug-external-use-symbol.svg#symbol"/>
+    </symbol>
+    
+    <rect id="rect" width="50" height="50" />
+    <use id="rect-copy-local" xlink:href="#rect"/>
+    <use id="rect-copy-external" xlink:href="Chrome-bug-external-use-symbol.svg#rect"/>
+  
+  <g fill="seaGreen" text-anchor="middle" font-size="4">
+      <text x="25" y="-3">Local nested &lt;use&gt;</text>
+    <use xlink:href="#rect-copy-local" />
+    <use xlink:href="#nested-symbol-local"
+         y="50" width="50" height="50" />
+      <text x="75" y="-3">External &lt;use&gt;</text>
+    <use xlink:href="Chrome-bug-external-use-symbol.svg#rect" x="50" />
+    <use xlink:href="Chrome-bug-external-use-symbol.svg#symbol"
+         x="50" y="50" width="50" height="50" />
+      <text x="125" y="-3">Nested external &lt;use&gt;</text>
+    <use xlink:href="#rect-copy-external" x="100" />
+    <use xlink:href="#nested-symbol-external" 
+         x="100" y="50" width="50" height="50" />
+  </g>
+</svg>

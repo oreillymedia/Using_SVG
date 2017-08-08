@@ -1,0 +1,72 @@
+<!DOCTYPE html>     
+<html lang="en">    
+<head>          
+    <meta charset="utf-8" />
+    <title>Gooey Filter</title>
+    <style>
+body {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+svg { 
+    width: 4in;
+    height: 2in;
+    flex: 0 auto;
+    /*
+    filter: blur(5.5px) brightness(75%) contrast(650%) brightness(130%) hue-rotate(-60deg); 
+    */
+    overflow: visible;
+}
+.step-1 {
+    filter: blur(5.5px);
+}
+.step-2 {
+    filter: blur(5.5px) brightness(75%);
+}
+.step-3 {
+    filter: blur(5.5px) brightness(75%) contrast(650%);
+}
+.step-4 {
+    filter: blur(5.5px) brightness(75%) contrast(650%)
+            brightness(130%);
+}
+.step-5 {
+    filter: blur(5.5px) brightness(75%) contrast(650%)
+            brightness(130%) hue-rotate(-60deg);
+}
+    </style>
+    </head>
+    <body>
+<svg id="sample"
+     width="4in" height="2in" viewBox="0 0 300 150">
+    <rect x="5%" y="7%" width="90%" height="86%" 
+          fill="white" stroke="red" stroke-width="8" />
+    <g fill="cyan">
+        <g id="dots">
+            <circle r="6" cx="10%" cy="50%" />
+            <circle r="6" cx="90%" cy="50%" />
+        </g>
+        <use xlink:href="#dots" y="-60" />
+        <use xlink:href="#dots" y="-45" />
+        <use xlink:href="#dots" y="-30" />
+        <use xlink:href="#dots" y="-15" />
+        <use xlink:href="#dots" y="+15" />
+        <use xlink:href="#dots" y="+30" />
+        <use xlink:href="#dots" y="+45" />
+        <use xlink:href="#dots" y="+60" />
+    </g>
+    <text id="t"
+          font-size="76px" font-family="Stencil, Stencil Std, 
+                                        Copperplate, sans-serif"
+          fill="blue"
+          x="50%" y="50%" dy="-0.05em" text-anchor="middle"
+          >Gooey<tspan dy="0.75em" x="50%"
+               >Text</tspan></text>
+</svg>
+<svg class="step-1"><use xlink:href="#sample" /></svg>
+<svg  class="step-2"><use xlink:href="#sample" /></svg>
+<svg  class="step-3"><use xlink:href="#sample" /></svg>
+<svg  class="step-4"><use xlink:href="#sample" /></svg>
+<svg  class="step-5"><use xlink:href="#sample" /></svg>
+</body>

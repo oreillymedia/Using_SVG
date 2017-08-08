@@ -1,0 +1,336 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="4.8in" height="6.5in" viewBox="-5 0 350 475">
+    <style type="text/css"><![CDATA[
+        svg {            
+            font-size: 12px;
+        }
+        text {
+            text-anchor: middle;
+            font-family: Tahoma, sans-serif;
+        }
+        text.strong {
+            font-weight: bold;
+            stroke: yellow;
+            stroke-opacity: 0.6;
+            paint-order: stroke;
+            stroke-width: 3;
+        }
+        .heading {
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 15px;
+            fill: currentColor;
+            stroke: black;
+            stroke-width: 0.4;
+            letter-spacing: 0.2ex;
+        }
+        .style {
+            color: orangered;
+        }
+        .markup {
+            color: royalblue;
+        }
+        .scripts {
+            color: darkgreen;
+        }
+        .label {
+            stroke: currentColor;
+            stroke-width: 3;
+            fill: white;
+        }
+        .arrow {
+            stroke: currentColor;
+            stroke-opacity: 0.8;
+        }
+        .style .arrow {            
+            marker-end: url(#style-arrowhead);
+        }
+        .markup .arrow {            
+            marker-end: url(#markup-arrowhead);
+        }
+        .scripts .arrow {            
+            marker-end: url(#scripts-arrowhead);
+        }
+        .thick {
+            stroke-width: 10;
+        }
+        .thin {
+            stroke-width: 5;
+        }
+        .dashed {
+            stroke-dasharray: 5 3;
+        }
+        marker path {
+            fill: currentColor;
+            stroke: none;
+        }
+        symbol, marker, use, svg {
+            overflow: visible;
+        }
+        .backdrop {
+            fill: currentColor;
+            fill-opacity: 0.2;
+        }
+        .dates .time-block rect {
+            fill-opacity: 0.2;
+        }
+        .dates .time-block:nth-of-type(2n) rect {
+            fill: white;
+        }
+]]> </style>
+    <defs>
+        <symbol id="style-label" viewBox="0 0 100 40" preserveAspectRatio="none" >
+            <rect class="label" width="100%" height="100%" ry="50%" rx="20%"/>
+        </symbol>
+        <symbol id="markup-label" viewBox="0 0 100 40" preserveAspectRatio="none" >
+            <rect class="label" width="100%" height="100%" />
+        </symbol>
+        <symbol id="script-label" viewBox="0 0 100 40" preserveAspectRatio="none" >
+            <path class="label" 
+                  d="M0,20 C0,10 10,0 20,4 C18,0 58,0 60,5 C65,0 110,0 98,15
+                     C110,25 85,45 70,35 C65,40 35,40 30,35 C22,40 0,35 0,20 Z" />
+        </symbol>
+        <symbol id="DOM-label" viewBox="0 0 100 40" preserveAspectRatio="none" >
+            <path class="label" 
+                  d="M0,10 L20,0 80,0 100,10 100,30 80,40 20,40 0,30 Z" />
+        </symbol>
+        
+        <marker class="style"  id="style-arrowhead" 
+                orient="auto" markerWidth="1" markerHeight="2">
+            <path id="arrowhead" d="M-1,-1 L0,-0.5 Q1,0 0,0.5 L-1,1 Z" />
+        </marker>
+        <marker class="markup" id="markup-arrowhead" 
+                orient="auto" markerWidth="1" markerHeight="2">
+            <use xlink:href="#arrowhead" />
+        </marker>
+        <marker class="scripts" id="scripts-arrowhead"
+                orient="auto" markerWidth="1" markerHeight="2">
+            <use xlink:href="#arrowhead" />
+        </marker>
+    </defs>
+    <g class="dates" >
+        <g class="time-block">
+            <rect x="0" y="1.5em" width="100%" height="2.5em" />
+            <text x="325" y="2em" dy="1.2em">1980s</text>
+        </g>
+        <g class="time-block">
+            <rect x="0" y="4em" width="100%" height="14em" />
+            <text x="325" y="11em" >1990s</text>
+        </g>
+        <g class="time-block">
+            <rect x="0" y="18em" width="100%" height="14em" />
+            <text x="325" y="25em" >2000s</text>
+        </g>
+        <g class="time-block">
+            <rect x="0" y="32em" width="100%" height="14em" />
+            <text x="325" y="36em" >2010s</text>
+        </g>
+    </g>
+    <g class="style">
+        <rect class="backdrop" x="0" y="0" width="100px" height="100%" />
+        <text class="heading" x="50" y="1em">style</text>
+        <g>
+            <use xlink:href="#style-label" x="25" y="7.5em" width="50" height="1.75em" />
+            <text x="50" y="7.5em" dy="1.2em">CSS</text>
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="25" y="11em" width="50" height="1.75em" />
+            <text x="50" y="11em" dy="1.2em">CSS 2</text>
+            <line class="thick arrow" x1="50" x2="50" y1="9.25em" y2="11em" />
+            <line class="thick dashed arrow" x1="135" x2="75" y1="11em" y2="11.75em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="25" y="24em" width="50" height="1.75em" />
+            <text x="50" y="24em" dy="1.2em">CSS 2.1</text>
+            <line class="thick arrow" x1="50" x2="50" y1="12.75em" y2="24em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="55" y="26em" width="48" height="1.75em" />
+            <text x="79" y="26em" dy="1.2em">Selectors</text>
+            <line class="thin arrow" x1="55" x2="70" y1="25.75em" y2="26em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="58" y="29em" width="40" height="1.75em" />
+            <text x="79" y="29em" dy="1.2em">Colors</text>
+            <line class="thin arrow" x1="50" x2="65" y1="25.75em" y2="29em" />
+            <line class="thin dashed arrow" x1="120" x2="90" y1="24.75em" y2="29em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="0" y="32em" width="46" height="2.75em" />
+            <text x="23" y="32em" dy="1.2em">Anima-<tspan dy="1em" x="25">tions</tspan></text>
+            <line class="thin dashed arrow" x1="50" x2="35" y1="25.75em" y2="32em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="0" y="28em" width="50" height="2.75em" />
+            <text x="25" y="28em" dy="1.2em">Back-<tspan dy="1em" x="25">grounds</tspan></text>
+            <line class="thin arrow" x1="40" x2="30" y1="25.75em" y2="28em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="60" y="33em" width="40" height="1.75em" />
+            <text x="80" y="33em" dy="1.2em">Filters</text>
+            <line class="thin dashed arrow" x1="50" x2="65" y1="25.75em" y2="33em" />
+            <line class="thin arrow" x1="120" x2="90" y1="24.75em" y2="33em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="5" y="35em" width="40" height="1.75em" />
+            <text x="25" y="35em" dy="1.2em">Shapes</text>
+            <line class="thin dashed arrow" x1="50" x2="40" y1="25.75em" y2="35em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="50" y="35em" width="50" height="1.75em" />
+            <text x="75" y="35em" dy="1.2em">Masking</text>
+            <line class="thin dashed arrow" x1="50" x2="60" y1="25.75em" y2="35em" />
+            <line class="thin arrow" x1="120" x2="95" y1="24.75em" y2="35.25em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="40" y="37em" width="60" height="1.75em" />
+            <text x="70" y="37em" dy="1.2em">Transforms</text>
+            <line class="thin dashed arrow" x1="50" x2="50" y1="25.75em" y2="37em" />
+            <line class="thin arrow" x1="120" x2="100" y1="24.75em" y2="37.5em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="5" y="37.5em" width="30" height="1.75em" />
+            <text x="20" y="37.5em" dy="1.2em" style="font-style: italic">etc.</text>
+        </g>
+    </g>
+    <g class="scripts">
+        <rect class="backdrop" x="200" y="0" width="100px" height="100%" />
+        <text class="heading" x="250" y="1em">scripts</text>
+        <g>
+            <use xlink:href="#script-label" x="220" y="6em" width="80" height="1.75em" />
+            <text x="260" y="6em" dy="1.2em">JavaScript</text>
+        </g>
+        <g>
+            <use xlink:href="#script-label" x="200" y="8em" width="40" height="1.75em" />
+            <text x="220" y="8em" dy="1.2em" >JScript</text>
+        </g>
+        <g>
+            <use xlink:href="#script-label" x="215" y="11em" width="80" height="1.75em" />
+            <text x="255" y="11em" dy="1.2em">ECMAScript</text>
+            <line class="thin dashed arrow" x1="270" x2="270" y1="7.75em" y2="11em" />
+            <line class="thin dashed arrow" x1="230" x2="250" y1="9.75em" y2="11em" />
+        </g>
+        <g>
+            <use xlink:href="#script-label" x="265" y="14em" width="30" height="1.75em" />
+            <text x="280" y="14em" dy="1.2em">ES 2</text>
+            <line class="thin arrow" x1="270" x2="280" y1="12.75em" y2="14em" />
+        </g>
+        <g>
+            <use xlink:href="#script-label" x="265" y="17em" width="30" height="1.75em" />
+            <text x="280" y="17em" dy="1.2em">ES 3</text>
+            <line class="thin arrow" x1="280" x2="280" y1="15.75em" y2="17em" />
+        </g>
+        <g>
+            <use xlink:href="#script-label" x="265" y="29em" width="30" height="1.75em" />
+            <text x="280" y="29em" dy="1.2em">ES 5</text>
+            <line class="thick arrow" x1="280" x2="280" y1="18.75em" y2="29em" />
+        </g>
+        <g>
+            <use xlink:href="#script-label" x="260" y="32em" width="40" height="1.75em" />
+            <text x="280" y="32em" dy="1.2em">ES 5.1</text>
+            <line class="thin arrow" x1="280" x2="280" y1="30.75em" y2="32em" />
+        </g>
+        <g>
+            <use xlink:href="#script-label" x="265" y="37em" width="30" height="1.75em" />
+            <text x="280" y="37em" dy="1.2em">ES 6</text>
+            <line class="thick arrow" x1="280" x2="280" y1="33.75em" y2="37em" />
+        </g>
+        <g>
+            <use xlink:href="#DOM-label" x="220" y="13em" width="40" height="1.75em" />
+            <text x="240" y="13em" dy="1.2em">DOM</text>
+            <line class="thick dashed arrow" x1="135" x2="220" y1="14em" y2="14em" />
+        </g>
+        <g>
+            <use xlink:href="#DOM-label" x="202" y="17.5em" width="36" height="2.75em" />
+            <text class="strong" x="220" y="17.5em" dy="1.2em">SVG 
+                <tspan dy="1em" x="220">DOM</tspan></text>
+            <line class="thin arrow" x1="235" x2="220" y1="14.75em" y2="17.5em" />
+            <line class="thick dashed arrow" x1="135" x2="200" y1="19em" y2="19em" />
+        </g>
+        <g>
+            <use xlink:href="#DOM-label" x="220" y="20.5em" width="40" height="1.75em" />
+            <text x="240" y="20.5em" dy="1.2em">DOM 2</text>
+            <line class="thick arrow" x1="245" x2="245" y1="14.75em" y2="20.5em" />
+        </g>
+        <g>
+            <use xlink:href="#DOM-label" x="220" y="24em" width="40" height="1.75em" />
+            <text x="240" y="24em" dy="1.2em">DOM 3</text>
+            <line class="thin arrow" x1="240" x2="240" y1="22.25em" y2="24em" />
+        </g>
+        <g>
+            <use xlink:href="#DOM-label" x="205" y="34em" width="30" height="2.75em" />
+            <text x="220" y="34em" dy="1.2em">DOM 
+                <tspan dy="1em" x="220">APIs</tspan></text>
+            <line class="thin dashed arrow" x1="235" x2="220" y1="25.75em" y2="34em" />
+            <line class="thin dashed arrow" x1="195" x2="205" y1="33em" y2="34.5em" />
+        </g>
+        <g>
+            <use xlink:href="#DOM-label" x="220" y="37em" width="40" height="1.75em" />
+            <text x="240" y="37em" dy="1.2em">DOM 4</text>
+            <line class="thick arrow" x1="245" x2="245" y1="25.75em" y2="37em" />
+        </g>
+    </g>
+    <g class="markup">
+        <rect class="backdrop" x="100" y="0" width="100px" height="100%" />
+        <text class="heading" x="150" y="1em">markup</text>
+        <g>
+            <use xlink:href="#markup-label" x="105" y="2em" width="90" height="1.5em" />
+            <text x="150" y="2em" dy="1.2em">SGML</text>
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="135" y="5em" width="60" height="1.75em" />
+            <text x="165" y="5em" dy="1.2em">HTML</text>
+            <line class="thick arrow" x1="170" x2="170" y1="3.5em" y2="5em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="135" y="7.5em" width="60" height="1.75em" />
+            <text x="165" y="7.5em" dy="1.2em">HTML 2</text>
+            <line class="thin arrow" x1="170" x2="170" y1="6.75em" y2="7.5em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="135" y="10em" width="60" height="1.75em" />
+            <text x="165" y="10em" dy="1.2em">HTML 3.2</text>
+            <line class="thin arrow" x1="170" x2="170" y1="9.25em" y2="10em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="105" y="13em" width="30" height="1.75em" />
+            <text x="120" y="13em" dy="1.2em">XML</text>
+            <line class="thick arrow" x1="120" x2="120" y1="3.5em" y2="13em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="145" y="14em" width="50" height="1.75em" />
+            <text x="170" y="14em" dy="1.2em">HTML 4</text>
+            <line class="thin arrow" x1="170" x2="170" y1="11.75em" y2="14em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="140" y="17em" width="40" height="1.75em" />
+            <text x="160" y="17em" dy="1.2em">XHTML</text>
+            <line class="thin arrow" x1="120" x2="155" y1="14.75em" y2="17em" />
+            <line class="thin arrow" x1="170" x2="165" y1="15.75em" y2="17em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="105" y="18em" width="30" height="1.75em" />
+            <text class="strong" x="120" y="18em" dy="1.2em">SVG</text>
+            <line class="thin arrow" x1="120" x2="120" y1="14.75em" y2="18em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="105" y="23em" width="50" height="1.75em" />
+            <text class="strong" x="130" y="23em" dy="1.2em">SVG 1.1</text>
+            <line class="thick arrow" x1="120" x2="120" y1="19.75em" y2="23em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="135" y="31em" width="60" height="4em" />
+            <text x="165" y="31em" dy="2.5em">(X)HTML 5</text>
+            <line class="thick arrow" x1="188" x2="188" y1="15.75em" y2="31em" />
+            <line class="thin arrow" x1="165" x2="165" y1="18.75em" y2="31em" />
+            <line class="thin dashed arrow" x1="135" x2="155" y1="24.75em" y2="31em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="105" y="37em" width="50" height="1.75em" />
+            <text class="strong" x="130" y="37em" dy="1.2em">SVG 2</text>
+            <line class="thick arrow" x1="125" x2="125" y1="24.75em" y2="37em" />
+            <line class="thin dashed arrow" x1="155" x2="145" y1="35em" y2="37em" />
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Stoplight Drawn Using CSS Gradients</title>
+    <style>
+        figure {
+            margin: 0;
+            padding: 0;
+        }
+        .stoplight-frame {
+            margin: 20px;
+            width: 100px;
+            height: 280px;
+            position: relative;
+            border: solid black 3px;
+            background: repeating-linear-gradient(-25deg,
+                #808080 0, #404040 12%, #C0C0C0 17%,
+                #808080 25%, #E0E0E0 35%, #606060 38%,
+                #A0A0A0 45%, #808080 50%);
+        }
+        .stoplight-light {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            border: solid black 2px;
+            position: absolute;
+            left: 20px;
+            
+            background-size: 40% 40%, cover;
+            background-repeat: no-repeat;
+            background-position: 40% 30%, center;
+        }
+        .stoplight-light.red {
+            top: 30px;
+            background-color: #880000;
+            background-image: 
+                radial-gradient(closest-side, 
+                    maroon 10%, transparent ),
+                radial-gradient(closest-side, 
+                    #660000, #220000 70%, black);    
+        }
+        .stoplight-light.red.on {
+            background-color: red;
+            background-image: 
+                radial-gradient(closest-side, 
+                    orange 10%, transparent),
+                radial-gradient(closest-side, 
+                    red 80%, brown);            
+        }
+        .stoplight-light.yellow {
+            top: 110px;
+            background-color: #aa8800;
+            background-image: 
+                radial-gradient(closest-side, 
+                    #A06000 10%, transparent),
+                radial-gradient(closest-side, 
+                    #905000, #804000 70%, #502000);  
+        }
+        .stoplight-light.yellow.on {
+            background-color: yellow;
+            background-image:  
+                radial-gradient(closest-side, 
+                    yellow 10%, transparent),
+                radial-gradient(closest-side, 
+                    gold, orange 80%, darkOrange); 
+        }
+        .stoplight-light.green {
+            top: 190px;
+            background-color: #004400;
+            background-image: 
+                radial-gradient(closest-side, 
+                    #007000 10%, transparent),
+                radial-gradient(closest-side, 
+                    #006800, #004000 70%, #001000);  
+        }
+        .stoplight-light.green.on {
+            background-color: #40CC40;
+            background-image: 
+                radial-gradient(closest-side, 
+                    #88FF00 10%, transparent),
+                radial-gradient(closest-side, 
+                    #82F000, forestGreen 80%, darkGreen); 
+        }
+    </style>
+</head>
+<body>
+    <figure>
+        <div class="stoplight-frame" >
+            <div class="stoplight-light red off" ></div>
+            <div class="stoplight-light yellow off" ></div>
+            <div class="stoplight-light green on" ></div>
+        </div>
+    </figure>
+</body>
+</html>

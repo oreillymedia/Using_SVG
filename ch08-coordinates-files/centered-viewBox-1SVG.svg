@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="410px" height="420px">
+    <title>Using ViewBox to center a coordinate system</title>
+    <style type="text/css">
+    .target {
+        stroke: tomato;
+        fill: none;
+        stroke-width: 3px;
+    }
+    .backdrop {
+        fill: #324;
+    }
+    </style>
+    <defs>
+        <g id="circles" class="target">
+            <circle r="10" />
+            <circle r="20" />
+            <circle r="30" />
+            <circle r="40" />
+            <circle r="50" />
+            <circle r="60" />
+            <circle r="70" />
+            <circle r="80" />
+            <circle r="90" />
+            <circle r="100" />
+        </g>
+    </defs>
+    <svg x="5px" y="5px" width="400px" height="200px">
+        <rect class="backdrop" width="100%" height="100%" />
+        <use xlink:href="#circles" />
+    </svg>
+    <svg x="5px" y="215px" width="400px" height="200px" 
+         viewBox="-200 -100 400 200">
+        <rect class="backdrop" 
+              width="100%" height="100%" x="-50%" y="-50%"/>
+        <use xlink:href="#circles" />
+    </svg>
+</svg>

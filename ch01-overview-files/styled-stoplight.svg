@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     height="320px" width="140px" >
+    <title>CSS-Styled Stoplight</title>
+    <style type="text/css">      <!--1-->
+        rect, circle {
+            stroke: black;
+            stroke-width: 3;     <!--2-->
+        }
+        .light {
+            stroke-width: 2;     <!--3-->
+        }
+    </style>
+    <rect x="20" y="20" width="100" height="280" 
+          style="fill:blue;" />  <!--4-->
+    <g>
+        <circle class="light" style="fill:red"
+                cx="70" cy="80" r="30" />          <!--5-->
+        <circle class="light" style="fill:yellow"
+                cx="70" cy="160" r="30" />
+        <circle class="light" style="fill:#40CC40"
+                cx="70" cy="240" r="30" />
+    </g>
+</svg>

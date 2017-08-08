@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Inline SVG within HTML</title>
+    <style>
+        form {
+            display: block;
+            margin: 1em;
+            padding: 1em;
+            background: lightyellow;
+            border: double navy thick;
+            border-radius: 1em;
+            overflow: auto;
+            color: #002;
+        }
+        label {
+            display: block;
+            clear: right;
+            padding: 0.5em 0;
+            font-family: sans-serif;
+        }
+        input, button {
+            display: block;
+            float: right;
+            min-width: 6em;
+            max-width: 70%;
+            border-width: 3px;
+            padding: 0.2em;
+        }
+        input:invalid, input.invalid {
+            border-color: red;
+        }
+        abbr[title="required"] {
+            color: red;
+            font-weight: bold;
+            text-decoration: none;
+            border: none;
+        }
+        text {
+            font-size: 60px; 
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+        #validationSVG {
+            float: left;
+            width: 6em;
+            height: 14em;
+            max-width: 50%;
+        }
+        .lit {
+            display: none;
+        }
+        .ok .green .lit {
+            display: block;
+        }
+        .incomplete .yellow .lit {
+            display: block;
+        }
+        .invalid .red .lit {
+            display: block;
+        }
+        #validationMessage {
+            min-height: 10em;
+            text-align: right;
+            padding: 0.5em 0;
+            color: darkred;
+        }
+        
+    </style>
+</head>
+<body>
+<form id="contactForm" class="incomplete" method="post" novalidate >
+    <h1>How can we contact you?</h1>
+    <label> 
+        <input type="text" name="CustomerName" required class="incomplete"
+               data-incomplete="We need your name to process your request" />
+        Full Name <abbr title="required">*</abbr>
+    </label>
+    <label>
+        <input type="email" name="CustomerEmail" required class="incomplete" 
+               pattern="[\w\.]+@[\w\.]+"
+               data-incomplete="We need your email to send you your receipt"
+               data-invalid="The email address you typed is invalid" />
+        Email Address <abbr title="required">*</abbr>
+    </label>
+    <label>
+        <input type="tel" name="CustomerTelephone"
+               pattern="\s*\(?\d{3}\)?\-?\s*\d{3}\-?\s*\d{4}\s*" 
+               title="(Optional) 10-digit number including area code"
+               data-invalid="The phone number should be of the form
+                             123-456-7890; leave empty if you
+                             only want to be contacted by email." />
+        Telephone Number
+    </label>
+    <svg id="validationSVG" 
+         viewBox="0 0 140 320" preserveAspectRatio="xMinYMin meet" >
+        <defs>
+            <circle id="light" cx="70" r="30" />
+        </defs>
+        <rect x="20" y="20" width="100" height="280" 
+              fill="url(gradients.svg#metal) silver" 
+              stroke="black" stroke-width="3" /> 
+        <g stroke="black" stroke-width="2">
+            <g class="red light" >
+                <use xlink:href="#light" y="80" 
+                     fill="url(gradients.svg#red-light-off) maroon" />
+                <use class="lit" xlink:href="#light" y="80" 
+                     fill="url(gradients.svg#red-light-on) red" />
+            </g>
+            <g class="yellow light">
+                <use xlink:href="#light" y="160" 
+                     fill="url(gradients.svg#yellow-light-off) #705008" />
+                <use class="lit" xlink:href="#light" y="160" 
+                     fill="url(gradients.svg#yellow-light-on) yellow" />
+            </g>
+            <g class="green light">
+                <use xlink:href="#light" y="240" 
+                     fill="url(gradients.svg#green-light-off) #002804" />
+                <use class="lit" xlink:href="#light" y="240" 
+                     fill="url(gradients.svg#green-light-on) lime" />
+            </g>
+        </g>
+    </svg>
+    <div id="validationMessage"></div>
+    <button type="submit" >Send</button>        
+</form>
+<script>
+(function(){    
+    function validateInput(e) {
+        this.value = this.value.trim(); //remove excess whitespace
+        var ok = true;
+        
+        //First, check for missing required values
+        if ( this.hasAttribute("required") && 
+             (this.value.length == 0) ) {
+            this.className = "incomplete";
+            ok=false;
+        }
+        //Second, if the browser supports the HTML5 validity API
+        //use it to test validity
+        else if (this.validity) {
+            if (!this.validity.valid) {
+                this.className =  "invalid";
+                ok=false;
+            }
+        }
+        //Otherwise, test validity using the pattern attribute
+        else if (this.hasAttribute("pattern")) {
+            var p = new RegExp( this.getAttribute("pattern") );
+            if (!p.test(this.value) ) {
+                this.className = "invalid";
+                ok=false;
+            }
+        }       
+        
+        if (ok) 
+                this.className = "ok";
+        
+        validateForm(e); 
+    }
+    
+    function validateForm(e) {
+        var problem;
+        if ( problem=form.querySelector(".invalid") ) {
+            form.className = "invalid";
+            message.innerHTML = problem.getAttribute("data-invalid");
+            e.preventDefault();
+        }
+        else if ( problem=form.querySelector(".incomplete") ) {
+            form.className = "incomplete";
+            message.innerHTML = problem.getAttribute("data-incomplete");
+            e.preventDefault();
+        }
+        else {
+            form.className = "ok";
+            message.innerHTML = "";
+        }
+    }
+    
+    var form    = document.getElementById("contactForm"),
+        inputs  = form.querySelectorAll("input"),
+        message = document.getElementById("validationMessage");
+    
+    for (var i=0, n=inputs.length; i<n; i++) {
+        inputs[i].addEventListener("blur", validateInput);
+        if (inputs[i].value) inputs[i].className = "";
+        //Remove the incomplete class if the browser
+        //has auto-filled the form
+    }
+    form.addEventListener("submit", validateForm);
+    validateForm(); //update form class in case inputs were auto-filled
+})()
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     width="14cm" height="11cm">
+    <title>Splash!</title>
+    <style type="text/css">
+        .water {
+            fill: paleTurquoise;
+        }
+        .ripples {
+            stroke: lightSeaGreen;
+            fill: lightSeaGreen;
+            fill-opacity: 0.15;
+        }
+        .stone {
+            fill: darkSlateGray;
+        }
+    </style>    
+    <rect class="water" width="14cm" height="11cm" />
+    <g class="ripples" >
+        <rect x="5.75cm" y="4.75cm" width="2.5cm" height="1.5cm" 
+              rx="0.25cm" />
+        <rect x="5cm"    y="4cm"    width="4cm"   height="3cm"  
+              rx="1cm"    />
+        <rect x="4cm"    y="3cm"    width="6cm"   height="5cm"  
+              rx="2cm"    />
+        <rect x="3cm"    y="2.5cm"  width="8cm"   height="6cm"   
+              rx="3cm"   ry="2.5cm" />
+        <rect x="2cm"    y="2cm"    width="10cm"  height="7cm"   
+              rx="4cm"   ry="3cm"   />
+        <rect x="1cm"  y="1cm"  width="12cm"  height="9cm"   
+              rx="5.5cm"   ry="4cm" />
+        <rect x="0.5cm"    y="0.5cm"    width="13cm"  height="10cm"   
+              rx="6.5cm"   ry="5cm" />
+    </g>
+    <rect class="stone" 
+          x="6cm" y="5cm" width="2cm" height="1cm" rx="0.1cm"/>
+</svg>

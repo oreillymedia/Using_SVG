@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="430" height="720" viewBox="0 0 860 1440">
+    <title>The Masked Man</title>
+    <style>
+        #layers image {
+            animation: fade 7s alternate infinite;
+        }
+        #layers image:nth-of-type(1) {animation-duration: 3s;}
+        #layers image:nth-of-type(2) {animation-duration: 4s;}
+        #layers image:nth-of-type(3) {animation-duration: 5s;}
+        #layers image:nth-of-type(4) {animation-duration: 6.5s;}
+        #layers image:nth-of-type(5) {animation-duration: 7s;}
+        
+        @keyframes fade {
+            0%, 20%, 60%, 90%, 100% { opacity: 0 }
+            10%, 80% { opacity: 0.5 }
+        }
+    </style>
+    <defs>
+        <linearGradient id="grad1" 
+                        gradientTransform="scale(0.8) rotate(10)">
+            <stop offset="0"/> 
+            <stop offset="0.3" stop-color="#222"/> 
+            <stop offset="0.4" stop-color="#444"/>
+            <stop offset="0.6" stop-color="#888"/>
+            <stop offset="0.8" stop-color="#444"/>
+            <stop offset="0.9" stop-color="#222"/> 
+            <stop offset="1"/>          
+        </linearGradient>
+        <linearGradient id="grad2" xlink:href="#grad1" 
+            gradientTransform="scale(0.9) rotate(-10)"/>
+        <radialGradient id="grad3" xlink:href="#grad1" 
+            gradientTransform="translate(0.1) skewX(10)" />
+        <radialGradient id="grad4" xlink:href="#grad1" 
+            gradientTransform="translate(-0.2) rotate(-15)" />
+        <radialGradient id="grad5" xlink:href="#grad1" 
+            gradientTransform="skewY(10) rotate(30)" />
+        <mask id="mask1" maskContentUnits="objectBoundingBox">
+            <rect width="1" height="1" fill="url(#grad1)"/> 
+        </mask>
+        <mask id="mask2" maskContentUnits="objectBoundingBox">
+            <rect width="1" height="1" fill="url(#grad2)"/> 
+        </mask>
+        <mask id="mask3" maskContentUnits="objectBoundingBox">
+            <rect width="1" height="1" fill="url(#grad3)"/> 
+        </mask>
+        <mask id="mask4" maskContentUnits="objectBoundingBox">
+            <rect width="1" height="1" fill="url(#grad4)"/> 
+        </mask>
+        <mask id="mask5" maskContentUnits="objectBoundingBox">
+            <rect width="1" height="1" fill="url(#grad5)"/> 
+        </mask>
+    </defs>
+    <image width="100%" height="100%" xlink:href="TopHatKurt.jpg"/>
+    <g id="layers">
+        <image mask="url(#mask1)" width="100%" height="100%"
+               xlink:href="TopHatSkull.jpg"/>
+        <image mask="url(#mask2)" width="100%" height="100%"
+               xlink:href="TopHatSkull.jpg"/>
+        <image mask="url(#mask3)" width="100%" height="100%"
+               xlink:href="TopHatSkull.jpg"/>
+        <image mask="url(#mask4)" width="100%" height="100%"
+               xlink:href="TopHatSkull.jpg"/>
+        <image mask="url(#mask5)" width="100%" height="100%"
+               xlink:href="TopHatSkull.jpg"/>
+    </g>
+</svg>  

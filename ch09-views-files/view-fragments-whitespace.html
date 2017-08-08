@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Using svgView fragments to create views</title>
+    <style>
+        img, iframe, object {
+            display: block;
+            width: 90%;
+            height: 80px;
+            margin: 10px auto;
+            background-color: lightgreen;
+        }
+        a {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h2>Image Sources</h2>
+    <img src="../ch06-path-files/heart.svg#svgView(viewBox(0,0,20,20);preserveAspectRatio(xMaxYMax slice))" />
+    <img src="../ch06-path-files/heart.svg#svgView(viewBox(0,0,20,20);preserveAspectRatio(xMaxYMaxslice))" />
+    <img src="../ch06-path-files/heart.svg#svgView(viewBox(0,0,20,20);preserveAspectRatio(xMaxYMax,slice))" />
+    <img src="../ch06-path-files/heart.svg#svgView(viewBox(0,0,20,20);preserveAspectRatio(xMaxYMax%20slice))" />
+</body>
+</html>

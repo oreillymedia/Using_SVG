@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="300px" viewBox="0 0 40 30" >
+    <title>3D perspective on transformed shapes</title>
+    <style type="text/css">
+        .scene {
+            perspective: 100px;
+            perspective-origin: 80px -40px;    <!--1-->
+        }
+        .box {
+            transform-style: preserve-3d;      <!--2-->
+        }
+        rect {
+            stroke-width: 0.3;
+            stroke-linejoin: round;
+        }
+        .inside {
+            fill: burlywood;
+            stroke: saddleBrown;
+        }
+        .outside {
+            fill: lightGray;
+            stroke: gray;
+        }
+    </style>
+    <g class="scene">
+        <g class="box" style="transform: translate(5px,10px)"> <!--3-->
+            <rect class="inside" width="25" height="15"
+                  style="transform: translateZ(-10px)"/>
+            <rect class="inside" width="10" height="15" 
+                  style="transform: rotateY(90deg)"/>
+            <rect class="outside" width="25" height="15" />
+            <rect class="outside" width="10" height="15" 
+                  style="transform: translate(25px,0) 
+                                    rotateY(90deg)"/>        
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="200px" width="200px" viewBox="0 0 20 20">    
+    <title>Club, with alternate view</title>
+    <style>
+        view:target + a path {
+            stroke: darkred;
+            stroke-width: 1;
+        }
+    </style>
+    <view id="alt" viewBox="-1 -1 22 22">
+        <title>Club with stroke</title>
+    </view>
+    <a xlink:href="#alt">
+        <path fill="black"
+              d="M 9,15.5 
+                 A 5,5 0 1 1 5.5, 7.5 
+                 A 5,5 0 1 1 14.5, 7.5
+                 A 5,5 0 1 1 11, 15.5
+                 Q 11,20 13,20  
+                 H 7 
+                 Q 9,20 9,15.5 Z" />
+    </a>
+</svg>

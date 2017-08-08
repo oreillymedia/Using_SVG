@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="4.8in" height="4.8in" viewBox="-220 0 480 480"
+     >
+    <title>The Web Platform: Roles and Relationships of Key Specifications</title>
+    <style>
+svg {            
+    font-size: 20px;
+    font-family: Tahoma, sans-serif;
+    isolation: isolate;
+}
+.style {
+    color: orangered;
+    text-anchor: end;
+}
+.markup {
+    color: royalblue;
+    text-anchor: end;
+}
+.scripts {
+    color: darkgreen;
+    text-anchor: start;
+}
+.protocols {
+    color: darkorchid;
+    text-anchor: start;
+}
+.venn {
+    fill: currentColor;
+    fill-opacity: 0.3;
+    stroke: currentColor;
+    stroke-opacity: 0.7;
+    stroke-width: 5;
+    mix-blend-mode: overlay;
+}
+.web {
+    fill: #ff9;
+    stroke: black;
+    stroke-width: 3;
+}
+.concern .sub {
+    font-size: 80%;
+}
+.heading {
+    font-weight: bold;
+    font-size: 120%;
+    fill: currentColor;
+    stroke: black;
+    stroke-width: 0.6;
+    letter-spacing: 1px;
+}
+.heading.sub {
+    font-size: 85%;
+    text-anchor: middle;
+}
+    </style>
+    <g class="markup">
+        <text class="concern" x="-25" y="70" dy="-1em">Content Structure<tspan 
+        class="sub" x="-25" dy="1em"> what the document is</tspan></text>
+        <circle class="venn" r="100" cx="0" cy="175" />
+        <text class="heading" y="130"> XML<tspan x="0" dy="1em"> HTML</tspan></text>
+    </g>
+    <g class="protocols">
+        <text class="concern" x="100" y="50" dy="-1em">Connection
+        <tspan class="sub" x="100" dy="1em">where to find it</tspan></text>
+        <circle class="venn" r="100" cx="135" cy="160" />
+        <text class="heading" x="120" y="140">HTTP <tspan x="120" dy="1em">URI</tspan></text>
+        <text class="heading sub" x="65" y="160">Links</text>
+    </g>
+    <g class="style">
+        <text class="concern" x="-40" y="400" dy="1em">Style &amp; Formatting<tspan
+        class="sub" x="-40" dy="1em">how it looks</tspan></text>
+        <circle class="venn" r="100" cx="-70" cy="290" />
+        <text class="heading" x="-60" y="320" dx="-1em">CSS</text>
+        <g transform="translate(-60, 225)rotate(30)">
+            <text class="heading sub">Selectors</text>
+        </g>
+    </g>
+    <g class="scripts">
+        <text class="concern" x="40" y="400" dy="1em">Logic &amp; Functionality <tspan 
+        class="sub" x="40" dy="1em">how it works</tspan></text>
+        <circle class="venn" r="100" cx="70" cy="290" />
+        <g transform="translate(40,370)rotate(-35)">
+            <text class="heading" >JavaScript</text>
+        </g>
+        <g transform="translate(30, 235) rotate(55)">
+            <text class="heading sub">DOM</text>
+        </g>
+        <text class="heading sub" x="115" y="240">AJAX</text>        
+        <text class="heading sub" x="0" y="305">CSS<tspan x="0" dy="1em">OM</tspan></text>
+    </g>
+    <g class="web">
+        <polygon id="star" transform="translate(0,240)" 
+                 points="0,0 5,8 15,8 7,14 12,25 0,18 -12,25 -7,14 -15,8 -5,8"/>
+        <use xlink:href="#star" transform="translate(73,-46)"/>
+    </g>
+</svg>

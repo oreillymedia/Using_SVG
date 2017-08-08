@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 400 120" width="4in" height="1.2in">
+    <title>Blur without eroded edges</title>
+    <filter id="blur-trimmed-filled">
+        <feGaussianBlur stdDeviation="1.5" result="blur"/>
+        <feMorphology radius="3" operator="dilate" />
+        <feMerge>
+            <feMergeNode />
+            <feMergeNode in="blur" />
+        </feMerge>
+        <feComposite in2="SourceAlpha" operator="in" />
+    </filter>
+    <defs>
+        <text id="t"
+              font-size="60px" font-family="Stencil, Stencil Std, 
+                                            Copperplate, sans-serif"
+              fill="#CDB" stroke="#352"
+              stroke-width="6px" paint-order="stroke"
+              x="5" y="107" dy="-0.9em" text-anchor="start"
+              >Fuzzy 
+            <tspan dy="0.9em" x="195" text-anchor="end"
+                   >Text</tspan></text>
+        <image id="i"
+               x="200" y="10" width="200" height="100"
+               xlink:href="sleepy-siamese.jpg"/>
+    </defs>
+    
+    <use xlink:href="#t" filter="url(#blur-trimmed-filled)" />
+    <use xlink:href="#i" filter="url(#blur-trimmed-filled)" />
+</svg>

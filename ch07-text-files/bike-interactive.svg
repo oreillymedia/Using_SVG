@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="586"
+     viewBox="0 0 1000 586" id="lynskey">
+    <title>Lynskey 2017 Vialé Technical Details (Interactive version)</title>
+    <style>
+        svg text {
+            font: 20px sans-serif;
+            fill: darkBlue;
+            transition: font-size 0.5s, opacity 0.3s;
+        }
+        @media (max-width: 600px), (max-height: 342px) {
+            svg text { font-size: 28px; }
+        }
+        @media (max-width: 400px), (max-height: 235px) {
+            svg text { font-size: 36px; }
+        }
+        .target { 
+            fill: none; 
+            pointer-events: visibleFill;
+        }
+        svg:hover g:not(:hover) text {
+            opacity: 0;
+        }
+    </style>
+    <image width="100%" height="100%" xlink:href="viale.jpg" />
+    <g>
+        <circle class="target" cx="770" cy="400" r="172"/>
+        <circle class="target" cx="220" cy="380" r="172"/>
+        <text x="360" y="520">DTSwiss TK540/X.9 Wheelset</text>
+    </g>
+    <g>
+        <polygon class="target"
+                 points="250,25 443,25 443,60 357,101 260,65" />
+        <text x="80" y="120">Selle Italia X1 Flow Saddle</text>
+    </g>
+    <g>
+        <polygon class="target"
+                 points="646,105 367,130 245,350 283,409
+                         390,434 413,379 456,370 500,400
+                         677,207 684,229 700,217 669,120" />
+        <text x="420" y="200">Titanium frame</text>
+    </g>
+    <g>
+        <circle class="target" cx="225" cy="400" r="55" />
+        <polygon class="target" 
+                 points="210,400 230,480 500,480 
+                         570,400 500,360 240,360" />
+        <text x="80" y="570">SRAM Apex rear dérailleur</text>
+    </g>
+</svg>

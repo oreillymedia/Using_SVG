@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="200px" height="200px" viewBox="-100 -100 200 200">
+    <title>WebKit-friendly Bulls-eye Gradient</title>
+    <style>
+        stop.A { stop-color: tomato; }
+        stop.B { stop-color: #222; }
+    </style>
+    <radialGradient id="bullseye" r="0.6">
+        <stop class="A" offset="0.1667"/>
+        <stop class="B" />
+        <stop class="B" offset="0.3333"/>
+        <stop class="A" />
+        <stop class="A" offset="0.5"/>
+        <stop class="B" />
+        <stop class="B" offset="0.6667"/>
+        <stop class="A" />
+        <stop class="A" offset="0.8333"/>
+        <stop class="B" />
+    </radialGradient>
+    <circle r="50%" fill="url(#bullseye)" />
+</svg>

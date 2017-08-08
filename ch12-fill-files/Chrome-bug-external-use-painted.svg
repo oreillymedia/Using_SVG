@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 200 100">
+    <title>Testing Paint Servers applied to </title>
+    <desc>
+Chrome does not apply paint-server content
+to shapes re-used from a separate file.
+    </desc>
+  <linearGradient id="grad">
+    <stop offset="0" stop-color="purple" />
+    <stop offset="1" stop-color="skyBlue" />
+  </linearGradient>
+  <pattern id="pattern" width="10" height="10"
+           patternUnits="userSpaceOnUse">
+    <rect width="10" height="10" fill="purple"/>
+    <rect width="5" height="5" fill="skyBlue"/>
+    <rect x="5" y="5" width="5" height="5" fill="skyBlue"/>
+  </pattern>
+  <symbol id="symbol" viewBox="-5 -5 10 10">
+    <circle r="5" />
+  </symbol>
+  
+  <g fill="url(#grad) crimson">
+    <rect width="50" height="50" />
+    <use xlink:href="#symbol"
+         x="50" width="50" height="50" />
+    <use xlink:href="Chrome-bug-external-use-symbol.svg#rect"
+         x="100" />
+    <use xlink:href="Chrome-bug-external-use-symbol.svg#symbol"
+         x="150" width="50" height="50" />
+  </g>
+  
+  <g fill="url(#pattern) crimson" transform="translate(0,50)">
+    <rect width="50" height="50" />
+    <use xlink:href="#symbol"
+         x="50" width="50" height="50" />
+    <use xlink:href="Chrome-bug-external-use-symbol.svg#rect"
+         x="100" />
+    <use xlink:href="Chrome-bug-external-use-symbol.svg#symbol"
+         x="150" width="50" height="50" />
+  </g>
+</svg>

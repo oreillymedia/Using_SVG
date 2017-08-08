@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="410px" height="205px" viewBox="-1 -1 44 22">
+    <title>Dotting SVG Shapes with Linecaps</title> 
+    <style type="text/css">
+        svg {
+            fill: none;
+            stroke-dasharray: 0.0089 1.97;       <!--1-->
+        }
+        path[id="heart"] {
+            stroke-linecap: round;               <!--2-->
+        }
+        path[id="spade"] {
+            stroke-linecap: square;              <!--3-->
+        }
+    </style>
+    
+    <path id="heart" stroke="darkRed"
+          d="M10,6 Q10,0 15,0T20,6Q20,10 15,14 
+             T10,20Q10,18 5,14T0,6Q0,0 5,0T10,6Z" />  <!--4-->
+    <path id="spade" stroke="#222" transform="translate(22,0)"
+          d="M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+             S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z" />
+    
+</svg>

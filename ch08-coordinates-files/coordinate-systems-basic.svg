@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="4in" height="4in" viewBox="-10 -20 130 140">
+    <title>Coordinate systems</title>
+    <style type="text/css">
+    svg {
+        overflow: visible;
+        font-family: sans-serif;
+        background: white;
+    }
+    .axis {
+        fill: none;
+        stroke: black;
+        stroke-width: 4;
+        marker-end: url(#arrow);
+        stroke-dasharray: 9 1;
+        stroke-dashoffset: -0.5;
+    }
+    text.axis-label, .axis-origin {
+        fill: black;
+        font-style: italic;
+        font-family: serif;
+        font-size: 10pt;
+    }
+    .sample-path {
+        stroke: tomato;
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-dasharray: 2 3;
+        stroke-dashoffset: -1.5;
+    }
+    .sample-point {
+        fill: tomato;
+        fill-opacity: 0.7;
+        stroke: firebrick;
+    }
+    .sample-label {
+        fill: firebrick;
+        font-size: 10pt;
+    }
+    .measurement {
+        stroke: royalBlue;
+        stroke-width: 2;
+        fill: none;
+    }
+    .measurement-label {
+        fill: royalBlue;
+        font-size: 8pt;
+    }
+    </style>
+    <defs>
+        <marker id="arrow" overflow="visible" orient="auto">
+          <polygon points="0,2 3,0 0,-2"/>
+        </marker>
+    </defs>
+    <polyline class="x axis" points="0,0 100,0" />
+    <polyline class="x axis" points="0,0 0,100" />
+    <text class="axis-label" dy="-8" x="120"
+          text-anchor="end">x axis</text>
+    <text class="axis-label" dy="+8" dx="8" y="100"
+          >y axis</text>
+    <circle class="axis-origin" r="5"/>
+    
+    <path class="sample-path" d="M0,0 H50 V80" />    
+    <circle class="sample-point" cx="50" cy="80" r="4"/>
+    <text class="sample-label" x="50" y="80" dx="0.5em" dy="-0.2em">x=50</text>
+    <text class="sample-label" x="50" y="80" dx="0.5em" dy="+0.8em">y=80</text>
+    
+    
+    <path class="measurement" d="M0,0 C0,-10 20,0 25,-10 C30,0 50,-10 50,0" />
+    <text class="measurement-label" x="25" y="-10" dy="-0.1em"
+          text-anchor="middle">50</text>    
+    <path class="measurement" d="M50,0 C40,0 50,35 40,40 C50,45 40,80 50,80" />
+    <text class="measurement-label" x="40" y="40" dy="0.4em" dx="-0.2em"
+          text-anchor="end">80</text>
+</svg>

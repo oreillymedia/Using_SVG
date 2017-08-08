@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>preserveAspectRatio options</title>
+    <link rel="stylesheet" href="flex-scale-viewBox.css" />  <!--1-->
+    <style>
+        /* additional styles for form */
+        form {
+            max-width: 25em;
+            text-align: right;
+        }
+        label {
+            display: block;
+            margin: 0.2em 0;
+        }
+    </style>
+    <script src="flex-scale-preserve-options.js"></script>   <!--2-->
+</head>
+<body>
+    <form id="preserve-options">                             <!--3-->
+        <label><code>preserveAspectRatio</code>
+                mode
+            <select id="preserve">
+                <option value="none" >none</option>
+                <option value="meet" selected >meet</option> <!--4-->
+                <option value="slice" >slice</option>            
+            </select>
+        </label>
+        <label><i>x</i>-alignment
+            <select id="x-align">                            <!--5-->
+                <option value="xMin" >min</option>
+                <option value="xMid" selected >mid</option>
+                <option value="xMax" >max</option>
+            </select>
+        </label>
+        <label><i>y</i>-alignment
+            <select id="y-align">
+                <option value="YMin" >min</option>
+                <option value="YMid" selected >mid</option>
+                <option value="YMax" >max</option>            
+            </select>
+        </label>
+    </form>
+    <div class="wrapper">
+        <svg id="preserve-svg" viewBox="0,0 20,20">
+            <title>Spade</title>
+            <path d="M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+                     S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z" />
+        </svg>
+    </div>
+</body>
+</html>

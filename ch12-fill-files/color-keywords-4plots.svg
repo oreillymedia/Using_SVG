@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="500px" height="600px" viewBox="0 0 500 600" >
+    <title>SVG Color Keywords</title>
+    <style type="text/css">
+        svg { overflow: visible; }
+        circle {
+            fill-opacity: 0.8;
+        }
+    </style>
+    <defs>
+        <polygon id="hexagon" fill="none"
+                 points="-100,57.7 -100,-57.7  0,-115.4
+                          100,-57.7  100,57.7  0,+115.4"/>
+    </defs>
+    <rect fill="#aaa" width="50%" height="50%"/>    
+    <rect fill="#ddd" x="50%" width="50%" height="50%"/> 
+    <rect fill="#222" y="50%" width="50%" height="50%"/>
+    <rect fill="#666" x="50%" y="50%" width="50%" height="50%"/>
+    
+    <svg id="darks" x="2.5%" y="2.5%" width="45%" height="45%" 
+         viewBox="-100,-120 200,240">
+        <use xlink:href="#hexagon" stroke="#222" />
+    </svg>     
+    <svg id="mid-darks" x="52.5%" y="2.5%" width="45%" height="45%" 
+         viewBox="-100,-120 200,240">
+        <use xlink:href="#hexagon" stroke="#666" />
+    </svg>      
+    <svg id="mid-lights" x="2.5%" y="52.5%" width="45%" height="45%"  
+         viewBox="-100,-120 200,240">
+        <use xlink:href="#hexagon" stroke="#aaa" />
+    </svg>    
+    <svg id="lights" x="52.5%" y="52.5%" width="45%" height="45%"  
+         viewBox="-100,-120 200,240">
+        <use xlink:href="#hexagon" stroke="#ddd" />
+    </svg>
+    
+    <script><![CDATA[
+(function(){
+    var svgNS = "http://www.w3.org/2000/svg";
+    var xlinkNS = "http://www.w3.org/1999/xlink";
+
+    var dataFileURL = "color-keywords.csv"
+
+    var request = new XMLHttpRequest();
+    request.addEventListener("load", draw);
+    request.overrideMimeType("text/csv");
+    request.open("GET", dataFileURL);
+    request.send();
+
+    function parseColor( CSVString ) {
+        var a = CSVString.split(",");
+        var c = {};
+        c.name = a[0].trim();
+        c.R = +a[1];
+        c.G = +a[2];
+        c.B = +a[3];
+        return c;
+    }
+
+    function draw() {
+        var colors = request.responseText
+                          .split("\n")
+                          .map( parseColor );
+        var vR = {x:0, y:-115.4},
+            vG = {x:100, y:57.7},
+            vB = {x:-100, y:57.7};
+        var plots = ["darks", "mid-darks", "mid-lights", "lights"];
+
+        for (var i=0, n=colors.length; i<n; i++){
+            var c = colors[i];
+            var min = Math.min(c.R, c.G, c.B);
+            var max = Math.max(c.R, c.G, c.B);
+            var mean = (min+max)/2;
+            var quantile = Math.ceil((plots.length)*(mean/256)) - 1;
+            if (quantile < 0) quantile = 0;
+            var floor = [0,0,32,129][quantile];
+            var ceil = [128,255,255,255][quantile];
+            var plot;
+
+
+            plot = plots[quantile];
+
+            console.log(c.name, ""+[c.R, c.G, c.B], plot, floor);
+            
+            var dot = document.createElementNS(svgNS, "circle");
+            dot.id = c.name;
+            dot.setAttribute("r", 10);
+            dot.setAttribute("cx", (max==min)? 0 
+                     : (vR.x*(c.R-floor) + vG.x*(c.G-floor) + vB.x*(c.B-floor))/(ceil-floor) );
+            dot.setAttribute("cy", (max==min)? 0 
+                     : (vR.y*(c.R-floor) + vG.y*(c.G-floor) + vB.y*(c.B-floor))/(ceil-floor) );
+
+            var rgb = "rgb("+[c.R, c.G, c.B]+")"
+            dot.style.setProperty("fill", rgb);
+
+            var tip = document.createElementNS(svgNS, "title");
+            tip.textContent = c.name +": " + rgb;
+            dot.appendChild(tip);
+
+            document.getElementById(plot).appendChild(dot);
+        }
+    }
+})();
+]]> </script>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="400px" width="400px" viewBox="-5 -5 30 30">
+    <title>Diamond, with cut-out, showing path points</title>
+    <use xlink:href="graphing.svg#grid" opacity="0.7"/>
+    <path fill="red"
+          fill-opacity="0.8"
+          d="M3,10 L10,0 17,10 10,20Z 
+             M9,11 L10,18 V10 H15 L11,9 10,2 V10 H5 Z" />
+        
+    <style>
+        text {
+            font-family: Candara, Gill Sans, Gill Sans MT, 
+                         sans-serif;
+            font-weight: bold;
+            font-size: 2.5px;
+            font-variant-numeric: lining-nums;
+            text-anchor: middle;
+            fill: currentColor;
+        }
+    </style>
+    <g color="indigo" style="--accentColor: mediumOrchid">
+        <use xlink:href="graphing.svg#vertex" x="3"  y="10" />
+        <use xlink:href="graphing.svg#vertex" x="10" y="0" />
+        <use xlink:href="graphing.svg#vertex" x="17" y="10" />
+        <use xlink:href="graphing.svg#vertex" x="10" y="20" />
+        
+        <use xlink:href="graphing.svg#vertex" x="9"   y="11" />
+        <use xlink:href="graphing.svg#vertex" x="10"  y="18" />
+        <use xlink:href="graphing.svg#vertex" x="10"  y="10" />
+        <use xlink:href="graphing.svg#vertex" x="15"  y="10" />
+        <use xlink:href="graphing.svg#vertex" x="11"  y="9" />
+        <use xlink:href="graphing.svg#vertex" x="10"  y="2" />
+        <use xlink:href="graphing.svg#vertex" x="10"  y="10" />
+        <use xlink:href="graphing.svg#vertex" x="5"   y="10" />
+        
+        <text x="3"  y="10" dy="+0.35em" dx="-0.5em">1</text>
+        <text x="10" y="0"  dy="-0.3em" >2</text>
+        <text x="17" y="10" dy="+0.35em" dx="+0.5em">3</text>
+        <text x="10" y="20" dy="+1em" >4</text>
+        
+        <text x="9"   y="11" dx="-0.3em" dy="+0.9em" >5</text>
+        <text x="10"  y="18" dx="+0.3em" dy="-0.3em" >6</text>
+        <text x="10"  y="10" dx="+0.3em" dy="+0.9em" >7</text>
+        <text x="15"  y="10" dx="-0.3em" dy="+0.9em" >8</text>
+        <text x="11"  y="9"  dx="+0.3em" dy="-0.3em" >9</text>
+        <text x="10"  y="2"  dx="-0.3em" dy="+0.9em" >10</text>
+        <text x="10"  y="10" dx="-0.3em" dy="-0.3em" >11</text>
+        <text x="5"   y="10" dx="+0.3em" dy="-0.3em" >12</text>
+    </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     height="9in" width="9in" viewBox="0 0 864 864">
+    <title>Checkerboard from a Pattern</title>
+    <style type="text/css">
+        .board { fill: saddleBrown; }
+        .white { fill: linen; }
+        .black { fill: #222; }
+        .squares { fill: url(#checks); }                   <!--1-->
+    </style>
+    <pattern id="checks" width="25%" height="25%" 
+             patternContentUnits="objectBoundingBox">      <!--2-->
+        <rect class="white" width="0.25" height="0.25" />  <!--3-->
+        <rect class="black" width="0.125" height="0.125" />
+        <rect class="black" x="0.125" y="0.125"
+              width="0.125" height="0.125" />              <!--4-->
+    </pattern>
+    
+    <g>                                                    <!--5-->
+        <rect class="board" width="9in" height="9in" rx="0.5in" />
+        <rect class="squares"
+              x="0.5in" y="0.5in" width="8in" height="8in" />
+    </g>
+    <g>                                                    <!--6-->
+        <rect class="board" x="8cm" y="8cm"
+              width="13cm" height="13cm" rx="0.5cm" />
+        <rect class="squares"
+              x="8.5cm" y="8.5cm" width="12cm" height="12cm" />
+    </g>
+</svg>

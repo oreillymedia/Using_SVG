@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 400 160" width="4in" height="1.6in">
+    <title>Motion on a Path, with JavaScript</title>
+    <defs>
+        <polygon id="bead" points="-8,0 0,-8 8,0 0,8"
+                 stroke-width="2" />
+    </defs>
+    <path id="track" fill="none" stroke="dimGray"
+        d="M200,80 C-50,280 -50,-120 200,80
+                   C450,280 450,-120 200,80Z" />               <!--1-->
+    <use xlink:href="#bead" fill="orchid" stroke="indigo" />
+    <use xlink:href="#bead" fill="gold" stroke="tomato" />
+    <use xlink:href="#bead" fill="springGreen" stroke="seaGreen" />
+    <use xlink:href="#bead" fill="skyBlue" stroke="mediumBlue" />
+    <use xlink:href="#bead" fill="indianRed" stroke="firebrick" />
+    <script><![CDATA[
+(function(){
+var track = document.getElementById("track"),                  //<2>
+    trackLength = track.getTotalLength(),
+    beads = document.querySelectorAll("[*|href='#bead']"),     //<3>
+    nBeads = beads.length,
+    dur = 5000; //duration of one loop of track, in ms
+
+function update(time) {
+    var t = (time % dur)/dur, /* position in repeat cycle */   //<4>
+        distance, /* distance along the path for this bead */
+        point,    /* SVGPoint for that distance */
+        point2;   /* SVGPoint for a slightly different distance */
+    for (var i=0; i<nBeads; i++) {
+        distance = trackLength * ( (t + i/nBeads) % 1 );       //<5>
+        point = track.getPointAtLength(distance);              //<6>
+        point2 = track.getPointAtLength((distance+2)%trackLength);
+        angle = Math.atan2( (point2.y - point.y), 
+                           (point2.x - point.x) );             //<7>
+        beads[i].setAttribute("transform", 
+            "translate(" + [point.x, point.y] + ")"
+            + "rotate(" + angle*180/Math.PI + ")" );           //<8>
+
+    }
+    requestAnimationFrame(update);    //<9>
+}
+requestAnimationFrame(update);        //<10>
+})();
+]]> </script>
+</svg>

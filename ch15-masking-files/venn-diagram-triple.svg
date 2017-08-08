@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="340px" width="360px" viewBox="-18 -22 36 34">
+    <title>Three-Circle Venn Diagram</title>
+    <style>
+        .left  { fill: royalBlue; }
+        .right { fill: lightGreen; }
+        .top   { fill: paleVioletRed; }
+        .outlines {
+            fill: none;
+            stroke: indigo;
+        }
+    </style>
+    <defs>
+        <circle id="circle" r="11.5" />
+        <use id="left" xlink:href="#circle" x="-6" />
+        <use id="right" xlink:href="#circle" x="6" />
+        <use id="top" xlink:href="#circle" y="-10" />
+    </defs>
+    <clipPath id="clip-left">
+        <use xlink:href="#circle" x="-6" />
+    </clipPath>
+    <clipPath id="clip-right">
+        <use xlink:href="#circle" x="6" />
+    </clipPath>
+    <clipPath id="clip-both"
+              clip-path="url(#clip-left)">
+        <use xlink:href="#circle" x="6" />
+    </clipPath>
+    <pattern id="stripes-lr" patternUnits="userSpaceOnUse"
+             width="2" height="100%"
+             patternTransform="rotate(30)">
+        <rect width="2" height="100%" class="left" />
+        <rect width="1" height="100%" class="right" />
+    </pattern>
+    <pattern id="stripes-lt" xlink:href="#stripes-lr">
+        <rect width="2" height="100%" class="left" />
+        <rect width="1" height="100%" class="top" />
+    </pattern>
+    <pattern id="stripes-rt" xlink:href="#stripes-lr">
+        <rect width="2" height="100%" class="right" />
+        <rect width="1" height="100%" class="top" />
+    </pattern>
+    <pattern id="stripes-all" xlink:href="#stripes-lr"
+             width="3" patternTransform="rotate(-30)">
+        <rect width="3" height="100%" class="left" />
+        <rect width="2" height="100%" class="right" />
+        <rect width="1" height="100%" class="top" />
+    </pattern>
+    
+    <use xlink:href="#left"  class="left" />
+    <use xlink:href="#right" class="right" />
+    <use xlink:href="#top"   class="top" />
+    <g clip-path="url(#clip-left)">
+        <use xlink:href="#circle" x="+6" fill="url(#stripes-lr)" />
+    </g>
+    <g clip-path="url(#clip-left)">
+        <use xlink:href="#circle" y="-10" fill="url(#stripes-lt)" />
+    </g>
+    <g clip-path="url(#clip-right)">
+        <use xlink:href="#circle" y="-10" fill="url(#stripes-rt)" />
+    </g>
+    <g clip-path="url(#clip-both)">
+        <use xlink:href="#circle" y="-10" fill="url(#stripes-all)" />
+    </g>
+    <g class="outlines">
+        <use xlink:href="#left" />
+        <use xlink:href="#right" />
+        <use xlink:href="#top" />
+    </g>
+</svg>

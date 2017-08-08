@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="250px" viewBox="0 0 400 250">
+    <title>Text Bounding Boxes</title>
+    <style>
+    text {
+        font: bold 60px/1 Edwardian Script ITC, Brush Script MT, cursive;
+        fill: darkSlateGray;
+    }
+    .glyph-boxes {
+        fill: royalBlue;
+        stroke: royalBlue;
+        fill-opacity: 0.4;
+    }
+    .bbox {
+        fill: none;
+        stroke: indigo;
+        stroke-width: 2px;
+        stroke-dasharray: 4px 2px;
+    }
+    </style>
+    <defs>
+        <path id="p" d="M80,220C0,60 200,180 350,50" />
+    </defs>
+    <rect width="100%" height="100%" fill="darkSeaGreen" />
+    <text><textPath xlink:href="#p">The Bounding Box</textPath></text>
+    <text x="380" y="200" text-anchor="end">…of Text!</text>
+    
+<script><![CDATA[
+var svgNS ="http://www.w3.org/2000/svg";
+var texts = document.getElementsByTagName("text");
+for (var i=0, n=texts.length; i<n; i++) {
+    var t = texts[i];
+    var g = document.createElementNS(svgNS, "g");
+    g.setAttribute("class", "glyph-boxes");
+
+    //calculate baseline position relative to glyph extent,
+    //by temporarily straightening the first character
+    var baseRotate=t.getAttribute("rotate");
+    t.setAttribute("rotate", -1*t.getRotationOfChar(0) + " 0");
+    var bounds = t.getExtentOfChar(0);
+    var ascent = t.getStartPositionOfChar(0).y - bounds.y;
+    var height = bounds.height;
+
+    if (baseRotate) t.setAttribute("rotate", baseRotate)
+    else t.removeAttribute("rotate");
+
+    for (var j=0, nchar=t.getNumberOfChars(); j<nchar; j++) {
+        var re = document.createElementNS(svgNS, "rect");
+
+        var start = t.getStartPositionOfChar(j),
+            end = t.getEndPositionOfChar(j),
+            angle = t.getRotationOfChar(j),
+            vector = [(end.x - start.x), (end.y - start.y)],
+            width = Math.sqrt(vector[0]*vector[0] + vector[1]*vector[1]),
+            aspect = height / width,
+            normal = [vector[1]*aspect, -vector[0]*aspect];
+
+        re.setAttribute("height", height);
+        re.setAttribute("width", width);
+        re.setAttribute("transform", 
+                       ["translate(", [start.x, start.y], ")",
+                        "rotate(", angle, ")", 
+                        "translate(0", -(ascent), ")" 
+                        ].join(" ")
+                       );
+        g.appendChild(re);        
+    }
+    t.parentNode.insertBefore(g, t);
+
+    var bbox = g.getBBox();
+    var rect = document.createElementNS(svgNS, "rect");
+    rect.setAttribute("class", "bbox");
+    rect.setAttribute("x", bbox.x);
+    rect.setAttribute("y", bbox.y);
+    rect.setAttribute("width", bbox.width);
+    rect.setAttribute("height", bbox.height);
+    t.parentNode.insertBefore(rect, t);
+}
+]]> </script>
+</svg>

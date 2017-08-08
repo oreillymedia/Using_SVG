@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="400px" width="400px" viewBox="-5 -5 30 30">
+    <title>Graphing paper assets for re-use</title>
+    <defs>
+        <g id="grid">
+            <path id="axes" 
+                  fill="none" stroke="royalBlue" stroke-width="0.3" 
+                  d="M-5, 0H25 M 0,-5V25"/>
+            <path id="major-grid" 
+                  fill="none" stroke="cornflowerBlue" stroke-width="0.15" 
+                  d="M-5, 5H25 M 5,-5V25
+                     M-5,10H25 M10,-5V25
+                     M-5,15H25 M15,-5V25
+                     M-5,20H25 M20,-5V25"/>
+            <path id="minor-grid" 
+                  fill="none" stroke="lightSkyBlue" stroke-width="0.1" 
+                  d="M-5,-4H25 M-4,-5V25
+                     M-5,-3H25 M-3,-5V25
+                     M-5,-2H25 M-2,-5V25
+                     M-5,-1H25 M-1,-5V25
+                     M-5, 1H25 M 1,-5V25
+                     M-5, 2H25 M 2,-5V25
+                     M-5, 3H25 M 3,-5V25
+                     M-5, 4H25 M 4,-5V25
+                     M-5, 6H25 M 6,-5V25
+                     M-5, 7H25 M 7,-5V25
+                     M-5, 8H25 M 8,-5V25
+                     M-5, 9H25 M 9,-5V25
+                     M-5,11H25 M11,-5V25
+                     M-5,12H25 M12,-5V25
+                     M-5,13H25 M13,-5V25
+                     M-5,14H25 M14,-5V25
+                     M-5,16H25 M16,-5V25
+                     M-5,17H25 M17,-5V25
+                     M-5,18H25 M18,-5V25
+                     M-5,19H25 M19,-5V25
+                     M-5,21H25 M21,-5V25
+                     M-5,22H25 M22,-5V25
+                     M-5,23H25 M23,-5V25
+                     M-5,24H25 M24,-5V25"/>
+        </g>
+        
+        <circle id="vertex"
+                fill="currentColor"
+                stroke-width="0.2"
+                style="stroke: var(--supports-css-variables, currentColor); 
+                       fill: var(--accentColor, currentColor); "
+                r=".5" />
+        
+        <polygon id="control-point"
+                 fill="currentColor"
+                 points=".6,0 0,.6 -.6,0 0,-.6" />
+        
+        <polygon id="reflected-control"
+                 fill="white"
+                 stroke="currentColor"
+                 stroke-width="0.2"
+                 points=".3,.3 .3,-.3 -.3,-.3 -.3,.3" />
+                
+    </defs>
+    <use xlink:href="#grid" opacity="0.7"/>
+    <g color="darkviolet" style="--accentColor: paleVioletRed">
+        <use xlink:href="#control-point"     x="10" y="0" />
+        <use xlink:href="#reflected-control" x="20" y="0" />
+        <use xlink:href="#vertex" x="0" y="0" />
+    </g>
+</svg>

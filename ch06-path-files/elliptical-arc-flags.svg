@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     viewBox="0 0 450 450" height="450px" width="450px" >
+    <title>Coffee Mug Arcs</title>
+    <style>
+        svg {
+            font-size: 24px;
+            font-family: Candara, Gill Sans, Gill Sans MT, 
+                         sans-serif;
+            font-weight: bold;
+            alignment-baseline: central;
+        }
+        .coffee-stain {
+            fill: none;
+            stroke: saddleBrown;
+            stroke-width: 18;
+            stroke-opacity: 0.5;
+        }
+        .arrow, #arrowhead {
+            fill: none;
+            stroke: navy;
+            stroke-width: 3;
+        }
+        .arrow {
+            marker-end: url(#arrow);
+        }
+        .points {
+            fill: navy;
+            font-size: 30px;
+            font-family: Segoe Print, Bradley Hand, Bradley Hand ITC, 
+                         Comic Sans, cursive;
+            text-anchor: middle;
+        }
+    </style>
+    
+    <path class="coffee-stain"
+          d="M100,350 A180,180 0 1 1 350,100" />
+    <text x="10" y="50" text-anchor="start"> Large arc,    <!--1-->
+        <tspan x="10" dy="1em">clockwise</tspan> </text>
+    
+    <path class="coffee-stain"
+          d="M100,350 A180,180 0 0 1 350,100" />
+    <text x="100" y="180" text-anchor="start"> Small arc, 
+        <tspan x="100" dy="1em">clockwise</tspan> </text>
+    
+    <path class="coffee-stain"
+          d="M100,350 A180,180 0 0 0 350,100" />
+    <text x="340" y="280" text-anchor="end"> Small arc, 
+        <tspan x="340" dy="1em">counter-clockwise</tspan> </text>
+    
+    <path class="coffee-stain"
+          d="M100,350 A180,180 0 1 0 350,100" />    
+    <text x="440" y="415" text-anchor="end"> Large arc, 
+        <tspan x="440" dy="1em">counter-clockwise</tspan> </text>
+    
+    <g class="points" >
+        <circle r="5" cx="100" cy="350"/>
+        <text x="100" y="350" dy="1.5em">Start</text>
+        <circle r="5" cx="350" cy="100"/>
+        <text x="350" y="100" dy="-1em">End</text>
+    </g>
+    <marker id="arrow" overflow="visible" 
+            orient="auto" markerUnits="userSpaceOnUse">    <!--2-->
+      <path id="arrowhead" d="M-10,-8 Q 16,0 -10,8" />
+    </marker>
+    <path class="arrow" 
+          d="M50,260 A210,180 45 0 1 250,50"/>              <!--3-->
+    <path class="arrow" 
+          d="M210,400 A210,180 45 0 0 400,200"/>
+</svg>

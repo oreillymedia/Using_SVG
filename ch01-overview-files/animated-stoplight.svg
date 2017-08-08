@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="320px" width="140px" >
+    <title>Animated Stoplight</title>
+    <defs>
+        <circle id="light" cx="70" r="30" />
+        <!-- Gradient definitions omitted
+ifeval::[1==0]
+:
+-->
+        <radialGradient id="red-light-on" fx="0.45" fy="0.4">
+           <stop stop-color="orange" offset="0.1"/>
+           <stop stop-color="red" offset="0.8"/>
+           <stop stop-color="brown" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="red-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="maroon" offset="0"/>
+            <stop stop-color="#220000" offset="0.7"/>
+            <stop stop-color="black" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="yellow-light-on" fx="0.45" fy="0.4">
+            <stop stop-color="yellow" offset="0.1"/>
+            <stop stop-color="orange" offset="0.6"/>
+            <stop stop-color="darkOrange" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="yellow-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="#A06000" offset="0"/>
+            <stop stop-color="#804000" offset="0.7"/>
+            <stop stop-color="#502000" offset="1"/>
+        </radialGradient>
+        <radialGradient id="green-light-on" fx="0.45" fy="0.4">
+            <stop stop-color="#88FF00" offset="0.1"/>
+            <stop stop-color="forestGreen" offset="0.7"/>
+            <stop stop-color="darkGreen" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="green-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="#007000" offset="0"/>
+            <stop stop-color="#004000" offset="0.6"/>
+            <stop stop-color="#001000" offset="1.0"/>
+        </radialGradient>
+        <linearGradient id="metal" spreadMethod="repeat"
+                        gradientTransform="scale(0.7) rotate(75)">
+            <stop stop-color="#808080" offset="0"/>
+            <stop stop-color="#404040" offset="0.25"/>
+            <stop stop-color="#C0C0C0" offset="0.35"/>
+            <stop stop-color="#808080" offset="0.5"/>
+            <stop stop-color="#E0E0E0" offset="0.7"/>
+            <stop stop-color="#606060" offset="0.75"/>
+            <stop stop-color="#A0A0A0" offset="0.9"/>
+            <stop stop-color="#808080" offset="1"/>
+        </linearGradient>
+<!-- 
+endif::[]
+        -->
+    </defs>
+    <rect x="20" y="20" width="100" height="280" 
+          fill="url(#metal)" stroke="black" stroke-width="3" /> 
+    <g stroke="black" stroke-width="2">
+        <g class="red light">                                              <!--1-->
+            <use xlink:href="#light" y="80" fill="url(#red-light-off)" />  <!--2-->
+            <use class="lit" display="block" 
+                 xlink:href="#light" y="80" fill="url(#red-light-on)" >    <!--3-->
+                <animate attributeName="display" attributeType="CSS"
+                         begin="0s" dur="9s" repeatDur="indefinite"
+                         calcMode="discrete"
+                         values="none;none;block" />                       <!--4-->
+            </use>
+        </g>
+        <g class="yellow light">
+            <use xlink:href="#light" y="160" fill="url(#yellow-light-off)" />
+            <use class="lit" display="none" 
+                 xlink:href="#light" y="160" fill="url(#yellow-light-on)" >
+                <animate attributeName="display" attributeType="CSS"
+                         begin="0s" dur="9s" repeatDur="indefinite"
+                         calcMode="discrete"
+                         values="none;block;none" />                       <!--5-->
+            </use>
+        </g>
+        <g class="green light">
+            <use xlink:href="#light" y="240" fill="url(#green-light-off)" />
+            <use class="lit" display="none" 
+                 xlink:href="#light" y="240" fill="url(#green-light-on)" >
+                <animate attributeName="display" attributeType="CSS"
+                         begin="0s" dur="9s" repeatDur="indefinite"
+                         calcMode="discrete"
+                         values="block;none;none" />
+            </use>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="240px" width="360px" viewBox="-18 -12 36 24">
+    <title>Two-Circle Venn Diagram</title>
+    <defs>
+        <circle id="circle" r="12" />
+        <use id="left" xlink:href="#circle" x="-6"/>
+        <use id="right" xlink:href="#circle" x="6"/>
+    </defs>
+    <use xlink:href="#left" fill="royalBlue" />
+    <use xlink:href="#right" fill="lightGreen" />
+    <clipPath id="clip-left">
+        <use xlink:href="#left" />
+    </clipPath>
+    <g clip-path="url(#clip-left)">
+        <use xlink:href="#right" fill="mediumTurquoise" />
+    </g>
+</svg>

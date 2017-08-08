@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="250px" viewBox="0 0 400 250">
+    <title>Text with Linear Gradients</title>
+    <linearGradient id="horizontal" >
+        <stop stop-color="gold" offset="0"/>
+        <stop stop-color="deepPink" offset="1"/>
+    </linearGradient>
+    <linearGradient id="vertical" x2="0" y2="1">           <!--1-->
+        <stop stop-color="deepSkyBlue" offset="0"/>
+        <stop stop-color="snow" offset="1"/>
+    </linearGradient>
+    <style>
+    text {
+        font: bold 56px Arial Rounded MT, Deja Vu Sans, sans-serif;
+        fill: url(#horizontal);
+    }
+    tspan.em {
+        fill: url(#vertical);                              <!--2-->
+    }
+    </style>
+    <rect width="100%" height="100%" fill="darkViolet" />
+    <text x="10" y="60px">
+        Filling
+        <tspan class="em" x="10" dy="1.5em">Text</tspan>   <!--3--> 
+        <tspan x="10" dy="1.5em">Boxes</tspan>
+    </text>
+    <text x="210" y="60px">                                <!--4-->
+        <tspan class="em">One</tspan> 
+        <tspan x="210" dy="1.5em">Two</tspan> 
+        <tspan class="em" x="210" dy="1.5em">Three!</tspan>
+    </text>
+</svg>

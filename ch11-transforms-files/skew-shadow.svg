@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="400px" height="140px" viewBox="0 0 400 140">
+    <title>Skewed shadows</title>
+    <style type="text/css">
+        text {
+            font: bold 144px Georgia, serif;
+        }        
+    </style>
+    <defs>
+        <linearGradient id="fadeGray" y2="100%" x2="0%">
+            <stop stop-color="gray" stop-opacity="0" offset="0"/>
+            <stop stop-color="gray" stop-opacity="1" offset="1"/>
+        </linearGradient>
+    </defs>
+    <g transform="translate(10,120)">
+        <use xlink:href="#t" fill="url(#fadeGray)" 
+             transform="skewX(-45) scale(1,0.7)"
+             aria-hidden="true" />
+        <g fill="blue" stroke="navy">
+            <text id="t">SVG</text>
+        </g>
+    </g>
+</svg> 

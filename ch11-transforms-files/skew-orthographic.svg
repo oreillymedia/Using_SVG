@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="300px" viewBox="0 0 40 30" >
+    <title>Using skew to create an orthographic projection</title>
+    <style type="text/css">
+        rect {
+            stroke-width: 0.3;
+            stroke-linejoin: round;
+        }
+        .inside {
+            fill: burlywood;
+            stroke: saddleBrown;
+        }
+        .outside {
+            fill: lightGray;
+            stroke: gray;
+        }
+    </style>
+    <g transform="translate(5,10)">                        <!--1-->
+        <rect class="inside" width="25" height="15" 
+              transform="translate(5,-5)"/>                <!--2-->
+        <rect class="inside" width="5" height="15" 
+              transform="skewY(-45)"/>                     <!--3-->
+        <rect class="outside" width="25" height="15" />    <!--4-->
+        <rect class="outside" width="5" height="15" 
+              transform="translate(25,0) skewY(-45)"/>     <!--5-->  
+    </g>
+    
+</svg>

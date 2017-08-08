@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" height="10cm" width="10cm">
+    <title>Line Art with a Cubic Bézier curve</title>
+    <style type="text/css">
+        path {
+            fill: royalBlue;
+            fill-opacity: 0.7;
+            stroke: royalBlue;
+            stroke-width: 2px;
+        }
+        .q1 {
+            stroke: purple;
+        }
+        .q2 {
+            stroke: navy;
+        }
+        .cubic {
+            stroke: crimson;
+            stroke-width: 2.5px;
+        }
+        svg {
+            margin: 1cm;
+            overflow: visible;
+        }
+    </style>
+    <script><![CDATA[
+(function(){
+        var s  = [0,0],
+            c1 = [377.95,0],
+            c2 = [377.95,377.95],
+            e  = [0,377.95]; 
+            /* start point, control points, end point */
+        var density = 10;  
+            /* number of threads to use to sketch each curve */
+
+        var doc = document;
+        var svg = doc.querySelector("svg");
+        var svgNS = svg.namespaceURI;            
+
+        if (!(svg.classList && svg.classList.contains("initialized") ) ) 
+            draw();
+
+        function draw(){
+            var g, l, p, q, t1, t2, t3;
+            for (var i = 0; i <= density; i++) {
+                p = i/density;
+                q = 1-p;
+                t1 = [], t2 = [], t3 = [];
+
+                g = doc.createElementNS(svgNS, "g");
+
+                l = doc.createElementNS(svgNS, "line");
+                l.setAttribute("class", "q1")
+                l.setAttribute("x1", t1[0] = s[0]*p + c1[0]*q );
+                l.setAttribute("y1", t1[1] = s[1]*p + c1[1]*q );
+                l.setAttribute("x2", t2[0] = c1[0]*p + c2[0]*q );
+                l.setAttribute("y2", t2[1] = c1[1]*p + c2[1]*q );
+                g.insertBefore(l, null);
+
+                l = doc.createElementNS(svgNS, "line");
+                l.setAttribute("class", "q2")
+                l.setAttribute("x1", t2[0] );
+                l.setAttribute("y1", t2[1] );
+                l.setAttribute("x2", t3[0] = c2[0]*p + e[0]*q );
+                l.setAttribute("y2", t3[1] = c2[1]*p + e[1]*q );
+                g.insertBefore(l, null);
+
+                l = doc.createElementNS(svgNS, "line");
+                l.setAttribute("class", "cubic")
+                l.setAttribute("x1", t1[0]*p + t2[0]*q );
+                l.setAttribute("y1", t1[1]*p + t2[1]*q );
+                l.setAttribute("x2", t2[0]*p + t3[0]*q );
+                l.setAttribute("y2", t2[1]*p + t3[1]*q );
+                g.insertBefore(l, null);
+
+                svg.insertBefore(g, null);
+            }
+
+            var path = doc.createElementNS(svgNS, "path");
+            path.setAttribute("d", 
+                    ["M", s, "C", c1, c2, e].join(" ")
+                 );
+            svg.insertBefore(path, null);
+
+            if (svg.classList)
+                svg.classList.add("initialized");
+        }
+})()
+]]></script>
+</svg>

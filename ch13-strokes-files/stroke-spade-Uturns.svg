@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     height="200px" width="200px" viewBox="-2 -2 24 24">
+    <title>Spade with 360-degree line joins emphasized</title>
+    <path fill="deepSkyBlue" stroke="blueViolet" stroke-opacity="0.7"
+          d="M 9,15 
+             C 9,20 0,21 0,16 
+             S 6,9 10,0
+             C 14,9 20,11 20,16 
+             S 11,20 11,15
+             Q 11,20 13,20  
+             H 7 
+             Q 9,20 9,15 Z" />
+    <g fill="none" stroke="darkRed" stroke-width="0.2">
+        <circle cx="9" cy="15" r="0.8" />
+        <circle cx="11" cy="15" r="0.8" />
+        <circle cx="13" cy="20" r="0.8" />
+        <circle cx="7" cy="20" r="0.8" />
+    </g>
+</svg>

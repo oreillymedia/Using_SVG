@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Keeping an Eye on Percentage Sizing</title>
+    <style>
+html, body {height: 100%; margin: 0;}
+.wrapper { 
+    position: relative;
+    border: thin solid;
+    box-sizing: border-box;
+    height: 100%;
+}
+@supports (resize: both) {
+  .wrapper { 
+    height: 10em;
+    width: 20em;
+    resize: both;
+    overflow: hidden;
+  }
+}
+svg { 
+    display: block;
+    position: absolute;
+    height: 90%;
+    width: 90%;
+    top: 5%;
+    left: 5%;
+    
+    background: darkred;
+}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <svg>
+            <g stroke="gray" stroke-width="3px" >
+                <line x2="100%" y2="100%" />
+                <line x1="100%" y2="100%" />
+            </g>
+            <ellipse cx="50%" cy="50%" ry="40%" rx="40%" 
+                     fill="white" />
+            <circle cx="50%" cy="50%" r="25%" 
+                    stroke="blue" stroke-width="30%" 
+                    stroke-opacity="0.6" /> 
+        </svg>
+    </div>
+</body>
+</html>

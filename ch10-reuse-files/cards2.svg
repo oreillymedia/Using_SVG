@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="180px" viewBox="0 0 400 180" >      <!--1-->
+    <script xlink:href="external-SVG-ajax.js" />
+    <title>Playing Cards</title>
+    <svg width="140" height="180"
+         class="club" id="club5">                              <!--5-->
+        <title>5 of clubs</title>
+        <use xlink:href="cards.svg#card-front" x="10" y="10" />
+        <text x="15" y="35">5</text>
+        <text x="105" y="160">5</text>
+        <use xlink:href="cards.svg#club" x="40" y="40" />
+        <use xlink:href="cards.svg#club" x="80" y="40" />
+        <use xlink:href="cards.svg#club" x="60" y="80" />
+        <use xlink:href="cards.svg#club" x="40" y="120" />
+        <use xlink:href="cards.svg#club" x="80" y="120" />              <!--6-->
+    </svg>
+    
+    <svg x="130" width="140" height="180"
+         class="heart" id="heart3">
+        <title>3 of hearts</title>
+        <use xlink:href="cards.svg#card-front" x="10" y="10" />
+        <text x="15" y="35">3</text>
+        <text x="105" y="160">3</text>
+        <use xlink:href="cards.svg#heart" x="60" y="40" />
+        <use xlink:href="cards.svg#heart" x="60" y="80" />
+        <use xlink:href="cards.svg#heart" x="60" y="120" />
+    </svg>
+    
+    <svg x="260" width="140" height="180"
+         class="spade" id="spadeA">
+        <title>Ace of spades</title>
+        <use xlink:href="cards.svg#card-front" x="10" y="10" />
+        <text x="15" y="35">A</text>
+        <text x="105" y="160">A</text>
+        <use xlink:href="cards.svg#spade" x="30" y="50" 
+             width="80" height="80" />                         <!--7-->
+    </svg>
+    
+    <!-- and many more, to draw the rest of the cards -->
+</svg>

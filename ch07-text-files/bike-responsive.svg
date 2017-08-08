@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink" 
+     viewBox="0 0 1000 586" id="lynskey">
+    <title>Lynskey 2017 Vialé Technical Details (Responsive version)</title>
+    <style>
+        svg text {
+            font: 20px sans-serif;
+            fill: darkBlue;
+            transition: font-size 0.5s;
+        }
+        @media (max-width: 600px), (max-height: 342px) {
+            svg text { font-size: 28px; }
+        }
+        @media (max-width: 400px), (max-height: 235px) {
+            svg text { font-size: 36px; }
+        }
+    </style>
+    <image width="100%" height="100%" xlink:href="viale.jpg" />
+    <text x="360" y="520">DTSwiss TK540/X.9 Wheelset</text>
+    <text x="80" y="120">Selle Italia X1 Flow Saddle</text>
+    <text x="420" y="200">Titanium frame</text>
+    <text x="80" y="570">SRAM Apex rear dérailleur</text>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="400px" width="400px" viewBox="-5 -5 30 30">
+    <title>Diamond, with a complete stroke</title>
+    <use xlink:href="graphing.svg#grid" opacity="0.7"/>
+    <path stroke="red" stroke-width="3" stroke-opacity="0.8"
+          fill="mediumOrchid" fill-opacity="0.8"
+          d="M3,10 L10,0 L17,10 L10,20 Z" />
+</svg>

@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     width="4in" height="2in" viewBox="-5 -20 280 140">
+    <title>Compound Labels for a Grouped Bar Chart</title>
+    <style>
+        svg {
+            font: 10px sans-serif; 
+        }
+        text {
+            fill: navy;
+        }
+        .bar { 
+            stroke: hsl(180, 90%, 20%);
+            stroke-width: 0.5px;
+        }
+        .bar-label, .group-label { 
+            text-anchor: middle;
+        }
+        @supports (paint-order: stroke) {
+            .bar-label {
+                stroke: white;
+                stroke-linejoin: round;
+                stroke-width: 3px;
+                paint-order: stroke;
+            }
+        }
+        .bar-2013 { fill: hsl(160, 70%, 80%); }
+        .bar-2014 { fill: hsl(160, 70%, 60%); }
+        .bar-2015 { fill: hsl(160, 70%, 40%); }
+        .bar-2016 { fill: hsl(160, 70%, 20%); }
+    </style>
+    <path id="y-grid" stroke="lightSkyBlue"
+          d="M0, 0H270 M0,20H270 M0,40H270
+             M0,60H270 M0,80H270 M0,100H270" />
+    <g id="x-axis" aria-label="Cities (X-axis)"></g>
+    <g id="legend" aria-label="Years (legend for colors)"></g>
+    <g id="bars" aria-label="Data Values" role="list"></g>
+    <g id="labels"></g>
+    <script><![CDATA[
+(function(){
+    /* customizable constants */
+    var groups = ["Toronto", "Vancouver", "Montreal"],
+        series = [2013, 2014, 2015, 2016],
+        maxX = 270,
+        maxY = 100,
+        fontSize = 10;
+        barPadding = 2,
+        groupPadding = 10;
+        
+    /* calculated constants */
+    var nGroups = groups.length,
+        nSeries = series.length,
+        groupWidth = ( (maxX + groupPadding) / nGroups) - groupPadding,
+        barWidth = ( (groupWidth + barPadding) / nSeries) - barPadding,
+        seriesLegend = document.getElementById("legend"),
+        xAxisLabels = document.getElementById("x-axis"),
+        bars = document.getElementById("bars"),
+        labels = document.getElementById("labels"),
+        svgNS = bars.namespaceURI;
+
+    function sanitize(s){
+        return s.toString().replace(/\W/g, "-");
+    }
+    
+    /* create series legend */
+    for (var i=0; i<nSeries; i++ ) {
+        var rect = document.createElementNS(svgNS, "rect");
+        rect.setAttribute("width", fontSize);
+        rect.setAttribute("x", i*maxX/nSeries);
+        rect.setAttribute("height", fontSize);
+        rect.setAttribute("y", -1.8*fontSize);
+        rect.setAttribute("class", "bar bar-"+sanitize(series[i]));
+
+        var text = document.createElementNS(svgNS, "text");
+        text.id = "series-label-"+ sanitize(series[i]);
+        text.setAttribute("class", "bar-label");
+        text.setAttribute("x", i*maxX/nSeries);
+        text.setAttribute("y", -0.8*fontSize);
+        text.setAttribute("dx", 1.25*fontSize );
+        text.setAttribute("class", "series-label");
+        text.textContent = series[i];
+
+        seriesLegend.appendChild(rect);
+        seriesLegend.appendChild(text);
+    }
+
+    /* create X-axis */
+    for (var j=0; j<nGroups; j++) {
+        var text = document.createElementNS(svgNS, "text");
+        text.id = "group-label-"+sanitize(groups[j]);
+        text.setAttribute("x", (j+0.5)*groupWidth + j*groupPadding);
+        text.setAttribute("y", maxY + 1.5*fontSize);
+        text.setAttribute("class", "group-label");
+        text.textContent = groups[j];
+
+        xAxisLabels.appendChild(text);    
+    }
+
+    /* create bars */
+    var data = [];
+    for (var j=0; j<nGroups; j++) {
+        for (var i=0; i<nSeries; i++ ) {
+            if (!data[i]) data[i]=[];
+            //random data where each value is influenced by the previous
+            data[i][j] = Math.sqrt(Math.random()*((1+(j?data[i][j-1]:0.5))/2));
+
+
+            var barHeight = maxY*data[i][j];
+            var rect = document.createElementNS(svgNS, "rect");
+            rect.setAttribute("width", barWidth);
+            rect.setAttribute("x", j*(groupWidth+groupPadding)
+                                   + i*(barWidth+barPadding));
+            rect.setAttribute("height", barHeight);
+            rect.setAttribute("y", maxY - barHeight);
+
+            rect.setAttribute("class", "bar bar-"+sanitize(series[i]));
+            rect.setAttribute("aria-labelledby", 
+                ["group-label-"+sanitize(groups[j]),
+                 "series-label-"+sanitize(series[i]),
+                 "value-label-"+sanitize(groups[j]+" "+series[i])
+                ].join(" ") );
+            rect.setAttribute("role", "listitem");
+
+            var text = document.createElementNS(svgNS, "text");
+            text.id = "value-label-"+sanitize(groups[j]+" "+series[i]);
+            text.setAttribute("class", "bar-label");
+            text.setAttribute("x", j*(groupWidth+groupPadding)
+                                   + (i+0.5)*barWidth + i*barPadding);
+            text.setAttribute("y", maxY - barHeight);
+            text.setAttribute("dy", (barHeight < 2*fontSize)?
+                                    -0.25*fontSize : 1.25*fontSize );
+            text.textContent = (100*data[i][j]).toFixed(0)+"%";
+
+            labels.appendChild(text);
+            bars.appendChild(rect);
+        }
+
+    }
+})()    
+]]> </script>
+</svg>

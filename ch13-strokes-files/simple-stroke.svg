@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     width="200" height="200" viewBox="-100 -100 200 200"
+     style="background-color: lightGreen">
+    <title>Stroking Shapes</title>
+    <polygon points="-98,0 0,-98 98,0 0,98" fill="royalBlue"
+             stroke="crimson" stroke-width="2" />
+    <circle r="1.2cm" fill="white"
+            stroke="lightGreen" stroke-width="1cm" 
+            stroke-opacity="0.5" />
+</svg>

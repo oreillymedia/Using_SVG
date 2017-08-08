@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Using Media Queries with Embedded and Inline SVG</title>
+    <link rel="stylesheet" href="mediaquery.css" />
+    <style>
+/* styles for the HTML page itself */
+body {
+    background: lightSkyBlue;
+    color: indigo;
+    font-family: sans-serif;
+    margin: 0;
+}
+svg.inline, object {
+    border: solid thin;
+    background: white;
+    width: 100px; /* fallback if viewport units not supported */
+    height: 150px;
+    width: calc(50vw - 2.5em);
+    height: calc(100vh - 4em);
+}
+figure {
+    display: inline-block;
+    margin: 1em;
+    padding: 0;
+}
+    </style>
+</head>
+<body>
+    <figure>
+        <figcaption>Inline SVG</figcaption>
+        <svg class="inline" >
+            <title>Stylable Shapes, Inline</title>
+            <rect x="10%" y="10%" height="80%" width="80%" />
+            <circle cx="70%" cy="80%" r="40px" />
+        </svg>
+    </figure>
+    <figure>
+        <figcaption>Embedded Object</figcaption>
+        <object type="image/svg+xml" data="mediaquery-embedded.svg">
+        </object>
+    </figure>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='UTF-8'>
+    <title>Wave-filtered text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Arvo:700);
+body {
+    background: darkSlateGray;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header {
+    width: 80%;
+    margin: 0 auto;
+}
+
+svg {
+    width: 100%;
+}
+
+svg text {
+    font-family: Arvo, Rockwell, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 65px;
+    stroke: darkSlateGray;
+    stroke-width: 3px;
+    filter: url(#hawaiifilter);
+    fill: url(#beach) black;
+}
+</style></head><body>
+<header>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 285 65">
+    <pattern id="beach" patternUnits="userSpaceOnUse" width="285" height="80">
+        <image x="0" y="-50" width="300" height="200"
+               xlink:href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/hawaii-beach.jpg"
+               transform="rotate(0.5)" />
+        <!-- photo by Daniel Ramirez, licensed under Creative Commons. 
+             https://www.flickr.com/photos/danramarch/6225153931 -->
+    </pattern>
+    <filter id="hawaiifilter">
+        <feOffset result="top"
+                  y="0" height="36px" />
+        
+        <feTurbulence y="30px" height="40px"
+                      type="turbulence" baseFrequency="0.01 .1"
+                      numOctaves="1" seed="53" />  
+        <feDisplacementMap in="SourceGraphic" result="waves"
+                           y="36px" height="30px"
+                           scale="4" 
+                           xChannelSelector="R" 
+                           yChannelSelector="B" />
+        <feGaussianBlur result="bottom" 
+                        y="34px" height="32px"
+                        stdDeviation="0.4" />
+        
+        <feMerge>
+            <feMergeNode in="top" />
+            <feMergeNode in="bottom" />
+        </feMerge>
+    </filter>
+        <rect width="100%" height="100%" fill="lightSkyBlue" />
+		<text x="50%" y="56" text-anchor="middle" contenteditable="true"
+              dx="-1 3 -7 -7 2 2">Hawaii</text>
+	</svg>
+</header>
+
+</body></html>

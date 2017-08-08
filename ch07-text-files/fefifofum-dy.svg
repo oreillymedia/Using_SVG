@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     viewBox="0 0 205 115">
+    <title>Jack's Giant Coming Down—Comic Book text</title>
+    <style>
+@font-face {
+    font-family: 'SequentialistBB';
+    src: url('fonts/SequentialistBB.woff2') format('woff2'),
+    url('fonts/SequentialistBB.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'SequentialistBB';
+    src: url('fonts/SequentialistBB-italic.woff2') format('woff2'),
+         url('fonts/SequentialistBB-italic.woff') format('woff');
+    font-style: italic;
+    font-weight: 400;
+}
+path { 
+    fill: #fff; 
+    stroke: #000; 
+    stroke-width: 2;
+}
+text { 
+    font-family: SequentialistBB, 
+                 Papyrus-condensed, Impact, 
+                 sans-serif-condensed, sans-serif; 
+    font-stretch: condensed;
+}
+    </style>
+    <path d="M45,5 l20,20 c60-5 120,-5 125,40
+             s-70,28 -80,30 -100,0 -100-30 10,-40 35-40Z" />
+    <text font-size="28" y="55" x="100" text-anchor="middle">
+        Fe <tspan dy="10" font-style="italic">Fi</tspan>
+        <tspan dy="10">Fo</tspan>
+        <tspan dy="10" font-weight="bold"
+            >Fum<tspan font-style="italic">!</tspan></tspan>
+    </text>
+</svg>

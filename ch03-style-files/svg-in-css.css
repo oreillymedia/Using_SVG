@@ -1,0 +1,55 @@
+body {
+    margin: 0 1em;
+    font-family: sans-serif;
+    color: navy;
+      
+    background-color: red;                                    /* <1> */    
+    background-image: url('../ch06-path-files/spade.svg'),
+                      url('../ch06-path-files/heart.svg'),
+                      url('../ch06-path-files/club.svg');     /* <2> */
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 0, 20px 20px;              /* <3> */
+}
+h1 {
+    text-align: center;
+    border-radius: 2em / 50%;
+}
+h1::before, h1::after {
+    display: block;
+    content: url('../ch06-path-files/diamond.svg')
+             url('../ch06-path-files/spade.svg')
+             url('../ch06-path-files/heart.svg')
+             url('../ch06-path-files/club.svg');             /* <4> */
+}
+h1, ul {
+    background-color: white;
+    background-color: rgba(100%, 100%, 100%, 0.85);
+    max-width: 70%;
+    margin: 0.5em auto;
+}
+ul {    
+    padding: 1em;
+    padding-left: calc(1em + 10%);
+    border: solid #999 1em;  
+    border-radius: 10%;                                       /* <5> */
+    
+    border-image-source: url(svg-in-css-border-gradient.svg); /* <6> */
+    border-image-slice:  5% 5%;
+    border-image-width:  4.7%; /* = 5% / 105% */
+    border-image-repeat: stretch;
+}
+li {
+    line-height: 2em;
+}
+ul li:nth-of-type(4n+1) {                                     /* <7> */
+    list-style-image: url('../ch06-path-files/diamond.svg');
+}
+ul li:nth-of-type(4n+2) {
+    list-style-image: url('../ch06-path-files/spade.svg');
+}
+ul li:nth-of-type(4n+3) {
+    list-style-image: url('../ch06-path-files/heart.svg');
+}
+ul li:nth-of-type(4n+4) {
+    list-style-image: url('../ch06-path-files/club.svg');
+}

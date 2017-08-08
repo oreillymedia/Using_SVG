@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="210" height="125" viewBox="200 125 210 125">
+    <title>Hidden Overflow on Stroked Symbols</title>
+    <style type="text/css">
+        text {
+            font-family: Times New Roman, Times, Georgia, serif;
+        }
+        .blue { stroke: royalBlue; }
+        .pink { stroke: deepPink; }
+        .see-through { stroke-opacity: 0.5; }
+        .wide { stroke-width: 3px; }    
+    </style>
+    <symbol id="spades-ace" viewBox="0 0 40 20">
+        <title>Ace Spade</title>
+        <path d="M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+                 S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z" />
+        <text x="30" y="18" font-size="20"
+              text-anchor="middle">A</text>
+    </symbol>
+    <rect height="250" width="410" fill="lavender" />
+
+    <g fill="midnightBlue">
+        <use xlink:href="#spades-ace" class="pink wide see-through"
+             width="200" height="100" x="210" y="135" />
+    </g>
+</svg>

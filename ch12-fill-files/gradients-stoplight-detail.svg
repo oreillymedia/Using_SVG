@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     height="200px" width="200px" viewBox="18.5,18.5 103 103">
+    <title>Gradient-Filled Stoplight</title>
+    <defs>
+        <circle id="light" cx="70" r="30" />
+        <radialGradient id="red-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="maroon" offset="0"/>
+            <stop stop-color="#220000" offset="0.7"/>
+            <stop stop-color="black" offset="1.0"/>
+        </radialGradient>
+        <radialGradient id="yellow-light-off" fx="0.45" fy="0.4">
+            <stop stop-color="#A06000" offset="0"/>
+            <stop stop-color="#804000" offset="0.7"/>
+            <stop stop-color="#502000" offset="1"/>
+        </radialGradient>
+        <radialGradient id="green-light-on" fx="0.45" fy="0.4">
+            <stop stop-color="#88FF00" offset="0.1"/>
+            <stop stop-color="forestGreen" offset="0.7"/>
+            <stop stop-color="darkGreen" offset="1.0"/>
+        </radialGradient>
+        <linearGradient id="metal" spreadMethod="repeat"
+                        gradientTransform="scale(0.7) rotate(75)">
+            <stop stop-color="#808080" offset="0"/>
+            <stop stop-color="#404040" offset="0.25"/>
+            <stop stop-color="#C0C0C0" offset="0.35"/>
+            <stop stop-color="#808080" offset="0.5"/>
+            <stop stop-color="#E0E0E0" offset="0.7"/>
+            <stop stop-color="#606060" offset="0.75"/>
+            <stop stop-color="#A0A0A0" offset="0.9"/>
+            <stop stop-color="#808080" offset="1"/>
+        </linearGradient>
+    </defs>
+    <rect x="20" y="20" width="100" height="280" 
+          fill="url(#metal)" stroke="black" stroke-width="3" /> 
+    <g stroke="black" stroke-width="2">
+        <use xlink:href="#light" y="80" 
+             fill="url(#red-light-off)" />
+        <use xlink:href="#light" y="160" 
+             fill="url(#yellow-light-off)" />
+        <use xlink:href="#light" y="240" 
+             fill="url(#green-light-on)" />
+    </g>
+</svg>

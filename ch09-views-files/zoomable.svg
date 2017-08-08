@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink" id="top"
+     height="200px" width="200px" viewBox="0,0 100,100">   <!--1-->
+    <title>Zoomable Interactive SVG</title>
+    <style>
+    text { 
+        font: 15px Snap ITC, Ravie, Markerfelt, Impact, sans-serif; 
+        text-anchor: middle; 
+    }
+    text a { fill: indigo; }
+    </style>
+    <rect width="100" height="100" fill="lightBlue" />      <!--2-->
+    <path fill="palevioletred"
+          d="M40,50 C-20,45 15,25 20,20 S45,-20 50,40 
+                    C55,-20 75,15 80,20 S120,45 60,50
+                    C120,55 85,75 80,80 S55,120 50,60
+                    C45,120 25,85 20,80 S-20,55 40,50 Z" /> <!--3-->
+    <circle fill="gold" stroke="gold" stroke-width="3"
+            stroke-dasharray="0.4 3" stroke-linecap="round"
+            cx="50" cy="50" r="8" />                        <!--4-->
+    <text y="100" dy="-0.5em" x="50">
+        <a xlink:href="#zoom">Zoom in!</a></text>           <!--5-->
+    <view id="zoom" viewBox="40,40 20,20" />                <!--6-->
+    <text y="50" dy="0.5ex" x="50" style="font-size: 3px">
+        <a xlink:href="#top">Zoom out!</a></text>           <!--7-->
+</svg>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>     <!--1-->
+<html lang="en">    <!--2-->
+    <head>          <!--3-->
+        <meta charset="utf-8" />    <!--4-->
+        <title>HTML file with Inline SVG</title>    <!--5-->
+        <style>
+        </style>    <!--6-->
+    </head>
+    <body>          
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink" >
+  <title>CDATA Test</title>
+  <style><![CDATA[
+    circle { stroke: purple; stroke-width: 10; }   
+  ]]></style>
+  <circle cx="150" cy="80" r="50" />
+  <script><![CDATA[
+    document.querySelector("circle").style.fill="red";
+  ]]></script>
+</svg>
+    </body>
+</html>             <!--9-->

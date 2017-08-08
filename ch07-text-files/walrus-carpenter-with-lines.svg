@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 320 180" >
+    <title>The Walrus and the Carpenter—Lewis Carroll</title>
+    <defs>
+        <g id="waves">
+            <path id="wave1" d="M10,35  q50,25 100,0 t100,0 100,0"/>
+            <path id="wave2" d="M10,60  q50,25 100,0 t100,0 100,0"/>
+            <path id="wave3" d="M10,85  q50,25 100,0 t100,0 100,0"/>
+            <path id="wave4" d="M10,110 q50,25 100,0 t100,0 100,0"/>
+            <path id="wave5" d="M10,135 q50,25 100,0 t100,0 100,0"/>
+            <path id="wave6" d="M10,160 q50,25 100,0 t100,0 100,0"/>
+        </g>
+    </defs>
+    <rect width="100%" height="100%" fill="azure" />
+    <use xlink:href="#waves"
+         fill="none" stroke="darkSlateGray" stroke-opacity="0.2"/>
+    <text font-size="18px"
+          font-family="Georgia, serif" 
+          fill="midnightBlue">
+        <textPath xlink:href="#wave1"
+                  >The sun was shining on the sea,</textPath>
+        <textPath xlink:href="#wave2"
+                  >Shining with all his might:</textPath>
+        <textPath xlink:href="#wave3"
+                  >He did his very best to make</textPath>
+        <textPath xlink:href="#wave4"
+                  >The billows smooth and bright—</textPath>
+        <textPath xlink:href="#wave5"
+                  >And this was odd, because it was</textPath>
+        <textPath xlink:href="#wave6"
+                  >The middle of the night.</textPath>
+    </text>
+</svg>

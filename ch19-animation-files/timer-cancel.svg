@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     id="gameboard" width="4in" height="1in">
+    <a id="button" xlink:href="#">
+        <rect width="2in" rx="12" height="1in" 
+              fill="palegoldenrod" />
+        <text text-anchor="middle" x="1in" y="68"
+              font-size="64" font-family="sans-serif"
+              fill="darkRed">STOP</text>
+    </a>
+    <text id="timer" role="timer" aria-atomic="true"
+          x="100%" y="1em" text-anchor="end"
+          font-size="64" font-family="Consolas, monospace"
+          >00.0</text>
+    <script><![CDATA[
+var timeLimit = 15,
+    timer = document.getElementById("timer");
+var endTime, frame;
+updateTime();
+function updateTime(t) {
+    if (!endTime) {
+        endTime = t + timeLimit*1000;
+    }
+    var timeLeft = endTime - t;
+    if (timeLeft <= 0) {
+        //endGame();
+        timeLeft = 0;
+    }
+    else {
+        frame = requestAnimationFrame(updateTime);
+    }
+    timer.textContent = (timeLeft/1000).toFixed(1);
+}
+
+var button = document.getElementById("button")
+button.addEventListener("click", stopTimer);
+function stopTimer() {
+    if (frame) {
+        cancelAnimationFrame(frame);
+        timer.style.fill="darkRed";
+    }
+}
+]]> </script>
+</svg>

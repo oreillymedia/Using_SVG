@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+/* Form styles */
+form {
+    display: block;
+    max-width: 30em;
+    padding: 1.5em;
+    overflow: auto;
+  
+    border: double 12px;
+    border-radius: 0 2em;
+    color: navy;
+    font-family: sans-serif;
+}
+h1 { margin: 0 0 1em; }
+label, button {
+    display: block;
+    clear: right;
+    padding: 0 0 3em;
+}
+input, button {
+    float: right;
+    min-width: 6em;
+    max-width: 70%;
+    padding: 0.5em;
+    color: inherit;
+    border: solid;
+}
+button { background: silver; }
+input:invalid {
+    border-color: red;
+    box-shadow: none; /* override browser defaults */
+}
+input:focus, button:focus {
+    outline: green dotted;
+    outline-offset: 2px;
+}
+form:invalid button[type="submit"] {
+    color: dimGray;
+}
+
+/* SVG styles */        
+form svg {
+    float: left;
+    width: 6em;
+    height: 12em;
+    max-width: 25%;
+    max-height: 80vh;
+    overflow: visible;
+}
+form:valid .green .lit {
+    /* If the validator thinks all form elements are ok,
+       the green light will display */
+    visibility: visible;
+}
+form:invalid .red .lit {
+    /* If the validator detects a problem in the form,
+       the red light will display */
+    visibility: visible;
+}
+form:valid .yellow .lit, form:invalid .yellow .lit {
+    /* If either validator class is recognized, 
+       turn off the yellow light */
+    visibility: hidden; 
+}

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     viewBox="0 0 200 120" width="4in" height="2.4in">
+    <title>An Echo-ing Offset Filter, with a problem</title>
+    <filter id="outline-echo">        
+        <feFlood flood-color="darkRed" />
+        <feComposite in2="SourceAlpha" operator="in" result="echo" />        
+        <feOffset in="echo" dx="-45" dy="-25" result="echo-1" />
+        <feOffset in="echo" dx="-40" dy="+30" result="echo-2" />
+        <feOffset in="echo" dx="+45" dy="+25" result="echo-3" />
+        <feOffset in="echo" dx="+40" dy="-30" result="echo-4" />
+        
+        <feMorphology in="SourceAlpha" result="expanded"
+                      operator="dilate" radius="3" />
+        <feMerge>
+            <feMergeNode in="echo-1" />
+            <feMergeNode in="echo-2" />
+            <feMergeNode in="echo-3" />
+            <feMergeNode in="echo-4" />
+            <feMergeNode in="expanded" />
+            <feMergeNode in="SourceGraphic" />
+        </feMerge>
+    </filter>
+    <style>
+@font-face {
+    font-family: 'BadaboomBB';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/badaboombb.woff2') format('woff2'),
+    url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/badaboombb.woff') format('woff');
+    font-style: normal;
+    font-weight: 400;
+}
+text { 
+    font-size: 60px;
+    font-family: BadaboomBB, Impact, sans-serif; 
+    text-anchor: middle;
+}
+    </style>
+    <rect fill="aqua" width="100%" height="100%" />
+    <text fill="yellow" filter="url(#outline-echo)" 
+          x="50%" y="50%" dy="0.35em"
+          dx="0, -10, -10, -12">
+        BOOM
+    </text>
+</svg>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Using SVG Views and &lt;picture&gt; 
+        to crop for different layouts</title>
+    <style>
+        header    { color: cadetBlue; }
+        header h1 { margin-top: 0.2em; }
+        header img {
+            border: solid thin;
+            display: block;
+            margin: auto;
+            width: 86vw;
+            height: 64vw;
+            max-height: 80vh;               <1>
+        }
+        @media (orientation: portrait) {
+            header img { 
+              width: 90vw; 
+              height: 90vw;                 <2>
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <picture>
+            <source type="image/svg+xml" 
+srcset="Drupe_fruit_diagram-en.svg#svgView(viewBox(20,10,300,300))"
+                    media="(orientation: portrait)" />     <!--3-->
+            <img src="Drupe_fruit_diagram-en.svg" 
+                 type="image/svg+xml"
+                 alt="Botanical diagram of a peach." />    <!--4-->
+        </picture>
+        <h1>A <i lang="la">Rosaceae</i> by any other name…</h1>
+    </header>
+    <p>The rose family is arguably one of the six most economically
+    important crop plant families, and includes apples, pears, 
+    quinces, medlars, loquats, almonds, peaches, apricots, plums, 
+    cherries, strawberries, raspberries, sloes, and roses among the
+    crop plants belonging to the family.</p>
+    <small>Text adapted from 
+<a href="https://en.wikipedia.org/wiki/Rosaceae">Wikipedia</a>
+    </small>
+</body>
+</html>

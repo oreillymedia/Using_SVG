@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 285 65" width="4in">
+    <title>Wave-Filtering Half of an Element</title>
+    <pattern id="beach" patternUnits="userSpaceOnUse" 
+             width="285" height="65">                      <!--1-->
+        <image x="0" y="-50" width="300" height="200"
+               xlink:href="hawaii-beach.jpg"
+               transform="rotate(0.5)" />
+        <!-- photo by Daniel Ramirez, licensed CC-BY 
+          https://www.flickr.com/photos/danramarch/6225153931 -->
+    </pattern>
+    <filter id="hawaiifilter">
+        <feOffset result="top" y="0" height="36px" />      <!--2-->
+        
+        <feTurbulence y="30px" height="40px" result="waves"
+                      type="turbulence" baseFrequency="0.01 .1"
+                      numOctaves="1" seed="53" />          <!--3-->
+        <feDisplacementMap in="SourceGraphic" in2="waves"
+                           y="36px" height="30px"
+                           scale="4" 
+                           xChannelSelector="G" 
+                           yChannelSelector="B" />         <!--4-->
+        <feGaussianBlur result="bottom" 
+                        y="34px" height="32px"
+                        stdDeviation="0.4" />              <!--5-->
+        <feMerge>
+            <feMergeNode in="top" />
+            <feMergeNode in="bottom" />                    <!--6-->
+        </feMerge>
+    </filter>
+    <style>
+svg text {
+    font-family: Arvo, Rockwell, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 64px;
+    fill: url(#beach) azure;
+    stroke: darkSlateGray;
+    stroke-width: 3px;
+    filter: url(#hawaiifilter);
+}
+    </style>
+    <style>
+@import url(https://fonts.googleapis.com/css?family=Arvo:700);
+    </style>
+    <rect width="100%" height="100%" fill="lightSkyBlue" />
+    <rect width="100%" y="36px" height="30px" 
+          fill="lightseagreen" /> 
+    <text x="50%" y="50" text-anchor="middle"
+          style="font-size: 48px"
+          dx="">Bermuda</text>
+</svg>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Inline SVG within HTML</title>
+    <style>
+        /* Form styles */
+        form {
+            display: block;
+            margin: 1em;
+            padding: 1em;
+            background: lightyellow;
+            border: double navy thick;
+            border-radius: 1em;
+            overflow: auto;
+            color: #002;
+        }
+        label {
+            display: block;
+            clear: right;
+            padding: 0 0 1.5em;
+            font-family: sans-serif;
+        }
+        input, button {
+            display: block;
+            float: right;
+            min-width: 6em;
+            max-width: 70%;
+            border-width: 3px;
+            padding: 0.2em;
+        }
+        input:invalid {
+            border-color: red;
+            box-shadow: none; /* override browser defaults */
+        }
+        abbr[title="Required"] {
+            color: red;
+            font-weight: bold;
+            text-decoration: none;
+            border: none;
+        }
+        
+        /* SVG styles */        
+        svg.validator {
+            float: left;
+            width: 6em;
+            height: 14em;
+            max-width: 25%;
+            max-height: 80vh;
+            overflow: visible;
+            padding: 1em; /* hack for browsers that don't */
+            margin: -1em; /* support overflow on SVG */
+        }
+        .lit {
+            /* Set the lights off to start */
+            display: none;
+        }
+        form .yellow .lit {
+            /* By default (if HTML 5 form validation is not supported)
+               the yellow light will display */
+            display: block;
+        }
+        form:valid .green .lit {
+            /* If the validator thinks all form elements are ok,
+               the green light will display */
+            display: block;
+        }
+        form:invalid .red .lit {
+            /* If the validator detects a problem in the form,
+               the red light will display */
+            display: block;
+        }
+        form:valid .yellow .lit, form:invalid .yellow .lit {
+            display: none; /* turn off the yellow light */
+        }
+                
+    </style>
+</head>
+<body>
+<form id="contactForm" method="post" >
+    <h1>How can we contact you?</h1>
+    <svg class="validator" 
+         viewBox="20 20 140 320" preserveAspectRatio="xMinYMin meet" >
+        <defs>
+            <circle id="light" cx="70" r="30" />
+        </defs>
+        <rect x="20" y="20" width="100" height="280" 
+              fill="url(gradients.svg#metal) silver" 
+              stroke="black" stroke-width="3" /> 
+        <g stroke="black" stroke-width="2">
+            <g class="red light" >
+                <use xlink:href="#light" y="80" 
+                     fill="url(gradients.svg#red-light-off) maroon" />
+                <use class="lit" xlink:href="#light" y="80" 
+                     fill="url(gradients.svg#red-light-on) red" >
+                    <title>STOP</title>
+                </use>
+            </g>
+            <g class="yellow light">
+                <use xlink:href="#light" y="160" 
+                     fill="url(gradients.svg#yellow-light-off) #705008" />
+                <use class="lit" xlink:href="#light" y="160" 
+                     fill="url(gradients.svg#yellow-light-on) yellow" />
+            </g>
+            <g class="green light">
+                <use xlink:href="#light" y="240" 
+                     fill="url(gradients.svg#green-light-off) #002804" />
+                <use class="lit" xlink:href="#light" y="240" 
+                     fill="url(gradients.svg#green-light-on) lime" >
+                    <title>GO</title>
+                </use>
+            </g>
+        </g>
+    </svg>
+    <label> 
+        <input type="text" name="CustomerName" required />
+        Full Name <abbr title="Required">*</abbr>
+    </label>
+    <label>
+        <input type="email" name="CustomerEmail" required 
+               pattern="[\w\.]+@[\w\.]+" />
+        Email Address <abbr title="Required">*</abbr>
+    </label>
+    <label>
+        <input type="tel" name="CustomerTelephone"
+               pattern="\s*\(?\d{3}\)?\-?\s*\d{3}\-?\s*\d{4}\s*" 
+               title="10-digit number including area code.
+(Optional—Leave empty to be contacted by email only.)" />
+        Telephone Number
+    </label>
+    <button type="submit" >Send</button>        
+</form>
+</body>
+</html>

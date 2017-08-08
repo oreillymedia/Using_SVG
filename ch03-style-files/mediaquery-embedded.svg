@@ -1,0 +1,6 @@
+<?xml-stylesheet href="mediaquery.css" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" >
+    <title>Stylable Shapes, in an SVG File</title>
+    <rect x="10%" y="10%" height="80%" width="80%" />
+    <circle cx="70%" cy="80%" r="40px" />
+</svg>

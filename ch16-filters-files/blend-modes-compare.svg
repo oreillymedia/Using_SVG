@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 240 390" width="4in">
+    <title>Blending Modes Compared</title>
+    <style>
+        filter {
+            color-interpolation-filters: sRGB;
+        }
+        .label {
+            font: 7px Consolas, monospace;
+            text-anchor: middle;
+            fill: royalBlue;
+        }
+        .warning {
+            font: 16px impact, sans-serif;
+            text-anchor: middle;
+            fill: red;
+            stroke: orange;
+            paint-order: stroke;
+        }
+        .warning tspan {
+            fill: cyan;
+            stroke: darkCyan;
+        }
+    </style>
+    <defs>
+        <linearGradient id="b-w-b">
+            <stop offset="0" />
+            <stop offset="0.4" stop-color="white" />
+            <stop offset="0.6" stop-color="white" />
+            <stop offset="1" />
+        </linearGradient>
+        <g id="warning" transform="rotate(-56 30,45)">
+            <rect fill="url(#b-w-b) white"
+                  x="-25" width="110" y="35" height="20" />
+            <text class="warning" x="30" y="45" dy="0.6ex"><tspan
+                  >¡</tspan> DANGER <tspan>!</tspan></text>
+        </g>
+    </defs>
+    <svg width="60" height="25%">
+        <filter id="blend-normal" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="normal" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-normal)" />        
+        <text class="label" y="95" x="50%">normal</text>
+    </svg>
+    <svg width="60" height="25%" x="60">
+        <filter id="blend-multiply" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="multiply" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-multiply)" />  
+        <text class="label" y="95" x="50%">multiply</text>
+    </svg>
+    <svg width="60" height="25%" x="120">
+        <filter id="blend-screen" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="screen" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-screen)" />  
+        <text class="label" y="95" x="50%">screen</text>
+    </svg>
+    <svg width="60" height="25%" x="180">
+        <filter id="blend-overlay" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="overlay" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-overlay)" />  
+        <text class="label" y="95" x="50%">overlay</text>
+    </svg>
+    <svg width="60" height="25%" y="25%" x="0">
+        <filter id="blend-darken" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="darken" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-darken)" />  
+        <text class="label" y="95" x="50%">darken</text>
+    </svg>
+    <svg width="60" height="25%" y="25%" x="60">
+        <filter id="blend-lighten" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="lighten" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-lighten)" />  
+        <text class="label" y="95" x="50%">lighten</text>
+    </svg>
+    <svg width="60" height="25%" y="25%" x="120">
+        <filter id="blend-difference" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="difference" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-difference)" />  
+        <text class="label" y="95" x="50%">difference</text>
+    </svg>
+    <svg width="60" height="25%" y="25%" x="180">
+        <filter id="blend-exclusion" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="exclusion" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-exclusion)" />  
+        <text class="label" y="95" x="50%">exclusion</text>
+    </svg>
+    <svg width="60" height="25%" y="50%" x="0">
+        <filter id="blend-hard-light" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="hard-light" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-hard-light)" />  
+        <text class="label" y="95" x="50%">hard-light</text>
+    </svg>
+    <svg width="60" height="25%" y="50%" x="60">
+        <filter id="blend-soft-light" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="soft-light" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-soft-light)" />  
+        <text class="label" y="95" x="50%">soft-light</text>
+    </svg>
+    <svg width="60" height="25%" y="50%" x="120">
+        <filter id="blend-color-dodge" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="color-dodge" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-color-dodge)" />  
+        <text class="label" y="95" x="50%">color-dodge</text>
+    </svg>
+    <svg width="60" height="25%" y="50%" x="180">
+        <filter id="blend-color-burn" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="color-burn" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-color-burn)" />  
+        <text class="label" y="95" x="50%">color-burn</text>
+    </svg>
+    <svg width="60" height="25%" y="75%" x="0">
+        <filter id="blend-hue" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="hue" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-hue)" />  
+        <text class="label" y="95" x="50%">hue</text>
+    </svg>
+    <svg width="60" height="25%" y="75%" x="60">
+        <filter id="blend-saturation" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="saturation" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-saturation)" />  
+        <text class="label" y="95" x="50%">saturation</text>
+    </svg>
+    <svg width="60" height="25%" y="75%" x="120">
+        <filter id="blend-color" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="color" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-color)" />  
+        <text class="label" y="95" x="50%">color</text>
+    </svg>
+    <svg width="60" height="25%" y="75%" x="180">
+        <filter id="blend-luminosity" filterUnits="userSpaceOnUse">
+            <feImage xlink:href="heron.jpg" 
+                     x="0" y="0" width="60" height="90" />
+            <feBlend in="SourceGraphic" mode="luminosity" />
+        </filter>
+        <use xlink:href="#warning" filter="url(#blend-luminosity)" />  
+        <text class="label" y="95" x="50%">luminosity</text>
+    </svg>
+</svg>

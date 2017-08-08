@@ -1,0 +1,26 @@
+<!DOCTYPE>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Shape-rendering to control stroke aliasing</title>
+</head>
+<body>
+<svg viewBox="0 0 20 20" width="20px" height="20px"
+     style="margin: 0.5in; color: darkMagenta;">
+    <title>A tiny stroked icon</title>
+    <path fill="none" stroke="currentColor"
+          d="M2,2 H18 V18 H2 Z
+             M4,4 L16,16
+             M4,16 L16,4" />
+</svg>
+<svg viewBox="0 0 20 20" width="20px" height="20px"
+     style="margin: 0.5in; color: darkMagenta;
+            shape-rendering: crispEdges">
+    <title>A tiny stroked icon, with crisp edges</title>
+    <path fill="none" stroke="currentColor"
+          d="M2,2 H18 V18 H2 Z
+             M4,4 L16,16
+             M4,16 L16,4" />
+</svg>
+</body>
+</html>

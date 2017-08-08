@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="400px" viewBox="0 0 80 80" >  <!--1-->
+    <title>Scaling with viewBox</title>
+    <style type="text/css">
+        use                 { fill: darkRed; }
+        use:nth-of-type(2n) { fill: lightSkyBlue; }      <!--2-->
+    </style>
+    <symbol viewBox="0 0 20 20" id="heart" >             <!--3-->
+        <title>Heart</title>
+        <path d="M10,6 Q10,0 15,0T20,6Q20,10 15,14 
+                 T10,20Q10,18 5,14T0,6Q0,0 5,0T10,6Z" />
+    </symbol>
+    
+    <use xlink:href="#heart" width="80" height="80"/>    <!--4-->
+    <use xlink:href="#heart" width="70" height="70"/>
+    <use xlink:href="#heart" width="60" height="60"/>
+    <use xlink:href="#heart" width="50" height="50"/>
+    <use xlink:href="#heart" width="40" height="40"/>
+    <use xlink:href="#heart" width="30" height="30"/>
+    <use xlink:href="#heart" width="22" height="22"/>
+    <use xlink:href="#heart" width="15" height="15"/>
+    <use xlink:href="#heart" width="10" height="10"/>
+</svg>

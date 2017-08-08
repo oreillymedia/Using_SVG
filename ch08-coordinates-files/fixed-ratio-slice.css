@@ -1,0 +1,28 @@
+/* page styles */
+body {
+    padding: 0.5em 2em;
+    font-family: sans-serif;
+    background-color: lightSteelBlue;
+    color: indigo;
+}
+svg  { background-color: plum; }
+path { fill: currentColor; }
+
+/* aspect-ratio control styles */
+.sliced-svg { 
+    display: block;
+    width: 100%;
+    height: 1px;
+    box-sizing: content-box;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+}
+.sliced-svg.square {
+    padding-bottom: 100%;
+    padding-bottom: calc(100% - 1px);
+}
+.sliced-svg.ratio-2-1 {
+    padding-bottom: 50%;
+    padding-bottom: calc(50% - 1px);
+}

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="400px" viewBox="-40 -40 80 80" >  <!--1-->
+    <title>Non-uniform Scaling</title>
+    <style type="text/css">
+        use                 { fill: darkSlateBlue; }
+        use:nth-of-type(2n) { fill: gold; }
+    </style>
+    <defs>
+        <path id="diamond"
+              d="M-7,0L0,-10 7,0 0,10Z
+                 M-1,1L0,8V0H5L1,-1 0,-8V0H-5Z" />           <!--2-->
+    </defs>
+    
+    <use xlink:href="#diamond" transform="scale(5.5,4)"/>    <!--3-->
+    <use xlink:href="#diamond" transform="scale(4,4)" />   
+    <use xlink:href="#diamond" transform="scale(4,3)" />
+    <use xlink:href="#diamond" transform="scale(3,3)" />
+    <use xlink:href="#diamond" transform="scale(3,2)" />
+    <use xlink:href="#diamond" transform="scale(2,2)" />
+    <use xlink:href="#diamond" transform="scale(2,1.5)" />
+    <use xlink:href="#diamond" transform="scale(1.5,1.5)" />
+    <use xlink:href="#diamond" transform="scale(1.5,1)" />
+    <use xlink:href="#diamond" transform="scale(1,1)" />
+    <use xlink:href="#diamond" transform="scale(1,0.75)" />
+    <use xlink:href="#diamond" transform="scale(0.75,0.75)" />
+    <use xlink:href="#diamond" transform="scale(0.75,0.5)" />
+    <use xlink:href="#diamond" transform="scale(0.5,0.5)" />
+</svg>

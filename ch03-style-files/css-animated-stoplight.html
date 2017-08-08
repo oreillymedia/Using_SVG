@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Stoplight Animated Using CSS</title>
+    <style>
+        figure {
+            margin: 0;
+            padding: 0;
+        }
+        .stoplight-frame {
+            margin: 20px;
+            width: 100px;
+            height: 280px;
+            position: relative;
+            background: repeating-linear-gradient(-25deg,
+                #808080 0,
+                #404040 12%,
+                #C0C0C0 17%,
+                #808080 25%,
+                #E0E0E0 35%,
+                #606060 38%,
+                #A0A0A0 45%,
+                #808080 50%);
+            border: solid 3px;
+        }
+        .stoplight-light {
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            border: solid 2px;
+            position: absolute;
+            left: 20px;
+            background-image: radial-gradient(closest-side,
+                            transparent 25%, rgba(50,35,0,0.5) )
+        }
+        .stoplight-light.red {
+            top: 30px;
+            background-color: #880000;
+            animation: redlight 9s infinite step-end;
+        }
+        @keyframes redlight {
+            0% {
+                background-image: radial-gradient(closest-side, 
+                                maroon, #220000 70%, black);
+            }
+            66.7% {
+                background-color: red;
+                background-image: radial-gradient(closest-side, 
+                                orange 10%, red 80%, brown);
+            }
+        }        
+        .stoplight-light.yellow {
+            top: 110px;
+            background-color: #aa8800;
+            animation: yellowlight 9s -3s infinite step-end;
+        }
+        @keyframes yellowlight {
+            0% {
+                background-image: radial-gradient(closest-side, 
+                                #A06000, #804000 70%, #502000);
+            }
+            66.7% {
+                background-color: yellow;
+                background-image: radial-gradient(closest-side, 
+                                yellow 10%, orange 80%, darkOrange);
+            }
+        }        
+        .stoplight-light.green {
+            top: 190px;
+            background-color: #004400;
+            animation: greenlight 9s -6s infinite step-end;
+        }
+        @keyframes greenlight {
+            0% {
+                background-image: radial-gradient(closest-side, 
+                                #007000, #004000 70%, #001000);
+            }
+            66.7% {
+                background-color: #40CC40;
+                background-image: radial-gradient(closest-side, 
+                                #88FF00 10%, forestGreen 80%, darkGreen);
+            }
+        }        
+    </style>
+</head>
+<body>
+    <figure>
+        <div class="stoplight-frame" >
+            <div class="stoplight-light red" ></div>
+            <div class="stoplight-light yellow" ></div>
+            <div class="stoplight-light green" ></div>
+        </div>
+    </figure>
+</body>
+</html>

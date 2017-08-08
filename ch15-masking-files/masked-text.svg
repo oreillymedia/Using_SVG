@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="400" height="200" viewBox="0 0 400 200">
+    <title>The Masked Graphic</title>
+    <defs>
+        <linearGradient id="linear">
+            <stop stop-color="#333" offset="0"/>
+            <stop stop-color="#FFF" offset="0.6"/> 
+            <stop stop-color="#FFF" offset="0.4"/> 
+            <stop stop-color="#333" offset="1"/>          
+        </linearGradient>
+        <radialGradient id="radial" xlink:href="#linear" />
+        <pattern id="dots" patternUnits="userSpaceOnUse"
+                 width="6" height="6" patternTransform="rotate(45)">
+            <circle cx="3" cy="3" r="3" fill="url(#radial)" />
+        </pattern>
+        <mask id="the-mask" maskContentUnits="objectBoundingBox">
+            <rect width="1" height="1" fill="url(#linear)"/> 
+        </mask>
+    </defs>
+    <rect width="100%" height="100%" fill="indianRed"/> 
+    <rect width="100%" height="100%" fill="url(#dots)"
+          fill-opacity="0.3" style="mix-blend-mode: soft-light"/> 
+    <g fill="url(#radial)" mask="url(#the-mask)">
+        <text text-anchor="middle"
+              style="font: bold 64px Stencil,
+                     Stencil Std, Copperplate, sans serif;
+                     text-transform: uppercase">
+            <tspan x="50%" dy="0.8em">The</tspan><tspan x="0">
+            </tspan><tspan x="50%" dy="0.8em" font-size="96px"
+            textLength="390">Masked</tspan><tspan x="0">
+            </tspan><tspan x="50%" dy="0.9em">Graphic</tspan>
+        </text>
+    </g>
+</svg>  

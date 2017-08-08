@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" width="600px" height="600px" viewBox="0 0 1000 1000"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    >
+    <desc/>
+    <defs>
+        <set xlink:href="#null_text" attributeName="visibility"
+            to="visible" begin="0s;space.mouseover" 
+            end="space.mouseout"/>
+        <set xlink:href="#jupiter_text" attributeName="visibility"
+            to="visible" begin="jupiter_orbit.mouseover" 
+            end="jupiter_orbit.mouseout"/>
+        <set xlink:href="#mars_text" attributeName="visibility"
+            to="visible" begin="mars_orbit.mouseover" 
+            end="mars_orbit.mouseout"/>
+        <set xlink:href="#earth_text" attributeName="visibility"
+            to="visible" begin="earth_orbit.mouseover" 
+            end="earth_orbit.mouseout"/>
+        <set xlink:href="#venus_text" attributeName="visibility"
+            to="visible" begin="venus_orbit.mouseover" 
+            end="venus_orbit.mouseout"/>
+        <set xlink:href="#mercury_text" attributeName="visibility"
+            to="visible" begin="mercury_orbit.mouseover" 
+            end="mercury_orbit.mouseout"/>
+        <set xlink:href="#sun_text" attributeName="visibility"
+            to="visible" begin="sun.mouseover" 
+            end="sun.mouseout"/>
+    </defs>
+    <g alignment-baseline="baseline">
+        <rect width="1000" height="1000" fill="black" id="space"/>
+        <g transform="translate(20,100)" fill="white" id="label" font-size="24pt">
+            <text id="null_text" visibility="hidden">Solar System to Jupiter</text>
+            <text id="sun_text" visibility="hidden">The Sun (Sol, a Class G2 Star)</text>
+            <text id="mercury_text" visibility="hidden">Mercury (No Moons)</text>
+            <text id="venus_text" visibility="hidden">Venus (No Moons)</text>
+            <text id="earth_text" visibility="hidden">Earth (Luna)</text>
+            <text id="mars_text" visibility="hidden">Mars (Phobos, Demos)</text>
+            <text id="jupiter_text" visibility="hidden">Jupiter (Amalthea, Io, Ganymede, Europa, Callisto)</text>
+        </g>
+        <g transform="translate(500,500)">
+            <circle fill="black" stroke="white" stroke-width="1" r="300" id="jupiter_orbit"/>
+            <circle fill="black" stroke="white" stroke-width="1" r="240" id="mars_orbit"/>
+            <circle fill="black" stroke="white" stroke-width="1" r="180" id="earth_orbit"/>
+            <circle fill="black" stroke="white" stroke-width="1" r="120" id="venus_orbit"/>
+            <circle fill="black" stroke="white" stroke-width="1" r="60" id="mercury_orbit"/>
+            <circle r="30" fill="yellow" id="sun">
+                <title>Sun</title>
+            </circle>
+            <circle r="4" fill="gray" id="Mercury" cx="60" stroke="white">
+                <title>Mercury</title>
+                <animateTransform attributeName="transform" type="rotate" 
+                    dur="4s" to="360"
+                    repeatCount="indefinite"/>
+                <set attributeName="stroke-width" to="3" begin="mercury_orbit.mouseover" 
+                    end="mercury_orbit.mouseout"/> 
+            </circle>
+            <circle r="7" fill="white" id="Venus" cx="120" 
+                 stroke="red" stroke-width="0">
+                <title>Venus</title>
+                <animateTransform attributeName="transform" type="rotate" 
+                    dur="7s" to="360"
+                    repeatCount="indefinite"/>
+                <set attributeName="stroke-width" to="3" 
+                    begin="venus_orbit.mouseover" 
+                    end="venus_orbit.mouseout"/> 
+            </circle>
+            <g>
+                <animateTransform attributeName="transform" 
+                    type="rotate" dur="12s" to="360"
+                    repeatCount="indefinite"/>
+                <g transform="translate(180,0)">
+                    <circle r="8" fill="blue" id="Earth" stroke="white">
+                        <title>Earth</title>
+                        <set attributeName="stroke-width" to="3"  
+                            begin="earth_orbit.mouseover" 
+                            end="earth_orbit.mouseout"/>                         
+                    </circle>
+                    <g>
+                        <circle r="3" fill="gray" id="Moon" cx="15">
+                            <animateTransform attributeName="transform" 
+                                type="rotate" dur="3s"
+                                to="360" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                </g>
+            </g>
+            <g>
+                <animateTransform attributeName="transform" type="rotate" dur="17s" to="360"
+                    repeatCount="indefinite"/>
+                <g transform="translate(240,0)">
+                    <circle r="5" fill="red" id="Mars" stroke="white">
+                        <set attributeName="stroke-width" to="3" begin="mars_orbit.mouseover" 
+                            end="mars_orbit.mouseout"/> 
+                        
+                    </circle>
+                    <g>
+                        <circle r="2" fill="gray" id="Phobos" cx="12">
+                            <animateTransform attributeName="transform" type="rotate" dur="2s"
+                                to="360" repeatCount="indefinite"/>
+                        </circle>
+                        <circle r="1.5" fill="white" id="Demos" cx="18">
+                            <animateTransform attributeName="transform" type="rotate" dur="3.2s"
+                                to="360" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                </g>
+            </g>
+            <g>
+                <animateTransform attributeName="transform" type="rotate" dur="24s" to="360"
+                    repeatCount="indefinite"/>
+                <g transform="translate(300,0)">
+                    <circle r="15" fill="orange" id="Jupiter" stroke="white">
+                        <set attributeName="stroke-width" to="3" begin="jupiter_orbit.mouseover" 
+                            end="jupiter_orbit.mouseout"/> 
+                    </circle>
+                    <g>
+                        <circle r="2" fill="gray" id="Amalthea" cx="20">
+                            <animateTransform attributeName="transform" type="rotate" dur="3.5s"
+                                to="360" repeatCount="indefinite"/>
+                        </circle>
+                        <circle r="1.5" fill="white" id="Io" cx="24">
+                            <animateTransform attributeName="transform" type="rotate" dur="4.1s"
+                                to="360" repeatCount="indefinite"/>
+                        </circle>
+                        <circle r="2" fill="blue" id="Europa" cx="29">
+                            <animateTransform attributeName="transform" type="rotate" dur="6.2s"
+                                to="360" repeatCount="indefinite"/>
+                        </circle>
+                        <circle r="3.4" fill="green" id="Ganymede" cx="36">
+                            <animateTransform attributeName="transform" type="rotate" dur="8.4s"
+                                to="360" repeatCount="indefinite"/>
+                        </circle>
+                        <circle r="3.4" fill="orange" id="Callisto" cx="46">
+                            <animateTransform attributeName="transform" type="rotate" dur="10.3s"
+                                to="360" repeatCount="indefinite"/>
+                        </circle>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

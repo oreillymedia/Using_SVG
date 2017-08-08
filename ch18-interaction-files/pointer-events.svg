@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     viewBox="0 0 400 200" width="400px" height="200px">
+    <title>Hover Effects that Don't Affect Hover Regions</title>
+    <style>
+        circle { 
+            fill: currentColor; 
+            stroke: currentColor;
+            stroke-width: 0px;
+            pointer-events: visibleFill;
+            transition: all 0.5s;
+        }
+        circle:hover { 
+            stroke-width: 24px;
+            fill-opacity: 0.3; 
+        }
+    </style>
+    <circle color="crimson" cx="75" cy="75" r="60" />
+    <circle color="springGreen" cx="200" cy="125" r="60" />
+    <circle color="royalBlue" cx="325" cy="75" r="60" />
+</svg>

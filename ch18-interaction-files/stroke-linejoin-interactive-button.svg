@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="390px" height="338px" viewBox="0 0 300 260">
+    <title>Strokes with Interactive Linejoin Options</title>
+    <desc>
+      Selecting one of the stroke-linejoin options
+      will apply that effect to the sample shape.
+    </desc>
+    <style>
+        svg {
+            font: 20px Consolas, monospace;
+            text-anchor: middle;
+        }
+        .shape {
+            fill: deepSkyBlue;
+            stroke: blueViolet;
+            stroke-width: 4px;
+            stroke-opacity: 0.8;
+        }
+        #round:target ~ .shape { stroke-linejoin: round; }
+        #bevel:target ~ .shape { stroke-linejoin: bevel; }
+        #miter:target ~ .shape { stroke-linejoin: miter; }
+        .option { fill: indigo; }
+        text { fill: blueViolet; }
+        .option:focus, .option:hover { 
+            outline: none;
+            text-decoration: underline;
+        }
+        .option:target text { fill: inherit; }
+    </style>
+    <symbol id="shape" viewBox="-18 -12 36 24">
+        <path d="M-5,-10 H5  V-5 H10  L15,0  L10,5   H5  V10 
+                         H-5 V5  H-10 L-15,0 L-10,-5 H-5 V-10 Z" />
+    </symbol>
+    <a id="round" class="option" xlink:href="#round">
+        <text x="50"  y="250">round</text></a>
+    <a id="bevel" class="option" xlink:href="#bevel">
+        <text x="150" y="250">bevel</text></a>
+    <a id="miter" class="option" xlink:href="#miter">
+        <text x="250" y="250">miter</text></a>
+    <use class="shape"
+         xlink:href="#shape" width="300" height="225" /> 
+    <script><![CDATA[
+var xlinkNS = "http://www.w3.org/1999/xlink";
+
+var options = document.getElementsByClassName("option");       //<1>
+for (var i=0, n=options.length; i<n; i++){
+    options[i].addEventListener("keypress", spaceActivation ); //<2> 
+    options[i].setAttribute("role", "button");                 //<3>
+}
+
+function spaceActivation(event) {
+    if (event.charCode == 32) { //spacebar               //<4>
+        var option = event.currentTarget;                //<5>
+        var href = option.getAttribute("href")           //<6>
+                   || option.getAttributeNS(xlinkNS, "href");
+        if (href) {
+            location.assign(href);                       //<7>
+
+            event.preventDefault();
+            return false;                                //<8>
+        }
+    }
+}
+]]></script>
+</svg>

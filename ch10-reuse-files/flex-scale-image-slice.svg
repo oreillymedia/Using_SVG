@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400" height="600" viewBox="0 0 400 600">
+    <title>The Authors of Using SVG with CSS3 and HTML5</title>
+    <style>
+        text { 
+            font: 20px Tahoma, sans-serif; 
+            text-anchor: middle;
+            fill: darkRed;
+        }
+        .bird-colors rect { fill: #5f6cb9; }
+        .bird-colors text { fill: #bbde60; }
+        .theme-colors rect { fill: #00aaa9; }
+        .theme-colors text { fill: white; }
+    </style>
+    <svg viewBox="50 5 500 750" width="50%" height="50%">
+        <image height="900" width="600"
+               aria-label="Using SVG cover image"
+               xlink:href="using_svg_cover.png"/>
+    </svg>
+    <g class="bird-colors">
+        <rect x="50%" height="50%" width="50%" />
+        <text x="75%" y="45" dy="-0.5em">Amelia 
+            <tspan x="75%" dy="1em">Bellamy-Royds</tspan></text>
+        <image x="50%" y="80" height="220" width="200"
+               preserveAspectRatio="xMinYMin slice"
+               aria-label="Amelia in the sunshine"
+               xlink:href="Amelia.jpg"/>
+    </g>
+    <g class="bird-colors">
+        <rect y="50%" height="50%" width="50%" />
+        <text x="25%" y="345">Kurt Cagle</text>
+        <image y="380" height="220" width="200"
+               preserveAspectRatio="xMinYMin slice"
+               aria-label="Kurt in a top hat"
+               xlink:href="Kurt.jpg"/>
+    </g>
+    <g class="theme-colors">
+        <rect x="50%" y="50%" height="50%" width="50%" />
+        <text x="75%" y="345">Dudley Storey</text>
+        <image x="50%" y="380" height="220" width="200"
+               preserveAspectRatio="xMinYMin slice"
+               aria-label="Dudley, re-imagined as a tiny warrior"
+               xlink:href="Dudley.jpg"/>
+    </g>
+</svg>

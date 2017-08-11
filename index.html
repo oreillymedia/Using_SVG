@@ -1,59 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
-  <title>Using SVG (with CSS3 and HTML5): Supplementary Material</title>
+  <title>Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="index-pages.css" />
 </head>
 
 <body>
-  <h1>Using SVG with CSS3 and HTML5: Supplementary Material</h1>
-  <div id="wrapper">
-    <h2>Code for Examples and Figures</h2>
+  <header>
+    <h1>Using SVG with CSS3 and HTML5: <br /> Supplementary Material</h1>
+    <p>Example code and online extras for the <a href="http://shop.oreilly.com/product/0636920037972.do">O'Reilly Media book</a> by Amelia Bellamy-Royds, Kurt Cagle, and Dudley Storey.</p>
+  </header>
+  <main>
+    <nav class="toc" aria-label="Page Contents">On this page:
+      <ul class="columns narrow">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#chapters">Chapters</a></li>
+        <li><a href="#reference">SVG Reference Guides</a></li>
+        <li><a href="#extras">Extra Articles and Examples</a></li>
+        <li><a href="authors">About the Authors</a></li>
+      </ul>
+    </nav>
+    <div id="intro" class="columns">
+      <p>
+        The book <cite>Using SVG with CSS3 and HTML5</cite> is a guide to scalable vector graphics in web sites: how they should work, how they do work, and how to work around the parts that don't work.
+      </p>
+      <p>
+        It's a big topic, and we couldn't fit everything we wanted to say in the book. This website compiles this additional material, while also making it easier to explore the code we used for the examples and figures.
+      </p>
+      <p>
+        Read more about the book <a href="http://shop.oreilly.com/product/0636920037972.do">on the O'Reilly Media catalogue page</a>. It is already available as an Early Release through the Safari Books Online service; e-books and paper books will be ready for purchase from retailers in late October or early November 2017.
+      </p>
+      <p>The files are covered by <a href="http://shop.oreilly.com/category/customer-service/faq-examples.do">the O’Reilly Media policy on the use of example code</a>. Short version: you are free to use the examples in moderation; credit is appreciated but not required. However, please don't integrate a large portion of the example set within a product or documentation. All the fonts and some image files are content owned by others; see the credits in the book — most are public domain or Creative Commons-licenced.</p>
+    </div>
+    <p><em>This site is still under construction! I'll be adding more material until the book is published (and possibly after).</em></p>
+    
+    <h2 id="chapters">Chapters</h2>
+    <p>
+      Read a summary of each chapter, and find the code for each example and figure 
+      <i>(summaries are still being added)</i>:
+    </p>
     <style>
-      ol.directory .list-heading {
+      .directory .list-heading {
         list-style: none;
         break-inside: auto;
       }
       
-      ol.directory .list-heading h3 {
+      .directory .list-heading h3 {
         margin: 1em 0 0.2em;
-      }
-      ol.directory .list-heading:first-child h3 {
-        margin-top: 0;
+        break-inside: avoid;
+        break-after: avoid;
       }
       
-      ol.directory .list-heading ol {
-        padding: 0;
-        margin: 0;
+      .directory .list-heading ol {
         padding-left: 2em;
+        border-left: thin solid;
       }
       
-      ol.directory .list-heading li {
+      .directory .list-heading li {
         list-style: decimal;
+        break-inside: avoid;
       }
       
-      ol.directory .list-heading li i {
+      .directory .list-heading li i {
         display: block;
         text-indent: 0;
       }
+
     </style>
     <ol class="columns narrow directory">
-      <li class="list-heading"><h3>Part I: SVG on the Web</h3>
+      <li class="list-heading">
+        <h3>Part I: SVG on the Web</h3>
         <ol start="1">
           <li><a href="ch01-overview-files" title="ch01-overview-files"> Graphics from Vectors: <i>An Overview of SVG</i></a></li>
           <li><a href="ch02-bigpicture-files" title="ch02-bigpicture-files">The Big Picture: <i>SVG and the Web</i></a></li>
           <li><a href="ch03-style-files" title="ch03-style-files">A Sense of Style: <i>Working with CSS</i></a></li>
           <li><a href="ch04-tools-files" title="ch04-tools-files">Tools of the Trade: <i>Software and Sources to Make SVG Easier</i></a></li>
         </ol>
-        <li class="list-heading"><h3>Part II. Drawing with Markup</h3>
+        <li class="list-heading">
+          <h3>Part II. Drawing with Markup</h3>
           <ol start="5">
             <li><a href="ch05-shapes-files" title="ch05-shapes-files">Building Blocks: <i>Basic Shapes</i></a></li>
             <li><a href="ch06-path-files" title="ch06-path-files">Following Your Own Path: <i>Custom Shapes</i></a></li>
             <li><a href="ch07-text-files" title="ch07-text-files">The Art of the Word: <i>Graphical Text Layout and Fonts</i></a></li>
           </ol>
         </li>
-        <li class="list-heading"><h3>Part III. Putting Graphics in Their Place</h3>
+        <li class="list-heading">
+          <h3>Part III. Putting Graphics in Their Place</h3>
           <ol start="8">
             <li><a href="ch08-coordinates-files" title="ch08-coordinates-files">Scaling Up: <i>Defining Coordinate Systems</i></a></li>
             <li><a href="ch09-views-files" title="ch09-views-files">A New Point of View: <i>Cropping Embedded SVG Files</i></a></li>
@@ -61,7 +95,8 @@
             <li><a href="ch11-transforms-files" title="ch11-transforms-files">Transformative Changes: <i>Coordinate System Transformations</i></a></li>
           </ol>
         </li>
-        <li class="list-heading"><h3>Part IV. Artistic Touches</h3>
+        <li class="list-heading">
+          <h3>Part IV. Artistic Touches</h3>
           <ol start="12">
             <li><a href="ch12-fill-files" title="ch12-fill-files">Filling Up To Full: <i>The fill Property, Gradients, &amp; Patterns</i></a></li>
             <li><a href="ch13-strokes-files" title="ch13-strokes-files">Drawing the Lines: <i>Stroke Effects</i></a></li>
@@ -70,7 +105,8 @@
             <li><a href="ch16-filters-files" title="ch16-filters-files">Playing with Pixels: <i> Filters and Blend Modes</i></a></li>
           </ol>
         </li>
-        <li class="list-heading"><h3>Part V. SVG as an Application</h3>
+        <li class="list-heading">
+          <h3>Part V. SVG as an Application</h3>
           <ol start="17">
             <li><a href="ch17-metadata-files" title="ch17-metadata-files">Beyond the Visible: <i>Metadata for Accessibility and Added Functionality</i></a></li>
             <li><a href="ch18-interaction-files" title="ch18-interaction-files">Drawing on Demand: <i>Interactive SVG</i></a></li>
@@ -79,8 +115,60 @@
           </ol>
         </li>
     </ol>
-  </div>
-
+    
+    <h2 id="reference">SVG Reference Guides</h2>
+    <p>Quick references to SVG syntax 
+      <i>(links will be added once content is posted)</i>:</p>
+    <ol class="columns narrow directory">
+      <li><a>SVG Elements and Attributes</a></li>
+      <li><a>SVG Style Properties</a></li>
+      <li><a>Embedding SVG in HTML</a></li>
+      <li><a>Select SVG DOM Methods and Objects</a></li>
+      <li><a>Units for Measurements</a></li>
+      <li><a>Path commands</a></li>
+      <li><a>Transform Functions</a></li>
+      <li><a>CSS Shape Functions</a></li>
+      <li><a>Shorthand Filter Functions</a></li>
+      <li><a>Blend Modes</a></li>
+    </ol>
+    
+    <h2 id="extras">Extra Articles and Examples</h2>
+    <p>Additional tutorials and explanations that we couldn't fit in the book 
+      <i>(list will be completed and links activated as content is posted)</i>:</p>
+    <ol class="columns narrow directory">
+      <li><a>“HTML Syntax, Lazy or Long”</a></li>
+      <li><a>“XML Prologs and Document Types”</a></li>
+      <li><a>“Understanding Vector Graphics”</a></li>
+    </ol>
+    
+    <h2 id="authors">About the Authors</h2>
+    <p>Where to find out more about what we do:</p>
+    <ol class="columns directory">
+      <li><p><b>Amelia Bellamy-Royds</b> writes about web developments, contributes to web standards creation, and sometimes even builds websites.</p>
+        <ul>
+          <li>Twitter <a href="https://twitter.com/AmeliasBrain">@AmeliasBrain</a></li>
+          <li>CodePen <a href="https://codepen.io/AmeliaBR/">@AmeliaBR</a></li>
+        </ul>
+      </li>
+      <li><p><b>Kurt Cagle</b> works as a data architect, with an interest in data semantics (structured meaning) and machine learning.</p>
+        <ul>
+          <li>Twitter <a href="https://twitter.com/kurt_cagle">@kurt_cagle</a></li>
+        </ul>
+      </li>
+      <li><p><b>Dudley Storey</b> teaches college students how to build websites, and shares his examples and tutorials with other web developers through his website, The New Code.</p>
+        <ul>
+          <li><a href="https://thenewcode.com/">theNewCode.com</a></li>
+          <li>Twitter <a href="https://twitter.com/dudleystorey">@dudleystorey</a></li>
+        </ul>
+      </li>
+    </ol>
+  </main>
+  <footer>
+    <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
+    </p>
+    <p>
+      View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files or suggest a correction.</p>
+  </footer>
 </body>
 
 </html>

@@ -1,24 +1,22 @@
+/* colors and typography */
 body {
   margin: 0;
   font: 0.9rem/1.4 "Helvetica Neue", "Lucida Grande", "Arial";
   -webkit-font-smoothing: antialiased;
-  color: #303030;
+  color: #223;
 }
 html {
   background: #ECE9E9;
   background: linear-gradient(to bottom right, 
-      #E0E9E9 5em,
-      #F8F0F0 calc(50% - 5em),
-      #F8F0E0 calc(50% + 5em),
-      #ECE9E9 calc(100% - 5em)) 
+      #E0E9E9 5vmin,
+      #F8F0F0 calc(50% - 10vmin),
+      #F8F0E0 calc(50% + 10vmin),
+      #ECE9E9 calc(100% - 10vmin)) 
       0 0/ 100% 100vh fixed;
-}
-body > * {
-  margin: 0 auto;
-  padding: 0.5rem;
 }
 :link {
   color: #248;
+  text-decoration-skip: ink;
 }
 :visited {
   color: #62A;
@@ -27,33 +25,80 @@ body > * {
   text-decoration: none;
   font-style: italic;
 }
+
+/* layout */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+body > * {
+  padding: 0 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+main {  
+  flex-grow: 1;
+}
 header, footer {
-  background: hsla(0, 0%, 100%, 0.5);
+  background: hsla(0, 0%, 100%, 0.3);
   max-width: 50rem;
+  margin: 0 auto;
+}
+p, li {
+  max-width: 45rem;
 }
 header p {
   font-style: italic;
+}
+header .title:link {
+  display: block;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 150%;
+  margin-top: 0.5em;
 }
 header nav {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  text-align: justify;
+}
+header nav > * {
+  display: inline-block;
+  text-align: center;
+}
+header nav .home {
+  flex-basis: 100%;
+}
+@media (min-width: 24em) {
+  header nav .home + * {
+    order: -1;
+  }
+  header nav .home {
+    flex-basis: auto;
+  }
 }
 h1, h2, h3 {
   line-height: 1.1;
 }
+h2, h3 {
+  margin: 2em 0 0.5em
+}
 .columns {
   margin: 0;
+  margin-bottom: 1em;
   padding: 0;
   column-gap: 1em;
+  column-width: 31em; /* 2 narrow columns + 1 gap */
 }
 .columns.narrow {
   column-width: 15em;
 }
-.columns.wide {
-  column-width: 31em;
-}
-.columns > p:first-child {
+.columns > p:first-child,
+.columns > li:first-child > *:first-child {
   margin-top: 0;
 }
 li, dt, dd {
@@ -67,11 +112,19 @@ dt {
   break-inside: avoid;
   break-after: avoid;
 }
-.directory li, .example-list > li {
+.directory > li {
   list-style: none;
-  break-inside: avoid;
 }
 .directory li {
-  padding-left: 0.5em;
-  text-indent: -0.5em;
+  text-indent: 0.5em hanging; /* One day, this will work. Maybe. */
+}
+@supports not (text-indent: 0.5em hanging) { /* sigh... */
+  .directory li {
+    padding-left: 0.5em;
+    text-indent: -0.5em;
+  }
+  .directory li ol, .directory li ul,
+  .directory dd ol, .directory dd ul {
+    margin-left: -0.5em;
+  }
 }

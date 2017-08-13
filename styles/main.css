@@ -73,6 +73,9 @@ header nav > * {
 header nav .home {
   flex-basis: 100%;
 }
+nav.toc li {
+  list-style: none;
+}
 @media (min-width: 24em) {
   header nav .home + * {
     order: -1;
@@ -101,9 +104,15 @@ h2, h3 {
 .columns > li:first-child > *:first-child {
   margin-top: 0;
 }
+li { list-style-position: initial; }
+ul > li { list-style-type: disc; }
 li, dt, dd {
   margin:  0 0 0.5em;
   line-height: 1.1;  
+}
+li ul, li ol {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
 }
 dd {
   margin-top: -0.5em;
@@ -112,8 +121,14 @@ dt {
   break-inside: avoid;
   break-after: avoid;
 }
-.directory > li {
+ul.directory > li {
   list-style: none;
+}
+ol.directory > li {
+  list-style-position: inside;
+}
+.directory li > ul, .directory li > ol {
+  padding-left: 2em;
 }
 .directory li {
   text-indent: 0.5em hanging; /* One day, this will work. Maybe. */

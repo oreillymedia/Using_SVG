@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     id="gameboard" width="8in" height="6in">
+     id="gameboard" width="8in" height="6in"
+     style="background: #224;"><!-- inline background color to avoid Chrome bug with external stylesheets not triggering repaint -->
     <title>Gem Collector Game</title>
     <desc>
         Click or tap as many circles as you can

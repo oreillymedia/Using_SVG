@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
      xmlns:xlink="http://www.w3.org/1999/xlink"
-     width="4.8in" height="6.5in" viewBox="-5 0 350 475">
+     width="4in" height="6in" viewBox="0 1 350 525">
     <style type="text/css"><![CDATA[
         svg {            
             font-size: 12px;
@@ -61,7 +61,7 @@
         .dashed {
             stroke-dasharray: 5 3;
         }
-        marker path {
+        #arrowhead {
             fill: currentColor;
             stroke: none;
         }
@@ -81,10 +81,10 @@
 ]]> </style>
     <defs>
         <symbol id="style-label" viewBox="0 0 100 40" preserveAspectRatio="none" >
-            <rect class="label" width="100%" height="100%" ry="50%" rx="20%"/>
+            <rect class="label" width="100" height="40" ry="20" rx="20"/>
         </symbol>
         <symbol id="markup-label" viewBox="0 0 100 40" preserveAspectRatio="none" >
-            <rect class="label" width="100%" height="100%" />
+            <rect class="label" width="100" height="40" />
         </symbol>
         <symbol id="script-label" viewBox="0 0 100 40" preserveAspectRatio="none" >
             <path class="label" 
@@ -96,17 +96,19 @@
                   d="M0,10 L20,0 80,0 100,10 100,30 80,40 20,40 0,30 Z" />
         </symbol>
         
-        <marker class="style"  id="style-arrowhead" 
+        <marker id="style-arrowhead" 
                 orient="auto" markerWidth="1" markerHeight="2">
+          <g class="style">
             <path id="arrowhead" d="M-1,-1 L0,-0.5 Q1,0 0,0.5 L-1,1 Z" />
+          </g>
         </marker>
-        <marker class="markup" id="markup-arrowhead" 
+        <marker id="markup-arrowhead" 
                 orient="auto" markerWidth="1" markerHeight="2">
-            <use xlink:href="#arrowhead" />
+            <use class="markup" xlink:href="#arrowhead" />
         </marker>
-        <marker class="scripts" id="scripts-arrowhead"
+        <marker id="scripts-arrowhead"
                 orient="auto" markerWidth="1" markerHeight="2">
-            <use xlink:href="#arrowhead" />
+            <use class="scripts" xlink:href="#arrowhead" />
         </marker>
     </defs>
     <g class="dates" >
@@ -124,11 +126,11 @@
         </g>
         <g class="time-block">
             <rect x="0" y="32em" width="100%" height="14em" />
-            <text x="325" y="36em" >2010s</text>
+            <text x="325" y="39em" >2010s</text>
         </g>
     </g>
     <g class="style">
-        <rect class="backdrop" x="0" y="0" width="100px" height="100%" />
+        <rect class="backdrop" x="0" y="0" width="100px" height="101%" />
         <text class="heading" x="50" y="1em">style</text>
         <g>
             <use xlink:href="#style-label" x="25" y="7.5em" width="50" height="1.75em" />
@@ -146,9 +148,35 @@
             <line class="thick arrow" x1="50" x2="50" y1="12.75em" y2="24em" />
         </g>
         <g>
-            <use xlink:href="#style-label" x="55" y="26em" width="48" height="1.75em" />
-            <text x="79" y="26em" dy="1.2em">Selectors</text>
-            <line class="thin arrow" x1="55" x2="70" y1="25.75em" y2="26em" />
+            <use xlink:href="#style-label" x="5" y="26em" width="30" height="1.75em" />
+            <text x="20" y="26em" dy="1.2em">Units</text>
+            <line class="thin arrow" x1="40" x2="20" y1="25.75em" y2="26em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="5" y="39em" width="60" height="2.75em" />
+            <text x="35" y="39em" dy="1.2em">Custom <tspan dy="1em" x="35">Properties</tspan></text>
+            <line class="thin dashed arrow" x1="50" x2="40" y1="25.75em" y2="39em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="5" y="35.5em" width="40" height="1.75em" />
+            <text x="25" y="35.5em" dy="1.2em">Shapes</text>
+            <line class="thin dashed arrow" x1="50" x2="40" y1="25.75em" y2="35.5em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="0" y="32em" width="46" height="2.75em" />
+            <text x="23" y="32em" dy="1.2em">Anima-<tspan dy="1em" x="25">tions</tspan></text>
+            <line class="thin dashed arrow" x1="50" x2="35" y1="25.75em" y2="32em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="0" y="28.5em" width="50" height="2.75em" />
+            <text x="25" y="28.5em" dy="1.2em">Back-<tspan dy="1em" x="25">grounds</tspan></text>
+            <line class="thin arrow" x1="45" x2="30" y1="25.75em" y2="28.5em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="60" y="32em" width="40" height="1.75em" />
+            <text x="80" y="32em" dy="1.2em">Filters</text>
+            <line class="thin dashed arrow" x1="50" x2="65" y1="25.75em" y2="32em" />
+            <line class="thin arrow" x1="120" x2="90" y1="24.75em" y2="32em" />
         </g>
         <g>
             <use xlink:href="#style-label" x="58" y="29em" width="40" height="1.75em" />
@@ -157,31 +185,15 @@
             <line class="thin dashed arrow" x1="120" x2="90" y1="24.75em" y2="29em" />
         </g>
         <g>
-            <use xlink:href="#style-label" x="0" y="32em" width="46" height="2.75em" />
-            <text x="23" y="32em" dy="1.2em">Anima-<tspan dy="1em" x="25">tions</tspan></text>
-            <line class="thin dashed arrow" x1="50" x2="35" y1="25.75em" y2="32em" />
+            <use xlink:href="#style-label" x="55" y="26em" width="48" height="1.75em" />
+            <text x="79" y="26em" dy="1.2em">Selectors</text>
+            <line class="thin arrow" x1="55" x2="70" y1="25.75em" y2="26em" />
         </g>
         <g>
-            <use xlink:href="#style-label" x="0" y="28em" width="50" height="2.75em" />
-            <text x="25" y="28em" dy="1.2em">Back-<tspan dy="1em" x="25">grounds</tspan></text>
-            <line class="thin arrow" x1="40" x2="30" y1="25.75em" y2="28em" />
-        </g>
-        <g>
-            <use xlink:href="#style-label" x="60" y="33em" width="40" height="1.75em" />
-            <text x="80" y="33em" dy="1.2em">Filters</text>
-            <line class="thin dashed arrow" x1="50" x2="65" y1="25.75em" y2="33em" />
-            <line class="thin arrow" x1="120" x2="90" y1="24.75em" y2="33em" />
-        </g>
-        <g>
-            <use xlink:href="#style-label" x="5" y="35em" width="40" height="1.75em" />
-            <text x="25" y="35em" dy="1.2em">Shapes</text>
-            <line class="thin dashed arrow" x1="50" x2="40" y1="25.75em" y2="35em" />
-        </g>
-        <g>
-            <use xlink:href="#style-label" x="50" y="35em" width="50" height="1.75em" />
-            <text x="75" y="35em" dy="1.2em">Masking</text>
-            <line class="thin dashed arrow" x1="50" x2="60" y1="25.75em" y2="35em" />
-            <line class="thin arrow" x1="120" x2="95" y1="24.75em" y2="35.25em" />
+            <use xlink:href="#style-label" x="50" y="34.5em" width="50" height="1.75em" />
+            <text x="75" y="34.5em" dy="1.2em">Masking</text>
+            <line class="thin dashed arrow" x1="50" x2="60" y1="25.75em" y2="34.5em" />
+            <line class="thin arrow" x1="120" x2="95" y1="24.75em" y2="34.75em" />
         </g>
         <g>
             <use xlink:href="#style-label" x="40" y="37em" width="60" height="1.75em" />
@@ -190,12 +202,17 @@
             <line class="thin arrow" x1="120" x2="100" y1="24.75em" y2="37.5em" />
         </g>
         <g>
-            <use xlink:href="#style-label" x="5" y="37.5em" width="30" height="1.75em" />
-            <text x="20" y="37.5em" dy="1.2em" style="font-style: italic">etc.</text>
+            <use xlink:href="#style-label" x="60" y="41em" width="40" height="2.75em" />
+            <text x="80" y="41em" dy="1.2em">Fill &amp; <tspan dy="1em" x="80">Stroke</tspan></text>
+            <line class="thin arrow" x1="105" x2="100" y1="38.5em" y2="41.5em" />
+        </g>
+        <g>
+            <use xlink:href="#style-label" x="5" y="42em" width="30" height="1.75em" />
+            <text x="20" y="42em" dy="1.2em" style="font-style: italic">etc.</text>
         </g>
     </g>
     <g class="scripts">
-        <rect class="backdrop" x="200" y="0" width="100px" height="100%" />
+        <rect class="backdrop" x="200" y="0" width="100px" height="101%" />
         <text class="heading" x="250" y="1em">scripts</text>
         <g>
             <use xlink:href="#script-label" x="220" y="6em" width="80" height="1.75em" />
@@ -237,6 +254,16 @@
             <line class="thick arrow" x1="280" x2="280" y1="33.75em" y2="37em" />
         </g>
         <g>
+            <use xlink:href="#script-label" x="265" y="39.5em" width="30" height="1.75em" />
+            <text x="280" y="39.5em" dy="1.2em">ES 7</text>
+            <line class="thin arrow" x1="280" x2="280" y1="38.75em" y2="39.5em" />
+        </g>
+        <g>
+            <use xlink:href="#script-label" x="265" y="42em" width="30" height="1.75em" />
+            <text x="280" y="42em" dy="1.2em">ES 8</text>
+            <line class="thin arrow" x1="280" x2="280" y1="41.25em" y2="42em" />
+        </g>
+        <g>
             <use xlink:href="#DOM-label" x="220" y="13em" width="40" height="1.75em" />
             <text x="240" y="13em" dy="1.2em">DOM</text>
             <line class="thick dashed arrow" x1="135" x2="220" y1="14em" y2="14em" />
@@ -259,11 +286,11 @@
             <line class="thin arrow" x1="240" x2="240" y1="22.25em" y2="24em" />
         </g>
         <g>
-            <use xlink:href="#DOM-label" x="205" y="34em" width="30" height="2.75em" />
-            <text x="220" y="34em" dy="1.2em">DOM 
+            <use xlink:href="#DOM-label" x="205" y="40em" width="30" height="2.75em" />
+            <text x="220" y="40em" dy="1.2em">DOM 
                 <tspan dy="1em" x="220">APIs</tspan></text>
-            <line class="thin dashed arrow" x1="235" x2="220" y1="25.75em" y2="34em" />
-            <line class="thin dashed arrow" x1="195" x2="205" y1="33em" y2="34.5em" />
+            <line class="thin dashed arrow" x1="235" x2="220" y1="25.75em" y2="40em" />
+            <line class="thin dashed arrow" x1="195" x2="205" y1="33em" y2="40.5em" />
         </g>
         <g>
             <use xlink:href="#DOM-label" x="220" y="37em" width="40" height="1.75em" />
@@ -272,7 +299,7 @@
         </g>
     </g>
     <g class="markup">
-        <rect class="backdrop" x="100" y="0" width="100px" height="100%" />
+        <rect class="backdrop" x="100" y="0" width="100px" height="101%" />
         <text class="heading" x="150" y="1em">markup</text>
         <g>
             <use xlink:href="#markup-label" x="105" y="2em" width="90" height="1.5em" />
@@ -297,6 +324,7 @@
             <use xlink:href="#markup-label" x="105" y="13em" width="30" height="1.75em" />
             <text x="120" y="13em" dy="1.2em">XML</text>
             <line class="thick arrow" x1="120" x2="120" y1="3.5em" y2="13em" />
+            <line class="thin dashed arrow" x1="150" x2="135" y1="11.75em" y2="13.5em" />
         </g>
         <g>
             <use xlink:href="#markup-label" x="145" y="14em" width="50" height="1.75em" />
@@ -331,6 +359,16 @@
             <text class="strong" x="130" y="37em" dy="1.2em">SVG 2</text>
             <line class="thick arrow" x1="125" x2="125" y1="24.75em" y2="37em" />
             <line class="thin dashed arrow" x1="155" x2="145" y1="35em" y2="37em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="105" y="41.5em" width="50" height="1.75em" />
+            <text x="130" y="41.5em" dy="1.2em">Markers</text>
+            <line class="thin arrow" x1="125" x2="125" y1="38.75em" y2="41.5em" />
+        </g>
+        <g>
+            <use xlink:href="#markup-label" x="160" y="41.5em" width="40" height="1.75em" />
+            <text x="180" y="41.5em" dy="1.2em">Paths</text>
+            <line class="thin arrow" x1="125" x2="175" y1="38.75em" y2="41.5em" />
         </g>
     </g>
 </svg>

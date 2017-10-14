@@ -1,7 +1,7 @@
 /* colors and typography */
 body {
   margin: 0;
-  font: 0.9rem/1.4 "Helvetica Neue", "Lucida Grande", "Arial";
+  font: 1rem/1.4 "Helvetica Neue", "Lucida Grande", "Arial";
   -webkit-font-smoothing: antialiased;
   color: #223;
 }
@@ -25,6 +25,19 @@ html {
   text-decoration: none;
   font-style: italic;
 }
+dt { 
+  font-weight: bold; 
+  background-color: rgba(50%, 75%, 100%, 0.3); 
+}
+dl dl dt { 
+  background: linear-gradient(to right, rgba(50%, 75%, 100%, 0.3), transparent); 
+}
+code { 
+  font-family: DejaVu Sans Mono, Lucida Console, Monaco, monospace; 
+  font-size: inherit; /* fix weird browser defaults */
+  color: black;
+}
+h1 code, h2 code, h3 code, dt code { color: inherit; }
 
 /* layout */
 body {
@@ -84,18 +97,21 @@ nav.toc li {
     flex-basis: auto;
   }
 }
-h1, h2, h3 {
+h1, h2, h3, dt {
   line-height: 1.1;
 }
 h2, h3 {
   margin: 2em 0 0.5em
 }
-.columns {
+.columns, dl.columns-children > dd {
   margin: 0;
   margin-bottom: 1em;
   padding: 0;
   column-gap: 1em;
   column-width: 31em; /* 2 narrow columns + 1 gap */
+  widows: 2;
+  orphans: 2;
+  min-height: 3em;
 }
 .columns.narrow {
   column-width: 15em;
@@ -104,22 +120,41 @@ h2, h3 {
 .columns > li:first-child > *:first-child {
   margin-top: 0;
 }
+dl.columns-children > dd { margin-top: 1em; }
+
+dl.columns-children > dd > *:first-child { margin-top: 0; }
+
 li { list-style-position: initial; }
 ul > li { list-style-type: disc; }
-li, dt, dd {
+.directory li, .directory dd {
   margin:  0 0 0.5em;
   line-height: 1.1;  
 }
-li ul, li ol {
+li ul, li ol, dd ul, dd ol {
   margin-top: 0.5em;
   margin-bottom: 1em;
 }
+li > p:first-child {
+  margin-top: 0.5em;
+}
+li > p:last-child {
+  margin-bottom: 0.5em;
+}
+
 dd {
   margin-top: -0.5em;
 }
 dt {
   break-inside: avoid;
+  -webkit-column-break-after: avoid;
   break-after: avoid;
+}
+dl dl {
+  padding-left: 1em;
+  border-left: thin solid;
+}
+dl dl dd {
+  margin-left: 0;
 }
 ul.directory > li {
   list-style: none;
@@ -142,4 +177,17 @@ ol.directory > li {
   .directory dd ol, .directory dd ul {
     margin-left: -0.5em;
   }
+}
+
+/* Section/definition permalinks */
+.hash-link {
+  display: block; 
+  float: right; 
+  margin-left: 0.5em;
+}
+.hash-link:not(:hover):not(:focus) {
+  text-decoration: none;
+}
+@media print {
+  .hash-link { display: none; }
 }

@@ -28,6 +28,12 @@ html {
 dt { 
   font-weight: bold; 
   background-color: rgba(50%, 75%, 100%, 0.3); 
+  padding: 0.2em 0;
+}
+dt + dt { padding-top: 0; }
+dt > i {
+  font-weight: normal;
+  font-style: normal;
 }
 dl dl dt { 
   background: linear-gradient(to right, rgba(50%, 75%, 100%, 0.3), transparent); 

@@ -1305,7 +1305,7 @@
         </dd>
        <dt id="script"><code>&lt;script&gt;</code><a href="#script" class="hash-link" aria-label="Permalink">#</a></dt>
         <dd>
-          <p>An embedded or linked script to run within the current document’s scope, if the SVG is being rendered in an environment that supports scripting.</p>
+          <p>An embedded or linked script to run within the current document’s scope, if the SVG is being rendered in an environment that supports scripting.  In XML documents, always use a <code>&lt;![CDATA[…]]&gt;</code> wrapper around embedded script code, to prevent parsing errors.</p>
           <p>The SVG <code>&lt;script&gt;</code> element is very similar to the HTML <code>&lt;script&gt;</code> element, but they create different DOM objects with slightly different properties.</p>
           <dl>
            <dt id="type-attr-script"><code>type</code><a href="#type-attr-script" class="hash-link" aria-label="Permalink">#</a></dt>

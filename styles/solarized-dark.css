@@ -1,0 +1,87 @@
+/* Solarized Dark 
+
+For use with Jekyll and Pygments
+
+http://ethanschoonover.com/solarized
+
+SOLARIZED HEX      ROLE
+--------- -------- ------------------------------------------
+base03    #002b36  background
+base01    #586e75  comments / secondary content
+base1     #93a1a1  body text / default code / primary content
+orange    #cb4b16  constants
+red       #dc322f  regex, special keywords
+blue      #268bd2  reserved keywords
+cyan      #2aa198  strings, numbers
+green     #859900  operators, other keywords
+*/
+
+[data-type="programlisting"] { background-color: #002b36; color: #93a1a1 }
+[data-type="programlisting"] .c { color: #586e75 } /* Comment */
+[data-type="programlisting"] .err { color: #93a1a1 } /* Error */
+[data-type="programlisting"] .g { color: #93a1a1 } /* Generic */
+[data-type="programlisting"] .k { color: #859900 } /* Keyword */
+[data-type="programlisting"] .l { color: #93a1a1 } /* Literal */
+[data-type="programlisting"] .n { color: #93a1a1 } /* Name */
+[data-type="programlisting"] .o { color: #859900 } /* Operator */
+[data-type="programlisting"] .x { color: #cb4b16 } /* Other */
+[data-type="programlisting"] .p { color: #93a1a1 } /* Punctuation */
+[data-type="programlisting"] .cm { color: #586e75 } /* Comment.Multiline */
+[data-type="programlisting"] .cp { color: #859900 } /* Comment.Preproc */
+[data-type="programlisting"] .c1 { color: #586e75 } /* Comment.Single */
+[data-type="programlisting"] .cs { color: #859900 } /* Comment.Special */
+[data-type="programlisting"] .gd { color: #2aa198 } /* Generic.Deleted */
+[data-type="programlisting"] .ge { color: #93a1a1; font-style: italic } /* Generic.Emph */
+[data-type="programlisting"] .gr { color: #dc322f } /* Generic.Error */
+[data-type="programlisting"] .gh { color: #cb4b16 } /* Generic.Heading */
+[data-type="programlisting"] .gi { color: #859900 } /* Generic.Inserted */
+[data-type="programlisting"] .go { color: #93a1a1 } /* Generic.Output */
+[data-type="programlisting"] .gp { color: #93a1a1 } /* Generic.Prompt */
+[data-type="programlisting"] .gs { color: #93a1a1; font-weight: bold } /* Generic.Strong */
+[data-type="programlisting"] .gu { color: #cb4b16 } /* Generic.Subheading */
+[data-type="programlisting"] .gt { color: #93a1a1 } /* Generic.Traceback */
+[data-type="programlisting"] .kc { color: #cb4b16 } /* Keyword.Constant */
+[data-type="programlisting"] .kd { color: #268bd2 } /* Keyword.Declaration */
+[data-type="programlisting"] .kn { color: #859900 } /* Keyword.Namespace */
+[data-type="programlisting"] .kp { color: #859900 } /* Keyword.Pseudo */
+[data-type="programlisting"] .kr { color: #268bd2 } /* Keyword.Reserved */
+[data-type="programlisting"] .kt { color: #dc322f } /* Keyword.Type */
+[data-type="programlisting"] .ld { color: #93a1a1 } /* Literal.Date */
+[data-type="programlisting"] .m { color: #2aa198 } /* Literal.Number */
+[data-type="programlisting"] .s { color: #2aa198 } /* Literal.String */
+[data-type="programlisting"] .na { color: #93a1a1 } /* Name.Attribute */
+[data-type="programlisting"] .nb { color: #B58900 } /* Name.Builtin */
+[data-type="programlisting"] .nc { color: #268bd2 } /* Name.Class */
+[data-type="programlisting"] .no { color: #cb4b16 } /* Name.Constant */
+[data-type="programlisting"] .nd { color: #268bd2 } /* Name.Decorator */
+[data-type="programlisting"] .ni { color: #cb4b16 } /* Name.Entity */
+[data-type="programlisting"] .ne { color: #cb4b16 } /* Name.Exception */
+[data-type="programlisting"] .nf { color: #268bd2 } /* Name.Function */
+[data-type="programlisting"] .nl { color: #93a1a1 } /* Name.Label */
+[data-type="programlisting"] .nn { color: #93a1a1 } /* Name.Namespace */
+[data-type="programlisting"] .nx { color: #93a1a1 } /* Name.Other */
+[data-type="programlisting"] .py { color: #93a1a1 } /* Name.Property */
+[data-type="programlisting"] .nt { color: #268bd2 } /* Name.Tag */
+[data-type="programlisting"] .nv { color: #268bd2 } /* Name.Variable */
+[data-type="programlisting"] .ow { color: #859900 } /* Operator.Word */
+[data-type="programlisting"] .w { color: #93a1a1 } /* Text.Whitespace */
+[data-type="programlisting"] .mf { color: #2aa198 } /* Literal.Number.Float */
+[data-type="programlisting"] .mh { color: #2aa198 } /* Literal.Number.Hex */
+[data-type="programlisting"] .mi { color: #2aa198 } /* Literal.Number.Integer */
+[data-type="programlisting"] .mo { color: #2aa198 } /* Literal.Number.Oct */
+[data-type="programlisting"] .sb { color: #586e75 } /* Literal.String.Backtick */
+[data-type="programlisting"] .sc { color: #2aa198 } /* Literal.String.Char */
+[data-type="programlisting"] .sd { color: #93a1a1 } /* Literal.String.Doc */
+[data-type="programlisting"] .s2 { color: #2aa198 } /* Literal.String.Double */
+[data-type="programlisting"] .se { color: #cb4b16 } /* Literal.String.Escape */
+[data-type="programlisting"] .sh { color: #93a1a1 } /* Literal.String.Heredoc */
+[data-type="programlisting"] .si { color: #2aa198 } /* Literal.String.Interpol */
+[data-type="programlisting"] .sx { color: #2aa198 } /* Literal.String.Other */
+[data-type="programlisting"] .sr { color: #dc322f } /* Literal.String.Regex */
+[data-type="programlisting"] .s1 { color: #2aa198 } /* Literal.String.Single */
+[data-type="programlisting"] .ss { color: #2aa198 } /* Literal.String.Symbol */
+[data-type="programlisting"] .bp { color: #268bd2 } /* Name.Builtin.Pseudo */
+[data-type="programlisting"] .vc { color: #268bd2 } /* Name.Variable.Class */
+[data-type="programlisting"] .vg { color: #268bd2 } /* Name.Variable.Global */
+[data-type="programlisting"] .vi { color: #268bd2 } /* Name.Variable.Instance */
+[data-type="programlisting"] .il { color: #2aa198 } /* Literal.Number.Integer.Long */

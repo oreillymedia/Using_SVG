@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <title>XML Prologs and Document Types
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title"
+        content="XML Prologs and Document Types — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description"
+        content="Unique features of XML that you may discover if you look at SVG code created by a software program. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png">
+  <meta name="twitter:image:alt" property="og:image"
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
+
 <body>
   <header>
     <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
@@ -18,15 +33,79 @@
   </header>
   <main>
     <h1>XML Prologs and Document Types</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+
+    <p>Standalone SVG (<em role="filename">.svg</em> files) uses the XML syntax. XML is rather out of fashion in web development today, so many web developers switching to SVG can get tripped up by the differences between XML and the more forgiving HTML parser.</p>
+
+    <p>We cover the two most important aspects of SVG-as-XML in the book:</p>
+
+    <ul>
+      <li>
+        <p>XML namespaces, which must be declared in your markup using <code>xmlns</code> and <code>xmlns:xlink</code> attributes, and must be used in the namespace-sensitive DOM methods like <code>createElementNS()</code>.</p>
+      </li>
+      <li>
+        <p>Strict syntax parsing, such as always closing your elements and quoting your attributes.</p>
+      </li>
+    </ul>
+
+    <p>But there are other features of XML which can sometimes show up in your SVG files.</p>
+
+    <p>Although it is not required, an SVG file may start with an XML declaration, indicating the XML version used and the character encoding. The following explicitly declares the default (version 1.0) XML syntax in a file with a UTF-8 Unicode character set:</p>
+
+    <pre data-type="programlisting" data-code-language="svg"><code class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</code></pre>
+
+    <p>The XML declaration is only <em>required</em> if you are using a non-Unicode character encoding (technically, anything other than UTF-8 or UTF-16). We always use UTF-8, so we don’t often use an XML declaration. If used, the declaration should always appear on the first line of the file.</p>
+
+    <p>You <em>may</em> also include an SGML <code>DOCTYPE</code> declaration, but it is no longer recommended for SVG. The <code>DOCTYPE</code> points to the document type definition of the SVG file format, and is used by some validators and code editing tools. However, some of these validation tools will not recognize perfectly valid XML content from non-SVG namespaces.</p>
+    <div data-type="note" epub:type="note">
+      <p>SGML is the Standard Generalized Markup Language, the parent language for both HTML and XML. It created the idea of elements defined by angle brackets (<code>&lt;</code> and <code>&gt;</code>), with attributes defining their properties.</p>
+
+      <p>SGML document type definitions (DTD files) are machine-readable files that define what elements are allowed for that document, what attributes they can have, and whether they have start and end tags, and if so what other types of elements can be included in-between. The <code>DOCTYPE</code> declaration indicates which DTD files to use.</p>
     </div>
+
+    <p>If you do include the <code>DOCTYPE</code>, it should appear on a line in between the XML declaration and the starting <code>&lt;svg&gt;</code>, and should exactly match the following (except that the amount of whitespace is flexible):</p>
+
+    <pre data-type="programlisting" data-code-language="svg"><code class="cp">&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"</code>
+<code class="cp">          "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"&gt;</code></pre>
+    <div data-type="warning" epub:type="warning">
+      <p>If you copy SVG code into another file, such as an HTML 5 document, don’t include the document type or the XML declaration. They are only valid at the start of a file.</p>
+    </div>
+
+    <p>The <code>DOCTYPE</code> and the XML declaration are part of the XML <strong role="term">prolog</strong>, which includes all parts of the file before the root (<code>&lt;svg&gt;</code> element).</p>
+
+    <p>The XML prolog can also include comments (many software programs add a “created by” comment) and other XML <strong role="term">processing instructions</strong> before the opening <code>&lt;svg&gt;</code>.</p>
+
+    <p>As we discuss in <a data-type="xref" href="../ch03-style-files/">Chapter 3</a>, one XML processing instruction you might use is a link to an external stylesheet:</p>
+
+    <pre data-type="programlisting" data-code-language="svg"><code class="cp">&lt;?xml-stylesheet href="style.css" type="text/css"?&gt;</code></pre>
+
+    <p>You will sometimes also see a longer DOCTYPE declaration, which defines extra XML entities (like <code>&amp;custom;</code>) for use as variables in the rest of the code, or even extra element and attribute definitions.</p>
+
+    <p>Adobe Illustrator SVG files sometimes use custom XML entities to represent Adobe’s custom XML namespaces. The start of the file looks like this (with extra line-breaks added):</p>
+
+    <pre data-type="programlisting" data-code-language="svg"><code class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</code>
+<code class="c">&lt;!-- Generator: Adobe Illustrator 15.1.0, SVG Export Plug-In .</code>
+<code class="c">     SVG Version: 6.00 Build 0)  --&gt;</code>
+<code class="cp">&lt;!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"</code>
+<code class="cp">          "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [</code>
+<code class="cp">	&lt;!ENTITY ns_extend "http://ns.adobe.com/Extensibility/1.0/"&gt;</code>
+	<code class="cp">&lt;!ENTITY ns_ai "http://ns.adobe.com/AdobeIllustrator/10.0/"&gt;</code>
+	<code class="cp">&lt;!ENTITY ns_graphs "http://ns.adobe.com/Graphs/1.0/"&gt;</code>
+	<code class="cp">&lt;!ENTITY ns_vars "http://ns.adobe.com/Variables/1.0/"&gt;</code>
+	<code class="cp">&lt;!ENTITY ns_imrep "http://ns.adobe.com/ImageReplacement/1.0/"&gt;</code>
+	<code class="cp">&lt;!ENTITY ns_sfw "http://ns.adobe.com/SaveForWeb/1.0/"&gt;</code>
+	<code class="cp">&lt;!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/"&gt;</code>
+]&gt;
+<code class="nt">&lt;svg</code> <code class="na">version=</code><code class="s">"1.1"</code> <code class="na">xmlns:x=</code><code class="s">"&amp;ns_extend;"</code> <code class="na">xmlns:i=</code><code class="s">"&amp;ns_ai;"</code>
+     <code class="na">xmlns:graph=</code><code class="s">"&amp;ns_graphs;"</code> <code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code>
+     <code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code>
+     <code class="na">x=</code><code class="s">"0px"</code> <code class="na">y=</code><code class="s">"0px"</code> <code class="na">width=</code><code class="s">"108px"</code> <code class="na">height=</code><code class="s">"71.931px"</code>
+	 <code class="na">viewBox=</code><code class="s">"0 0 108 71.931"</code>
+     <code class="na">enable-background=</code><code class="s">"new 0 0 108 71.931"</code> <code class="na">xml:space=</code><code class="s">"preserve"</code><code class="nt">&gt;</code></pre>
+
+    <p>XML-supporting software will reach the <code>xmlns:x</code> attribute on the <code>&lt;svg&gt;</code>, and will substitute the full namespace URI for the <code>&amp;ns_extend;</code> entity—and so on, for all the other entities.</p>
+
+    <p>The SVGO optimizer tool currently can’t handle this type of file. Which is unfortunate, because an Illustrator file that is using these features has obviously <em>not</em> been optimized for the web. You’ll need to either re-export it from Illustrator (using the export for web option), or edit the code directly to remove all the custom entities, and then optimize with SVGO.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
@@ -35,4 +114,5 @@
       View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files or suggest a correction.</p>
   </footer>
 </body>
+
 </html>

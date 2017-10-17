@@ -31,19 +31,23 @@ dt {
   padding: 0.2em 0;
 }
 dt + dt { padding-top: 0; }
-dt > i {
+.directory dt {
   font-weight: normal;
-  font-style: normal;
+}
+.directory dt .label {
+  font-weight: bold;
 }
 dl dl dt { 
   background: linear-gradient(to right, rgba(50%, 75%, 100%, 0.3), transparent); 
 }
-code { 
+code, pre[data-type="programlisting"] { 
   font-family: DejaVu Sans Mono, Lucida Console, Monaco, monospace; 
   font-size: inherit; /* fix weird browser defaults */
+}
+code {
   color: black;
 }
-h1 code, h2 code, h3 code, dt code { color: inherit; }
+h1 code, h2 code, h3 code, h4 code, h5 code, dt code { color: inherit; }
 
 /* layout */
 body {
@@ -103,7 +107,7 @@ nav.toc li {
     flex-basis: auto;
   }
 }
-h1, h2, h3, dt {
+h1, h2, h3, h4, h5, dt {
   line-height: 1.1;
 }
 h2, h3 {

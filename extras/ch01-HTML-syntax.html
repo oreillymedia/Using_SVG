@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <title>HTML Syntax, Lazy or Long
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="HTML Syntax, Lazy or Long — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Explaining the elements, attributes, and syntax details of our boilerplate inline SVG example. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png">
+  <meta name="twitter:image:alt" property="og:image" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
+
 <body>
   <header>
     <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
@@ -18,15 +32,81 @@
   </header>
   <main>
     <h1>HTML Syntax, Lazy or Long</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+    <p>In the book, we showed two different versions of a basic HTML file containing an <code>&lt;svg&gt;</code> element. What is the difference, and why would you want to use the longer version?</p>
+
+    <p>We mentioned one reason: the more formal syntax is XML compatible. When you’re working with SVG, keeping your inline SVG code XML-compatible means being able to copy and paste code into standalone SVG files. But even for the HTML itself, there are some benefits to the more formal code.</p>
+
+    <p>So let’s start with the bare minimum inline SVG HTML file:</p>
+
+    <pre data-type="programlisting" data-code-language="html"><code class="nt">&lt;svg&gt;</code></pre>
+
+    <p>The HTML parser will see that “ooops, you forgot to mention that you were using modern HTML” and will turn on <strong role="term">quirks mode</strong> to ensure it is compatibile with 1990s-era code. Quirks mode changes a variety of little details about how CSS works. You probably don’t want that, so a good HTML file will start with the modern HTML <code>DOCTYPE</code> declaration.</p>
+
+    <p>The HTML parser will also see that “ooops, you forgot to create an <code>&lt;html&gt;</code> element, or an HTML <code>&lt;head&gt;</code> element, or an HTML <code>&lt;body&gt;</code> element”, so it will create all of those for you. Then the HTML parser will create an <code>&lt;svg&gt;</code> element—because you did remember to include that—but it will see that “ooops, you forgot to mark the end of the element before the end of the file.” So it will also do that for you.</p>
+
+    <p>Compare with the code for <a data-type="xref" href="../ch01-overview-files/">Example 1-1</a>, here reproduced as <a data-type="xref" href="#inline-svg-boilerplate-annotated-example">Example 1-X1</a>. Many of the extra elements and attributes add important information, to be sure our web page is correctly interpreted.</p>
+    <div id="inline-svg-boilerplate-annotated-example" data-type="example">
+      <h5><span class="label">Example 1-X1. </span>Defining a (complete) HTML file for inline SVG</h5>
+      <pre data-type="programlisting" data-code-language="html"><code class="cp">&lt;!DOCTYPE html&gt;</code><code>     </code><a class="co" id="co_online_extras_CO1-1" href="#callout_online_extras_CO1-1"><img src="callouts/1.svg" alt="1" /></a><code>
+</code><code class="nt">&lt;html</code><code> </code><code class="na">lang=</code><code class="s">"en"</code><code class="nt">&gt;</code><code>    </code><a class="co" id="co_online_extras_CO1-2" href="#callout_online_extras_CO1-2"><img src="callouts/2.svg" alt="2" /></a><code>
+    </code><code class="nt">&lt;head</code><code class="nt">&gt;</code><code>          </code><a class="co" id="co_online_extras_CO1-3" href="#callout_online_extras_CO1-3"><img src="callouts/3.svg" alt="3" /></a><code>
+        </code><code class="nt">&lt;meta</code><code> </code><code class="na">charset=</code><code class="s">"utf-8"</code><code> </code><code class="nt">/&gt;</code><code>  </code><a class="co" id="co_online_extras_CO1-4" href="#callout_online_extras_CO1-4"><img src="callouts/4.svg" alt="4" /></a><code> </code><a class="co" id="co_online_extras_CO1-5" href="#callout_online_extras_CO1-5"><img src="callouts/5.svg" alt="5" /></a><code>
+        </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>HTML file with Inline SVG</code><code class="nt">&lt;/title&gt;</code><code>    </code><a class="co" id="co_online_extras_CO1-6" href="#callout_online_extras_CO1-6"><img src="callouts/6.svg" alt="6" /></a><code>
+        </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;/style&gt;</code><code>    </code><a class="co" id="co_online_extras_CO1-7" href="#callout_online_extras_CO1-7"><img src="callouts/7.svg" alt="7" /></a><code>
+    </code><code class="nt">&lt;/head&gt;</code><code>
+    </code><code class="nt">&lt;body</code><code class="nt">&gt;</code><code>          </code><a class="co" id="co_online_extras_CO1-8" href="#callout_online_extras_CO1-8"><img src="callouts/8.svg" alt="8" /></a><code>
+        </code><code class="nt">&lt;svg</code><code> </code><code class="na">width=</code><code class="s">"400px"</code><code> </code><code class="na">height=</code><code class="s">"400px"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;/svg&gt;</code><code>      </code><a class="co" id="co_online_extras_CO1-9" href="#callout_online_extras_CO1-9"><img src="callouts/9.svg" alt="9" /></a><code>
+    </code><code class="nt">&lt;/body&gt;</code><code>
+</code><code class="nt">&lt;/html&gt;</code><code>             </code><a class="co" id="co_online_extras_CO1-10" href="#callout_online_extras_CO1-10"><img src="callouts/10.svg" alt="10" /></a></pre>
+
+      <dl class="calloutlist columns">
+        <dt><a class="co" id="callout_online_extras_CO1-1" href="#co_online_extras_CO1-1"><img src="callouts/1.svg" alt="1" /></a></dt>
+        <dd>
+          <p>The file starts with the modern HTML document type declaration. <a data-type="indexterm" data-primary="DOCTYPE" data-secondary="for HTML" id="idm140647424649104" />Older HTML <code>DOCTYPE</code> tags were long and convoluted, requiring copying and pasting every time. Modern HTML uses <code>&lt;!DOCTYPE html&gt;</code>. It’s short and simple, so you have no excuse for leaving it out. Without it, the layout might get a little quirky.</p>
+        </dd>
+        <dt><a class="co" id="callout_online_extras_CO1-2" href="#co_online_extras_CO1-2"><img src="callouts/2.svg" alt="2" /></a></dt>
+        <dd>
+          <p>After the declaration, the HTML document itself starts with the opening tag of the <code>&lt;html&gt;</code> element. The element has one attribute, <a data-type="indexterm" data-primary="lang attribute" data-secondary="in HTML" id="idm140647424644192" /><code>lang</code> which defines the language of all human-readable text in the file. In this case, that’s <code>en</code> for English.</p>
+        </dd>
+        <dt><a class="co" id="callout_online_extras_CO1-3" href="#co_online_extras_CO1-3"><img src="callouts/3.svg" alt="3" /></a></dt>
+        <dd>
+          <p>A <code>&lt;head&gt;</code> element is the first child of <code>&lt;html&gt;</code>. It contains metadata that won’t be drawn to the screen, but which the browser should know before it parses the rest of the file.</p>
+        </dd>
+        <dt><a class="co" id="callout_online_extras_CO1-4" href="#co_online_extras_CO1-4"><img src="callouts/4.svg" alt="4" /></a></dt>
+        <dd>
+          <p>The most important metadata: the character encoding declaration. A character encoding is the system by which the computer converts binary data (bits and bytes) in a file into letters, numbers, and <code>&lt;</code> signs. The web browser would have needed to make a good guess at the character encoding to get this far, but lots of encodings are similar. The <code>utf-8</code> value says that we saved the file using UTF-8. PS: make sure you save your file using UTF-8. Most modern code editors do it automatically, but older software might not.</p>
+        </dd>
+        <dt><a class="co" id="callout_online_extras_CO1-5" href="#co_online_extras_CO1-5"><img src="callouts/5.svg" alt="5" /></a></dt>
+        <dd>
+          <p>The <code>&lt;meta&gt;</code> tag doesn’t (and can’t) have any children. To make the file XML-compatible, we mark the tag as self-closing tag with a <code>/</code> before the final <code>&gt;</code>.</p>
+        </dd>
+        <dt><a class="co" id="callout_online_extras_CO1-6" href="#co_online_extras_CO1-6"><img src="callouts/6.svg" alt="6" /></a></dt>
+        <dd>
+          <p>The next most important metadata is the <code>&lt;title&gt;</code> element, which declares a human-readable name for the file. This time, the value isn’t an attribute, but the text content contained between the opening <code>&lt;title&gt;</code> tag and the closing <code>&lt;/title&gt;</code> tag.</p>
+        </dd>
+        <dt><a class="co" id="callout_online_extras_CO1-7" href="#co_online_extras_CO1-7"><img src="callouts/7.svg" alt="7" /></a></dt>
+        <dd>
+          <p>A <code>&lt;style&gt;</code> tag (with its matching <code>&lt;/style&gt;</code> closing tag) is also included in the <code>&lt;head&gt;</code>, as a placeholder. If we had any CSS code for the document, we could put it here.</p>
+        </dd>
+        <dt><a class="co" id="callout_online_extras_CO1-8" href="#co_online_extras_CO1-8"><img src="callouts/8.svg" alt="8" /></a></dt>
+        <dd>
+          <p>After closing off the <code>&lt;head&gt;</code> element with a <code>&lt;/head&gt;</code> tag, the actual content of the HTML file is included in a <code>&lt;body&gt;</code> element.</p>
+        </dd>
+        <dt><a class="co" id="callout_online_extras_CO1-9" href="#co_online_extras_CO1-9"><img src="callouts/9.svg" alt="9" /></a></dt>
+        <dd>
+          <p>The only content in this page is our one inline SVG element. The opening <code>&lt;svg&gt;</code> tag now has two attributes, <code>width</code> and <code>height</code>. And we now have a matching <code>&lt;/svg&gt;</code> closing tag to mark the end of the SVG code.</p>
+        </dd>
+        <dt><a class="co" id="callout_online_extras_CO1-10" href="#co_online_extras_CO1-10"><img src="callouts/10.svg" alt="10" /></a></dt>
+        <dd>
+          <p>Finally, we close off the <code>&lt;body&gt;</code> and then <code>&lt;html&gt;</code> elements, with <code>&lt;/body&gt;</code> and <code>&lt;/html&gt;</code>.</p>
+        </dd>
+      </dl>
     </div>
+
+
+    <p>Although some of the extra tags don’t change the final results, they help keep our code clear and consistent. By opening and closing all our tags, we help ourselves keep track of the final DOM structure that will be created in the browser, which will be used by our CSS styles and JavaScript code. It also works better with most code editors’ syntax highlighters and auto-complete tools.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
@@ -35,4 +115,5 @@
       View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files or suggest a correction.</p>
   </footer>
 </body>
+
 </html>

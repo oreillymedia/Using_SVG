@@ -1,0 +1,88 @@
+/* Additional styles for the online extras articles */
+
+/* center single-column content */
+p, li {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* notes, tips, warnings */
+[data-type="note"],
+[data-type="tip"],
+[data-type="warning"] {
+  max-width: 45rem;
+  box-sizing: border-box;
+  margin: 1em auto;
+  padding: 0.1rem 0.5rem 0.1rem 4.5rem;
+  border-width: 3px;
+  border-radius: 3px;
+  border-style: none solid;
+}
+[data-type="note"]    { border-color: #248 }
+[data-type="tip"]     { border-color: #4a8 }
+[data-type="warning"] { border-color: #a12 }
+
+[data-type="note"]::before,
+[data-type="tip"]::before,
+[data-type="warning"]::before {
+  display: block;
+  float: left;
+  font-size: 200%;
+  margin: 1rem 0 1rem -3.5rem;
+}
+[data-type="note"]::before    { content: "🤓"; } /* 🤓🤔😡 or 🦉🐒🦂 */
+[data-type="tip"::before]     { content: "🤔"; } 
+[data-type="warning"]::before { content: "😡"; }
+
+/* examples and figures */
+[data-type="example"],
+figure {
+  border: 2px #248;
+  border-style: solid none;
+  margin: 1em 0;
+}
+[data-type="example"] h5, /* example caption */
+figure figcaption {
+  font-size: inherit;
+  font-weight: normal;
+  max-width: 45em;
+  margin: 0.5em auto;
+}
+[data-type="example"] h5 .label,
+figure figcaption .label {
+  font-style: italic;
+}
+figure {
+  padding: 0 calc(50% - 22em); /* constrain content width to 44em */
+}
+figure img {
+  display: block;
+  max-width: 100%;
+  max-height: 95vh;
+  margin: 0 auto;
+  resize: both;
+}
+
+/* code blocks */
+pre[data-type="programlisting"] {
+  padding: 0.5em;
+  max-width: 70ch;
+  margin: 0.5em auto;
+}
+.highlight code { color: inherit}
+
+/* callouts */
+.calloutlist dt {
+  float: left;
+  clear: left;
+  background: none;
+  margin: 0.5em;
+}
+.calloutlist dd {
+  padding: 0.5em 0 0.5em 2em;
+  margin: 0;
+}
+.calloutlist dd p { margin: 0; }
+.calloutlist dd:nth-of-type(odd) {
+  background: rgba(50%, 75%, 100%, 0.3);
+}

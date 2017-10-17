@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <title>Understanding Vector Graphics
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Understanding Vector Graphics — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="SVG stands for Scalable Vector Graphics, but what does that mean?  How is it different from other image formats? An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png">
+  <meta name="twitter:image:alt" property="og:image" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
+
 <body>
   <header>
     <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
@@ -18,15 +32,83 @@
   </header>
   <main>
     <h1>Understanding Vector Graphics</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+
+    <p>SVG stands for <strong role="term">Scalable Vector Graphics</strong>, but what does that mean?</p>
+
+    <p>Vectors, in mathematics, are numerical representations of movement or of a difference in two states. They describe how to get from here to there. Usually represented as a list of numbers, they break down the overall change between the two states into the net displacement as measured in different, independent dimensions. For 2D graphics, the dimensions are usually horizontal (<em>x</em>) and vertical (<em>y</em>).</p>
+
+    <p><strong role="term">Vector graphics</strong> consist of mathematical descriptions of shapes as a combination of these numerical vectors. Because the vector graphics define the <em>path</em> that the lines should take, rather than a set of points along the way, they can be used to calculate any number of points, and so can be used at any image resolution.</p>
+
+    <p>Vector graphics form the basis of many computer applications, and they’ve been around almost as long as the personal computer. The DWG (“drawing”) format—used by AutoCAD and other computer-assisted drafting software—and the PostScript language—used in Adobe’s desktop publishing software, and later in PDF—were both developed in the early 1980s.</p>
+
+    <p>For drafting, the mathematical precision of vector graphics is essential. For publishing, the key benefit was the ability to create high-resolution printed documents, without requiring the position of every drop of ink to be encoded in the computer file.</p>
+
+    <p>Computer printers do not (usually) draw vector graphics directly, tracing along the lines like you would draw a shape with a pen. However, by using a set of vector shapes to define the boundaries of what a letter or image looks like, a program can test whether any given point is within that boundary. As the printer head moves across the page, the software tells it whether to drop or not drop a spot of ink at any given point.</p>
+
+    <p>The software can calculate which pixels on the screen would fit within the shape outlines, in a process called <strong role="term">rasterization</strong>. The word comes from the latin for “rake”, and refers to the way the image is calculated as a series of parallel lines, like the lines made by the tines of a rake across the ground. The rasterizer software calculates when each of these raster-line crosses an edge in the vector graphic, and changes the color when it does.</p>
+
+    <p>The same principles are used in TrueType and other vector font formats. Rather than storing separate, pixelated representations for each possible size of text, vector fonts often only need one set of shapes, regardless of size.</p>
+    <div data-type="note" epub:type="note">
+      <p>This description of vector fonts is an over-simplification; most font formats also include hints or constraints that are used to adjust the appearance of the letters at low resolutions.</p>
     </div>
+
+    <p><a data-type="xref" href="#rasterization-figure">Figure 1-X1</a> simulates the rasterization process. The gray dashed line represents the vector outline of the shape, which is the same mathematically-defined curve regardless of the display resolution. The dots of ink, or pixels of light, fill in the shape in neat rows.</p>
+
+    <figure class="page-float">
+      <div id="rasterization-figure" class="figure">
+        <img src="../ch01-overview-files/rasterization.svg" alt="An arbitrary curved shaped, drawn twice.  On the left, labelled Low-Resolution Display, the shape is filled with large red, green, and blue dots spaced at regular intevals.  On the right, labelled High-Resolution Display, the dot pattern is much smaller and more closely spaced, requiring many more dots to fill in the shape." />
+        <figcaption><span class="label">Figure 1-X1. </span>A vector graphic rasterized at different resolutions</figcaption>
+      </div>
+    </figure>
+
+    <p>The number of rows and dots that fill in the shape are quite different between a low resolution and a high resolution printer or display. However, the overall size and shape is the same, except for a slight jaggedness (pixelation or aliasing) around the edges on the low-resolution display, caused by the fixed size and spacing of the dots. This jaggedness is often minimized by partially coloring the edge pixels to smooth out the curves (anti-aliasing).</p>
+
+    <p>With aliasing, all the colored dots that are cut by the edges in <a data-type="xref" href="#rasterization-figure">Figure 1-X1</a> would be either full circles or removed completely. With anti-aliasing, they would be full circles, but at a reduced color intensity. The edges of anti-aliased shapes can therefore sometimes look blurry, instead of jagged.</p>
+
+    <p><strong role="term">Raster graphics</strong> are the opposite of vector graphics; these are directly encoded as the rows (raster lines) of final pixel colors for each point in the image grid. Viewed at the correct resolution, the human eye connects up those points into lines and shapes, but the underlying graphic doesn’t include any information about those shapes.</p>
+
+    <p>Raster graphics are also known as <strong role="term">bitmap</strong> graphics, because originally the data (bits) in the file could be directly mapped to corresponding pixels in the output. Today, most raster graphic formats employ some form of compression, to reduce the total number of bytes necessary to encode the graphic.</p>
+
+    <p>When SVG was first proposed in the late 1990s, bandwidth was at a premium. The principle advantage of vector graphics on the web was that high-resolution (but graphically simple) images could be defined with small file sizes.</p>
+
+    <p>You can display the graphics at any size, for screen or print, without causing smooth curves or diagonal lines to degrade into jagged steps. The images scale cleanly whether they are rendered at 1% of the original size or 100 times the original size. Mathematical transformations—scaling, rotating, or skewing—of the image do not change the underlying information about the graphic itself. So if you add a transformation, and then later decide to remove or change it, you haven’t lost any information.</p>
+
+    <p>Raster graphics, on the other hand, are considerably more sensitive to scaling. If you double the image’s dimensions, the display will have to interpolate new color values from the old, making the image appear soft and out of focus. If you then reduce that image to one half its original size, that same graphic has to throw out information. Take that reduced image and blow it up by a factor of four, and the image ends up interpolating data that may or may not be accurate, and the image gets even farther out of focus. Rotations can create jagged artifacts, skewing can introduce more artifacts, and successive transformations can leave an image looking like it went through a wormhole in space.</p>
+
+    <p>In other words, all vector graphics are scalable, while raster graphics for the most part are not.</p>
+
+    <p>In general, vector graphics are:</p>
+
+    <ul>
+      <li>
+        <p>Described by instructions or functions rather than by pixels.</p>
+      </li>
+      <li>
+        <p>Resizable and transformable, without losing information.</p>
+      </li>
+      <li>
+        <p>Often smaller filesizes to encode high-resolution graphics.</p>
+      </li>
+    </ul>
+
+    <p>It is worth noting that many raster image software tools incorporate some vector graphics encoding. Even photo-processing applications like Photoshop or GIMP use vector graphics to combine layers, manipulate text, or apply some effects. However, most of these vector encodings are not available to end users or developers—they are locked up deep within the application layers of these respective programs. (Although some of these programs now support some degree of SVG export of this hidden vector data!)</p>
+
+    <p>Similarly, SVG (and other vector graphics, like PDF) can incorporate bitmap images as an element of the graphic. These bitmaps do not get the scaling benefit of vector graphics; while they can certainly be scaled, the images will lose resolution the same way scaling any bitmap will. However, the SVG code can be used to modify bitmap images or composite multiple bitmaps—mask areas off, scale areas, apply underlays or overlays, generate drop shadows, and so forth—and these effects can be applied regardless of the resolution of the bitmap image. This makes it possible to build layout tools for raster graphics with SVG.</p>
+
+    <p><strong role="term">Declarative animation</strong> adds a new dimension to the vectors—time!</p>
+
+    <p>Declarative vector animations (including both CSS animation and SMIL animation elements) define how a property should change over time, and let the browser fill in the specific in-between values. While videos and other animated image formats (such as GIF) define a fixed number of individual frames, vector animations will adapt in frame rate according to the capabilities of the device. Slowing down or speeding up the animation is also simple, just like scaling the image in space.</p>
+
+    <p>Because vector graphics languages describe images and animation as a series of discrete instructions for each shape or line, they could logically be translated into an element-based document object model (DOM) of the sort used for HTML and XML. And that’s where SVG comes in.</p>
+
+    <p>SVG uses an XML markup format and CSS styles, so it can be edited and processed with existing tools used by web developers.</p>
+
+    <p>Text in the graphic is plain text in the file, so it is easy to edit—and in the right software, it isaccessible to screen readers and to user interaction.</p>
+
+    <p>The SVG image is represented using a live DOM (document object model) inside the browser, so it can be manipulated with JavaScript, often with only slight changes to code that was built for working with HTML documents.</p>
+
+    <p>Working with vector graphics—especially in web browsers—can be more frustrating than working with raster images. Much more of the final appearance is controlled by the rendering software. The SVG in the browser may not match the image in your graphical editor. Browser bugs and missing feature support become a constant concern. But just as when working the HTML, CSS and JavaScript, the solution is to plan your project with fallbacks in mind, and to test your work in many browsers.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
@@ -35,4 +117,5 @@
       View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files or suggest a correction.</p>
   </footer>
 </body>
+
 </html>

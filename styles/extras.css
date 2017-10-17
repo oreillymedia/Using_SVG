@@ -31,7 +31,7 @@ p, li {
   margin: 1rem 0 1rem -3.5rem;
 }
 [data-type="note"]::before    { content: "🤓"; } /* 🤓🤔😡 or 🦉🐒🦂 */
-[data-type="tip"::before]     { content: "🤔"; } 
+[data-type="tip"]::before     { content: "🤔"; } 
 [data-type="warning"]::before { content: "😡"; }
 
 /* examples and figures */
@@ -52,8 +52,9 @@ figure figcaption {
 figure figcaption .label {
   font-style: italic;
 }
-figure {
-  padding: 0 calc(50% - 22em); /* constrain content width to 44em */
+figure,
+dl:not(.columns):not(.columns-children) dt {
+  padding: 0.2em calc(50% - 22em); /* constrain content width to 44em */
 }
 figure img {
   display: block;

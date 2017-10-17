@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
-  <title>Embedding SVG in HTML Reference
-    — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <title>Embedding SVG in HTML Reference — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  
+  <meta name="twitter:title" property="og:title" 
+        content="Embedding SVG in HTML Reference — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="A guide to the HTML elements for adding SVG to web pages. Part of the supplementary material for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png">
+  <meta name="twitter:image:alt" property="og:image" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
+
 <body>
   <header>
     <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
@@ -17,15 +29,240 @@
   </header>
   <main>
     <h1>Embedding SVG in HTML</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+    <p>These HTML elements can be used to integrate SVG in a web page. They also have other uses, of course, but this reference focuses on their relationship to SVG.</p>
+    <dl class="columns-children">
+      <dt id="img"><code>&lt;img&gt;</code><a href="#img" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Embed a non-interactive, static or animated, image file. A linked SVG file is loaded in secure mode, meaning that no scripts run and no additional file assets are loaded. An <code>&lt;img&gt;</code> element is a single tag with no child elements.</p>
+        <div class="openblock">
+          <dl>
+            <dt id="src-attr-img"><code>src</code><a href="#src-attr-img" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>The URL of the image file to embed.</p>
+            </dd>
+            <dt id="alt-attr-img"><code>alt</code><a href="#alt-attr-img" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>Alternative text description of the image, used if the image does not load or for screen readers. For SVG image sources, also add <code>role="img"</code> so that VoiceOver (the screen reader on Mac and iOS) actually uses the <code>alt</code> text.</p>
+            </dd>
+            <dt id="crossorigin-attr-img"><code>crossorigin</code><a href="#crossorigin-attr-img" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>Whether to request the image file with cross-origin permissions. See the <a href="markup.html#crossorigin-attr">description in the SVG reference</a> for details.</p>
+            </dd>
+            <dt id="srcset-attr-img"><code>srcset</code><a href="#srcset-attr-img" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A set of alternative URLs for the same image at different sizes, along with descriptors of the resolution or width for each. Not usually needed for SVG images.</p>
+            </dd>
+            <dt id="sizes-attr-img"><code>sizes</code><a href="#sizes-attr-img" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>Information about how large the image will be drawn on the screen, for use by the browser when selecting a file from a <code>srcset</code>. Again, not usually needed for SVG images.</p>
+            </dd>
+            <dt id="width-attr-img"><code>width</code><a href="#width-attr-img" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A default width, as an integer number of pixels. Can be over-ridden with CSS.</p>
+            </dd>
+            <dt id="height-attr-img"><code>height</code><a href="#height-attr-img" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A default height, as an integer number of pixels. Can be over-ridden with CSS.</p>
+            </dd>
+          </dl>
+        </div>
+
+      </dd>
+      <dt id="picture"><code>&lt;picture&gt;</code> and <code>&lt;source&gt;</code><a href="#picture" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Define a set of image file options for the web browser to chose from, based on various conditions. A <code>&lt;picture&gt;</code> element must have an <code>&lt;img&gt;</code> element as a child, and may have one or more <code>&lt;source&gt;</code> element children listing alternative source files; the <code>&lt;img&gt;</code> will then be embedded with the selected image file as its source.</p>
+
+        <p>For use with SVG, reference your fallback image or default SVG view from the <code>&lt;img&gt;</code> element and use these attributes on <code>&lt;source&gt;</code>:</p>
+        <div class="openblock">
+          <dl>
+            <dt id="type-attr-source"><code>type</code><a href="#type-attr-source" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>The type of the alternative image source, as a media type (MIME type) string.</p>
+
+              <ul>
+                <li>
+                  <p>For SVG, the value should be <code>image/svg+xml</code>.</p>
+                </li>
+              </ul>
+            </dd>
+            <dt id="media-attr-source"><code>media</code><a href="#media-attr-source" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A media query describing when this source applies.</p>
+
+              <ul>
+                <li>
+                  <p>Same format as in an <code>@media</code> rule or the <code>media</code> attribute of <code>&lt;link&gt;</code> stylesheet.</p>
+                </li>
+                <li>
+                  <p>A <code>&lt;source&gt;</code> within <code>&lt;picture&gt;</code> must have at least one of <code>type</code> or <code>media</code>.</p>
+                </li>
+              </ul>
+            </dd>
+            <dt id="srcset-attr-source"><code>srcset</code><a href="#srcset-attr-source" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>The URL(s) of the image files, which should all represent the same image at different resolutions.</p>
+
+              <ul>
+                <li>
+                  <p>For SVG sources, this is normally just a single URL for all resolutions.</p>
+                </li>
+                <li>
+                  <p>If you want to use a different graphic at different screen dimensions, or a different view of your SVG (as described in <a data-type="xref" href="../ch09-views-files/">Chapter 9</a>), use a separate <code>&lt;source&gt;</code> with a <code>media</code> attribute.</p>
+                </li>
+                <li>
+                  <p>The simple <code>src</code> attribute is <em>not</em> used for <code>&lt;source&gt;</code> within <code>&lt;picture&gt;</code>.</p>
+                </li>
+              </ul>
+            </dd>
+          </dl>
+        </div>
+
+      </dd>
+      <dt id="object"><code>&lt;object&gt;</code><a href="#object" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Embed an interactive document, which could be processed by a special plug-in instead of the main web browser. An <code>&lt;object&gt;</code> element must have a closing tag in HTML. It’s child content is treated as fallback, if the browser does not recognize or cannot process the object’s data type. The child content can also include <code>&lt;param&gt;</code> (parameter) elements, but they are not currently used for SVG.</p>
+
+        <p>An object’s dimensions can be affected by the intrinsic sizes of the embedded file, see <a data-type="xref" href="../ch09-views-files/">Chapter 9</a> for details.</p>
+        <div class="openblock">
+          <dl>
+            <dt id="type-attr-object"><code>type</code><a href="#type-attr-object" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>The type of the object, as a media type (MIME type) string.</p>
+
+              <ul>
+                <li>
+                  <p>For SVG, the value should be <code>image/svg+xml</code>.</p>
+                </li>
+                <li>
+                  <p>Required if <code>data</code> is not specified initially.</p>
+                </li>
+              </ul>
+            </dd>
+            <dt id="data-attr-object"><code>data</code><a href="#data-attr-object" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>The URL of the document that will be embedded (i.e., of the SVG file).</p>
+            </dd>
+            <dt id="typemustmatch-attr-object"><code>typemustmatch</code><a href="#typemustmatch-attr-object" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A flag that tells the browser not to render the document if the content-type specified by the server that provided the data file isn’t the same as this object’s <code>type</code> attribute.</p>
+
+              <ul>
+                <li>
+                  <p>No value; for XHTML, use an empty string or repeat the attribute name as the value.</p>
+                </li>
+                <li>
+                  <p>Default (if the attribute is not included) is to use the actual document type specified by the web server.</p>
+                </li>
+                <li>
+                  <p>Use <code>typemustmatch</code> if embedding files from web servers you don’t control. But remember: this doesn’t provide full sandboxing of the embedded document.</p>
+                </li>
+              </ul>
+            </dd>
+            <dt id="name-attr-object"><code>name</code><a href="#name-attr-object" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A name for the object’s browsing context. Used to make this object the target of links from elsewhere on the page. See <a data-type="xref" href="../ch09-views-files/">Chapter 9</a> for examples and limitations.</p>
+
+              <ul>
+                <li>
+                  <p>Must not start with a <code>_</code> (underscore) character.</p>
+                </li>
+              </ul>
+            </dd>
+            <dt id="width-attr-object"><code>width</code><a href="#width-attr-object" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A default width, as an integer number of pixels. Can be over-ridden with CSS.</p>
+            </dd>
+            <dt id="height-attr-object"><code>height</code><a href="#height-attr-object" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A default height, as an integer number of pixels. Can be over-ridden with CSS.</p>
+            </dd>
+          </dl>
+        </div>
+
+      </dd>
+      <dt id="embed"><code>&lt;embed&gt;</code><a href="#embed" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Embed an interactive document, which could be processed by a special plug-in instead of the main web browser. An <code>&lt;embed&gt;</code> should be functionally equivalent to <code>&lt;object&gt;</code>. The difference is in the syntax, which comes from pre-standardization HTML. An <code>&lt;embed&gt;</code> element is a single tag, with no child elements and therefore no fallback.</p>
+        <div class="openblock">
+          <dl>
+            <dt id="src-attr-embed"><code>src</code><a href="#src-attr-embed" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>The URL of the embedded document (equivalent to <code>data</code> on an <code>&lt;object&gt;</code>).</p>
+            </dd>
+            <dt id="type-attr-embed"><code>type</code>, <code>width</code>, and <code>height</code><a href="#type-attr-embed" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>Equivalent to the same attributes on <code>&lt;object&gt;</code>.</p>
+            </dd>
+            <dt id="other-attributes-embed">other attributes<a href="#other-attributes-embed" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>Treated as parameters for the plug-in; they aren’t used in SVG.</p>
+            </dd>
+          </dl>
+        </div>
+
+      </dd>
+      <dt id="iframe"><code>&lt;iframe&gt;</code><a href="#iframe" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Embed an interactive document that is processed by the main web browser. The document’s functionality can be restricted using sandboxing, to turn off scripts, pop-ups, or other features. An <code>&lt;iframe&gt;</code> must have a closing tag, but cannot have any child elements.</p>
+
+        <p>Browsers are inconsistent about scaling and sizing <code>&lt;iframe&gt;</code> elements containing SVG documents; see <a data-type="xref" href="../ch09-views-files/">Chapter 9</a> for details.</p>
+        <div class="openblock">
+          <dl>
+            <dt id="src-attr-iframe"><code>src</code><a href="#src-attr-iframe" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>The URL of the embedded document.</p>
+            </dd>
+            <dt id="srcdoc-attr-iframe"><code>srcdoc</code><a href="#srcdoc-attr-iframe" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>Complete markup of an embedded HTML document (as an attribute value string).</p>
+            </dd>
+            <dt id="name-attr-iframe"><code>name</code><a href="#name-attr-iframe" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A name for the object’s browsing context. Used to make this object the target of links from elsewhere on the page.</p>
+            </dd>
+            <dt id="sandbox-attr-iframe"><code>sandbox</code><a href="#sandbox-attr-iframe" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>Permissions and restrictions on the functionality of the embedded document. It should be used when embedding SVG that you don’t control.</p>
+
+              <ul>
+                <li>
+                  <p>Value is a space-separated list of <a href="https://html.spec.whatwg.org/multipage/iframe-embed-object.html#attr-iframe-sandbox">permission tokens</a> (like <code>allow-forms</code> or <code>allow-scripts</code>), or an empty string (which means full sandboxing).</p>
+                </li>
+                <li>
+                  <p>Default (if the attribute isn’t present) is no sandboxing.</p>
+                </li>
+                <li>
+                  <p>Has no effect if changed after the embedded document is loaded.</p>
+                </li>
+              </ul>
+            </dd>
+            <dt id="allowX-attr-iframe"><code>allowfullscreen</code>, <code>allowpaymentrequest</code>, and <code>allowUserMedia</code><a href="#allowX-attr-iframe" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>Additional permissions, separate from the sandbox ones.</p>
+
+              <ul>
+                <li>
+                  <p>No value (use an empty string in XHTML), the presence of the attribute grants the permission.</p>
+                </li>
+              </ul>
+            </dd>
+            <dt id="width-attr-iframe"><code>width</code><a href="#width-attr-iframe" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A default width, as an integer number of pixels. Can be over-ridden with CSS.</p>
+            </dd>
+            <dt id="height-attr-iframe"><code>height</code><a href="#height-attr-iframe" class="hash-link" aria-label="Permalink">#</a></dt>
+            <dd>
+              <p>A default height, as an integer number of pixels. Can be over-ridden with CSS.</p>
+            </dd>
+          </dl>
+        </div>
+
+      </dd>
+      <dt id="svg"><code>&lt;svg&gt;</code><a href="#svg" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Not an HTML element, but included here for completeness because it <em>is</em> used to include SVG in an HTML page. When used in that way, the <code>&lt;svg&gt;</code> can be styled and positioned as a CSS replaced-content layout box, similar to an <code>&lt;img&gt;</code>. In other words, it can have borders and padding, and can be floated or absolutely positioned. Attributes for <code>&lt;svg&gt;</code> are described in <a href="markup.html#svg">the markup reference</a>.</p>
+      </dd>
+    </dl>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
@@ -34,4 +271,5 @@
       View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files or suggest a correction.</p>
   </footer>
 </body>
+
 </html>

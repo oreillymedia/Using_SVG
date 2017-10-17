@@ -175,11 +175,11 @@ ol.directory > li {
 .directory li > ul, .directory li > ol {
   padding-left: 2em;
 }
-.directory li {
+.directory li, .directory > dt {
   text-indent: 0.5em hanging; /* One day, this will work. Maybe. */
 }
 @supports not (text-indent: 0.5em hanging) { /* sigh... */
-  .directory li {
+  .directory li, .directory > dt {
     padding-left: 0.5em;
     text-indent: -0.5em;
   }

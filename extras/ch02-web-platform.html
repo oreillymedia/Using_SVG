@@ -2,10 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>The Web Platform
-    — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <title>The Web Platform — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="The Web Platform — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="The web platform is the interconnected set of standards used by websites and browsers: HTML, CSS, HTTP, URLs, JavaScript, the DOM. And SVG. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png">
+  <meta name="twitter:image:alt" property="og:image" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
+
 <body>
   <header>
     <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
@@ -18,15 +29,67 @@
   </header>
   <main>
     <h1>The Web Platform</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+    <p>The web platform—the foundation on which all web sites are built, from global forces like Google and Facebook to niche blogs and web apps—consists of a half-dozen core coding standards, and countless extensions of them. Each standard is a plank that connects the browsers (and other software) that interpret the web page code to the developers that write it.</p>
+
+    <p>So long as both ends, browsers and developers, stay firmly attached to a common standard, the structure stays sound and web sites function as expected in any browser, on any operating system.</p>
+
+    <p>But all of these components—standards, browsers, and web sites—are in constant flux, adding new features and building new structures. If a browser doesn’t quite reach the level of the standard a developer is using, something needs to be cobbled together to connect them, or the page ends up broken in appearance or function. In many ways, the web platform is more of a ramshackle raft than anything you would want to build a house upon.</p>
+
+    <p>Somehow, it all hangs together, most of the time.</p>
+
+    <p>Since the web standards movement first gained hold in the late 1990s, a key organizing principle—to help control the chaos—has been the <strong role="term">separation of concerns</strong>. Different aspects of a web site or application should be kept in separate code blocks or files, in order to support the greatest flexibility and re-usability of code. <a data-type="xref" href="#webplatform-venndiagram-figure">Figure 2-X1</a> visualizes how the main web languages each have their separate, but interconnected, concerns.</p>
+
+    <figure class="page-float">
+      <div id="webplatform-venndiagram-figure" class="figure">
+        <img src="../ch02-bigpicture-files/webplatform-venndiagram.svg" alt="A Venn Diagram with four circles: Content Structure (what the document is), represented by XML and HTML; Connection (where to find it) represented by HTTP and URI; Style and Formatting (how it looks), represented by CSS; and, Logic and Functionality (how it works) represented by JavaScript.  The circles overlap to form regions labelled links, selectors, DOM, CSS OM, and AJAX, as described in the text.  The points where multiple circles overlap are marked by stars." />
+        <figcaption><span class="label">Figure 2-X1. </span>The core web platform languages, their roles and their areas of overlap. Web pages and web sites exist at the intersection of all four regions.</figcaption>
+      </div>
+    </figure>
+
+    <p>Each component has a clear role to play:</p>
+    <dl>
+      <dt>HTML and XML</dt>
+      <dd>
+        <p>The language most strongly associated with the web is HTML, HyperText Markup Language. <strong role="term">Hypertext</strong> meaning that the text in one document is connected to further information stored elsewhere; <strong role="term">markup</strong> meaning that the structure is described by codes included in the main text. Not all information can be represented as HTML, whose markup tags are designed to describe text documents.</p>
+
+        <p>The eXtensible Markup Language (XML) allows diverse data and document formats to be represented with a consistent syntax. Programs to edit, validate, and manipulate XML documents only needed to know the XML syntax rules, not the particulars of the document type. XML, while the basis of countless file types, has not—as initially planned—replaced the looser syntax of HTML; nonetheless, a document can be both HTML and XML compatible when required, a format known as XHTML.</p>
+      </dd>
+      <dt>HTTP and URI</dt>
+      <dd>
+        <p>Web pages may be written in HTML, but the web is <em>connected</em> with the Universal Resource Identifier system that identifies resources on the web (URI, more commonly known as Universal Resource Locators, or URLs), and the HyperText Transfer Protocol (HTTP) that transmits them from server to browser.</p>
+
+        <p>These standards overlap the HTML language in one key area: links. The URI/URL addressing system identifies hyperlink destinations and embedded resources such as images. HTTP mostly operates behind the scenes, in the browser source codes. Front-end web page developers should at least be aware of the HTTP form-submission methods (GET and POST) for sending data to the server, and the HTTP header system for identifying files from the server and for sending user information (e.g., web cookies) with file requests.</p>
+      </dd>
+      <dt>CSS</dt>
+      <dd>
+        <p>Cascading Style Sheets (CSS) were developed as an alternative to the formatting-focused HTML tags that flourished in the early years of the web. CSS offered two main benefits: presentation information could be separated into style blocks or stylesheet files, and multiple stylesheets could be applied to a single document.</p>
+
+        <p>By separating the styles, one stylesheet could be used for many web pages on a site, and the HTML markup could focus on the content. By <strong role="term">cascading</strong> style rules through multiple stylesheets, users could retain some control over appearance, by setting their own defaults and by marking certain features as <code>!important</code> if, for example, poor eyesight makes large text or high-contrast colors essential.</p>
+
+        <p>The benefits of CSS were such that HTML 4.01 deprecated—discouraged the use of—formatting markup when it was finalized in 1999 by the World Wide Web Consortium (W3C). Web designers were, and are, advised to separate structure (HTML) from presentation (CSS) as much as possible, connecting the two only by the selectors in the CSS and the class attributes in the HTML. Ideally, it should be possible to completely change the style of a web page without altering the HTML.</p>
+      </dd>
+      <dt>JavaScript</dt>
+      <dd>
+        <p>Dynamic web pages, which could react to user actions in the same way desktop computer programs did, were another new feature developed by early web browsers trying to distinguish themselves. Netscape Navigator 2 was the first to include programming code, using JavaScript, a flexible, informal scripting language whose syntax was (very) loosely inspired by the then-dominant Java. Other browsers developed similar-but-different scripting rules.</p>
+
+        <p>While HTML and CSS were standardized by the World Wide Web Consortium (W3C), scripting was standardized by the organization ECMA International (formerly the European Computer Manufacturers Association) and is officially known as ECMAScript. This book will follow the terminology used by the vast majority of web developers, and call it JavaScript. Thankfully, most browsers now support the ECMAScript standards, so the distinction is no longer relevant.</p>
+
+        <p>ECMAScript only provides half of the functionality required for dynamic HTML. It defines basic data types, functions, and control structures. It <em>doesn’t</em> define how the parts of a web page work. The Document Object Model (DOM) connects JavaScript to HTML/XML. It defines a web document, not as a stream of text with formatting marks, but as a collection of data objects. The DOM specifications define how these objects are nested within one another, along with their properties and methods. Unlike JavaScript, the DOM was defined via the W3C, originally with the intent it could be implemented in any programming language. There is also a CSS object model (CSS OM) that allows scripts to manipulate the rules in a stylesheet.</p>
+
+        <p>Web page scripts can also use HTTP to access other files or database gateways on the Internet. Commonly known as <strong role="term">AJAX</strong>, for <em>Asynchronous JavaScript And XML</em>, the technique relies on the <code>XMLHttpRequest</code> API, first introduced as an add-on to Internet Explorer but now widely supported and being standardized.<sup><a data-type="noteref" id="idm140253693067968-marker" href="ch22.html#idm140253693067968">1</a></sup> Although initially designed for accessing XML data files, it can import any information accessible via HTTP, and can manipulate the HTTP headers sent with the request.</p>
+      </dd>
+    </dl>
+
+    <p>The web exists at the intersection of these components (in the starred regions of <a data-type="xref" href="#webplatform-venndiagram-figure">Figure 2-X1</a>). Individual web pages are built from HTML/XML, CSS, and Javascript. Complex web sites are held together by hyperlinks, AJAX, URIs and HTTP.</p>
+
+    <p>SVG is an XML language styled with CSS, manipulated with JavaScript, and tied together with URLs in the form of hyperlinks and cross-references to assets. However, it was never designed as a replacement for HTML, but as a purpose-built language to describe a type of document that HTML doesn’t: graphics.</p>
+
+    <p>Graphics cut across the separation of presentation and content. The presentation (layout and other visual appearance) <em>is</em> the content of a graphical document. Animations can be functional (reacting to user interaction), they can be structural (part of the information in the graphic), or they can be decorative.</p>
+
+    <p>It’s no surprise, then, that the SVG specifications include extensions to all aspects of the web platform: they define elements and attributes, but also new style properties and DOM objects and methods. They even define an extension to URLs, the SVG view fragments that we introduce in <a data-type="xref" href="../ch09-views-files/">Chapter 9</a>.</p>
+
+    <p>Using SVG to its full potential on the web therefore means understanding CSS, JavaScript and the DOM, and how HTTP interacts with URLs and file handling. It also means understanding HTML—and how it differs from SVG—so you can use the best features of each language in an integrated web page.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

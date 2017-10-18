@@ -13,22 +13,45 @@ p, li {
   max-width: 45rem;
   box-sizing: border-box;
   margin: 1em auto;
-  padding: 0.1rem 0.5rem 0.1rem 4.5rem;
+  padding: 0 0.5rem 0 4rem;
+  overflow: hidden; /* contain child margins */
   border-width: 3px;
   border-radius: 3px;
   border-style: none solid;
 }
 [data-type="note"]    { border-color: #248 }
-[data-type="tip"]     { border-color: #4a8 }
+[data-type="note"]    h6     { color: #248 }
+[data-type="tip"]     { border-color: #396 }
+[data-type="tip"]     h6     { color: #396 }
 [data-type="warning"] { border-color: #a12 }
+[data-type="warning"] h6     { color: #a12 }
+
+[data-type="note"]    h6,
+[data-type="tip"]     h6,
+[data-type="warning"] h6,
+[data-type="note"]::before,
+[data-type="tip"]::before,
+[data-type="warning"]::before {
+  display: inline-block;
+  width: 4rem;
+  text-align: center;
+  float: left;
+  clear: left;
+  margin: 0;
+  margin-left: -4rem;
+}
+[data-type="note"]    h6,
+[data-type="tip"]     h6,
+[data-type="warning"] h6 {
+  font-size: x-small;
+  margin-bottom: 1rem;
+}
 
 [data-type="note"]::before,
 [data-type="tip"]::before,
 [data-type="warning"]::before {
-  display: block;
-  float: left;
   font-size: 200%;
-  margin: 1rem 0 1rem -3.5rem;
+  margin-top: 1rem;
 }
 [data-type="note"]::before    { content: "🤓"; } /* 🤓🤔😡 or 🦉🐒🦂 */
 [data-type="tip"]::before     { content: "🤔"; } 

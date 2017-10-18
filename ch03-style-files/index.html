@@ -1,33 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
     <head><meta charset="utf-8" /> 
-    <title>ch03-style-files/</title>
-    <link rel="stylesheet" href="../styles/main.css" />
-  </head>
-  <body>
-    <div id="wrapper">
-      <h2>All files in ch03-style-files</h2>
-      <ul class="columns narrow directory"><li><a href=".." title="Parent folder">..</a></li>
-<li><a href="css-animated-stoplight.html" title="css-animated-stoplight.html">css-animated-stoplight.html</a></li>
-<li><a href="css-stoplight.html" title="css-stoplight.html">css-stoplight.html</a></li>
-<li><a href="css-stoplight.png" title="css-stoplight.png">css-stoplight.png</a></li>
-<li><a href="grouped-stoplight-print-styles-force.svg" title="grouped-stoplight-print-styles-force.svg">grouped-stoplight-print-styles-force.svg</a></li>
-<li><a href="grouped-stoplight-print-styles.css" title="grouped-stoplight-print-styles.css">grouped-stoplight-print-styles.css</a></li>
-<li><a href="grouped-stoplight-print-styles.png" title="grouped-stoplight-print-styles.png">grouped-stoplight-print-styles.png</a></li>
-<li><a href="grouped-stoplight-print-styles.svg" title="grouped-stoplight-print-styles.svg">grouped-stoplight-print-styles.svg</a></li>
-<li><a href="mediaquery-embedded.svg" title="mediaquery-embedded.svg">mediaquery-embedded.svg</a></li>
-<li><a href="mediaquery-inline-embed.html" title="mediaquery-inline-embed.html">mediaquery-inline-embed.html</a></li>
-<li><a href="mediaquery-inline-embed.png" title="mediaquery-inline-embed.png">mediaquery-inline-embed.png</a></li>
-<li><a href="mediaquery.css" title="mediaquery.css">mediaquery.css</a></li>
-<li><a href="sample-css-namespaces-default.svg" title="sample-css-namespaces-default.svg">sample-css-namespaces-default.svg</a></li>
-<li><a href="sample-css-namespaces.svg" title="sample-css-namespaces.svg">sample-css-namespaces.svg</a></li>
-<li><a href="sample-html-link.css" title="sample-html-link.css">sample-html-link.css</a></li>
-<li><a href="sample-html-link.svg" title="sample-html-link.svg">sample-html-link.svg</a></li>
-<li><a href="svg-css-fallback.html" title="svg-css-fallback.html">svg-css-fallback.html</a></li>
-<li><a href="svg-in-css-border-gradient.svg" title="svg-in-css-border-gradient.svg">svg-in-css-border-gradient.svg</a></li>
-<li><a href="svg-in-css.css" title="svg-in-css.css">svg-in-css.css</a></li>
-<li><a href="svg-in-css.html" title="svg-in-css.html">svg-in-css.html</a></li>
-<li><a href="svg-in-css.png" title="svg-in-css.png">svg-in-css.png</a></li></ul>
+  <title>Chapter 03, A Sense of Style: 
+    Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <link rel="stylesheet" href="../styles/main.css" />
+
+  <meta name="twitter:title" property="og:title" content="A Sense of Style — Ch03, Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" content="Working with CSS. Online extras and example code for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png">
+  <meta name="twitter:image:alt" property="og:image" content="Using SVG book cover, featuring a blue-fronted lorikeet.">
+</head>
+
+<body>
+  <header>
+    <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
+    <p>Example code and online extras for the <a href="http://shop.oreilly.com/product/0636920037972.do">O'Reilly Media book</a> by Amelia Bellamy-Royds, Kurt Cagle, and Dudley Storey.</p>
+    <nav>
+      <a class="home" href="../index.html#chapters">Chapter List</a>
+      <a href="../ch02-bigpicture-files/">Previous Chapter</a>
+      <a href="../ch04-tools-files/">Next Chapter</a>
+    </nav>
+  </header>
+  <main>
+    <h1>
+      <div>Chapter 3</div> A Sense of Style: <i>Working with CSS</i></h1>
+    <nav class="toc" aria-label="Page Contents">On this page:
+      <ul class="columns narrow">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#examples">Figures and Examples</a></li>
+        <li><a href="#extras">Online Extras</a></li>
+      </ul>
+    </nav>
+    <div id="intro" class="columns">
+      <p>
+        On the web, style means CSS. Cascading Style Sheets are used to indicate how the plain text of HTML should be formatted into the colorful diversity of websites and applications that you interact with every day.</p>
+      <p>
+        SVG and CSS have an intertwined relationship. SVG incorporates CSS styling of decorative aspects of the drawing, but uses a basic layout model completely independent of CSS layout. CSS has been expanded to include so many graphical effects (formerly only available in SVG) that it has become a rudimentary vector graphics language of its own.</p>
+      <p>
+        This chapter covers how to use CSS styles to modify your SVG graphics, and how to reference SVG images and elements in CSS code used to style HTML. It also discusses the benefits and limitations of using CSS+HTML to create graphics, including its similarities and differences with SVG, and outlines factors for you to consider when deciding between these CSS vector graphics and SVG.
+      </p>
     </div>
-  
+    <h2 id="examples">Figures and Examples<a href="#examples" class="hash-link" aria-label="Permalink">#</a></h2>
+    <p>The file names link to the code view on GitHub. <em>Beware: the linked screenshots are hi-resolution; some have very large file sizes.</em></p>
+    <dl class="columns directory">
+      <dt><span class="label">Figure 3-1. </span>A minimalist, monochrome stoplight</dt>
+      <dt><span class="label">Example 3-1. </span>Stylesheet for monochrome printing of an SVG</dt>
+      <dd>
+        <ul>
+          <li><a href="grouped-stoplight-print-styles.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/grouped-stoplight-print-styles.svg">grouped-stoplight-print-styles.svg</a>
+          <li><a href="grouped-stoplight-print-styles.css">Raw CSS file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/grouped-stoplight-print-styles.css">grouped-stoplight-print-styles.css</a>
+          </li>
+          <li><a href="grouped-stoplight-print-styles-force.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/grouped-stoplight-print-styles-force.svg">grouped-stoplight-print-styles-force.svg</a> (a version that uses the print styles, even for on-screen viewing)
+          <li><a href="grouped-stoplight-print-styles.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/grouped-stoplight-print-styles.png">grouped-stoplight-print-styles.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 3-2. </span>A web page using SVG graphics as CSS backgrounds, bullets, and borders</dt>
+      <dt><span class="label">Example 3-2. </span>Using CSS properties that accept an SVG image value</dt>
+      <dd>
+        <ul>
+          <li><a href="svg-in-css.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/svg-in-css.html">svg-in-css.html</a>
+          </li>
+          <li><a href="svg-in-css.css">Raw CSS file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/svg-in-css.css">svg-in-css.css</a>
+          </li>
+          <li><a href="svg-in-css.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/svg-in-css.png">svg-in-css.png</a></li>
+          <li><a href="svg-in-css-border-gradient.svg">The SVG for the border image</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/svg-in-css-border-gradient.svg">svg-in-css-border-gradient.svg</a></li>
+          <li>See also <a href="../ch06-path-files/">the Chapter 6 files</a> for the icons</li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 3-3. </span>The CSS vector graphic stoplight</dt>
+      <dt><span class="label">Example 3-3. </span>Drawing a simple stoplight, with CSS and HTML</dt>
+      <dd>
+        <ul>
+          <li><a href="css-stoplight.html">Live HTML file (with embedded CSS)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/css-stoplight.html">css-stoplight.html</a>
+          </li>
+          <li><a href="css-stoplight.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/css-stoplight.png">css-stoplight.png</a></li>
+          <li>See also <a href="../ch12-fill-files/">the Chapter 12 files</a> for the version with gradients</li>
+        </ul>
+      </dd>
+    </dl>
+    <p>View all files from the chapter <a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch03-style-files/">in the GitHub repo</a>.</p>
+    <h2 id="extras">Online Extras<a href="#extras" class="hash-link" aria-label="Permalink">#</a></h2>
+    <ul class="columns directory">
+      <li><a>“XML Namespaces in CSS”</a></li>
+      <li><a>“The Cascade”</a></li>
+      <li><a>“Media Queries in Embedded Versus Inline SVG”</a></li>
+      <li>Reference: <a >SVG Style Properties</a></li>
+    </ul>
+  </main>
+  <footer>
+    <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
+    </p>
+    <p>
+      View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files or suggest a correction.</p>
+  </footer>
 </body></html>

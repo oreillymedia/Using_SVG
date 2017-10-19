@@ -10,19 +10,20 @@ body {
     color: indigo;
     font-family: sans-serif;
     margin: 0;
+    display: flex;
+}
+figure {
+    display: inline-block; /* if flex-box not supported */
+    width: 45%;
+    margin: 1em;
+    padding: 0;
 }
 svg.inline, object {
     border: solid thin;
     background: white;
-    width: 100px; /* fallback if viewport units not supported */
-    height: 150px;
-    width: calc(50vw - 2.5em);
+    width: 100%;
+    height: 200px; /* if vh units not supported */
     height: calc(100vh - 4em);
-}
-figure {
-    display: inline-block;
-    margin: 1em;
-    padding: 0;
 }
     </style>
 </head>

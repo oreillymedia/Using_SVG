@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
-  <title>The Cascade
+  <title>The Cascade 
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="The Cascade — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="The CSS cascade mostly works the same for SVG as for HTML. But that doesn't mean that it is simple. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png">
+  <meta name="twitter:image:alt" property="og:image" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
+
 <body>
   <header>
     <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
@@ -21,12 +35,209 @@
     <nav class="toc" aria-label="Page Contents">On this page:
       <ul class="columns narrow">
         <li><a href="#intro">Introduction</a></li>
+        <li><a href="#style-cascade-origin">Style Declaration Origins and Importance</a></li>
+        <li><a href="#style-cascade-specificity">Selector Specificity and Source Order</a></li>
+        <li><a href="#style-cascade-cascaded">Cascaded and Specified Values</a></li>
+        <li><a href="#style-cascade-inheritance">Inheritance and Computed Values</a></li>
       </ul>
     </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+    <div id="intro">
+      <p>
+        <p>With all the possible ways of declaring CSS styles, it frequently occurs that multiple values for a given style property could apply to a single element. You might have a <code>fill</code> presentation attribute, <code>fill</code> set in a matching style rule in a <code>&lt;style&gt;</code> block, and <code>fill</code> set in another style rule in an external stylesheet.</p>
+
+        <p>This is where the <strong role="term">cascade</strong> comes in: the rules that govern the waterfall of different style declarations, one replacing another until a final value is determined.</p>
+
+        <p>For the most part, the CSS cascade works the same in SVG as it does in CSS-styled HTML. However, presentation attributes add an extra twist. This article is written from the perspective of SVG styles, but it applies to CSS in general.</p>
+
+        <p>The order of precedence of CSS rules is determined by the interaction of four factors:</p>
+        <ol>
+          <li>
+            <p>The <strong role="term">origin</strong> of the style declaration: browser defaults, web page author values, or user settings.</p>
+          </li>
+          <li>
+            <p>The <strong role="term">importance</strong> of the rule (either <code>!important</code> or not).</p>
+          </li>
+          <li>
+            <p>The <strong role="term">specificity</strong> of the CSS selector.</p>
+          </li>
+          <li>
+            <p>The <strong role="term">order</strong> in which the declarations are given; when all else is equal, later declarations replace previous ones.</p>
+          </li>
+
+        </ol>
+
+        <p>The final, used value of each property on each element is the result of the CSS cascade, CSS inheritance, and additional computations based on the web page layout.</p>
     </div>
+
+    <section data-type="sect2" data-pdf-bookmark="Style Declaration Origins and Importance">
+      <h2 id="style-cascade-origin">Style Declaration Origins and Importance</h2>
+
+        <p>There are five possible origins, from the perspective of the cascade. They are ranked in the following order (for non-<code>!important</code> declarations), with origins later in the list overriding origins earlier in the list:</p>
+        <ol>
+          <li>
+            <p>Web browser (or other user agent) default styles for a particular element or pseudoclass. For example, in HTML the <code>&lt;li&gt;</code> element has <code>display: list-item</code>, and headings usually have bold font and larger font sizes.</p>
+
+            <p>The user-agent styles for SVG are <a href="https://www.w3.org/TR/SVG2/styling.html#UAStyleSheet">defined in the SVG specs</a>. The following styles are applied this way:</p>
+            <div class="openblock">
+              <ul>
+                <li>
+                  <p><code>overflow</code> is <code>hidden</code> by default on SVG elements where it has an effect (the normal default for <code>overflow</code> in CSS is <code>visible</code>);</p>
+                </li>
+                <li>
+                  <p><code>display</code> is forced to always be <code>none</code> for <code>&lt;defs&gt;</code> and other elements that are never displayed in SVG;</p>
+                </li>
+                <li>
+                  <p>new properties from the CSS Transforms specification (see <a data-type="xref" href="../ch11-transforms-files/">Chapter 11</a>) are adjusted for SVG elements to maintain backwards compatibility (by default) with SVG 1.1 transforms.</p>
+                </li>
+              </ul>
+            </div>
+
+          </li>
+          <li>
+            <p>User preferences set in the web browser. For example, most browsers allow users to specify a default font.</p>
+          </li>
+          <li>
+            <p>Styles defined by the web page: in the markup, in <code>&lt;style&gt;</code> blocks, or from external stylesheets. These are collectively known as “author” style rules.</p>
+          </li>
+          <li>
+            <p>Styles defined in <code>@keyframes</code> animation rules. The <code>animation</code> property (and its longhands) cascades as a regular style property, to determine <em>which</em> keyframes apply on a given element. However, the effects created by the keyframes themselves are treated as a separate, high priority origin, which overrides other declarations regardless of specificity.</p>
+          </li>
+          <li>
+            <p>Transition states. Again, the <code>transition</code> property follows normal cascade rules, but when a transition applies to another property, it applies to changes created by any other origin, including keyframe animations.</p>
+          </li>
+
+        </ol>
+
+        <p>For <code>!important</code> rules, the ranking of origins 1 to 4 is reversed.</p>
+
+        <p>Important user preferences override all author styles, including important ones. These are usually related to accessibility issues, such as setting a minimum font size or requiring high-contrast color combinations.</p>
+        <div data-type="tip" epub:type="tip">
+          <h6>Tip</h6>
+          <p>Because SVG text is often artistic, browsers may or may not apply user’s accessibility preferences to modify the author’s styles. They may or may not consider scaling transformations before determining if a <code>font-size</code> is too small.</p>
+        </div>
+
+        <p>Important browser styles are even stronger, and usually relate to fundamental features of the language. In SVG 2, the behavior of <code>display</code> on elements that are never displayed—regardless of the <code>display</code> value an author might set—is defined using an <code>!important</code> user-agent stylesheet rule. (In SVG 1.1, the same rule existed, it just wasn’t defined in terms of the CSS cascade.)</p>
+
+        <p>The CSS specs (CSS Cascade Level 3 and 4) currently say that <em>all</em> of these important rules should override animations, but most browsers don’t currently work that way.</p>
+        <div data-type="warning" epub:type="warning">
+          <h6>Warning</h6>
+          <p>In Blink, WebKit, and MS Edge, animations override important author styles. However, in Chrome and Safari (at least) they do not override important user styles like minimum font sizes. (MS Edge does not have a minimum font-size user setting.)</p>
+        </div>
+    </section>
+
+    <section data-type="sect2" data-pdf-bookmark="Selector Specificity and Source Order">
+      <h2 id="style-cascade-specificity">Selector Specificity and Source Order</h2>
+
+        <p>When multiple style rules declared by the same origin could apply to a given element, they are ranked according to the specificity of the CSS selector used. There are three components to selector specificity, in order from least to most specific:</p>
+        <ol>
+          <li>
+            <p>Element tag names and pseudoelement selectors.</p>
+          </li>
+          <li>
+            <p>Classes, pseudoclasses, and attribute-based selectors.</p>
+          </li>
+          <li>
+            <p>ID values.</p>
+          </li>
+
+        </ol>
+
+        <p>A given selector may have many components, so the total number of components of each category is counted. If two selectors are tied for the number of <code>id</code> references (possibly none), then the number of class and class-like components is counted. If still tied, the number of element components is used.</p>
+
+        <p>A universal selector, <code>*</code>, has zero specificity when comparing stylesheet rules, but still trumps over presentation attributes, inherited values, and browser defaults.</p>
+        <div data-type="tip" epub:type="tip">
+          <h6>Tip</h6>
+          <p>Presentation attributes are treated as if they had selectors with a specificity slightly less than zero. Any CSS rule that applies to the same element will be more specific.</p>
+        </div>
+
+        <p>The <code>style</code> attribute acts like the most specific selector of all. Technically, inline styles are the fourth component of selector specificity. However, we can’t—yet—use any other selectors (such as pseudoclasses) in a <code>style</code> attribute, so there’s no need to compare any other numbers.</p>
+
+        <p>If two CSS declarations have the same origin, importance, and specificity, then the final tie-breaker is used: source order. The last declaration wins.</p>
+
+        <p>External stylesheets and <code>&lt;style&gt;</code> blocks are ordered based on the DOM order of the elements that include them. External stylesheets included with <code>@import</code> get positioned before the sheet that imported them—which is why <code>@import</code> values are only allowed at the very top of a stylesheet. Within each stylesheet (or even within <code>style</code> attributes), declarations are ordered in the order you typed them.</p>
+        <div data-type="tip" epub:type="tip">
+          <h6>Tip</h6>
+          <p>The “last declaration” doesn’t include any declarations that the CSS parser tosses out as invalid. That’s why you can create easy fallbacks for new syntax, with the new syntax declared right after the old one:</p>
+
+          <pre data-type="programlisting" data-code-language="css"><code class="k">fill</code><code class="o">:</code> <code class="n">currentColor</code><code class="p">;</code>
+<code class="k">fill</code><code class="o">:</code> <code class="n">var</code><code class="p">(</code><code class="o">--</code><code class="n">primaryColor</code><code class="o">,</code> <code class="nb">navy</code><code class="p">);</code></pre>
+
+          <p>Browsers that recognize the new syntax (here, CSS variables) will use it instead of the earlier declaration. Older browsers will treat <code>currentColor</code> as the last valid <code>fill</code> value.</p>
+        </div>
+
+        <p>Presentation attributes don’t have any specific order, but you’re not supposed to ever have more than one attribute with the same name on the same element. If you do, the results are undefined—browsers may pick the first or last version.</p>
+    </section>
+
+    <section data-type="sect2" data-pdf-bookmark="Cascaded and Specified Values">
+      <h2 id="style-cascade-cascaded">Cascaded and Specified Values</h2>
+
+        <p>Origin, specificity, and source order are used to rank all the style declarations on an element. This is the cascading process: selecting a single, top-ranked declaration for each property and element.</p>
+
+        <p>After the cascade, all the style declarations on each element have been reduced to a single, <strong role="term">cascaded value</strong> for each property.</p>
+
+        <p>But there might not be a cascaded value—because no CSS declarations, anywhere in the cascade, mentioned that property for that element. In that case, the element is assigned either <code>initial</code> or <code>inherit</code>, depending on whether the style property is normally inherited. The result of this assignment is known as a <strong role="term">specified value</strong>. Every property on every element (and pseudoelement) has a specified value.</p>
+
+        <p>You can also force the cascaded value to be either <code>initial</code> or <code>inherit</code>, by using those keywords in a CSS declaration. They are valid as a replacement for the value in any CSS property, including in SVG presentation attributes.</p>
+
+        <p>The initial value—which also applies to the root element, for inherited properties—is defined for each CSS property in the specifications.</p>
+        <div data-type="tip" epub:type="tip">
+          <h6>Tip</h6>
+          <p>The <code>initial</code> keyword <em>isn’t</em> affected by browser defaults for particular elements. So <code>overflow: initial</code> will always work out as <code>visible</code>, regardless of SVG or HTML.</p>
+        </div>
+
+        <p>For example, the initial value of the <code>stop-color</code> property used in gradients is <code>black</code>, and it isn’t normally inherited. To change it, you need to override <code>stop-color</code> on every <code>&lt;stop&gt;</code> element.</p>
+
+        <p>The initial value of the <code>stroke</code> property is <code>none</code>, but <code>stroke</code> <em>is</em> inherited. If you set it on a <code>&lt;g&gt;</code> or <code>&lt;svg&gt;</code>, it will affect all child elements, unless they have their own (cascaded) <code>stroke</code> value.</p>
+
+        <p>The latest specs also define two other universal keywords:</p>
+
+        <ul>
+          <li>
+            <p><code>unset</code> (equivalent to <code>initial</code> or <code>inherit</code>, depending on if the property is normally inherited or not)</p>
+          </li>
+          <li>
+            <p><code>revert</code> (rollback to the final value from a lower-ranked origin; in author styles, this means rollback to browser defaults)</p>
+          </li>
+        </ul>
+        <div data-type="warning" epub:type="warning">
+          <h6>Warning</h6>
+          <p>The <code>unset</code> keyword is supported in all the latest browsers, but not in older browsers such as Internet Explorer.</p>
+
+          <p><code>revert</code> is only supported in WebKit (as of late 2017).</p>
+      </div>
+    </section>
+
+    <section data-type="sect2" data-pdf-bookmark="Inheritance and Computed Values">
+      <h2 id="style-cascade-inheritance">Inheritance and Computed Values</h2>
+
+        <p>Once you have a specified value (possibly <code>inherit</code> or <code>initial</code>) for each property on each element, you’re finished with the cascade, and ready to move on to inheritance.</p>
+
+        <p>Many property values are partially-computed before inheritance, creating <strong role="term">computed values</strong>. For example, <code>em</code> units are usually converted to <code>px</code>. CSS variable references (<code>var()</code> functions) are substituted for their values. Some <code>calc()</code> functions are also simplified at this time. Colors are converted to integer <code>rgb()</code> or <code>rgba()</code> notation.</p>
+        <div data-type="warning" epub:type="warning">
+          <h6>Warning</h6>
+          <p>The original CSS Color Module Level 3 said that the <code>currentColor</code> keyword should also be substituted before inheritance. This created a breaking change from how <code>currentColor</code> worked in SVG. The CSS specs have since been changed, and <code>currentColor</code> is now defined to inherit as a keyword. However, browsers are currently inconsistent.</p>
+        </div>
+
+        <p>The computation process works top-down in the inheritance tree, starting from the root element. The <code>initial</code> and <code>inherit</code> keywords are also substituted at this point: <code>initial</code> with the value defined in the specs, and <code>inherit</code> with the computed value from the parent element. You often need inherited values to do other parts of the computation: for example, you may need to compute an inherited <code>font-size</code> in order to convert <code>em</code> lengths into <code>px</code>.</p>
+
+        <p>In SVG, the hidden cloned elements created by <code>&lt;use&gt;</code> references inherit styles from the <code>&lt;use&gt;</code> element itself. In other words, for style inheritance, the clones act as if they were child elements of the <code>&lt;use&gt;</code>, although they are <em>not</em> child elements for CSS selector matching. HTML web components work similarly.</p>
+        <div data-type="warning" epub:type="warning">
+          <h6>Warning</h6>
+          <p>Firefox up to version 56 (mid-2017) incorrectly treated the cloned elements as if they were child elements of <code>&lt;use&gt;</code> for CSS selector matching, too.</p>
+        </div>
+
+        <p>Selector specificity and rule origin have no effect on inherited values. A (low-specificity) presentation attribute will not be replaced by an inherited value, even if that inherited value was created by an <code>!important</code> CSS rule or by an animation.</p>
+        <div data-type="tip" epub:type="tip">
+          <h6>Tip</h6>
+          <p>As we showed in <a data-type="xref" href="../ch03-style-files/">Example 3-1</a> in the book, you can force a presentation attribute to be overridden by using the <code>inherit</code> keyword in a CSS rule that applies directly to the element with the attribute.</p>
+        </div>
+
+        <p>The computed value for inheritance <em>doesn’t</em> include all the final computations used by the <code>getComputedStyle()</code> DOM method—such as converting percentages to <code>px</code>—because those calculations require the final CSS layout to be calculated.</p>
+
+        <p>After inheritance is complete, the browser is able to lay out the web page, converting the computed CSS values into their final <strong role="term">used values</strong> as it goes. Percentages and <code>auto</code> values are resolved, remaining <code>calc()</code> functions are calculated, <code>currentColor</code> is replaced (if it wasn’t previously), and various property-specific clamping and other adjustments are made.</p>
+
+        <p>And finally, the browser can actually paint the web page.</p>
+      </section>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
@@ -35,4 +246,5 @@
       View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files or suggest a correction.</p>
   </footer>
 </body>
+
 </html>

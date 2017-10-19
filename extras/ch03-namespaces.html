@@ -5,6 +5,18 @@
   <title>XML Namespaces in CSS
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="XML Namespaces in CSS — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="You can usually ignore XML namespaces when writing CSS selectors, but that makes it all the more surprising when they cause a problem. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png">
+  <meta name="twitter:image:alt" property="og:image" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,132 @@
   </header>
   <main>
     <h1>XML Namespaces in CSS</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+    
+<p>XML namespaces are a frequent complication when switching from HTML to SVG.  That’s true for CSS selectors, too.</p>
+
+<p>Most of the time, you can ignore namespaces when writing your CSS selectors, but that just makes it all the more surprising when they cause a problem.</p>
+
+<p>By default in XML, CSS tag-name selectors apply to elements defined in any namespace.  Attribute selectors (like <code>[attributeName]</code> or <code>[name="value"]</code>), however, only apply to attributes in the default namespace—that is, attributes without a namespace prefix.</p>
+
+<p>There are two cases in SVG where these defaults can be a problem:</p>
+
+<ul>
+<li>
+<p>when you want to distinguish between SVG and HTML elements with the same tag names (for example, the <code>&lt;a&gt;</code> link-anchor elements)</p>
+</li>
+<li>
+<p>when you want to select elements based on the value of a namespaced attribute (for example, <code>xlink:href</code>, or a custom attribute created by your graphics software)</p>
+</li>
+</ul>
+
+<p>To select an element tag or attribute defined in a specific namespace, you declare a namespace prefix with an <code>@namespace</code> rule, then use it in your selector.  The namespace is separated from the tag name with a <code>|</code> (vertical bar or pipe) character; if there is no tag name in the selector, use a universal <code>*</code> selector:</p>
+
+<pre data-type="programlisting" data-code-language="css"><code class="k">@namespace</code> <code class="nt">svg</code> <code class="s2">"http://www.w3.org/2000/svg"</code><code class="p">;</code>
+
+<code class="nt">a</code>     <code class="p">{</code> <code class="c">/* These rules would apply to any `a` elements. */</code>
+    <code class="k">text-decoration</code><code class="o">:</code> <code class="nb">underline</code><code class="p">;</code>
+    <code class="k">color</code><code class="o">:</code> <code class="nb">purple</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nt">svg</code><code class="o">|</code><code class="nt">a</code> <code class="p">{</code> <code class="c">/* These rules would apply to SVG `a` elements,</code>
+<code class="c">           but not HTML links. */</code>
+    <code class="k">stroke</code><code class="o">:</code> <code class="nb">purple</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nt">svg</code><code class="o">|*</code> <code class="p">{</code> <code class="c">/* These rules apply to all SVG-namespaced elements,</code>
+<code class="c">           but not HTML elements. */</code>
+    <code class="k">mix-blend-mode</code><code class="o">:</code> <code class="n">multiply</code><code class="p">;</code>
+<code class="p">}</code></pre>
+
+<p>The <code>@namespace</code> rule can also be used with attribute selectors.  The prefix and <code>|</code> are applied before the attribute name.</p>
+
+<pre data-type="programlisting" data-code-language="css"><code class="k">@namespace</code> <code class="nt">xl</code> <code class="s2">"http://www.w3.org/1999/xlink"</code><code class="p">;</code>
+           <code class="c">/* Note that you can use any prefix you choose</code>
+<code class="c">              in the CSS @namespace rule, it does not have to</code>
+<code class="c">              match the one used in the markup. */</code>
+
+<code class="o">[</code><code class="nt">xl</code><code class="o">|</code><code class="nt">href</code><code class="o">]</code><code class="p">{</code> <code class="c">/* These rules apply to elements (in any namespace)</code>
+<code class="c">              with a namespaced `xlink:href` attribute. */</code>
+    <code class="k">fill</code><code class="o">:</code> <code class="nb">orange</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="o">[</code><code class="nt">href</code><code class="o">]</code> <code class="p">{</code> <code class="c">/* These rules only apply to elements</code>
+<code class="c">            with no-namespace `href` attributes. */</code>
+    <code class="k">fill</code><code class="o">:</code> <code class="nb">gold</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="o">[</code><code class="nt">xl</code><code class="o">|</code><code class="nt">href</code><code class="err">$</code><code class="o">=</code><code class="s2">".pdf"</code><code class="o">],</code> <code class="o">[</code><code class="nt">href</code><code class="err">$</code><code class="o">=</code><code class="s2">".pdf"</code><code class="o">]</code> <code class="p">{</code>
+        <code class="c">/* These rules apply to elements</code>
+<code class="c">           with either type of `href` attribute,</code>
+<code class="c">           if the attribute value ends in ".pdf" */</code>
+    <code class="k">text-transform</code><code class="o">:</code> <code class="nb">uppercase</code><code class="p">;</code>
+<code class="p">}</code></pre>
+
+<p>That last rule can be simplified, to indicate that you don’t care about the attribute namespace.
+The <code>*</code> (asterisk) character, when included before a <code>|</code> pipe, works as a wildcard namespace prefix, matching any namespace:</p>
+
+<pre data-type="programlisting" data-code-language="css"><code class="o">[*|</code><code class="nt">href</code><code class="err">$</code><code class="o">=</code><code class="s2">".pdf"</code><code class="o">]</code> <code class="p">{</code> <code class="c">/* These rules apply to elements with an `href`</code>
+<code class="c">              attribute from any namespace, including `xlink`,</code>
+<code class="c">              if the attribute value ends in ".pdf" */</code>
+    <code class="k">text-transform</code><code class="o">:</code> <code class="nb">uppercase</code><code class="p">;</code>
+<code class="p">}</code></pre>
+<div data-type="tip"><h6>Tip</h6>
+<p>Keep your code forward-compatible for the day when <code>xlink</code> is no longer required, by using the <code>[*|href]</code> syntax instead of a specific namespace prefix.</p>
+</div>
+
+<p>You can use namespaced attribute selectors to select custom attributes added by your graphics software, such as layer names. But, remember: The CSS namespace selectors will only work if the actual DOM elements correctly reflect the intended namespaces.  If you copy your SVG code into a non-XML HTML document, these custom namespaces won’t be recognized.</p>
+
+<p>If you use unrecognized namespace prefixes in your inline SVG markup, the HTML parser will include the prefix <em>and</em> the <code>:</code> (colon) character in the attribute or tag name.  If you really need to select these in CSS, use regular tag or attribute selectors based on the complete name, escaping the <code>:</code> character (which has special meaning in CSS) by preceding it with a <code>\</code> (backslash).  For example, these styles are based on custom Inkscape attributes:</p>
+
+<pre data-type="programlisting" data-code-language="css"><code class="k">@namespace</code> <code class="nt">ink</code> <code class="s2">"http://www.inkscape.org/namespaces/inkscape"</code><code class="p">;</code>
+
+<code class="o">[</code><code class="nt">inkscape</code><code class="err">\</code><code class="nd">:groupmode</code><code class="o">=</code><code class="s2">"layer"</code><code class="o">],</code> <code class="o">[</code><code class="nt">ink</code><code class="o">|</code><code class="nt">groupmode</code><code class="o">=</code><code class="s2">"layer"</code><code class="o">]</code> <code class="p">{</code>
+    <code class="c">/* These rules apply to elements with the</code>
+<code class="c">       inkscape:groupmode="layer" attribute,</code>
+<code class="c">       in either XML or HTML documents. */</code>
+    <code class="k">isolation</code><code class="o">:</code> <code class="n">isolate</code><code class="p">;</code>
+<code class="p">}</code></pre>
+
+<p>But it’s better to avoid trying to use unrecognized XML prefixes in an HTML document.  Edit the code to add classes if you require them.</p>
+
+<p>Recognized namespace prefixes, such as <code>xlink</code>, are properly parsed in HTML documents.  You need to use the CSS namespacing rules to select them, the same as in an SVG or XML document.</p>
+
+<p>You can also declare a default namespace by omitting the prefix in the <code>@namespace</code> rule.  All selectors in that stylesheet will now only apply to elements in that namespace.  You can cancel that out by specifically declaring another namespace, or by using the wildcard (<code>*</code>) namespace prefix to modify a tag-name selector or a regular <code>*</code> universal CSS selector:</p>
+
+<pre data-type="programlisting" data-code-language="css"><code class="k">@namespace</code> <code class="s2">"http://www.w3.org/2000/svg"</code><code class="p">;</code>
+<code class="k">@namespace</code> <code class="nt">html</code> <code class="s2">"http://www.w3.org/1999/xhtml"</code><code class="p">;</code>
+
+<code class="nt">a</code>   <code class="p">{</code> <code class="c">/* These rules would apply to SVG links,</code>
+<code class="c">         but not HTML links. */</code>
+    <code class="k">stroke</code><code class="o">:</code> <code class="nb">pink</code><code class="p">;</code>
+    <code class="k">fill</code><code class="o">:</code> <code class="n">currentColor</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="o">*|</code><code class="nt">a</code> <code class="p">{</code> <code class="c">/* These rules would apply to any `a` elements. */</code>
+    <code class="k">text-decoration</code><code class="o">:</code> <code class="nb">underline</code><code class="p">;</code>
+    <code class="k">color</code><code class="o">:</code> <code class="nb">purple</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nt">html</code><code class="o">|</code><code class="nt">a</code> <code class="p">{</code> <code class="c">/* These rules only apply to HTML `a` elements,</code>
+<code class="c">            not SVG links */</code>
+    <code class="k">text-shadow</code><code class="o">:</code> <code class="nb">pink</code> <code class="m">1px</code> <code class="m">1px</code> <code class="m">0</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nc">.special</code> <code class="p">{</code> <code class="c">/* These rules only apply to SVG-namespaced</code>
+<code class="c">              elements with the class `special`. */</code>
+    <code class="k">fill</code><code class="o">:</code> <code class="sx">url(#gradient)</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="o">*|*</code><code class="nc">.special</code> <code class="p">{</code> <code class="c">/* These rules apply to all elements</code>
+<code class="c">                 with the class `special`. */</code>
+    <code class="k">font-family</code><code class="o">:</code> <code class="nb">fantasy</code><code class="p">;</code>
+<code class="p">}</code></pre>
+
+<p>The default namespace declaration does not affect attribute selectors—they still apply to no-namespace attributes, unless a prefix is used.</p>
+
+<p>You can’t use namespace prefixes in the <code>querySelector()</code> and <code>querySelectorAll()</code> methods, but you can use the <code>*</code> wildcard.  The primary use would be to select elements that have an <code>xlink:href</code> attribute:</p>
+
+<pre data-type="programlisting" data-code-language="javascript"><code class="nb">document</code><code class="p">.</code><code class="nx">querySelectorAll</code><code class="p">(</code><code class="s2">"a[*|href^='#']"</code><code class="p">);</code>
+<code class="c1">//returns a list of &lt;a&gt; elements</code>
+<code class="c1">//that have href or xlink:href attributes</code>
+<code class="c1">//whose values start with a `#` character</code></pre>
+
+<p>With the query-selector methods, there is no way to select SVG <code>&lt;a&gt;</code> elements but not HTML <code>&lt;a&gt;</code> elements, or vice versa.</p>
+
+<p>Namespaces in CSS (and XML namespaces in general) are a rarely-used feature on the web today.  You may sometimes find them useful to help you isolate your inline SVG styles from the rest of your document.  But it is probably better to use unique classes to distinguish elements, so you don’t have conflicts if you later add other SVG to the page.  The only namespaced selector we use in the book is <code>[*|href]</code> (and its variants), to select elements with <code>xlink:href</code> or <code>href</code> attributes.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

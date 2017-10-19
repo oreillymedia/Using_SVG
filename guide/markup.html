@@ -206,7 +206,7 @@
           <p>Any additional data added by the author (or by the authoring software). Two formats are acceptable:</p>
           <ul>
             <li>
-              <p>In XML/stand-alone SVG, create a custom XML namespace for your attributes. The namespace URL can be any URL that you own, the prefix can be anything unique for the document, and the attributes can any XML-compatible attribute names and values. If you use an XML validator, you may get warnings, but nothing should break.</p>
+              <p>In XML/standalone SVG, create a custom XML namespace for your attributes. The namespace URL can be any URL that you own, the prefix can be anything unique for the document, and the attributes can any XML-compatible attribute names and values. If you use an XML validator, you may get warnings, but nothing should break.</p>
             </li>
             <li>
               <p>For SVG-in-HTML, use HTML-style data attributes; any attribute name that starts with <code>data-</code> is for custom data. Beware: the matching <code>dataset</code> DOM property on the element object is new in SVG 2, and won’t be supported everywhere. Use <code>getAttribute()</code>/<code>setAttribute()</code> for best support.</p>

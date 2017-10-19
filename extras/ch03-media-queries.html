@@ -2,10 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Media Queries in Embedded Versus Inline SVG
+  <title>Media Queries in Embedded Versus Inline SVG 
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Media Queries in Embedded Versus Inline SVG — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Media queries can be used with inline SVG and in standalone SVG files. But if you switch between the two, you’ll often need to make adjustments. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png">
+  <meta name="twitter:image:alt" property="og:image" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
+
 <body>
   <header>
     <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
@@ -18,15 +31,109 @@
   </header>
   <main>
     <h1>Media Queries in Embedded Versus Inline SVG</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+
+    <p>Media queries are incredibly useful—in SVG and in web design in general—to adapt styles to different devices. They can be used with inline SVG and in standalone SVG files. But if you’re switching between the two, you’ll often need to make adjustments.</p>
+
+    <p>As we warned in the book (in the section “Media queries” of <a data-type="xref" href="../ch03-style-files/">Chapter 3</a>), the media being tested is the window or printed page for the <em>document</em> containing the SVG code. If the SVG is inline within HTML 5, that means the entire frame containing the HTML web page. However, if the SVG is embedded as an <code>&lt;object&gt;</code> or <code>&lt;img&gt;</code>, it means the specific frame area created to draw the graphic.</p>
+
+    <p><a data-type="xref" href="#mediaquery-inline-embed-example">Example 3-X1</a> constructs a simplified graphic to demonstrate the difference.</p>
+
+    <p>The graphic is used both as inline SVG and as an embedded SVG file—the same markup, copied and pasted. The same CSS file is used for both, as an external stylesheet. Inside the CSS file is a media query that tests the size of the document region, and reduces the thick stroke width when the document is small.</p>
+    
+    <div id="mediaquery-inline-embed-example" data-type="example">
+      <h5><span class="label">Example 3-X1. </span>Interpretation of Media Queries in Inline versus Embedded SVG</h5>
+
+<p><strong>CSS styles: <em role="filename">mediaquery.css</em></strong></p>
+
+<pre data-type="programlisting" data-code-language="css"><code class="nt">rect</code> <code class="p">{</code>
+    <code class="k">fill</code><code class="o">:</code> <code class="n">lightGreen</code><code class="p">;</code>
+    <code class="k">stroke</code><code class="o">:</code> <code class="n">darkGreen</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nt">circle</code> <code class="p">{</code>
+    <code class="k">fill</code><code class="o">:</code> <code class="n">royalBlue</code><code class="p">;</code>
+    <code class="k">stroke</code><code class="o">:</code> <code class="nb">indigo</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nt">rect</code><code class="o">,</code> <code class="nt">circle</code> <code class="p">{</code>
+    <code class="k">stroke-width</code><code class="o">:</code> <code class="m">20px</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="k">@media</code> <code class="p">(</code><code class="k">max-width</code><code class="o">:</code> <code class="m">200px</code><code class="p">)</code><code class="o">,</code> <code class="p">(</code><code class="k">max-height</code><code class="o">:</code> <code class="m">200px</code><code class="p">)</code> <code class="p">{</code>
+    <code class="nt">rect</code><code class="o">,</code> <code class="nt">circle</code> <code class="p">{</code>
+        <code class="k">stroke-width</code><code class="o">:</code> <code class="m">5px</code><code class="p">;</code>
+    <code class="p">}</code>
+<code class="p">}</code></pre>
+
+<p><strong>Embedded SVG file: <em role="filename">mediaquery-embedded.svg</em></strong></p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="cp">&lt;?xml-stylesheet href="mediaquery.css" ?&gt;</code>
+<code class="nt">&lt;svg</code> <code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code> <code class="na">xml:lang=</code><code class="s">"en"</code> <code class="nt">&gt;</code>
+    <code class="nt">&lt;title&gt;</code>Stylable Shapes, in an SVG File<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;rect</code> <code class="na">x=</code><code class="s">"10%"</code> <code class="na">y=</code><code class="s">"10%"</code> <code class="na">height=</code><code class="s">"80%"</code> <code class="na">width=</code><code class="s">"80%"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;circle</code> <code class="na">cx=</code><code class="s">"70%"</code> <code class="na">cy=</code><code class="s">"80%"</code> <code class="na">r=</code><code class="s">"40px"</code> <code class="nt">/&gt;</code>
+<code class="nt">&lt;/svg&gt;</code></pre>
+
+<p><strong>HTML markup:</strong></p>
+
+
+<pre data-type="programlisting" data-code-language="html"><code class="cp">&lt;!DOCTYPE html&gt;</code>
+<code class="nt">&lt;html</code> <code class="na">lang=</code><code class="s">"en"</code><code class="nt">&gt;</code>
+<code class="nt">&lt;head&gt;</code>
+    <code class="nt">&lt;title&gt;</code>Using Media Queries with Embedded and Inline SVG<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;link</code> <code class="na">rel=</code><code class="s">"stylesheet"</code> <code class="na">href=</code><code class="s">"mediaquery.css"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;style&gt;</code>
+<code class="c">/* styles for the HTML page itself */</code>
+<code class="nt">body</code> <code class="p">{</code>
+    <code class="k">background</code><code class="o">:</code> <code class="n">lightSkyBlue</code><code class="p">;</code>
+    <code class="k">color</code><code class="o">:</code> <code class="nb">indigo</code><code class="p">;</code>
+    <code class="k">font-family</code><code class="o">:</code> <code class="nb">sans-serif</code><code class="p">;</code>
+    <code class="k">margin</code><code class="o">:</code> <code class="m">0</code><code class="p">;</code>
+    <code class="k">display</code><code class="o">:</code> <code class="nb">flex</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nt">figure</code> <code class="p">{</code>
+    <code class="k">display</code><code class="o">:</code> <code class="nb">inline-block</code><code class="p">;</code> <code class="c">/* if flex-box not supported */</code>
+    <code class="k">width</code><code class="o">:</code> <code class="m">45%</code><code class="p">;</code>
+    <code class="k">margin</code><code class="o">:</code> <code class="m">1em</code><code class="p">;</code>
+    <code class="k">padding</code><code class="o">:</code> <code class="m">0</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nt">svg</code><code class="nc">.inline</code><code class="o">,</code> <code class="nt">object</code> <code class="p">{</code>
+    <code class="k">border</code><code class="o">:</code> <code class="nb">solid</code> <code class="nb">thin</code><code class="p">;</code>
+    <code class="k">background</code><code class="o">:</code> <code class="nb">white</code><code class="p">;</code>
+    <code class="k">width</code><code class="o">:</code> <code class="m">100%</code><code class="p">;</code>
+    <code class="k">height</code><code class="o">:</code> <code class="m">200px</code><code class="p">;</code> <code class="c">/* if vh units not supported */</code>
+    <code class="k">height</code><code class="o">:</code> <code class="n">calc</code><code class="p">(</code><code class="m">100vh</code> <code class="o">-</code> <code class="m">4em</code><code class="p">);</code>
+<code class="p">}</code>
+    <code class="nt">&lt;/style&gt;</code>
+<code class="nt">&lt;/head&gt;</code>
+<code class="nt">&lt;body&gt;</code>
+    <code class="nt">&lt;figure&gt;</code>
+        <code class="nt">&lt;figcaption&gt;</code>Inline SVG<code class="nt">&lt;/figcaption&gt;</code>
+        <code class="nt">&lt;svg</code> <code class="na">class=</code><code class="s">"inline"</code> <code class="nt">&gt;</code>
+            <code class="nt">&lt;title&gt;</code>Stylable Shapes, Inline<code class="nt">&lt;/title&gt;</code>
+            <code class="nt">&lt;rect</code> <code class="na">x=</code><code class="s">"10%"</code> <code class="na">y=</code><code class="s">"10%"</code> <code class="na">height=</code><code class="s">"80%"</code> <code class="na">width=</code><code class="s">"80%"</code> <code class="nt">/&gt;</code>
+            <code class="nt">&lt;circle</code> <code class="na">cx=</code><code class="s">"70%"</code> <code class="na">cy=</code><code class="s">"80%"</code> <code class="na">r=</code><code class="s">"40px"</code> <code class="nt">/&gt;</code>
+        <code class="nt">&lt;/svg&gt;</code>
+    <code class="nt">&lt;/figure&gt;</code>
+    <code class="nt">&lt;figure&gt;</code>
+        <code class="nt">&lt;figcaption&gt;</code>Embedded Object<code class="nt">&lt;/figcaption&gt;</code>
+        <code class="nt">&lt;object</code> <code class="na">type=</code><code class="s">"image/svg+xml"</code> <code class="na">data=</code><code class="s">"mediaquery-embedded.svg"</code><code class="nt">&gt;</code>
+        <code class="nt">&lt;/object&gt;</code>
+    <code class="nt">&lt;/figure&gt;</code>
+<code class="nt">&lt;/body&gt;</code>
+<code class="nt">&lt;/html&gt;</code></pre></div>
+
+
+    <p>A screenshot of the result on a small screen is shown in <a data-type="xref" href="#mediaquery-inline-embed-figure">Figure 3-X1</a>. At this size, the height and width for the embedded object have triggered the media query, but the overall document dimensions, used for the styles on the inline SVG, have not.</p>
+
+    <figure class="page-float">
+      <div id="mediaquery-inline-embed-figure" class="figure">
+        <img src="../ch03-style-files/mediaquery-inline-embed.png" alt="A web page with side-by-side figures labelled Inline SVG and Embedded Object. Both contain a green rectangle with dark green border stroke, and a blue circle with a darker blue stroke. In the figure labelled Inline SVG, the strokes are much thicker than in the one labelled Embedded Object." />
+        <figcaption><span class="label">Figure 3-X1. </span>Media Queries in Inline versus Embedded SVG, on a 410px-wide display</figcaption>
+      </div>
+    </figure>
+    
+    <p>View the <a href="../ch03-style-files/mediaquery-inline-embed.html" target="_blank">live example in a separate tab</a>.</p>
+
+    <p>Although this example was simple, focusing on the complications, media queries add considerable flexibility to your SVG code. In <a data-type="xref" href="ch07.html#text-chapter">Chapter 7</a>, we show a more realistic example, using media queries to adjust text size when the scale of an image changes.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

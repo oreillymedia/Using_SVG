@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
-  <title>SVG Style Properties Reference
-    — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <title>SVG Style Properties Reference — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
 </head>
+
 <body>
   <header>
     <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
@@ -20,12 +21,2107 @@
     <nav class="toc" aria-label="Page Contents">On this page:
       <ul class="columns narrow">
         <li><a href="#intro">Introduction</a></li>
+        <li><a href="#style-guide-element-categories">Element Categories for Styling</a></li>
+        <li><a href="#style-guide-initial-inherit">Initial and Inherited Styles</a></li>
+        <li><a href="#style-guide-list">Alphabetical List of SVG Style Properties</a></li>
       </ul>
     </nav>
     <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+      <p>This appendix summarizes all the style properties that can be definied on SVG elements. All of them can be defined either with CSS stylesheets, inline style attributes, or presentation attributes (except where explicitly noted otherwise). It doesn’t go into detail about the individual styles, but is instead a reference that you can flip to whenever you need to confirm the default for a property or the spelling of a keyword.</p>
+
+      <p>Each property description mentions the specifications that defined it or changed the definition significantly, so that you can estimate likely browser support levels. To keep it simple, we don’t distinguish between SVG 1 and 1.1, or CSS before level 2.</p>
+
+      <p>SVG 2 converts a number of SVG 1 layout attributes into style properties that can be defined either as presentation attributes or in stylesheets. This will allow them to be applied uniformly to classes of elements, or controlled by CSS media queries and pseudoclasses. They are listed here, but there is more detail in the <a href="markup.html">Elements and Attributes</a> reference.</p>
+
+      <p>Not listed here are the wide variety of CSS box model properties, such as padding or borders, which can apply to the top-level <code>&lt;svg&gt;</code> element in HTML 5 documents. These have the same effect on the SVG region as they would for other replaced elements in the document, such as <code>&lt;object&gt;</code> or <code>&lt;img&gt;</code>. Some other new CSS3 properties could theoretically apply to SVG text, such as <code>text-shadow</code>, but are not yet formally adopted into SVG.</p>
     </div>
+
+    <section data-type="sect1" data-pdf-bookmark="Element Categories for Styling">
+      <h2 id="style-guide-element-categories">Element Categories for Styling<a href="#style-guide-element-categories" class="hash-link" aria-label="Permalink">#</a></h2>
+      <style>
+li > p > em:first-child {
+    font-style: normal;
+    text-decoration: underline;
+    text-decoration-color: #248;
+}
+      </style>
+      <p>The style property list indicates which types of elements are affected by that style, using the following categories:</p>
+      <dl class="columns">
+        <dt id="shape-elements">Shape elements <a href="#shape-elements" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Styles that describe how shapes should be drawn apply to any of the predefined or custom shape elements: <code>&lt;circle&gt;</code>, <code>&lt;ellipse&gt;</code>, <code>&lt;line&gt;</code>, <code>&lt;path&gt;</code>, <code>&lt;polygon&gt;</code>, <code>&lt;polyline&gt;</code>, and <code>&lt;rect&gt;</code>.</p>
+        </dd>
+        <dt id="path-like elements">Path-like elements <a href="#path-like-elements" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>A few properties only apply to shapes that are drawn by giving a list of points or path segments: <code>&lt;path&gt;</code>, <code>&lt;polygon&gt;</code>, and <code>&lt;polyline&gt;</code>.</p>
+        </dd>
+        <dt id="text-elements">Text elements <a href="#text-elements" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Styles that modify the font and layout of visible text content can be set for the <code>&lt;text&gt;</code> element as a whole or for individual <code>&lt;tspan&gt;</code>, <code>&lt;textPath&gt;</code> or <code>&lt;a&gt;</code> elements. The properties that control text direction may also have an effect on the display of <code>&lt;title&gt;</code> tooltips, but that is not clearly defined in the specifications.</p>
+        </dd>
+        <dt id="graphics-elements">Graphics elements<a href="#graphics-elements" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>These styles apply to any content that is directly drawn on the screen: shapes, embedded images or complete <code>&lt;text&gt;</code> elements.</p>
+        </dd>
+        <dt id="container-elements">Container elements<a href="#container-elements" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Certain styles can apply to container elements such as <code>&lt;g&gt;</code>, <code>&lt;svg&gt;</code>, or <code>&lt;a&gt;</code>, and on <code>&lt;use&gt;</code> (which acts like a container for its shadow-contents). When effects are applied to a container element, the contained graphical content is layered together as normal, and then the combined graphic is modified. This often has a different result than if the same style had been applied on each component separately.</p>
+        </dd>
+        <dt id="coordinate-system-elements">Coordinate-system elements<a href="#coordinate-system-elements" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>A few properties only apply to SVG elements if they define a rectangular coordinate-system region. In other words, elements that can have a <code>viewBox</code> attribute: <code>&lt;svg&gt;</code>, <code>&lt;symbol&gt;</code>, <code>&lt;marker&gt;</code>, and <code>&lt;pattern&gt;</code>.</p>
+        </dd>
+      </dl>
+
+      <p>Nonetheless, you may declare the styles on any element using CSS (and often, but not always, using presentation attributes).</p>
+    </section>
+
+    <section data-type="sect1" data-pdf-bookmark="Initial and Inherited Styles">
+      <h2 id="style-guide-initial-inherit">Initial and Inherited Styles<a href="#style-guide-initial-inherit" class="hash-link" aria-label="Permalink">#</a></h2>
+      <div class="columns">
+        <p>Every CSS property has a defined initial (default) value. A few properties have separate defaults set on particular elements as part of the browser style sheet, but this is unusual in SVG. Unless otherwise noted, the default value listed in the guide is both the initial value and the default for all SVG elements.</p>
+
+        <p>Most styles will be inherited by child elements and by shadow-children of <code>&lt;use&gt;</code> elements.</p>
+
+        <p>Styles that <em>aren’t</em> inherited are indicated in the list; in that case, all elements get the initial value. Non-inherited properties include most styles that directly apply to container elements, and a few styles that only apply on specific element types.</p>
+        
+        <p>You can always force inheritance by using the <code>inherit</code> keyword.</p>
+
+        <p>In modern browsers, you can also force an element to reset to the default value, with the <code>initial</code> keyword. However, this isn’t supported in Internet Explorer.</p>
+
+        <p>There’s a more extensive discussion of initial and inherited values in <a href="../extras/ch03-cascade.html">“The Cascade”</a>, an online extra article for <a href="../ch03-style-files/">Chapter 3</a>.</p>
+      </div>
+    </section>
+
+
+    <section data-type="sect1" data-pdf-bookmark="Alphabetical List of SVG Style Properties">
+      <h2 id="style-guide-list">Alphabetical List of SVG Style Properties<a href="#style-guide-list" class="hash-link" aria-label="Permalink">#</a></h2>
+      <dl class="columns-children">
+        <dt id="alignment-baseline"><code>alignment-baseline</code> <a href="#alignment-baseline" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines which point in each text glyph, perpendicular to the inline text layout orientation, should be aligned with the equivalent point in the parent text content.</p>
+
+          <p>CSS Inline Layout Level 3 makes this a longhand property for <code>vertical-align</code>.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em></p>
+                <ol>
+                  <li>
+                    <p>a baseline keyword: <code>alphabetic</code>, <code>ideographic</code>, <code>hanging</code>, <code>mathematical</code>, <code>central</code>, <code>middle</code>, <code>text-before-edge</code>, <code>text-after-edge</code>; CSS3 replaces the last two with <code>text-top</code> and <code>text-bottom</code> and adds <code>top</code> and <code>bottom</code></p>
+                  </li>
+                  <li>
+                    <p><code>auto</code>, <code>baseline</code>, or inherit</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> in SVG 1, <code>auto</code> (not well implemented); in CSS3, <code>baseline</code></p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> text elements</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 1 (but inconsistently implemented), CSS Inline Layout Level 3</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="animation"><code>animation</code> and its longhands <a href="#animation" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>See “CSS Keyframe Animations” in <a data-type="xref" href="../ch19-animation-files/">Chapter 19</a>, or consult the <a href="https://drafts.csswg.org/css-animations/">CSS Animations spec</a>.</p>
+        </dd>
+        <dt id="baseline-shift"><code>baseline-shift</code> <a href="#baseline-shift" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines an offset from the normal alignment-baseline that should apply for the extent of this element. Positive values raise the baseline, negative values lower it.</p>
+
+          <p>CSS Inline Layout Level 3 makes this a longhand property for <code>vertical-align</code>.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em></p>
+                <ol>
+                  <li>
+                    <p>a percentage of the line height (font-size for single-line SVG)</p>
+                  </li>
+                  <li>
+                    <p>a length with units</p>
+                  </li>
+                  <li>
+                    <p>a keyword <code>baseline</code>, <code>sub</code>, or <code>super</code> (CSS3 removes <code>baseline</code>)</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> in SVG 1, <code>baseline</code>; in CSS3, the length 0 (which has the same effect)</p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> text elements</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 1 (but inconsistently implemented), CSS Inline Layout Level 3</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="clip"><code>clip</code><a href="#clip" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines a rectangle outside of which this element cannot be drawn. <strong>Deprecated</strong> in favor of <code>clip-path</code>; only recommended for hiding elements that still need to be keyboard accessible.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> either <code>auto</code> (no clipping) or a <code>rect()</code> function.</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>auto</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> coordinate-system elements in SVG; absolutely-positioned CSS layout boxes</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2 and SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="clip-path"><code>clip-path</code> <a href="#clip-path" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines a shape (or composite set of shapes) outside of which this element cannot draw any graphical content or filter effects.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>none</code></p>
+                </li>
+                <li>
+                  <p>a <code>url()</code> reference to a <code>&lt;clipPath&gt;</code> element (support is best if it is within the same document)</p>
+                </li>
+                <li>
+                  <p>(new in CSS3) one of the CSS shape functions.</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>none</code></p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> graphics elements and container elements in SVG; any CSS layout box</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1, CSS Masking Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="clip-rule"><code>clip-rule</code> <a href="#clip-rule" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the <code>fill-rule</code> value that should be used on shapes inside a <code>&lt;clipPath&gt;</code> element in order to calculate the clipping area.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> either <code>nonzero</code> or <code>evenodd</code>.</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>nonzero</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> path-like elements that are children of a <code>&lt;clipPath&gt;</code> element, or are cloned into a <code>&lt;clipPath&gt;</code> with <code>&lt;use&gt;</code>.</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="color"><code>color</code> <a href="#color" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the value of the <code>currentColor</code> keyword, which can then be used anywhere a color is required. Although <code>color</code> also controls the color of text in HTML, it has no direct effect in SVG.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> any recognized CSS color value (see <a data-type="xref" href="../ch12-fill-files/">Chapter 12</a>); CSS3-supporting browsers support a wider array of color declarations, including partially transparent colors.</p>
+            </li>
+            <li>
+              <p><em>Default:</em> usually <code>black</code>, but it is not explicitly defined and can be set by user preferences in some browsers</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> no SVG elements directly.</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, SVG 1, CSS 2.1, CSS Color Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="color-interpolation"><code>color-interpolation</code> <a href="#color-interpolation" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the color model to use when calculating color transitions for gradients and animations, as well as color blending when layering semi-transparent colors.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>auto</code>, <code>linearRGB</code>, or <code>sRGB</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>sRGB</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> graphics elements, container elements, gradient elements, and animation elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1 (but not well supported)</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="color-interpolation-filters"><code>color-interpolation-filters</code> <a href="#color-interpolation-filters" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the color model to use when performing color operations in SVG filter elements. Switch to <code>sRGB</code> to get the same behavior as the shorthand filter functions.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>auto</code>, <code>linearRGB</code>, or <code>sRGB</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>linearRGB</code> in SVG 1; <code>auto</code> in CSS Filters</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> <code>&lt;filter&gt;</code> and filter primitive (<code>&lt;fe*&gt;</code>) elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1, CSS Filters Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="color-rendering"><code>color-rendering</code> <a href="#color-rendering" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Hints to the browser how it should optimize color interpolation and other calculations.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>auto</code>, <code>optimizeSpeed</code>, or <code>optimizeQuality</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>auto</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> all SVG elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1 (but not well supported)</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="cursor"><code>cursor</code> <a href="#cursor" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the pointer cursor to be displayed when the mouse is hovering over this element.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>auto</code> (meaning the browser should select a cursor)</p>
+                </li>
+                <li>
+                  <p>a keyword describing a system cursor:</p>
+
+                  <ul>
+                    <li>
+                      <p><code>crosshair</code> (cross centered on the active point),</p>
+                    </li>
+                    <li>
+                      <p><code>default</code> (usually an arrow),</p>
+                    </li>
+                    <li>
+                      <p><code>pointer</code> (usually a hand with a pointer finger extended, used for links),</p>
+                    </li>
+                    <li>
+                      <p><code>move</code> (usually crossed arrows),</p>
+                    </li>
+                    <li>
+                      <p><code>e-resize</code>, <code>n-resize</code>, <code>ne-resize</code>, <code>nw-resize</code>, <code>s-resize</code>, <code>se-resize</code>, <code>sw-resize</code>, or <code>w-resize</code> (arrows, with directions as indicated, where north is up, east is right, and so on),</p>
+                    </li>
+                    <li>
+                      <p><code>text</code> (the text-caret cursor, a vertical line with caps for horizontal text direction),</p>
+                    </li>
+                    <li>
+                      <p><code>wait</code> (a spinner or hourglass),</p>
+                    </li>
+                    <li>
+                      <p><code>help</code> (usually a question mark), or</p>
+                    </li>
+                    <li>
+                      <p><code>progress</code> (the wait spinner, but next to the usual arrow)</p>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <p>(new in CSS3) a URL reference to an image file, optionally followed by two numbers representing the coordinates within the image that should be aligned on the mouse point; SVG cursor images are currently only supported if they have defined width and height</p>
+                </li>
+                <li>
+                  <p>(<strong>deprecated</strong>) a URL reference to a (deprecated) SVG <code>&lt;cursor&gt;</code> element (which has an <code>xlink:href</code> reference to an image file plus <code>x</code> and <code>y</code> attributes for the reference point)</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>auto</code>; if you provide a URL but not a reference point, the reference point defaults to (0,0) in the image’s coordinate system</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> graphics elements, text elements, container elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, SVG 1, CSS Basic User Interface Module Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="cx"><code>cx</code> <a href="#cx" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the horizontal reference coordinate (center point) for SVG circles and ellipses.</p>
+
+          <p><strong>The attribute only maps to the style property on the SVG elements that the property applies to.</strong> Browser support for the style property is limited.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> a length with units, percentage (of the coordinate system width), or number (of SVG user units)</p>
+              </li>
+              <li>
+                <p><em>Default:</em> 0</p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> <code>&lt;circle&gt;</code>, <code>&lt;ellipse&gt;</code></p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 2</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="cy"><code>cy</code> <a href="#cy" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the vertical reference coordinate (center point) for SVG circles and ellipses.</p>
+
+          <p><strong>The attribute only maps to the style property on the SVG elements that the property applies to.</strong> Browser support for the style property is limited.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> a length with units, percentage (of the coordinate system height), or number (of SVG user units)</p>
+              </li>
+              <li>
+                <p><em>Default:</em> 0</p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> <code>&lt;circle&gt;</code>, <code>&lt;ellipse&gt;</code></p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 2</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="d"><code>d</code> <a href="#d" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the shape of a path.</p>
+
+          <p><strong>The attribute only maps to the style property for <code>&lt;path&gt;</code>.</strong> Browser support for the the style property is limited.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> SVG path data (see <a data-type="xref" href="path-data.html">the Path Commands guide</a>) as a quoted string, or <code>none</code></p>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>none</code></p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> <code>&lt;path&gt;</code></p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 2</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="direction"><code>direction</code> <a href="#direction" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the direction of inline text layout. Equivalent to the <code>dir</code> attribute in HTML.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> <code>ltr</code> (left-to-right) or <code>rtl</code> (right-to-left)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>ltr</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS2, CSS Writing Modes Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="display"><code>display</code> <a href="#display" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Determines whether the browser can render this element (and therefore any of its child elements); for CSS box model, also defines the type of box this element has, and the type of box layout to be used for its child elements.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> For elements in a SVG layout context:</p>
+              <ol>
+                <li>
+                  <p><code>none</code> (do not render this element; if it would normally be rendered, this means do not render its child content, either)</p>
+                </li>
+                <li>
+                  <p><code>inline</code> (render this element following normal SVG layout)</p>
+                </li>
+                <li>
+                  <p>any other recognized value from the CSS box model (<code>block</code>, <code>table-footer</code>, <code>list-item</code> and so), which <em>should</em> be treated the same as <code>inline</code></p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>inline</code></p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> all elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="dominant-baseline"><code>dominant-baseline</code> <a href="#dominant-baseline" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the point in each text glyph, perpendicular to the text writing-mode direction, which should be aligned with the anchor point.</p>
+
+          <p>In SVG 1, a non-<code>auto</code> value establishes a reference baseline system defined by the curent element’s font, which may affect child elements differently than setting the same value on the child element. In CSS3, it is always re-calculated for each element.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em></p>
+                <ol>
+                  <li>
+                    <p>one of the baseline keywords: <code>alphabetic</code>, <code>ideographic</code>, <code>hanging</code>, <code>mathematical</code>, <code>central</code>, <code>middle</code>, <code>text-before-edge</code>, <code>text-after-edge</code> (CSS3 replaces the last two with <code>text-top</code> and <code>text-bottom</code>)</p>
+                  </li>
+                  <li>
+                    <p><code>auto</code>, which means <code>alphabetic</code> for horizontal text and <code>central</code> for vertical text (CSS3 clarifies that alphabetic baseline should also be used for sideways vertical text)</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>auto</code></p>
+              </li>
+              <li>
+                <p>Not inherited in SVG 1, inherited in CSS3</p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> text elements</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 1 (but not well supported), CSS Inline Layout Level 3</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="enable-background"><code>enable-background</code> <a href="#enable-background" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Establishes the scope for compiling backdrop layers for creating the <code>BackgroundImage</code> and <code>BackgroundAlpha</code> SVG filter inputs.</p>
+
+          <p><strong>Deprecated</strong> in favor of <code>isolation</code>. Not well supported; for support in Internet Explorer/MS Edge, only use <code>new</code>, not the numerical parameters.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> Either</p>
+                <ol>
+                  <li>
+                    <p><code>accumulate</code>, meaning this element adds to the backdrop scope defined by an ancestor element (if any)</p>
+                  </li>
+                  <li>
+                    <p>the keyword <code>new</code>, optionally followed by a <code>viewBox</code>-style declaration (four numbers), meaning that this element defines an isolated backdrop context for its child elements, and that the specified rectangle is the region that should be stored in memory</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>accumulate</code></p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> container elements</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 1</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="fill"><code>fill</code> <a href="#fill" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the content to be painted within the geometric area of a shape, or the outlines of text glyphs.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>none</code>, to indicate that the area should not be painted</p>
+                </li>
+                <li>
+                  <p>any recognized CSS color value (including CSS3 colors in browsers that support them)</p>
+                </li>
+                <li>
+                  <p>a <code>url()</code> reference to a valid paint server element (pattern or gradient), with an optional fallback color, separated by whitespace, like <code>url(<em>ref</em>) fallback</code></p>
+                </li>
+                <li>
+                  <p>(<strong>deprecated</strong> and never well supported) an <code>icc-color()</code> function which defines a color relative to a pre-defined color profile</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>black</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="fill-opacity"><code>fill-opacity</code> <a href="#fill-opacity" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the maximum opacity of the fill paint; the alpha value of every pixel in the fill paint will be multiplied by the specified value.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a number in the range 0.0–1.0; SVG 2 allows percentages (but no browser support yet)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> 1.0 (fully opaque)</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1, SVG 2</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="fill-rule"><code>fill-rule</code> <a href="#fill-rule" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Indicates how the interior fill-region area should be calculated for a shape with criss-crossing lines; see <a data-type="xref" href="../ch06-path-files/">Chapter 6</a> for examples.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> either <code>nonzero</code> or <code>evenodd</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>nonzero</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> path-like elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="filter"><code>filter</code> <a href="#filter" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Describes an image-manipulation operation (or series of operations) to perform on the final composited representation of this element and its children, before clipping, masking, and blending with the backdrop.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>none</code></p>
+                </li>
+                <li>
+                  <p>a <code>url()</code> reference to a <code>&lt;filter&gt;</code> element</p>
+                </li>
+                <li>
+                  <p>(new in CSS3) a whitespace-separated list of <code>url()</code> filter references or CSS filter functions (as defined in <a data-type="xref" href="filter-functions.html">the Shorthand Filter Functions guide</a>): <code>blur(<em>stdDeviation</em>)</code>, <code>brightness(<em>multiplier</em>)</code>, <code>contrast(<em>multiplier</em>)</code>, <code>drop-shadow(<em>x-offset</em> <em>y-offset</em> <em>stdDeviation</em> <em>color</em>)</code>, <code>grayscale(<em>proportion</em>)</code>, <code>hue-rotate(<em>angle</em>)</code>, <code>invert(<em>proportion</em>)</code>, <code>opacity(<em>proportion</em>)</code>, <code>saturate(<em>multiplier</em>)</code>, <code>sepia(<em>proportion</em>)</code></p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>none</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> in SVG 1, graphics and container elements; in CSS3, any content that is displayed on screen, including inline text spans</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1, CSS Filter Effects Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="flood-color"><code>flood-color</code> <a href="#flood-color" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the color used in <code>&lt;feFlood&gt;</code> filter elements to create a solid color region.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> any valid color</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>black</code></p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> <code>&lt;feFlood&gt;</code> and <code>&lt;feDropShadow&gt;</code> elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="flood-opacity"><code>flood-opacity</code> <a href="#flood-opacity" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the opacity of the region created by <code>&lt;feFlood&gt;</code> filter elements.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a number in the range 0.0–1.0; SVG 2 allows percentages (but no browser support yet)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> 1.0</p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> <code>&lt;feFlood&gt;</code> and <code>&lt;feDropShadow&gt;</code> elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="font"><code>font</code> <a href="#font" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Shorthand property to set all the font-related properties (and reset those not specified to defaults). <strong>No presentation attribute</strong>; either use CSS syntax or use the longhand properties as attributes.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> any keywords for <code>font-style</code>, <code>font-variant</code>, and <code>font-weight</code>, followed by <code>font-size</code>, optionally followed by a <em>/</em> character and <code>line-height</code>, then finally a <code>font-family</code> list</p>
+            </li>
+            <li>
+              <p><em>Default:</em> determined by individual properties</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="font-family"><code>font-family</code> <a href="#font-family" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Specifies a list of typeface families to use, from most to least preferred.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> A comma-separated list of</p>
+              <ol>
+                <li>
+                  <p>typeface names to be selected from the operating system’s (quoted if they contain any punctuation or special characters)</p>
+                </li>
+                <li>
+                  <p>font-family names that were declared in an <code>@font-face</code> rule</p>
+                </li>
+                <li>
+                  <p>one of the five generic font keywords: <code>serif</code>, <code>sans-serif</code>, <code>monospace</code>, <code>cursive</code>, <code>fantasy</code> (should be last value in the list, since these will always match a browser font)</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> browser-specific, and can often be customized by the user</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="font-kerning"><code>font-kerning</code> <a href="#font-kerning" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Whether kerning (font-specific spacing adjustments between glyphs) should be applied. Replaces the <code>kerning</code> property from SVG 1. <strong>No presentation attribute.</strong></p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>auto</code> (kerning at the browser’s discretion), <code>normal</code> (kerning as defined in the font), or <code>none</code> (no kerning)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>auto</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text element</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS Fonts Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="font-size"><code>font-size</code> <a href="#font-size" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the size of text, by defining the height of a single line of text (before line-spacing).</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p>a length or percentage; percentages and font-based relative units such as <code>em</code> and <code>ex</code> are calculated relative to the inherited font size</p>
+                </li>
+                <li>
+                  <p>for SVG presentation attributes only, a unitless number that will be interpretted as a length in user coordinates</p>
+                </li>
+                <li>
+                  <p>absolute keywords <code>xx-large</code>, <code>x-large</code>, <code>large</code>, <code>medium</code>, <code>small</code>, <code>x-small</code>, or <code>xx-small</code></p>
+                </li>
+                <li>
+                  <p>relative keywords <code>larger</code> or <code>smaller</code>, which will adjust the inherited font size</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>medium</code>; however, be cautious about relying on default font sizes for SVG text within SVG used as images, as some older browsers do not set a valid default in this case</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="font-size-adjust"><code>font-size-adjust</code> <a href="#font-size-adjust" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Indicates that browsers should adjust the font size to maintain a specified <code>ex</code> height. The value is the expected ratio of <code>ex</code> to <code>em</code> units in the preferred font. If the font used by the browser has a different ratio, it should adjust the displayed font-size in order to maintain the expected <code>ex</code> size. The value used for <code>em</code> units and properties such as <code>line-height</code> will not change.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a number between 0.0 and 1.0, or the keyword <code>none</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>none</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2 (but not well supported), SVG 1, CSS Fonts Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="font-stretch"><code>font-stretch</code> <a href="#font-stretch" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Indicates which typeface from the specified family should be used, according to the width of the characters from narrow to wide.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>normal</code>, <code>wider</code>, <code>narrower</code>, <code>ultra-condensed</code>, <code>extra-condensed</code>, <code>condensed</code>, <code>semi-condensed</code>, <code>semi-expanded</code>, <code>expanded</code>, <code>extra-expanded</code>, <code>ultra-expanded</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>normal</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="font-style"><code>font-style</code> <a href="#font-style" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Indicates whether italic type should be used.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>normal</code>, <code>italic</code>, or <code>oblique</code>; <code>italic</code> and <code>oblique</code> will be treated as synonyms unless the font-family actually has distinct <code>italic</code> and <code>oblique</code> faces defined (highly unlikely)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>normal</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="font-variant"><code>font-variant</code> <a href="#font-variant" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Indicates which typographical options should be used from the font.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p>in CSS 2/SVG 1: <code>normal</code> or <code>small-caps</code></p>
+                </li>
+                <li>
+                  <p>in CSS3, <code>font-variant</code> becomes a shorthand for a number of properties for selecting OpenType font features</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>normal</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, CSS Fonts Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="font-weight"><code>font-weight</code> <a href="#font-weight" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Indicates which typeface from the specified family should be used, according to the thickness of the strokes from light <span class="keep-together">to heavy.</span></p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p>one of the absolute keywords <code>normal</code> or <code>bold</code></p>
+                </li>
+                <li>
+                  <p>one of the relative keywords <code>lighter</code> or <code>bolder</code> (which adjust relative to the inherited value)</p>
+                </li>
+                <li>
+                  <p>a numeric weight, as a multiple of 100 between 100 and 900, where 400 is <code>normal</code> and 600 is <code>bold</code></p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>normal</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="glyph-orientation-horizontal"><code>glyph-orientation-horizontal</code> <a href="#glyph-orientation-horizontal" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the direction of individual text glyphs when the text writing mode <span class="keep-together">is horizontal.</span></p>
+
+          <p><strong>Deprecated</strong> by CSS Writing Modes Level 3 (use the <code>rotate</code> attribute on SVG text elements, instead).</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> <code>0</code>, <code>90</code>, <code>180</code>, or <code>270</code></p>
+              </li>
+              <li>
+                <p><em>Default:</em> 0</p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> text elements with horizontal writing mode</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 1</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="glyph-orientation-vertical"><code>glyph-orientation-vertical</code> <a href="#glyph-orientation-vertical" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the direction of individual text glyphs when the text writing mode <span class="keep-together">is vertical.</span></p>
+
+          <p><strong>Deprecated</strong> by CSS Writing Modes Level 3 (use <code>text-orientation</code> or the <code>rotate</code> attribute instead).</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em></p>
+                <ol>
+                  <li>
+                    <p>an angle value: <code>0</code>, <code>90</code>, <code>180</code>, or <code>270</code></p>
+                  </li>
+                  <li>
+                    <p>the keyword <code>auto</code>, which equates to 0 for full-width characters and 90 for other characters</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>auto</code></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> text elements with vertical writing mode</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 1; CSS Writing Modes Level 3 re-defines as a partial synonym for <code>text-orientation</code></p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="height"><code>height</code> <a href="#height" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the height of the layout rectangle of certain elements within an SVG layout context.</p>
+
+          <p><strong>The attribute only maps to the style property on the SVG elements that the property applies to.</strong> Browser support for the applying the style property to SVG layout is limited.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em></p>
+                <ol>
+                  <li>
+                    <p><code>auto</code>, which has a different meaning depending on the element (see the relevant element reference for the default behavior)</p>
+                  </li>
+                  <li>
+                    <p>a non-negative length with units, or a percentage (of the coordinate system height)</p>
+                  </li>
+                  <li>
+                    <p>(for presentation attributes only) a non-negative number of SVG user units</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>auto</code></p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> <code>&lt;rect&gt;</code>, <code>&lt;svg&gt;</code>, <code>&lt;image&gt;</code>, <code>&lt;foreignObject&gt;</code>, <code>&lt;symbol&gt;</code>, <code>&lt;use&gt;</code>; HTML media elements embedded in an SVG layout context (which follow HTML rules for presentation attributes); CSS layout boxes</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> CSS 2, SVG 2</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="image-rendering"><code>image-rendering</code> <a href="#image-rendering" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Hints how the browser should optimize the scaling of raster images.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>auto</code>, <code>optimizeQuality</code>, or <code>optimizeSpeed</code> (which may create a pixelated appearance); CSS Images Level 3 or 4 will replace these values with more specific ones (<code>pixelated</code> versus <code>smooth</code>), but the spec isn’t finalized</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>auto</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> <code>&lt;image&gt;</code></p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="isolation"><code>isolation</code> <a href="#isolation" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Limits the scope for blending effects. Replaces <code>enable-background</code>.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> either <code>auto</code> or <code>isolate</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>auto</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> graphics and container elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS Compositing and Blending Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="kerning"><code>kerning</code> <a href="#kerning" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Whether kerning (font-specific spacing adjustments between glyphs) should be applied.</p>
+
+          <p><strong>Deprecated</strong> and replaced by <code>font-kerning</code> in CSS Fonts Level 3.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em></p>
+                <ol>
+                  <li>
+                    <p><code>auto</code> to allow normal kerning</p>
+                  </li>
+                  <li>
+                    <p>a length to impose arbitrary spacing; should only be used with length 0 to disable automatic kerning (use <code>letter-spacing</code> to alter spacing)</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>auto</code></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> text elements</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 1</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="letter-spacing"><code>letter-spacing</code> <a href="#letter-spacing" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Determines whether and how much extra space should be added in between individual character glyphs. A non-zero value <em>should</em> disable all non-essential ligatures; the text will look uneven if it contains essential ligatures.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>normal</code></p>
+                </li>
+                <li>
+                  <p>a length with units</p>
+                </li>
+                <li>
+                  <p>(for presentation attributes only) a number of SVG user units</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>normal</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, SVG 1, CSS Text Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="lighting-color"><code>lighting-color</code> <a href="#lighting-color" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the color used by lighting filter effects. Note that the lighting color must be set on the lighting effect primitive, not on the element describing the geometry of the light source.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> any valid CSS color</p>
+            </li>
+            <li>
+              <p><em>Default:</em> white</p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> <code>&lt;feDiffuseLighting&gt;</code>, <code>&lt;feSpecularLighting&gt;</code></p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1, CSS Filters Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="marker"><code>marker</code> <a href="#marker" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets <code>marker-end</code>, <code>marker-mid</code>, and <code>marker-start</code> to the same value. <strong>No presentation attribute</strong>; use CSS syntax instead.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a <code>url()</code> reference to a <code>&lt;marker&gt;</code> element (in the same document for best browser support), or <code>none</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>none</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> path-like elements and <code>&lt;line&gt;</code>; in SVG 2, applies to all shape elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1, SVG 2</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="marker-end"><code>marker-end</code> <a href="#marker-end" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets a marker that will be drawn on the final vertex point of the shape.</p>
+
+          <p>See <code>marker</code> for syntax details.</p>
+        </dd>
+        <dt id="marker-mid"><code>marker-mid</code> <a href="#marker-mid" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets a marker that will be drawn on every vertex point of the shape except for the very first and very last.</p>
+
+          <p>See <code>marker</code> for syntax details.</p>
+        </dd>
+        <dt id="marker-start"><code>marker-start</code> <a href="#marker-start" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets a marker that will be drawn on the initial vertex point of the shape.</p>
+
+          <p>See <code>marker</code> for syntax details.</p>
+        </dd>
+        <dt id="mask"><code>mask</code> <a href="#mask" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines a composited image layer that represents regions of reduced opacity for this element.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>none</code></p>
+                </li>
+                <li>
+                  <p>a <code>url()</code> reference to a <code>&lt;mask&gt;</code> element (with best browser support if it is in the same document)</p>
+                </li>
+                <li>
+                  <p>(new in CSS3) a comma-separated list of mask descriptions, with each consisting of values for the <code>mask-image</code>, <code>mask-clip</code>, <code>mask-composite</code>, <code>mask-mode</code>, <code>mask-origin</code>, <code>mask-position</code>, <code>mask-repeat</code>, and <code>mask-size</code> properties</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>none</code></p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> graphics and container elements; (in CSS3) CSS layout boxes</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1, CSS Masking Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="mask-clip"><code>mask-clip</code> <a href="#mask-clip" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the masking region for CSS image masks; has no effect when the mask is a <code>&lt;mask&gt;</code> element. See <a href="https://drafts.fxtf.org/css-masking-1/">CSS Masking Level 1</a> for details.</p>
+        </dd>
+        <dt id="mask-composite"><code>mask-composite</code> <a href="#mask-composite" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines how multiple mask layers should be combined to create the final mask for this element.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a comma-separated list of the keywords <code>add</code>, <code>subtract</code>, <code>intersect</code>, and <code>exclude</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>add</code></p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> graphics and container elements; CSS layout boxes</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS Masking Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="mask-image"><code>mask-image</code> <a href="#mask-image" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the images or SVG masks to use as mask layers for this element. See <a href="https://drafts.fxtf.org/css-masking-1/">CSS Masking Level 1</a> for details.</p>
+        </dd>
+        <dt id="mask-mode"><code>mask-mode</code> <a href="#mask-mode" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Determines how the pixels in each mask layer should be converted into a single-channel masking value.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a comma-separated list of the keywords <code>luminance</code>, <code>alpha</code>, and <code>match-source</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>match-source</code></p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> graphics and container elements; CSS layout boxes</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS Masking Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="mask-origin"><code>mask-origin</code> <a href="#mask-origin" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the reference box for positioning and scaling CSS image masks; has no effect when the mask is a <code>&lt;mask&gt;</code> element. See <a href="https://drafts.fxtf.org/css-masking-1/">CSS Masking Level 1</a> for details.</p>
+        </dd>
+        <dt id="mask-position"><code>mask-position</code> <a href="#mask-position" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the base position (relative to the <code>mask-origin</code> reference box) for CSS image masks; has no effect when the mask is a <code>&lt;mask&gt;</code> element. See <a href="https://drafts.fxtf.org/css-masking-1/">CSS Masking Level 1</a> for details.</p>
+        </dd>
+        <dt id="mask-repeat"><code>mask-repeat</code> <a href="#mask-repeat" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines whether CSS image masks should be tiled; has no effect when the mask is a <code>&lt;mask&gt;</code> element. See <a href="https://drafts.fxtf.org/css-masking-1/">CSS Masking Level 1</a> for details.</p>
+        </dd>
+        <dt id="mask-size"><code>mask-size</code> <a href="#mask-size" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the size of CSS image masks; has no effect when the mask is a <code>&lt;mask&gt;</code> element. See <a href="https://drafts.fxtf.org/css-masking-1/">CSS Masking Level 1</a> for details.</p>
+        </dd>
+        <dt id="mask-type"><code>mask-type</code> <a href="#mask-type" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the default mask mode for this mask.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> either <code>luminance</code> or <code>alpha</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>luminance</code></p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> <code>&lt;mask&gt;</code> elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS Masking Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="opacity"><code>opacity</code> <a href="#opacity" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the maximum opacity value for this element, to be applied by multiplying the alpha channel of every pixel by the specified value.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a number in the range 0.0–1.0; CSS Color Level 4 allows percentages (but no browser support yet)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> 1</p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> graphics and container elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1, CSS Color Level 3, CSS Color Level 4</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="overflow"><code>overflow</code> <a href="#overflow" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines whether the graphics for this element should be clipped to its rectangular layout region.</p>
+
+          <p>Visible overflow on <code>&lt;pattern&gt;</code> is undefined and unsupported in most browsers.</p>
+
+          <p>SVG 2 recommends that, if scrolling is not possible on a given element, <code>auto</code> should be treated equal to <code>visible</code>, but <code>scroll</code> should be treated equal to <code>hidden</code>. However, browsers are currently inconsistent about <code>auto</code>.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> one of <code>visible</code>, <code>hidden</code>, <code>auto</code>, or <code>scroll</code></p>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>visible</code> (this is the <code>initial</code> value), but set to <code>hidden</code> in the browser default styles for all SVG elements that it applies to</p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> coordinate-system elements</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> CSS 2, SVG 1, SVG 2</p>
+              </li>
+            </ul>
+          </div>
+        </dd>
+        <dt id="pointer-events"><code>pointer-events</code> <a href="#pointer-events" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines which regions of this element should trigger mouse/touch events, <code>cursor</code> changes, and <code>:hover</code> effects, and whether sensitivity should be affected by the <code>visibility</code> state.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>visiblePainted</code>, <code>visibleFill</code>, <code>visibleStroke</code>, <code>visible</code>, <code>painted</code>, <code>fill</code>, <code>stroke</code>, <code>all</code>, or <code>none</code> (see “Getting the Point(er) Across” in <a data-type="xref" href="../ch18-interaction-files/">Chapter 18</a> for what they mean)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>visiblePainted</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> graphics elements and text elements, although some values only apply to shape elements (as described in the book)</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="r"><code>r</code> <a href="#r" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the radius for SVG circles.</p>
+
+          <p><strong>The attribute only maps to the style property on <code>&lt;circle&gt;</code>.</strong> Browser support for the style property is limited.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> a non-negative length with units, percentage (proportional to the coordinate system diagonal, as defined in <a data-type="xref" href="units.html#units-percentages-reference">the Units guide</a>), or number (of SVG user units)</p>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>auto</code></p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> <code>&lt;circle&gt;</code></p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 2</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="rx"><code>rx</code> <a href="#rx" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the horizontal radius for SVG ellipses and rectangles (where it defines the corner-rounding radius).</p>
+
+          <p><strong>The attribute only maps to the style property on the SVG elements that the property applies to.</strong> Browser support for the style property is limited.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em></p>
+                <ol>
+                  <li>
+                    <p><code>auto</code>, which means match <code>ry</code> if it is defined, or 0 otherwise</p>
+                  </li>
+                  <li>
+                    <p>a non-negative length with units, percentage (of the coordinate system width), or number (of SVG user units)</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>auto</code></p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> <code>&lt;rect&gt;</code>, <code>&lt;ellipse&gt;</code></p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 2</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="ry"><code>ry</code> <a href="#ry" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the vertical radius for SVG ellipses and rectangles (where it defines the corner-rounding radius).</p>
+
+          <p><strong>The attribute only maps to the style property on the SVG elements that the property applies to.</strong> Browser support for the style property is limited.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em></p>
+                <ol>
+                  <li>
+                    <p><code>auto</code>, which means match <code>rx</code> if it is defined, or 0 otherwise</p>
+                  </li>
+                  <li>
+                    <p>a non-negative length with units, percentage (of the coordinate system height), or number (of SVG user units)</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>auto</code></p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> <code>&lt;rect&gt;</code>, <code>&lt;ellipse&gt;</code></p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 2</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="shape-rendering"><code>shape-rendering</code> <a href="#shape-rendering" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Hints to the browser how it should adjust shape outlines to fit the physical pixels of a low-resolution display.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>auto</code>, <code>optimizeSpeed</code>, <code>crispEdges</code> (which turns off anti-aliasing, causing pixels on the edge of a shape to either be fully colored or not at all), or <code>geometricPrecision</code> (which specifically requests anti-aliasing, although for most browsers it is the same as <code>auto</code>)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>auto</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="stop-color"><code>stop-color</code> <a href="#stop-color" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the color of the gradient at this stop point.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> any CSS color (although semi-transparent colors are not supported consistently)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> black</p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> <code>&lt;stop&gt;</code> elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="stop-opacity"><code>stop-opacity</code> <a href="#stop-opacity" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the opacity of the gradient at this stop point; if the <code>stop-color</code> is semi-transparent, the transparency effect <em>should</em> be multiplied.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a number in the range 0.0–1.0; SVG 2 allows percentages (but no browser support yet)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> 1</p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> <code>&lt;stop&gt;</code> elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="stroke"><code>stroke</code> <a href="#stroke" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the content to be painted in the stroke region around the edge of the shape, line, or letters. See <a data-type="xref" href="../ch13-strokes-files/">Chapter 13</a> for important warnings about using paint servers for strokes.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>none</code> to indicate that the area should not be painted.</p>
+                </li>
+                <li>
+                  <p>any recognized CSS color value (including CSS3 colors in browsers that support them).</p>
+                </li>
+                <li>
+                  <p>a <code>url()</code> reference to a valid paint server element (pattern or gradient), with an optional fallback color, separated by whitespace, like <code>url(<em>ref</em>) fallback</code>.</p>
+                </li>
+                <li>
+                  <p>(<strong>deprecated</strong> and never well supported) an <code>icc-color()</code> function which defines a color relative to a pre-defined color profile.</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>none</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="stroke-dasharray"><code>stroke-dasharray</code> <a href="#stroke-dasharray" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Describes the pattern of dash length and gaps used to generate the stroke region.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>none</code></p>
+                </li>
+                <li>
+                  <p>a list of non-negative lengths with units, percentages (proportional to the coordinate system diagonal, as defined in <a data-type="xref" href="units.html#units-percentages-reference">the Units guide</a>), or numbers (of SVG user units), separated by whitespace and/or commas (although commas are likely to be deprecated in the CSS Fill and Stroke Module)</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>none</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="stroke-dashoffset"><code>stroke-dashoffset</code> <a href="#stroke-dashoffset" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the position within the <code>stroke-dasharray</code> pattern at which to position the starting point of the path.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a non-negative length with units, percentage (proportional to the coordinate system diagonal, as defined in <a data-type="xref" href="units.html#units-percentages-reference">the Units guide</a>), or number (of SVG user units)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> 0</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="stroke-linecap"><code>stroke-linecap</code> <a href="#stroke-linecap" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Describes the added stroke-region shape that extends from every open-ended path segment and every stroke dash.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>butt</code> (no extra cap shape), <code>round</code> (semi-circular caps), or <code>square</code> (square caps, extending half the stroke width beyond the official end of the path or dash)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>butt</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="stroke-linejoin"><code>stroke-linejoin</code> <a href="#stroke-linejoin" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Describes the shape used to fill in the outside corners of stroke regions.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>miter</code> (extend the strokes until they meet in a point), <code>round</code> (connect with an arc), or <code>bevel</code> (connect the strokes with a single straight line); SVG 2 adds <code>arc</code> and <code>miter-clip</code> (though no browser support yet)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>miter</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="stroke-miterlimit"><code>stroke-miterlimit</code> <a href="#stroke-miterlimit" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Limits how far mitered line-join corners can extend beyond the official dimensions of the shape, as a multiple of the <code>stroke-width</code>.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a number greater than or equal to 1</p>
+            </li>
+            <li>
+              <p><em>Default:</em> 4</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="stroke-opacity"><code>stroke-opacity</code> <a href="#stroke-opacity" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the maximum opacity for the color or paint effect used in the stroke region; the alpha value of every pixel in the stroke paint will be multiplied by the specified value.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a number in the range 0.0–1.0; SVG 2 allows percentages (but no browser support yet)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> 1</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="stroke-width"><code>stroke-width</code> <a href="#stroke-width" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the width of the stroke region, perpendicular to the edge of the shape and centered over it.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> a non-negative length with units, percentage (proportional to the coordinate system diagonal, as defined in <a data-type="xref" href="units.html#units-percentages-reference">the Units guide</a>), or number (of SVG user units)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> 1px</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> shape elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="text-anchor"><code>text-anchor</code> <a href="#text-anchor" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines how each chunk of continuous text in the inline flow direction (horizontal or vertical) should be aligned relative to the anchor point in that axis (<em>x</em> or <em>y</em>).</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> <code>start</code>, <code>middle</code>, or <code>end</code></p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>start</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> SVG 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="text-decoration"><code>text-decoration</code> <a href="#text-decoration" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the type of emphasis line, if any, that should be added along the length of the span of text.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>none</code></p>
+                </li>
+                <li>
+                  <p>one or more of the keywords <code>underline</code>, <code>overline</code>, or <code>line-through</code></p>
+                </li>
+                <li>
+                  <p>(new in CSS3) a combination of the values for the (new) longhand properties <code>text-decoration-position</code>, <code>text-decoration-style</code>, and <code>text-decoration-color</code>; there are also new <code>text-decoration-fill</code> and <code>text-decoration-stroke</code> properties for SVG; none of the longhands have presentation attributes</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>none</code></p>
+            </li>
+            <li>
+              <p><strong>Not inherited</strong></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, CSS Text Decoration Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="text-orientation"><code>text-orientation</code><a href="#text-orientation" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>How characters should be oriented in vertical text; replaces <code>glyph-orientation-vertical</code>. <strong>No presentation attribute.</strong></p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> one of <code>mixed</code>, <code>upright</code>, <code>sideways-right</code>, <code>sideways-left</code>, <code>sideways</code>, or <code>use-glyph-orientation</code></p>
+            </li>
+            <li>
+              <p><em>Default</em>: <code>mixed</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS Writing Modes Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="text-rendering"><code>text-rendering</code> <a href="#text-rendering" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Hints to the browser how it should optimize text shaping adjustments.</p>
+
+          <p>Supported in some browsers as a way to control ligature and kerning use, even in non-SVG text; the <code>font-variant-ligatures</code> and <code>font-kerning</code> properties are now the standard way to do this.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> one of</p>
+                <ol>
+                  <li>
+                    <p><code>auto</code>,</p>
+                  </li>
+                  <li>
+                    <p><code>optimizeSpeed</code> (which often turns off ligatures and kerning),</p>
+                  </li>
+                  <li>
+                    <p><code>optimizeLegibility</code> (which may turn on optional ligatures), or</p>
+                  </li>
+                  <li>
+                    <p><code>geometricPrecision</code> (which should turn off any resolution-based adjustments to glyph shapes, so that text scales exactly like an SVG shape)</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>auto</code></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> text elements</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 1</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="transform"><code>transform</code> <a href="#transform" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Applies a series of alterations to the coordinate system before calculating the size, shape, and position of the current element (or its descendents).</p>
+
+          <p>The syntax for the <code>transform</code> style property <strong>is different</strong> from the <code>transform</code> attribute. Browser support for the style property on SVG elements is still limited; consider using the attribute instead.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> A list of transformation functions, with units for all parameters, as described in <a data-type="xref" href="transform-functions.html">the Transform Functions guide</a>, or <code>none</code>.</p>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>none</code></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> graphics elements and container elements (but <em>not</em> to <code>&lt;tspan&gt;</code>, <code>&lt;textPath&gt;</code>, or <code>&lt;a&gt;</code> within text); <em>should</em> also apply to gradients and patterns, but support is limited</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> CSS Transforms Level 1</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="transform-box"><code>transform-box</code> <a href="#transform-box" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>The reference rectangle to use for calculating the origin and any percentage lengths within transformations. <strong>No presentation attribute.</strong> Browser support is still limited.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> <code>view-box</code>, <code>fill-box</code>, or <code>border-box</code> (which has same effect as <code>fill-box</code> for SVG elements without CSS layout boxes)</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>view-box</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> the same elements as <code>transform</code></p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS Transforms Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="transform-origin"><code>transform-origin</code> <a href="#transform-origin" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>The coordinate system origin used for calculating transformations; <em>should</em> be calculated relative to the <code>transform-box</code> reference box. <strong>No presentation attribute.</strong> Browser support for SVG elements is still limited.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> Up to three values, for the <em>x</em>, <em>y</em>, and <em>z</em> position:</p>
+              <ol>
+                <li>
+                  <p><code>left</code>, <code>center</code>, <code>right</code>, or a percentage or length, for the <em>x</em> position (defaults to <code>50%</code>, aka <code>center</code>)</p>
+                </li>
+                <li>
+                  <p><code>top</code>, <code>center</code>, <code>bottom</code>, or a percentage or length, for the <em>y</em> position (defaults to <code>50%</code>, aka <code>center</code>)</p>
+                </li>
+                <li>
+                  <p>A length, for the <em>z</em> origin (defaults to <code>0px</code>)</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>50% 50%</code> (this is the <code>initial</code> value), but set to <code>0 0</code> for SVG elements without CSS layout boxes in the browser default styles</p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> the same elements as <code>transform</code></p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS Transforms Level 1</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="transition"><code>transition</code> and its shorthands <a href="#transition" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>See “CSS Transitions” in <a data-type="xref" href="../ch19-animation-files/">Chapter 19</a>, or consult the <a href="https://drafts.csswg.org/css-transitions/">CSS Transitions spec</a>.</p>
+        </dd>
+        <dt id="unicode-bidi"><code>unicode-bidi</code> <a href="#unicode-bidi" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Determines whether the browser should apply the Unicode bidirectional algorithm to re-arrange the character content to suit the layout direction.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>normal</code>, <code>embed</code>, or <code>bidi-override</code></p>
+                </li>
+                <li>
+                  <p>(new in CSS3) <code>isolate</code>, <code>isolate-override</code> and <code>plaintext</code></p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>normal</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, CSS Writing Modes Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="visibility"><code>visibility</code> <a href="#visibility" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Indicates whether graphics for this element should be painted to the screen. Does not affect layout. May affect <code>pointer-events</code>. For SVG, does not effect container elements except by inheriting to their children.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em> either <code>visible</code> or <code>hidden</code>; <code>collapse</code> is also valid and is treated like <code>hidden</code> in SVG.</p>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>visible</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> graphics elements, text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="width"><code>width</code> <a href="#width" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the width of the layout rectangle of certain elements within an SVG layout context.</p>
+
+          <p><strong>The attribute only maps to the style property on the SVG elements that the property applies to.</strong> Browser support for the applying the style property to SVG layout is limited.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em></p>
+                <ol>
+                  <li>
+                    <p><code>auto</code>, which has a different meaning depending on the element (see the relevant element reference for the default behavior)</p>
+                  </li>
+                  <li>
+                    <p>a non-negative length with units, or a percentage (of the coordinate system width)</p>
+                  </li>
+                  <li>
+                    <p>(for presentation attributes only) a non-negative number of SVG user units</p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> <code>auto</code></p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> <code>&lt;rect&gt;</code>, <code>&lt;svg&gt;</code>, <code>&lt;image&gt;</code>, <code>&lt;foreignObject&gt;</code>, <code>&lt;symbol&gt;</code>, <code>&lt;use&gt;</code>; HTML media elements embedded in an SVG layout context (which follow HTML rules for presentation attributes); CSS layout boxes</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> CSS 2, SVG 2</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="word-spacing"><code>word-spacing</code> <a href="#word-spacing" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Determines whether and how much extra space should be added to whitespace characters that serve as word breaks in the text.</p>
+
+          <ul>
+            <li>
+              <p><em>Allowed values:</em></p>
+              <ol>
+                <li>
+                  <p><code>normal</code></p>
+                </li>
+                <li>
+                  <p>a length, with units or (for presentation attributes only) as a number of SVG user units</p>
+                </li>
+                <li>
+                  <p>(new in CSS3) a percentage, which increases spacing relative to the normal spacing for that whitespace character</p>
+                </li>
+
+              </ol>
+            </li>
+            <li>
+              <p><em>Default:</em> <code>normal</code></p>
+            </li>
+            <li>
+              <p><em>Applies to:</em> text elements</p>
+            </li>
+            <li>
+              <p><em>Defined in:</em> CSS 2, SVG 1, CSS Text Level 3</p>
+            </li>
+          </ul>
+        </dd>
+        <dt id="writing-mode"><code>writing-mode</code> <a href="#writing-mode" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Defines the layout orientation for text.</p>
+
+          <p>The SVG 1 values are <strong>deprecated</strong> and should only be used as fallbacks for CSS3 values.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em></p>
+                <ol>
+                  <li>
+                    <p>for horizontal text, with lines stacked top-to-bottom: in SVG 1, <code>lr</code>, <code>lr-tb</code>, <code>rl</code>, <code>rl-tb</code>; in CSS3, <code>horizontal-tb</code></p>
+                  </li>
+                  <li>
+                    <p>for vertical text, with lines stacked right-to-left: in SVG 1, <code>tb</code> or <code>tb-rl</code>; in CSS3, <code>vertical-rl</code></p>
+                  </li>
+                  <li>
+                    <p>for vertical text, with lines stacked left-to-right: in CSS3, <code>vertical-lr</code></p>
+                  </li>
+
+                </ol>
+              </li>
+              <li>
+                <p><em>Default:</em> in SVG 1, <code>lr-tb</code>; in CSS3 <code>horizontal-tb</code></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> text elements</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 1, CSS Writing Modes Level 3</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="x"><code>x</code> <a href="#x" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the horizontal reference coordinate (minimum coordinate, or top-left point) for the layout rectangle of certain elements within an SVG layout context.</p>
+
+          <p><strong>The attribute only maps to the style property on the SVG elements that the property applies to.</strong> Browser support for the style property is limited.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> a length with units, percentage (of the coordinate system width), or number (of SVG user units)</p>
+              </li>
+              <li>
+                <p><em>Default:</em> 0</p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> <code>&lt;rect&gt;</code>, <code>&lt;svg&gt;</code>, <code>&lt;image&gt;</code>, <code>&lt;foreignObject&gt;</code>, <code>&lt;symbol&gt;</code>, <code>&lt;use&gt;</code>; HTML media elements embedded in an SVG layout context (which don’t have presentation attributes)</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 2</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+        <dt id="y"><code>y</code> <a href="#y" class="hash-link" aria-label="Permalink">#</a></dt>
+        <dd>
+          <p>Sets the vertical reference coordinate (minimum coordinate, or top-left point) for the layout rectangle of certain elements within an SVG layout context.</p>
+
+          <p><strong>The attribute only maps to the style property on the SVG elements that the property applies to.</strong> Browser support for the style property is limited.</p>
+          <div class="openblock">
+            <ul>
+              <li>
+                <p><em>Allowed values:</em> a length with units, percentage (of the coordinate system height), or number (of SVG user units)</p>
+              </li>
+              <li>
+                <p><em>Default:</em> 0</p>
+              </li>
+              <li>
+                <p><strong>Not inherited</strong></p>
+              </li>
+              <li>
+                <p><em>Applies to:</em> <code>&lt;rect&gt;</code>, <code>&lt;svg&gt;</code>, <code>&lt;image&gt;</code>, <code>&lt;foreignObject&gt;</code>, <code>&lt;symbol&gt;</code>, <code>&lt;use&gt;</code>; HTML media elements embedded in an SVG layout context (which don’t have presentation attributes)</p>
+              </li>
+              <li>
+                <p><em>Defined in:</em> SVG 2</p>
+              </li>
+            </ul>
+          </div>
+
+        </dd>
+      </dl>
+    </section>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
@@ -34,4 +2130,5 @@
       View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files or suggest a correction.</p>
   </footer>
 </body>
+
 </html>

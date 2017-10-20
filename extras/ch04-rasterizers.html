@@ -5,6 +5,18 @@
   <title>SVG Snapshots: Converting Vector to Raster
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="SVG Snapshots: Converting Vector to Raster — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Sometimes, you need a “snapshot” image of an SVG, saved in a common raster (aka, bitmap) image format, such as PNG or JPEG.  The conversion can often be automated using dedicated rasterization tools. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -21,12 +33,106 @@
     <nav class="toc" aria-label="Page Contents">On this page:
       <ul class="columns narrow">
         <li><a href="#intro">Introduction</a></li>
+        <li><a href="#tools-rasterizers-dedicated-section">Image Conversion Tools</a></li>
+        <li><a href="#tools-rasterizers-browsers-section">Web Browser Screenshot Tools</a></li>
       </ul>
     </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+    <div id="intro">
+    
+<p>Although we’d love to have SVG everywhere, you often need a “snapshot” image of an SVG, saved in a common raster (aka, bitmap) image format, such as PNG or JPEG.  These SVG snapshots are your fallback images for old browsers, and are often required as thumbnail or preview images, particularly for social media sharing.</p>
+
+<p>Manually saving files in multiple formats from a graphics editor can be tedious.  On many web server set-ups, the process can be automated using dedicated rasterization and conversion tools.</p>
+
+<p>Rasterization is the conversion of a vector graphic into a bitmap format.  Broadly speaking, any application that can display an SVG on a screen is a rasterizer, including web browsers and graphics editors.</p>
     </div>
+
+    <section data-type="sect2" data-pdf-bookmark="Image Conversion Tools">
+      <h2 id="tools-rasterizers-dedicated-section">Image Conversion Tools<a href="#tools-rasterizers-dedicated-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>The following programs are “single-purpose” rasterizers, used when incorporating SVG into print or when generating fallback alternatives for older browsers.  They are command-line programs or software libraries suitable for inclusion in automated routines:</p>
+<dl>
+<dt id="Batik">Batik<a href="#Batik" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>The <a href="http://xmlgraphics.apache.org/batik">Apache Batik project</a> is a complete implementation of SVG 1.1 in Java.  The project’s rasterizer utility has traditionally been used to render SVG in publishing pipelines, most typically to convert XSL Formatting Objects (XSL-FO) documents into printed output.  For basic SVG, the quality of the Batik rendering is quite high, and is particularly appropriate for generating images in raster formats such as PNG or JPEG from SVG graphics.</p>
+
+<p>Batik supports nearly all features of SVG 1.1, but has not implemented CSS3 features which you might wish to use in SVG for modern web browsers.  It can run JavaScript code within the SVG before saving the image—but again, with limitations on support of modern JS/DOM features.</p>
+
+<p>The command-line rasterizer is a Java archive file (<em role="filename">batik-rasterizer.jar</em>), which is passed to a Java run-time environment. There are a number of options for controlling output file format, width and height, area, quality, output directory, script execution, and so forth. Invoking the rasterizer without arguments should give you the list of options.</p>
+</dd>
+<dt id="LibRSVG">LibRSVG<a href="#LibRSVG" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>The <a href="http://librsvg.sourceforge.net">LibRSVG library</a> is part of the Linux Gnome project, and provides support within Gnome for static SVG images as well as a library that lets developers generate SVG in their programs. For command-line build tools, it can be run as a standalone program called <em role="filename">rsvg</em> to generate PNG or JPEG images from SVG files.  RSVG supports core vector graphics, but not advanced effects.  The LibRSVG rendering engine is used in numerous other open source tools that render SVG.</p>
+</dd>
+<dt id="ImageMagick">ImageMagick<a href="#ImageMagick" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p><a href="http://www.imagemagick.org">ImageMagick</a> is a “Swiss army knife” for command line manipulation of graphics, and is available on Windows, Macintosh, and Linux platforms. It can be used from a command line, or can be invoked from libraries and build tools in most modern processing languages, from C++ to Python, PHP, Ruby, and Node.js.</p>
+
+<p>At its simplest, the ImageMagick convert command is trivial:</p>
+
+<pre data-type="programlisting">convert image.svg image.png</pre>
+
+<p>This converts the file indicated by the first argument from an SVG image to a corresponding PNG image.  However, ImageMagick has much more complicated options, including its own vector graphics shapes (heavily inspired by SVG terminology) and filter primitives, defined entirely in command-line parameters.</p>
+
+<p>To render SVG, ImageMagick will use Inkscape’s command-line interface if it is available; in that case, it will support most SVG 1.1 features.  As a second effort, ImageMagick will try to use LibRSVG. If neither is available, ImageMagick converts the SVG to its internal vector language, which covers basic vector graphics and some graphical effects, but has limited support of CSS.</p>
+</dd>
+<dt id="Inkscape">Inkscape<a href="#Inkscape" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Did we mention that <a href="https://inkscape.org/en/doc/inkscape-man.html">Inkscape has a command-line interface</a>?  With the latest version of Inkscape, <em>most</em> SVG 1.1 and CSS 2 features should export correctly, as well as some CSS3 and SVG 2 features.  The command line utility offers options to add a background, crop the image, or to rasterize only a particular element or group.</p>
+</dd>
+<dt id="CairoSVG">CairoSVG<a href="#CairoSVG" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Cairo is vector graphics language used as a programming library in other software; it has implementations in many common programming languages such as C++ and Python.  Cairo graphics can be converted into vector files as PostScript, PDF, and SVG, can be output on various screen display modes on Linux and Macintosh systems, or can be used to generate raster images.</p>
+
+<p>The <a href="http://cairosvg.org/">CairoSVG</a> library, from the web design company Kozea, parses SVG files, and converts them to Cairo graphics; the result can be used to generate PDF, PostScript, or PNG versions of the SVG files.  Most basic vector graphics features from SVG 1.1 are supported.</p>
+</dd>
+</dl>
+
+<p>As you may have gathered, a limitation of all these rasterization tools is that they do not neccessarily keep up to date with the latest developments in other web platform specifications—if they even support the full SVG standard to begin with.</p>
+    </section>
+
+    <section data-type="sect2" data-pdf-bookmark="Web Browser Screenshot Tools">
+      <h2 id="tools-rasterizers-browsers-section">Web Browser Screenshot Tools<a href="#tools-rasterizers-browsers-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>If you’re building cutting-edge SVG animations or data visualizations using modern CSS and JavaScript, your best option for creating an accurate snapshot is to use an actual web browser rendering engine.  This is also your best option for creating screenshots of inline SVG mixed with HTML.</p>
+
+<p><em>How</em> you use the browser rendering engine depends on whether or not you need to automate the process.</p>
+
+<p>For automated rendering, from a server routine or other command-line interface, the options are improving:</p>
+
+<ul>
+<li>
+<p>The most established tool is the <a href="http://phantomjs.org/">PhantomJS</a> implementation of the WebKit browser engines.  The sample <em role="filename">rasterize.js</em> script can be used to convert any web page or SVG file to PNG or PDF.  PhantomJS can also run JavaScript code in the document, before saving the resulting graphic.  However, it tends to be somewhat out-of-date compared to the versions of WebKit used in Safari and iOS, so won’t always support the latest and greatest features from browsers.</p>
+</li>
+<li>
+<p>A “headless” (no graphical application interface) <a href="https://developers.google.com/web/updates/2017/04/headless-chrome">version of Google Chrome</a> is now included with the normal Chrome application (since version 59 or 60, released mid-2017).  Like PhantomJS, it can be controlled by scripting, using an API called Puppeteer.  However, it also has basic command line options for simple screenshots.  Because it directly uses the same code as the Chrome browser installed on your system, it supports any SVG, JS, or CSS features that Chrome does.</p>
+</li>
+<li>
+<p><a href="https://slimerjs.org/features.html">SlimerJS</a> is an almost-headless interface to Gecko (Firefox’s rendering engine).  It’s not completely headless because it runs actual application windows in the background, but it can be controlled by scripts, and claims to be mostly compatible with scripts made for PhantomJS.</p>
+</li>
+</ul>
+
+<p>If you <em>don’t</em> need to integrate the rasterization in an automated build system, you can also use the full version of the browser.  Most operating systems now have easy-to-use screenshot tools that can create a raster image of what is on your screen, but some browsers have better tools built-in:</p>
+
+<ul>
+<li>
+<p>Microsoft Edge allows you to save any SVG image or inline SVG element as standalone SVG or as a PNG (or even <em role="filename">.bmp</em>).  Just use the “Save Image As…” option from the right-click context menu, then change the “Save As Type” in the file save dialog.  Unlike most screenshot tools, this version preserves transparency, keeping the SVG separate from its background.</p>
+</li>
+<li>
+<p>Firefox has can make its own screenshots of both SVG and HTML content.  From the Developer Tools, you can take a screenshot of the entire page—not just the section visible on screen—or of any element in the main document (iframes are buggy).  There’s also a new user-friendly screenshot utility in the main interface (click on the “…” button in the URL bar), but it doesn’t yet (as of version 57) work when viewing a standalone SVG file.</p>
+
+<p>For even more options, there is a second screenshot tool hidden in Firefox’s browser-developer command line (<em>not</em> the JavaScript developer’s console). <a href="http://meyerweb.com/eric/thoughts/2015/10/22/firefoxs-screenshot-command/">Eric Meyer has written a nice summary of how to access the tool and its options</a>; the biggest advantage is the ability to change the “device pixel ratio” (aka resolution) of the rasterized PNG images.</p>
+</li>
+</ul>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>The vast majority of the figures in the book are high-resolution screenshots from Firefox, created using the command-line screenshot tool, with a high <code>--dpr</code> option of 2 or more.</p>
+</div>
+
+<p>With all these options for converting SVG to raster image formats, you may wonder about the reverse conversion.  Can you create an SVG from a PNG or JPEG?</p>
+
+<p>That gets much more complicated.  Although SVG code contains information about how the shapes should look, raster images don’t contain information about the shapes they were constructed from.</p>
+
+<p>Tracing or vectorizing tools use algorithms to try to calculate those shapes from the pixel data in a raster image, looking for high-contrast edges, then connecting them into smooth lines and curves.  The more comprehensive graphics programs, such as Illustrator and Inkscape, include auto-tracing tools.  There are also specialized tracing tools such as <a href="http://vectormagic.com/">Vector Magic</a>.  These can be particularly useful if you want to draw graphics by hand before scanning them into your computer and converting the drawings to SVG.</p>
+    </section>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

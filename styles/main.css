@@ -57,21 +57,29 @@ body {
   align-items: stretch;
   width: 100%;
 }
-body > * {
+main {  
+  flex-grow: 1;
   padding: 0 0.5rem;
   width: 100%;
   box-sizing: border-box;
 }
-main {  
-  flex-grow: 1;
-}
 header, footer {
-  background: hsla(0, 0%, 100%, 0.3);
+  background: hsla(0, 0%, 100%, 0.5);
   max-width: 50rem;
-  margin: 0 auto;
+  padding: 0 calc(50% - 25rem);
+  box-sizing: content-box;
 }
-p, li {
+header {
+  padding-bottom: 0.5rem;
+}
+footer {
+  padding-top: 0.5rem;
+}
+p {
   max-width: 45rem;
+}
+li {
+  max-width: 42rem;
 }
 header p {
   font-style: italic;

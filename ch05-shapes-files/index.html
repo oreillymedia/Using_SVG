@@ -1,43 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><meta charset="utf-8" />
-    <title>ch05-shapes-files/</title>
-    <link rel="stylesheet" href="../styles/main.css" />
-  </head>
-  <body>
-    <div id="wrapper">
-      <h2>All files in ch05-shapes-files</h2>
-      <ul class="columns narrow directory"><li><a href=".." title="Parent folder">..</a></li>
-<li><a href="basic-ellipse.png" title="basic-ellipse.png">basic-ellipse.png</a></li>
-<li><a href="basic-ellipse.svg" title="basic-ellipse.svg">basic-ellipse.svg</a></li>
-<li><a href="basic-line.png" title="basic-line.png">basic-line.png</a></li>
-<li><a href="basic-line.svg" title="basic-line.svg">basic-line.svg</a></li>
-<li><a href="basic-rectangle.png" title="basic-rectangle.png">basic-rectangle.png</a></li>
-<li><a href="basic-rectangle.svg" title="basic-rectangle.svg">basic-rectangle.svg</a></li>
-<li><a href="basic-rounded-rectangle.png" title="basic-rounded-rectangle.png">basic-rounded-rectangle.png</a></li>
-<li><a href="basic-rounded-rectangle.svg" title="basic-rounded-rectangle.svg">basic-rounded-rectangle.svg</a></li>
-<li><a href="border-radius.html" title="border-radius.html">border-radius.html</a></li>
-<li><a href="border-radius.png" title="border-radius.png">border-radius.png</a></li>
-<li><a href="checkerboard.png" title="checkerboard.png">checkerboard.png</a></li>
-<li><a href="checkerboard.svg" title="checkerboard.svg">checkerboard.svg</a></li>
-<li><a href="css-shapes.html" title="css-shapes.html">css-shapes.html</a></li>
-<li><a href="css-shapes.png" title="css-shapes.png">css-shapes.png</a></li>
-<li><a href="diagonal-percentages.svg" title="diagonal-percentages.svg">diagonal-percentages.svg</a></li>
-<li><a href="eyes.png" title="eyes.png">eyes.png</a></li>
-<li><a href="face.png" title="face.png">face.png</a></li>
-<li><a href="face.svg" title="face.svg">face.svg</a></li>
-<li><a href="line-art-static.svg" title="line-art-static.svg">line-art-static.svg</a></li>
-<li><a href="line-art.png" title="line-art.png">line-art.png</a></li>
-<li><a href="line-art.svg" title="line-art.svg">line-art.svg</a></li>
-<li><a href="pythagoras.png" title="pythagoras.png">pythagoras.png</a></li>
-<li><a href="pythagoras.svg" title="pythagoras.svg">pythagoras.svg</a></li>
-<li><a href="resize-eye.1.png" title="resize-eye.1.png">resize-eye.1.png</a></li>
-<li><a href="resize-eye.2.png" title="resize-eye.2.png">resize-eye.2.png</a></li>
-<li><a href="resize-eye.3.png" title="resize-eye.3.png">resize-eye.3.png</a></li>
-<li><a href="resize-eye.html" title="resize-eye.html">resize-eye.html</a></li>
-<li><a href="resize-eye.png" title="resize-eye.png">resize-eye.png</a></li>
-<li><a href="splash.png" title="splash.png">splash.png</a></li>
-<li><a href="splash.svg" title="splash.svg">splash.svg</a></li></ul>
-    </div>
+<head>
+  <meta charset="utf-8" />
+  <title>Chapter 05, Building Blocks: 
+    Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <link rel="stylesheet" href="../styles/main.css" />
   
-</body></html>
+  <meta name="twitter:title" property="og:title" 
+        content="Building Blocks — Ch05, Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Basic Shapes. Online extras and example code for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
+</head>
+
+<body>
+  <header>
+    <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
+    <p>Example code and online extras for the <a href="http://shop.oreilly.com/product/0636920037972.do">O'Reilly Media book</a> by Amelia Bellamy-Royds, Kurt Cagle, and Dudley Storey.</p>
+    <nav>
+      <a class="home" href="../index.html#chapters">Chapter List</a>
+      <a href="../ch04-tools-files/">Previous Chapter</a>
+      <a href="../ch06-path-files/">Next Chapter</a>
+    </nav>
+  </header>
+  <main>
+    <h1><div>Chapter 1</div> Building Blocks: <i>Basic Shapes</i></h1>
+    <nav class="toc" aria-label="Page Contents">On this page:
+      <ul class="columns narrow">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#examples">Figures and Examples</a></li>
+        <li><a href="#extras">Online Extras</a></li>
+      </ul>
+    </nav>
+    <div id="intro" class="columns">
+      <p>Most SVG graphics are built from one or more shape elements. Shapes—along with text and embedded images—provide the basic graphical content that is drawn to the screen. The attributes of each shape element define the geometrical region of that shape; its style properties control how that vector region is displayed on the screen (or printed on paper).
+      </p>
+      <p>SVG defines two different ways of creating a shape. The first is to make use of the predefined shape primitives. In <a href="../ch01-overview-files/">Chapter 1</a>, we introduced two of these: circles and rectangles. The others are <code>&lt;line&gt;</code> and <code>&lt;ellipse&gt;</code>. These are “quick and dirty” shapes that are useful for fast layout, common operations, and fairly standard interface and graphic design layouts. They can also make your code easier to read, as the element tag names clearly define what shape it is.
+      </p>
+      <p>This chapter introduces the basic shapes in detail, discussing how you can specify lengths and positions in SVG. With this information, you will be able to lay out many simple geometric designs.
+      </p>
+      <p><a href="../ch06-path-files/">Chapter 6</a> then explores <code>&lt;path&gt;</code> and the other custom shape elements, and the variety of shapes they can create. At the end, you’ll have all the information you need to create basic vector icons and line drawings with SVG. In theory, anyway—it takes a lot of practice to really get comfortable with manipulating curved paths!
+      </p>
+    </div>
+    <h2 id="examples">Figures and Examples<a href="#examples" class="hash-link" aria-label="Permalink">#</a></h2>
+    <p>The file names link to the code view on GitHub. <em>Beware: the linked screenshots are hi-resolution; some have very large file sizes.</em></p>
+    <p><a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/">View all files for this chapter on GitHub</a>.</p>
+    <dl class="columns directory">
+      <dt><span class="label">Figure 5-1. </span>An SVG line, stroked in blue</dt>
+      <dd>
+        <ul>
+          <li><a href="basic-line.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/basic-line.svg">basic-line.svg</a>
+          <li><a href="basic-line.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/basic-line.png">basic-line.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 5-2. </span>String art “curves” created from SVG lines</dt>
+      <dt><span class="label">Example 5-1. </span>Drawing SVG lines with JavaScript</dt>
+      <dt><span class="label">Example 5-2. </span>The SVG document created by the line-art script</dt>
+      <dd>
+        <ul>
+          <li><a href="line-art.svg">Live SVG file (with embedded JS)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/line-art.svg">line-art.svg</a>
+          <li><a href="line-art.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/line-art.png">line-art.png</a></li>
+          <li><a href="line-art-static.svg">Resulting SVG file (post-JS execution)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/line-art-static.svg">line-art-static.svg</a>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 5-3. </span>An SVG rectangle, filled in purple</dt>
+      <dd>
+        <ul>
+          <li><a href="basic-rectangle.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/basic-rectangle.svg">basic-rectangle.svg</a>
+          <li><a href="basic-rectangle.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/basic-rectangle.png">basic-rectangle.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 5-4. </span>A checkerboard of SVG rectangles created with JavaScript</dt>
+      <dt><span class="label">Example 5-3. </span>Creating a checkerboard of SVG rectangles with JavaScript</dt>
+      <dd>
+        <ul>
+          <li><a href="checkerboard.svg">Live SVG file (with embedded JS)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/checkerboard.svg">checkerboard.svg</a>
+          <li><a href="checkerboard.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/checkerboard.png">checkerboard.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 5-5. </span>An SVG rectangle with rounded corners, positioned atop a regular &lt;rect&gt; and a line</dt>
+      <dd>
+        <ul>
+          <li><a href="basic-rounded-rectangle.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/basic-rounded-rectangle.svg">basic-rounded-rectangle.svg</a>
+          <li><a href="basic-rounded-rectangle.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/basic-rounded-rectangle.png">basic-rounded-rectangle.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 5-6. </span>A ripple pattern created with rounded rectangles</dt>
+      <dt><span class="label">Example 5-4. </span>Using radiused corners to round rectangles</dt>
+      <dd>
+        <ul>
+          <li><a href="splash.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/splash.svg">splash.svg</a>
+          <li><a href="splash.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/splash.png">splash.png</a></li>
+        </ul>
+      </dd>
+      <dt>Unlabelled figure in the “Curved Corners” CSS versus SVG sidebar</dt>
+      <dd>
+        <ul>
+          <li><a href="border-radius.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/border-radius.html">border-radius.html</a>
+          </li>
+          <li><a href="border-radius.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/border-radius.png">border-radius.png</a></li>
+          <li>The HTML uses the <a class="filename" href="splash.svg">splash.svg</a> image</li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 5-7. </span>A funny-looking face making a funny face</dt>
+      <dt><span class="label">Example 5-5. </span>Positioning and sizing circles and ellipses in a drawing</dt>
+      <dd>
+        <ul>
+          <li><a href="face.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/face.svg">face.svg</a>
+          <li><a href="face.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/face.png">face.png</a></li>
+        </ul>
+      </dd>
+      <dt>Unlabelled figure in the “Shapes in Stylesheets” CSS versus SVG sidebar</dt>
+      <dd>
+        <ul>
+          <li><a href="css-shapes.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/css-shapes.html">css-shapes.html</a> (the <code>shape-outside</code> and <code>clip-path</code> shapes won't be supported in all browsers)
+          </li>
+          <li><a href="css-shapes.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch05-shapes-files/css-shapes.png">css-shapes.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 5-X1. </span>A Pythagorean triple, drawn as even-length beads arranged in a right-angled triangle</dt>
+      <dd>
+        <ul>
+          <li><a href="pythagoras.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/pythagoras.svg">pythagoras.svg</a>
+          <li><a href="pythagoras.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/pythagoras.png">pythagoras.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 5-X2. </span>SVG circles and ellipses sized using percentages, at different aspect ratios</dt>
+      <dt><span class="label">Example 5-X1. </span>Sizing circles and ellipses using percentages, in a resizeable SVG</dt>
+      <dd>
+        <ul>
+          <li><a href="resize-eye.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/resize-eye.html">resize-eye.html</a>
+          </li>
+          <li><a href="resize-eye.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch01-overview-files/resize-eye.png">resize-eye.png</a></li>
+          <li>From the <a href="../extras/ch05-percentages.html">“Perplexing Percentages”</a> extra article.</li>
+        </ul>
+      </dd>
+    </dl>
+    <h2 id="extras">Online Extras<a href="#extras" class="hash-link" aria-label="Permalink">#</a></h2>
+    <ul class="columns directory">
+      <li><a href="../extras/ch05-percentages.html">“Perplexing Percentages”</a>: Most SVG lengths are proportional to the <code>viewBox</code> width or height. But some values aren't either horizontal or vertical.</li>
+      <li>Reference: <a href="../guide/units.html">Units for Measurements</a></li>
+      <li>Reference: <a href="../guide/css-shapes.html">CSS Shape Functions</a></li>
+      <li>Reference: <a href="../guide/markup.html">Elements and Attributes</a></li>
+    </ul>
+  </main>
+  <footer>
+    <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
+    </p>
+    <p>
+      View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files, suggest a correction, or see when a page was last updated.</p>
+  </footer>
+</body>
+</html>

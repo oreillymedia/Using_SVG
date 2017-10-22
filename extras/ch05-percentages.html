@@ -5,6 +5,18 @@
   <title>Perplexing Percentages
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Perplexing Percentages — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Most SVG lengths are proportional to the viewBox width or height. But some values aren't either horizontal or vertical. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,189 @@
   </header>
   <main>
     <h1>Perplexing Percentages</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<p>
+  Nearly every length measurement in SVG can be expressed by a percentage. With a few exceptions, those percentages are relative to the SVG coordinate system size—the size defined by the <code>viewBox</code> of the nearest ancestor <code>&lt;svg&gt;</code> or <code>&lt;symbol&gt;</code> (or by its actual width and height, if it doesn’t have a <code>viewBox</code>).</p>
+
+<p>Percentages in horizontal lengths are proportional to the coordinate system width. Percentages in vertical lengths are proportional to the coordinate system height.</p>
+
+<p>But some lengths in SVG aren’t either strictly horizontal or vertical:</p>
+
+<ul>
+  <li>
+    <p>the radius (<code>r</code>) of <code>&lt;circle&gt;</code> and <code>&lt;radialGradient&gt;</code> elements</p>
+  </li>
+  <li>
+    <p>lengths within stroke properties: <code>stroke-width</code>, <code>stroke-dasharray</code>, and <code>stroke-dashoffset</code></p>
+  </li>
+</ul>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>Font-related lengths (such as for <code>font-size</code> and <code>baseline-shift</code>) are also neither strictly horizontal or strictly vertical. But those properties have their own way of interpreting percentages.</p>
+</div>
+
+<p>Percentages in the radius and stroke properties are also proportional to the coordinate system size, but in a way that combines the width and height in to a single reference value.</p>
+
+<p>These values can be thought of as “diagonal” lengths, because the percentages grow and shrink in proportion to the length of the diagonal of the SVG coordinate system.</p>
+
+<p>But it’s not that simple. They aren’t percentages <em>of</em> the diagonal length. Instead, the value of 100% is adjusted to maintain the relationship from Pythagoras’ theorem.</p>
+
+<p>Pythagoras’ theorem (as you might remember from geometry class) says that in a right-angled triangle, the square of the length of the diagonal always equals the sum of the squares of the horizontal and vertical lengths.</p>
+<figure data-type="equation">
+  <div class="latex-code" role="math">
+\begin{array}{l c r}
+(\text{diagonal})^2 &amp;=&amp; (\text{width})^2 + (\text{height})^2
+\\
+\\
+(\text{diagonal}) &amp;=&amp; {\sqrt{(\text{width})^2 + (\text{height})^2}}
+\end{array}
+  </div>
+  <img class="latex-fallback" src="../equations/pythagoras.png" alt="First line: diagonal squared equals width squared plus height squared. Second line: diagonal equals the square root of width squared plus height squared." />
+</figure>
+
+<p>For example, if a rectangle is 4-inches wide and 3-inches tall, the diagonal will be 5-inches long, as shown in <a data-type="xref" href="#pythagoras-figure">Figure 25-1</a>. You may have even memorized a few “Pythagorean triple” sets like this, where the numbers are all nice neat integers.</p>
+
+<figure class="page-float">
+  <div id="pythagoras-figure" class="figure">
+    <img src="../ch05-shapes-files/pythagoras.svg" alt="A right-angle triangle, drawn as thin lines with thick red or orange dashes as beads over top.  There are four beads across the top edge, three down the left, and five along the diagonal.  The formula 3-squared + 4-squared = 5-squared is written across the bottom." />
+    <figcaption><span class="label">Figure 25-1. </span>A Pythagorean triple, drawn as even-length beads arranged in a right-angled triangle</figcaption>
+  </div>
+</figure>
+
+<p>In general, you can’t use Pythagoras’ theorem with SVG percentages, because 1% height is a different unit than 1% width. However, if a rectangle is 100% wide (measured by the width of the SVG) and 100% tall (measured by the height of the SVG), the diagonal (measured using the formula for circle radius) will equal √2&nbsp;×&nbsp;100%, or 141.4214…%.</p>
+
+<p>The absolute distance of the diagonal (calculated using Pythagoras’ theorem) can therefore be used to figure out just how big a percentage circle will be. For example, in a 3×4-inch SVG, the diagonal is 5 inches, so that means 5 inches equals 141<em>-ish-</em>%. From there, you can calculate that 100% in the “diagonal percentages” would be (5in / 1.41), or approximately 3.53in.</p>
+
+<p>If your SVG is square, however—say, 200px by 200px—then the numbers get a little nicer. The SVG’s full diagonal length would be √2&nbsp;×&nbsp;200px (approximately 282px), but 100% in diagonal mode would be (√2&nbsp;×&nbsp;200px)/(√2), or exactly 200px.</p>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>In the special case of a square SVG, 1% is 1% is 1%, no matter how you measure it.</p>
+</div>
+
+<p>The general formula is as follows:</p>
+<figure data-type="equation">
+  <div class="latex-code" role="math" style="font-size: 140%">
+\text{distance} = \frac{\text{percentage value}}{100\%} \times \frac{\sqrt{(\text{width})^2 + (\text{height})^2}}{\sqrt{2}}
+  </div>
+  <img class="latex-fallback" role="math" src="../equations/percentages.png" alt="distance equals percentage value divided by 100%, times (stacked fraction) square root of width squared plus height squared, all divided by square root of two." />
+</figure>
+
+<p>That √2 factor means that the numbers aren’t usually nice neat integers anymore, but the same formula works in any SVG, of any dimensions.</p>
+
+<p>If your SVG was 12cm wide and 5cm tall, the full diagonal would be √(12<sup>2</sup> + 5<sup>2</sup>)cm, or 13cm. A 100% diagonal distance would be approximately (13cm / 1.41), or 9.19cm.</p>
+
+<p>The main thing you need to know, is that a percentage length for circle radius is somewhere in-between the lengths that you would get for that percentage for width and that percentage for height.</p>
+
+<p>There is one interesting side effect of the formula, that relates to the geometry of ellipses: when a circle and an ellipse both use the same percentage values for their radius, the radius will be the same on the diagonal of an ellipse. That relationship is demonstrated in <a data-type="xref" href="#resize-eye-example">Example 25-1</a>.</p>
+
+<p>The code uses HTML and CSS to create a resizable container for an inline <code>&lt;svg&gt;</code>, allowing you to test the same percentages in different-sized graphics. <a data-type="xref" href="#resize-eye-figure">Figure 25-2</a> shows the result when the graphic has been resized to various aspect ratios.</p>
+
+<figure class="page-float">
+  <div id="resize-eye-figure" class="figure">
+    <img src="../ch05-shapes-files/resize-eye.png" alt="Three browser panels with scroll bars, each containing variations of the same figure: dark red rectangle with a white ellipse, and a circle on top that is solid black in center, dark blue surrounding, then transparent blue. The top panel is full width of the figure, the bottom two panels are the same height but one is 2/3 the width and the other 1/3 width. The rectangle and ellipse adjust to fill the panel, but the circles overflow it in the more stretched-out panels." />
+    <figcaption><span class="label">Figure 25-2. </span>SVG circles and ellipses sized using percentages, at different aspect ratios</figcaption>
+  </div>
+</figure>
+<div id="resize-eye-example" data-type="example">
+  <h5><span class="label">Example 25-1. </span>Sizing circles and ellipses using percentages, in a resizeable SVG</h5>
+
+  <pre data-type="programlisting" data-code-language="html"><code class="cp">&lt;!DOCTYPE html&gt;</code><code>
+</code><code class="nt">&lt;html</code><code> </code><code class="na">lang=</code><code class="s">"en"</code><code class="nt">&gt;</code><code>
+</code><code class="nt">&lt;head</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Keeping an Eye on Percentage Sizing</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+</code><code class="nt">html</code><code class="o">,</code><code> </code><code class="nt">body</code><code> </code><code class="p">{</code><code class="k">height</code><code class="o">:</code><code> </code><code class="m">100%</code><code class="p">;</code><code> </code><code class="k">margin</code><code class="o">:</code><code> </code><code class="m">0</code><code class="p">;</code><code class="p">}</code><code>
+</code><code class="nc">.wrapper</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">position</code><code class="o">:</code><code> </code><code class="nb">relative</code><code class="p">;</code><code>
+    </code><code class="k">border</code><code class="o">:</code><code> </code><code class="nb">thin</code><code> </code><code class="nb">solid</code><code class="p">;</code><code>
+    </code><code class="k">box-sizing</code><code class="o">:</code><code> </code><code class="nb">border-box</code><code class="p">;</code><code>
+    </code><code class="k">height</code><code class="o">:</code><code> </code><code class="m">100%</code><code class="p">;</code><code>
+</code><code class="p">}</code><code>                                </code><a class="co" id="co_online_extras_CO2-1" href="#callout_online_extras_CO2-1"><img src="callouts/1.svg" alt="1" /></a><code>
+</code><code class="k">@supports</code><code> </code><code class="p">(</code><code class="k">resize</code><code class="o">:</code><code> </code><code class="nb">both</code><code class="p">)</code><code> </code><code class="p">{</code><code>
+  </code><code class="nc">.wrapper</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">height</code><code class="o">:</code><code> </code><code class="m">10em</code><code class="p">;</code><code>
+    </code><code class="k">width</code><code class="o">:</code><code> </code><code class="m">20em</code><code class="p">;</code><code>
+    </code><code class="k">resize</code><code class="o">:</code><code> </code><code class="nb">both</code><code class="p">;</code><code>
+    </code><code class="k">overflow</code><code class="o">:</code><code> </code><code class="nb">hidden</code><code class="p">;</code><code>
+  </code><code class="p">}</code><code>
+</code><code class="p">}</code><code>
+</code><code class="nt">svg</code><code> </code><code class="p">{</code><code>                            </code><a class="co" id="co_online_extras_CO2-2" href="#callout_online_extras_CO2-2"><img src="callouts/2.svg" alt="2" /></a><code>
+    </code><code class="k">display</code><code class="o">:</code><code> </code><code class="nb">block</code><code class="p">;</code><code>
+    </code><code class="k">position</code><code class="o">:</code><code> </code><code class="nb">absolute</code><code class="p">;</code><code>
+    </code><code class="k">height</code><code class="o">:</code><code> </code><code class="m">90%</code><code class="p">;</code><code>
+    </code><code class="k">width</code><code class="o">:</code><code> </code><code class="m">90%</code><code class="p">;</code><code>
+    </code><code class="k">top</code><code class="o">:</code><code> </code><code class="m">5%</code><code class="p">;</code><code>
+    </code><code class="k">left</code><code class="o">:</code><code> </code><code class="m">5%</code><code class="p">;</code><code>
+
+    </code><code class="k">background</code><code class="o">:</code><code> </code><code class="n">darkRed</code><code class="p">;</code><code>         </code><a class="co" id="co_online_extras_CO2-3" href="#callout_online_extras_CO2-3"><img src="callouts/3.svg" alt="3" /></a><code>
+</code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+</code><code class="nt">&lt;/head&gt;</code><code>
+</code><code class="nt">&lt;body</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;div</code><code> </code><code class="na">class=</code><code class="s">"wrapper"</code><code class="nt">&gt;</code><code>                                 </code><a class="co" id="co_online_extras_CO2-4" href="#callout_online_extras_CO2-4"><img src="callouts/4.svg" alt="4" /></a><code>
+        </code><code class="nt">&lt;svg</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;g</code><code> </code><code class="na">stroke=</code><code class="s">"gray"</code><code> </code><code class="na">stroke-width=</code><code class="s">"3px"</code><code> </code><code class="nt">&gt;</code><code>         </code><a class="co" id="co_online_extras_CO2-5" href="#callout_online_extras_CO2-5"><img src="callouts/5.svg" alt="5" /></a><code>
+                </code><code class="nt">&lt;line</code><code> </code><code class="na">x2=</code><code class="s">"100%"</code><code> </code><code class="na">y2=</code><code class="s">"100%"</code><code> </code><code class="nt">/&gt;</code><code>
+                </code><code class="nt">&lt;line</code><code> </code><code class="na">x1=</code><code class="s">"100%"</code><code> </code><code class="na">y2=</code><code class="s">"100%"</code><code> </code><code class="nt">/&gt;</code><code>
+            </code><code class="nt">&lt;/g&gt;</code><code>
+            </code><code class="nt">&lt;ellipse</code><code> </code><code class="na">cx=</code><code class="s">"50%"</code><code> </code><code class="na">cy=</code><code class="s">"50%"</code><code> </code><code class="na">ry=</code><code class="s">"40%"</code><code> </code><code class="na">rx=</code><code class="s">"40%"</code><code>
+                     </code><code class="na">fill=</code><code class="s">"white"</code><code> </code><code class="nt">/&gt;</code><code>                      </code><a class="co" id="co_online_extras_CO2-6" href="#callout_online_extras_CO2-6"><img src="callouts/6.svg" alt="6" /></a><code>
+            </code><code class="nt">&lt;circle</code><code> </code><code class="na">cx=</code><code class="s">"50%"</code><code> </code><code class="na">cy=</code><code class="s">"50%"</code><code> </code><code class="na">r=</code><code class="s">"25%"</code><code>
+                    </code><code class="na">stroke=</code><code class="s">"blue"</code><code> </code><code class="na">stroke-width=</code><code class="s">"30%"</code><code>
+                    </code><code class="na">stroke-opacity=</code><code class="s">"0.6"</code><code> </code><code class="nt">/&gt;</code><code>               </code><a class="co" id="co_online_extras_CO2-7" href="#callout_online_extras_CO2-7"><img src="callouts/7.svg" alt="7" /></a><code>
+        </code><code class="nt">&lt;/svg&gt;</code><code>
+    </code><code class="nt">&lt;/div&gt;</code><code>
+</code><code class="nt">&lt;/body&gt;</code><code>
+</code><code class="nt">&lt;/html&gt;</code></pre>
+  <dl class="calloutlist columns">
+    <dt><a class="co" id="callout_online_extras_CO2-1" href="#co_online_extras_CO2-1"><img src="callouts/1.svg" alt="1" /></a></dt>
+    <dd>
+      <p>The HTML style block defines the properties that allow the user to resize the SVG. A wrapper element, with a defined width and height, and a non-default <code>position</code> property, is given the <code>resize: both</code> property to allow resizing in horizontal and vertical directions. The <code>overflow</code> property must be changed from the default (<code>visible</code>) to make this work. Since CSS <code>resize</code> is not supported in all browsers, an <code>@supports</code> rule is used to set these values; in other browsers, the graphic fills the entire screen, and you can resize the browser window.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO2-2" href="#co_online_extras_CO2-2"><img src="callouts/2.svg" alt="2" /></a></dt>
+    <dd>
+      <p>The SVG is positioned absolutely within it’s wrapper, stretched to fit the current wrapper size, with a 5% offset from the edges.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO2-3" href="#co_online_extras_CO2-3"><img src="callouts/3.svg" alt="3" /></a></dt>
+    <dd>
+      <p>The SVG box is given a solid, dark red background color which will provide contrast for the graphic.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO2-4" href="#co_online_extras_CO2-4"><img src="callouts/4.svg" alt="4" /></a></dt>
+    <dd>
+      <p>The SVG code is contained in an inline <code>&lt;svg&gt;</code> element. Because this is HTML 5, the SVG namespace can be omitted from the markup.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO2-5" href="#co_online_extras_CO2-5"><img src="callouts/5.svg" alt="5" /></a></dt>
+    <dd>
+      <p>Diagonal guidelines are drawn between each corner of the SVG.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO2-6" href="#co_online_extras_CO2-6"><img src="callouts/6.svg" alt="6" /></a></dt>
+    <dd>
+      <p>The white ellipse is centered in the SVG region, with horizontal and vertical radius of 40%.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO2-7" href="#co_online_extras_CO2-7"><img src="callouts/7.svg" alt="7" /></a></dt>
+    <dd>
+      <p>The circle is centered on the same point. Both the radius and the stroke-width are set using percentages; the stroke is partially transparent so that you can see the edges of the shapes underneath it.</p>
+    </dd>
+  </dl>
+</div>
+
+<p><a href="../ch05-shapes-files/resize-eye.html">View the live example.</a></p>
+
+<p>The wide stroke is controlled by setting <code>stroke-width</code> to a percentage value. It will also scale in proportion to the diagonal of the SVG region.</p>
+
+<p>The combined distance of the circle’s <code>r</code> value (25%) and the outside half of the stroke-width (half of 30%, or 15%) means that the outer edge of the circle’s stroke creates an effective radius of 40%. On the diagonals, this always exactly matches the edge of the white ellipse which has both horizontal and vertical radii of 40%. This can be confirmed by the guidelines drawn in <a data-type="xref" href="#resize-eye-figure">Figure 25-2</a>, or by opening the web page in a browser and resizing it yourself.</p>
+<div data-type="warning" epub:type="warning">
+  <h6>Warning</h6>
+  <p>The CSS <code>resize</code> property used in the example is introduced in the CSS 3 Basic User Interface module. It has not been implemented in Internet Explorer or MS Edge as of EdgeHTML version 16, and is also not supported in many mobile browsers. If resizability is a fundamental part of your website, use JavaScript event handling.</p>
+</div>
+
+<p>As you can discover when testing <a data-type="xref" href="#resize-eye-example">Example 25-1</a> in your browser, the circle sized with percentage values can easily extend outside the bounds of the SVG if the SVG is wide and short or tall and narrow. With percentage sizing alone, there is no way to limit the circle to fit within the more constrained dimension.</p>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>To create a scalable shape that still always fits within the SVG, you need to create the scaling effect with <code>viewBox</code>, which we discuss in <a data-type="xref" href="ch08.html#coordinates-chapter">Chapter 8</a>.</p>
+</div>
+
+<p>You rarely need to know the specifics of how diagonal percentages work in SVG. However, it’s good to know that they work in a complicated way, so you’re not expecting them to be simple!</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
@@ -34,5 +220,18 @@
     <p>
       View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files, suggest a correction, or see when a page was last updated.</p>
   </footer>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+<script>
+(function() {
+  if (!katex) return;
+  var eqns = document.querySelectorAll(".latex-code");
+  for (var i=0, n=eqns.length; i<n; i++) {
+    var eqn = eqns[i];
+    katex.render(eqn.textContent, eqn);
+    eqn.classList.add("rendered");
+  }
+})();
+</script>
 </body>
 </html>

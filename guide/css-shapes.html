@@ -5,6 +5,17 @@
   <title>CSS Shape Functions Reference
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  
+  <meta name="twitter:title" property="og:title" 
+        content="CSS Shape Functions Reference — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="A guide to defining shapes directly in CSS—without SVG—for new properties such as clip-path and shape-outside. Part of the supplementary material for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -17,15 +28,211 @@
   </header>
   <main>
     <h1>CSS Shape Functions</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+<p>The following functions define shapes for use within CSS properties. They <em>should</em> all be usable within the <code>clip-path</code>, <code>shape-outside</code>, and <code>offset-path</code> properties, but browser support varies.</p>
+
+<p>The shapes are measured according to a reference box (such as the <code>content-box</code>, <code>margin-box</code>, <code>fill-box</code>, or <code>view-box</code>), which varies according to the property.</p>
+
+<p>Some details may change, check the <a href="https://drafts.csswg.org/">CSS specs for the latest definitions</a>.</p>
+<dl class="columns-children">
+  <dt id="circle"><code>circle()</code> <a href="#circle" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dt><code>circle(<em>radius</em>)</code> </dt>
+  <dt><code>circle(at <em>position</em>)</code> </dt>
+  <dt><code>circle(<em>radius</em> at <em>position</em>)</code> </dt>
+  <dd>
+    <p>Defines a circle with the specified radius, centered at the specified position. The parameters and defaults are as follows:</p>
+    <div class="openblock">
+      <dl>
+        <dt><code><em>radius</em></code></dt>
+        <dd>
+
+          <ul>
+            <li>
+              <p>a length (with units) or a percentage (proportional to the reference-box diagonal, following the formula defined in <a data-type="xref" href="app05.html#units-percentages-reference">“Percentage Lengths”</a>), or a <code>calc()</code> combination of the two</p>
+            </li>
+            <li>
+              <p>or one of the keywords <code>closest-side</code> or <code>farthest-side</code> (beware: the <code>*-corner</code> keywords from CSS radial gradients are <em>not</em> currently valid!)</p>
+            </li>
+            <li>
+              <p>default is <code>closest-side</code></p>
+            </li>
+          </ul>
+        </dd>
+        <dt><code><em>position</em></code></dt>
+        <dd>
+
+          <ul>
+            <li>
+              <p>is defined using the standard CSS syntax (as in <code>background-position</code>)</p>
+            </li>
+            <li>
+              <p>can use keywords (<code>top</code>, <code>bottom</code>, <code>left</code>, <code>right</code>, and <code>center</code>), lengths, or percentages (of reference box width or height)</p>
+            </li>
+            <li>
+              <p>if lengths or percentages are used, the first value is the horizontal position</p>
+            </li>
+            <li>
+              <p>default is <code>center center</code></p>
+            </li>
+          </ul>
+        </dd>
+      </dl>
     </div>
+
+  </dd>
+  <dt id="ellipse"><code>ellipse()</code> <a href="#ellipse" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dt><code>ellipse(<em>x-radius</em> <em>y-radius</em>)</code> </dt>
+  <dt><code>ellipse(at <em>position</em>)</code> </dt>
+  <dt><code>ellipse(<em>x-radius</em> <em>y-radius</em> at <em>position</em>)</code> </dt>
+  <dd>
+    <p>Draws an ellipse with the specified radii, centered at the specified position.</p>
+    <div class="openblock">
+      <dl>
+        <dt><code><em>x-radius</em></code> and <code><em>y-radius</em></code></dt>
+        <dd>
+
+          <ul>
+            <li>
+              <p>use the same options as the <code><em>radius</em></code> of <code>circle()</code>, <em>except</em> that percentages are relative to the reference-box width (<code><em>x-radius</em></code>) or height (<code><em>y-radius</em></code>).</p>
+            </li>
+            <li>
+              <p>there must be two values (in the current version of the spec).</p>
+            </li>
+            <li>
+              <p>default is <code>closest-side closest-side</code></p>
+            </li>
+          </ul>
+        </dd>
+        <dt><code><em>position</em></code></dt>
+        <dd>
+
+          <ul>
+            <li>
+              <p>uses the same syntax as <code>circle()</code></p>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+
+  </dd>
+  <dt id="inset"><code>inset(<em>inset-distances</em>)</code> <a href="#inset" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dt><code>inset(<em>inset-distances</em> round <em>corner-radii</em>)</code> </dt>
+  <dd>
+    <p>Draws a rectangle or rounded rectangle, measured by an inset distance from the reference box.</p>
+    <div class="openblock">
+      <dl>
+        <dt><code><em>inset-distances</em></code></dt>
+        <dd>
+
+          <ul>
+            <li>
+              <p>between 1 and 4 values</p>
+            </li>
+            <li>
+              <p>the order is top, left, bottom, right, with missing values filled in according to the same rules as CSS <code>margin</code>, <code>padding</code>, etc.</p>
+            </li>
+            <li>
+              <p>each value is either a length with units or a percentage (of the reference box width or height), or a <code>calc()</code> combination of the two</p>
+            </li>
+            <li>
+              <p>negative values create an <em>outset</em> rectangle, larger than the reference box</p>
+            </li>
+          </ul>
+        </dd>
+        <dt><code><em>corner-radii</em></code></dt>
+        <dd>
+
+          <ul>
+            <li>
+              <p>uses the syntax of the <code>border-radius</code> shorthand</p>
+            </li>
+            <li>
+              <p>between 1 and 4 length or percentage values (starting with the top-left corner and going clockwise, with missing values taken from the opposite corner)</p>
+            </li>
+            <li>
+              <p>to set different values for the vertical and horizontal radius, separate them with a slash (<code>/</code>); horizontal values are before the slash, vertical values after</p>
+            </li>
+            <li>
+              <p>values must be positive, and will be clamped to the width or height of the box being rounded</p>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+
+  </dd>
+  <dt id="polygon"><code>polygon(<em>point</em>, <em>point</em>, <em>point</em> …)</code> <a href="#polygon" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dt><code>polygon(<em>fill-rule</em>, <em>point</em>, <em>point</em>, <em>point</em> …)</code> </dt>
+  <dd>
+    <p>Draws an arbitrary shape made up of straight-line edges.</p>
+    <div class="openblock">
+      <dl>
+        <dt><code><em>point</em></code> </dt>
+        <dd>
+
+          <ul>
+            <li>
+              <p>two length values, percentages, or <code>calc()</code> combinations, separated by whitespace</p>
+            </li>
+            <li>
+              <p>the first value is horizontal (<em>x</em>) position of the point, second is vertical (<em>y</em>)</p>
+            </li>
+            <li>
+              <p>there can be any number of points in the list, each two-value pair separated by commas</p>
+            </li>
+            <li>
+              <p>note that the whitespace/comma rules are much stricter than for SVG <code>&lt;polygon&gt;</code></p>
+            </li>
+            <li>
+              <p>there must be at least one point for the function to be valid; for most uses you’ll need three points to get a useful shape</p>
+            </li>
+          </ul>
+        </dd>
+        <dt><code><em>fill-rule</em></code> </dt>
+        <dd>
+
+          <ul>
+            <li>
+              <p>either <code>nonzero</code> or <code>evenodd</code>, with interpretation the same as for the <code>fill-rule</code> property</p>
+            </li>
+            <li>
+              <p>default <code>nonzero</code></p>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+
+  </dd>
+  <dt id="path"><code>path(<em>path-data</em>)</code> <a href="#path" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dt><code>path(<em>fill-rule</em>, <em>path-data</em>)</code> </dt>
+  <dd>
+    <p>Draws an arbitrary shape, which can have straight lines, curves, and disconnected sub-paths or holes.</p>
+    <div class="openblock">
+      <dl>
+        <dt><code><em>path-data</em></code> </dt>
+        <dd>
+
+          <ul>
+            <li>
+              <p>a quoted string of SVG path data, following the syntax in <a data-type="xref" href="path-data.html">the Path Commands guide</a></p>
+            </li>
+          </ul>
+        </dd>
+        <dt><code><em>fill-rule</em></code> </dt>
+        <dd>
+
+          <ul>
+            <li>
+              <p>same as for <code>polygon()</code></p>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+    </div>
+
+  </dd>
+</dl>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

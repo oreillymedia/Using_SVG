@@ -37,7 +37,7 @@ dt + dt { padding-top: 0; }
 .directory dt .label {
   font-weight: bold;
 }
-dl dl dt { 
+dl dl dt, .columns dt { 
   background: linear-gradient(to right, rgba(50%, 75%, 100%, 0.3), transparent); 
 }
 code, pre[data-type="programlisting"] { 
@@ -208,4 +208,15 @@ ol.directory > li {
 }
 @media print {
   .hash-link { display: none; }
+}
+
+/* Latex equations & fallback */
+.latex-code:not(.rendered) { display: none; }
+.latex-code.rendered + .latex-fallback { display: none; }
+figure[data-type="equation"] {
+  border-style: none;
+  background-color: rgba(50%, 75%, 100%, 0.3);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  overflow-x: auto;
 }

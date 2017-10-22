@@ -5,6 +5,17 @@
   <title>Units for Measurements Reference
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  
+  <meta name="twitter:title" property="og:title" 
+        content="Units for Measurements Reference — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="A guide to the length, angle, and time units used in SVG and CSS. Part of the supplementary material for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -20,12 +31,331 @@
     <nav class="toc" aria-label="Page Contents">On this page:
       <ul class="columns narrow">
         <li><a href="#intro">Introduction</a></li>
+        <li><a href="#units-absolute-reference">Absolute Length Units</a></li>
+        <li><a href="#units-relative-reference">Font-Relative Length Units</a></li>
+        <li><a href="#units-viewport-reference">Viewport Length Units</a></li>
+        <li><a href="#units-percentages-reference">Percentage Lengths</a></li>
+        <li><a href="#units-angles-reference">Angle Units</a></li>
+        <li><a href="#intro">Time Units</a></li>
       </ul>
     </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<div id="intro" class="columns">
+
+  <p>The length units you can use to specify positions and coordinates in SVG can be separated into absolute units, which have explicit conversion factors, and relative units, which depend on other properties of the layout. As discussed in the text, the newer CSS units should be used with caution for SVG.</p>
+
+  <p>Percentage units have special meaning depending on the attribute or style property. However, most SVG length values use a common interpretation of percentages, that depends on whether the length is horizontal, vertical, or other.</p>
+
+  <p>Units are also defined for angle measurements and time measurements.</p>
+</div>
+
+<section data-type="sect1" data-pdf-bookmark="Absolute Length Units">
+  <h2 id="units-absolute-reference">Absolute Length Units<a href="#units-absolute-reference" class="hash-link" aria-label="Permalink">#</a></h2>
+  <div class="columns">
+
+    <p>The following absolute length units are defined in CSS 2 and SVG 1 and 1.1. They should be supported in nearly all SVG implementations. However, the relationship between the <code>px</code> unit and the other absolute units was defined in CSS 2.1; in older software, the relationship between <code>px</code> and other units will fluctuate according to the screen resolution.</p>
+    <dl>
+      <dt><code>px</code> </dt>
+      <dd>
+        <p>Pixel units, directly equivalent to SVG user units.</p>
+
+        <ul>
+          <li>
+            <p>For print, a <code>px</code> should be equal to <sup>1</sup>/<sub>96</sub><sup>th</sup> of an inch.</p>
+          </li>
+          <li>
+            <p>For screens, a <code>px</code> should represent approximately the same distance in the user’s field of view (the same visual angle) as <sup>1</sup>/<sub>96</sub><sup>th</sup> of an inch at arm’s length.</p>
+          </li>
+          <li>
+            <p>The px unit can be adjusted to represent an even number of actual screen pixels.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt><code>in</code> </dt>
+      <dd>
+        <p>Inches.</p>
+
+        <ul>
+          <li>
+            <p>1in = 96px or user units</p>
+          </li>
+          <li>
+            <p>1in = 2.54cm</p>
+          </li>
+          <li>
+            <p>In modern software, inches and all other absolute units will be adjusted to match the <code>px</code> unit.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt><code>cm</code> </dt>
+      <dd>
+        <p>Centimeters.</p>
+
+        <ul>
+          <li>
+            <p>1cm ≅ 37.795px or user units</p>
+          </li>
+        </ul>
+      </dd>
+      <dt><code>mm</code> </dt>
+      <dd>
+        <p>Millimeters.</p>
+
+        <ul>
+          <li>
+            <p>1mm ≅ 3.7795px or user units</p>
+          </li>
+        </ul>
+      </dd>
+      <dt><code>pt</code> </dt>
+      <dd>
+        <p>Points.</p>
+
+        <ul>
+          <li>
+            <p>1pt ≅ 1.3333px or user units (1px = 0.75pt)</p>
+          </li>
+          <li>
+            <p>1pt = <sup>1</sup>/<sub>72</sub>in</p>
+          </li>
+        </ul>
+      </dd>
+      <dt><code>pc</code> </dt>
+      <dd>
+        <p>Picas.</p>
+
+        <ul>
+          <li>
+            <p>1pc = 16px or user units</p>
+          </li>
+          <li>
+            <p>1pc = <sup>1</sup>/<sub>6</sub>in</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+  </div>
+</section>
+    
+<section data-type="sect1" data-pdf-bookmark="Font-Relative Length Units">
+  <h2 id="units-relative-reference">Font-Relative Length Units<a href="#units-relative-reference" class="hash-link" aria-label="Permalink">#</a></h2>
+  <div class="columns">
+
+    <p>The following units describe lengths proportional to the size and properties of the font set on the element. They are defined in CSS 2 and SVG 1 and 1.1, and should be well supported for SVG. However, some SVG viewers do not apply a reasonable default font size for SVG, so test carefully—font-relative units may be unusually small or large if you don’t specify <code>font-size</code> yourself!</p>
+    <dl>
+      <dt><code>em</code> </dt>
+      <dd>
+        <p>Em units. Equivalent to the computed font-size in effect for an element.</p>
+      </dd>
+      <dt><code>ex</code> </dt>
+      <dd>
+        <p>Ex units. Equivalent to the height of a lower-case letter in the font (and font-size) in effect for an element. If the font doesn’t include lower-case letters, or doesn’t include the metadata about the ex-height, then 1ex = 0.5em.</p>
+      </dd>
+    </dl>
+
+    <p>The following additional font-relative units are defined in the CSS 3 Values and Units specification; they may not be supported correctly in some SVG software.</p>
+    <dl>
+      <dt><code>ch</code> </dt>
+      <dd>
+        <p>Character units. Equivalent to the width of the <code>0</code> (zero) character in the font and font-size in effect for an element.</p>
+      </dd>
+      <dt><code>rem</code> </dt>
+      <dd>
+        <p>Root-em units. The font size of the root element in the document, regardless of any settings for the current element.</p>
+      </dd>
+    </dl>
+
+    <p>When styles defined with relative lengths are inherited, it is the computed value of the length that is inherited, not the relationship to the current font. In other words, the value is not affected if the child element has a different font or font-size.</p>
+  </div>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="Viewport Length Units">
+  <h2 id="units-viewport-reference">Viewport Length Units<a href="#units-viewport-reference" class="hash-link" aria-label="Permalink">#</a></h2>
+  <div class="columns">
+
+    <p>The CSS 3 Values and Units specification also defines <em>viewport</em> units, which are relative to the viewport used to draw the entire document. Similar to the media queries discussed in <a data-type="xref" href="../ch03-style-files/">Chapter 3</a>, the size of the document region for images and embedded objects is different than for inline SVG. Viewport units also may not be well supported in SVG.</p>
+    <dl>
+      <dt><code>vw</code> </dt>
+      <dd>
+        <p>Viewport width units. 1% of the viewport width.</p>
+      </dd>
+      <dt><code>vh</code> </dt>
+      <dd>
+        <p>Viewport height units. 1% of the viewport height.</p>
+      </dd>
+      <dt><code>vmin</code> </dt>
+      <dd>
+        <p>Viewport minimum units. 1% of the viewport width or height, whichever is smaller.</p>
+      </dd>
+      <dt><code>vmax</code> </dt>
+      <dd>
+        <p>Viewport maximum units. 1% of the viewport width or height, whichever is larger.</p>
+      </dd>
+    </dl>
+  </div>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="Percentage Lengths">
+  <h2 id="units-percentages-reference">Percentage Lengths<a href="#units-percentages-reference" class="hash-link" aria-label="Permalink">#</a></h2>
+  <div class="columns">
+
+    <p>In SVG, most percentages are calculated relative to the height and width of the nearest ancestor element that defines a coordinate system. As described in <a data-type="xref" href="../ch08-coordinates-files/">Chapter 8</a>, the height and width refer to the scaled <code>viewBox</code> graphic region, not the available space.</p>
+
+    <p>Percentages for width or <em>x</em>-position are relative to the coordinate system width, percentages for height or <em>y</em>-position are relative to the coordinate system height, and percentages for all other properties are calculated as follows:</p>
+<figure data-type="equation">
+  <div class="latex-code" role="math" style="font-size: 140%">
+\text{distance} = \frac{\text{percentage value}}{100\%} \times \frac{\sqrt{(\text{width})^2 + (\text{height})^2}}{\sqrt{2}}
+  </div>
+  <img class="latex-fallback" role="math" src="../equations/percentages.png" alt="distance equals percentage value divided by 100%, times (stacked fraction) square root of width squared plus height squared, all divided by square root of two." />
+</figure>
+  </div>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="Angle Units">
+  <h2 id="units-angles-reference">Angle Units<a href="#units-angles-reference" class="hash-link" aria-label="Permalink">#</a></h2>
+  <div class="columns">
+
+    <p>In SVG 1, there were no angle units. Angles were always specified only as numbers, and implicitly meant degrees. The angles in CSS <code>hsl()</code> color notation work the same way. (In contrast, in JavaScript trigonometry, angles are always implicitly radians.)</p>
+
+    <p>CSS Values and Units Level 3 adds angle units. They are used in the CSS transform syntax and CSS linear gradients. SVG 2 adopts them for other angle-related properties and attributes—but for best support, continue to use unitless degrees for most SVG attributes.</p>
+
+    <p>Positive angles are normally clockwise in both CSS and SVG (unless a negative scale has created a mirror reflection).</p>
+
+    <p>In most CSS contexts, 0° is straight up. In most SVG contexts, 0° is pointing right, towards the positive <em>x</em>-axis.</p>
+
+    <p>You can usually use values less than 0 or greater than a full circle. When animating and transitioning angle values, this allows you to control the direction of transition and the number of times something rotates.</p>
+    <dl>
+      <dt><code>deg</code> </dt>
+      <dd>
+        <p>Degrees. We use the symbol version (°) in the book text.</p>
+
+        <ul>
+          <li>
+            <p>360deg is a full-circle turn</p>
+          </li>
+          <li>
+            <p>90deg is a right-angle</p>
+          </li>
+        </ul>
+      </dd>
+      <dt><code>rad</code> </dt>
+      <dd>
+        <p>Radians.</p>
+
+        <ul>
+          <li>
+            <p>2π*1rad (approximately 6.283rad) is a full-circle turn</p>
+          </li>
+          <li>
+            <p>(π/2)*1rad (approximately 1.571rad) is a right-angle</p>
+          </li>
+          <li>
+            <p>1rad is the angle such that a circular arc has the same path length as its radius.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt><code>grad</code> </dt>
+      <dd>
+        <p>Gradians. (A rarely-used metric degree unit.)</p>
+
+        <ul>
+          <li>
+            <p>400grad is a full-circle turn</p>
+          </li>
+          <li>
+            <p>100grad is a right-angle</p>
+          </li>
+        </ul>
+      </dd>
+      <dt><code>turn</code> </dt>
+      <dd>
+        <p>Turns.</p>
+
+        <ul>
+          <li>
+            <p>1turn is a full-circle</p>
+          </li>
+          <li>
+            <p>0.25turn is a right-angle</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+  </div>
+</section>
+    
+<section data-type="sect1" data-pdf-bookmark="Time Units">
+  <h2 id="units-time-reference">Time Units<a href="#units-time-reference" class="hash-link" aria-label="Permalink">#</a></h2>
+  <div class="columns">
+
+    <p>SVG 1 used time units from SMIL for the SVG/SMIL animation elements. CSS uses a more limited set of time units for animations and transitions.</p>
+
+    <p>Most JavaScript time-related methods use milliseconds (implicitly, as a number). However, the SVG/SMIL and CSS animation DOM methods use seconds.</p>
+
+    <p>The following units can be used in both CSS animations and SVG/SMIL animations:</p>
+    <dl>
+      <dt><code>s</code> </dt>
+      <dd>
+        <p>Seconds.</p>
+      </dd>
+      <dt><code>ms</code> </dt>
+      <dd>
+        <p>Milliseconds.</p>
+
+        <ul>
+          <li>
+            <p>1000ms = 1s</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+
+    <p>The following units and formats are also valid in SVG/SMIL:</p>
+    <dl>
+      <dt><code>min</code> </dt>
+      <dd>
+        <p>Minutes.</p>
+
+        <ul>
+          <li>
+            <p>1min = 60s</p>
+          </li>
+        </ul>
+      </dd>
+      <dt><code>h</code> </dt>
+      <dd>
+        <p>Hours.</p>
+
+        <ul>
+          <li>
+            <p>1h = 60min = 3600s</p>
+          </li>
+        </ul>
+      </dd>
+      <dt><code><em>mm</em>:<em>ss</em></code> </dt>
+      <dd>
+        <p>Minutes and seconds.</p>
+      </dd>
+        <dt><code><em>hh</em>:<em>mm</em>:<em>ss</em></code> </dt>
+      <dd>
+        <p>Hours, minutes, and seconds.</p>
+
+        <ul>
+          <li>
+            <p>These are both implicit units based on the number format with <code>:</code></p>
+          </li>
+          <li>
+            <p>The minutes and seconds parts must always have 2 digits, between 00 and 59</p>
+          </li>
+          <li>
+            <p>The seconds part can optionally have a decimal part, like <code>00:02.5</code> for 2.5s</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+
+    <p>In time-related SVG/SMIL attributes, numbers without units are treated as an amount in seconds.</p>
+  </div>
+  </section>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
@@ -33,5 +363,18 @@
     <p>
       View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files, suggest a correction, or see when a page was last updated.</p>
   </footer>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.js" integrity="sha384-GR8SEkOO1rBN/jnOcQDFcFmwXAevSLx7/Io9Ps1rkxWp983ZIuUGfxivlF/5f5eJ" crossorigin="anonymous"></script>
+<script>
+(function() {
+  if (!katex) return;
+  var eqns = document.querySelectorAll(".latex-code");
+  for (var i=0, n=eqns.length; i<n; i++) {
+    var eqn = eqns[i];
+    katex.render(eqn.textContent, eqn);
+    eqn.classList.add("rendered");
+  }
+})();
+</script>
 </body>
 </html>

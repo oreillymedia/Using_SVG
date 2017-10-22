@@ -77,7 +77,7 @@ figure figcaption .label {
 }
 figure,
 dl:not(.columns):not(.columns-children) dt {
-  padding: 0.2em calc(50% - 22em); /* constrain content width to 44em */
+  padding: 0.2em calc(50% - 22.5em); /* constrain content width to 45em */
 }
 figure img {
   display: block;
@@ -93,7 +93,7 @@ pre[data-type="programlisting"] {
   max-width: 70ch;
   margin: 0.5em auto;
 }
-.highlight code { color: inherit}
+pre[data-type="programlisting"] code { color: inherit}
 
 /* callouts */
 .calloutlist dt {

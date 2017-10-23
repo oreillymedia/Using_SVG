@@ -40,6 +40,9 @@ dt + dt { padding-top: 0; }
 dl dl dt, .columns dt { 
   background: linear-gradient(to right, rgba(50%, 75%, 100%, 0.3), transparent); 
 }
+dl.columns, dl.columns-children {
+  border-bottom: solid 3px rgba(50%, 75%, 100%, 0.3);
+}
 code, pre[data-type="programlisting"] { 
   font-family: DejaVu Sans Mono, Lucida Console, Monaco, monospace; 
   font-size: inherit; /* fix weird browser defaults */

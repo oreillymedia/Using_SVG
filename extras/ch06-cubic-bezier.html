@@ -5,6 +5,19 @@
   <title>Calculating Cubic Béziers
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title"
+        content="Calculating Cubic Béziers — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description"
+        content="Connecting the control points to the cubic curve. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt"
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +31,58 @@
   </header>
   <main>
     <h1>Calculating Cubic Béziers</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+    
+<p>In <a data-type="xref" href="../ch06-path-files/">Chapter 6</a> in the book, we showed how a quadratic Bézier curve is constructed mathematically from the end points and the control point, by comparing it to a “string art” drawing, as shown in <a data-type="xref" href="#line-art-bezier-figure-2">Figure 6-X4</a>.</p>
+
+<figure class="page-float">
+  <div id="line-art-bezier-figure-2" class="figure">
+    <img src="../ch06-path-files/line-art-bezier.svg" alt="A shape with two pointed corners and two curved sides, in blue. A series of purple lines wrap around both curved sides, while tracing out the edges of a square with their start and end points." />
+    <figcaption><span class="label">Figure 6-X4. </span>A quadratic Bézier path, and the string art mesh that encloses it</figcaption>
+  </div>
+</figure>
+
+<p>Cubic Bézier curves are more complicated, starting from the fact that they have two control points for each segment. If you wanted to draw a cubic curve by hand, using the “string art” method, you would need a multi-step process:</p>
+
+<ul>
+  <li>
+    <p>First, you create two over-lapping quadratic curves as a sort of scaffolding:</p>
+    <ol>
+      <li>
+        <p>using the cubic curve’s start point, first control point, and second control point</p>
+      </li>
+      <li>
+        <p>using the two control points and the end point.</p>
+      </li>
+
+    </ol>
+  </li>
+  <li>
+    <p>Then, you create a new set of strings that start and end at evenly-spaced positions along these curves. For example, one line would start at 10% of the distance along the first quadratic and end 10% of the distance along the second quadratic.</p>
+  </li>
+  <li>
+    <p>This second set of strings are the tangents to your cubic curve. The point 10% of the distance along your 10% line would be a point on the curve.</p>
+  </li>
+</ul>
+
+<p>The string art diagrams get rather messy for cubic curves, as shown in <a data-type="xref" href="#line-art-bezier-cubic">Figure 6-X5</a>, but the final curves can be very elegant. The dark blue and purple lines show how the quadratic scaffolding was constructed. The thick red strings connect them and sketch out the actual cubic Bézier shape.</p>
+
+<figure class="page-float">
+  <div id="line-art-bezier-cubic" class="figure">
+    <img src="../ch06-path-files/line-art-bezier-cubic.png" alt="Four square figures, arranged in a grid.  Each has a solid, curved shape, with lines wrapped around it. The top-left curve is in a D-shape. The top-right is a stretched S-shape along the diagonal.  Bottom-left is almost triangular, with convex curves joining in a point. Bottom-right is a tear-drop shape in one corner." />
+    <figcaption><span class="label">Figure 6-X5. </span>Cubic Bézier curves and their “string art” basis</figcaption>
+  </div>
+</figure>
+
+<p>The four curves in <a data-type="xref" href="#line-art-bezier-cubic">Figure 6-X5</a> are as follows (using a scale with 10 units along each edge of the square, instead of 10cm):</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;path</code> <code class="na">d=</code><code class="s">"M 0,0 C 10,0  10,10 0,10"</code><code class="nt">/&gt;</code>
+<code class="nt">&lt;path</code> <code class="na">d=</code><code class="s">"M 0,0 C 10,0   0,10 10,10"</code><code class="nt">/&gt;</code>
+<code class="nt">&lt;path</code> <code class="na">d=</code><code class="s">"M 0,0 C 10,10 10,0   0,10"</code><code class="nt">/&gt;</code>
+<code class="nt">&lt;path</code> <code class="na">d=</code><code class="s">"M 0,0 C  0,10 10,0   0, 0"</code><code class="nt">/&gt;</code></pre>
+
+<p>Each curve has start, end, and control points in different corners of a square; the thin purple and navy strings are used to sketch out the quadratic curves, and then the thick red strings sketch the cubic curve. Nonetheless, for the computer, it is just a weighted average of weighted averages of all the points.</p>
+    
+<p><a href="../ch06-path-files/line-art-bezier-cubic-animated.svg#s=0,0&c1=10,0&c2=0,10&e=10,10" target="_blank">View a live, animated version of the S-curve</a>. You can then change the start point, control points, and end point by editing the <code>s</code>, <code>c1</code>, <code>c2</code>, and <code>e</code> parameters in the URL.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

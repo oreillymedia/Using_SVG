@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
-     viewBox="0 0 540 170" width="4in" height="1.25in">
-  <title>Fill-rule shapes</title>
+     viewBox="0 0 540 170">
+  <title>Fill-rule shapes, with evenodd fill</title>
   <style>
 path {
   fill: lightSkyBlue;

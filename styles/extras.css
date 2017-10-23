@@ -81,6 +81,7 @@ dl:not(.columns):not(.columns-children) dt {
 }
 figure img {
   display: block;
+  background: white;
   max-width: 100%;
   max-height: 95vh;
   margin: 0 auto;
@@ -110,3 +111,4 @@ pre[data-type="programlisting"] code { color: inherit}
 .calloutlist dd:nth-of-type(odd) {
   background: rgba(50%, 75%, 100%, 0.3);
 }
+dl.calloutlist { border-bottom: none; }

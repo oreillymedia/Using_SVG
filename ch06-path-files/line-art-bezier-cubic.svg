@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en" 
+     viewBox="-40 -40 458 458"
+     style="max-width: 12cm; max-height: 12cm; margin: auto">
+    <title>Line Art with a Cubic Bézier curve</title>
+    <style type="text/css">
+        path {
+            fill: royalBlue;
+            fill-opacity: 0.7;
+            stroke: royalBlue;
+            stroke-width: 2px;
+        }
+        .q1 {
+            stroke: purple;
+        }
+        .q2 {
+            stroke: navy;
+        }
+        .cubic {
+            stroke: crimson;
+            stroke-width: 2.5px;
+        }
+    </style>
+    <g id="drawing"></g>
+    <script><![CDATA[
+(function(){
+        var scale = 37.395;  /* px per cm */
+        var density = 10;  
+            /* number of threads to use to sketch each curve */
+
+        var doc = document;
+        var svg = doc.querySelector("svg");
+        var svgNS = svg.namespaceURI;
+        var drawing = doc.getElementById("drawing");
+
+        window.addEventListener("hashchange", draw);
+        draw();
+
+        function draw(){
+            drawing.textContent = ""; /* clear previous drawing */
+
+            var param = location.hash || location.search || "";
+            param = new URLSearchParams(param.replace(/^[#?]/, ""));
+
+            var s  = param.has("s")?  param.get("s").split(",") :[0,0],
+                c1 = param.has("c1")? param.get("c1").split(","):[10,0],
+                c2 = param.has("c2")? param.get("c2").split(","):[10,10]
+                e  = param.has("e")?  param.get("e").split(",") :[0,10];
+            /* start point, control points, end point */
+
+            var g, l, p, q, t1, t2, t3;
+            for (var i = 0; i <= density; i++) {
+                p = i/density;
+                q = 1-p;
+                t1 = [], t2 = [], t3 = [];
+
+                g = doc.createElementNS(svgNS, "g");
+
+                l = doc.createElementNS(svgNS, "line");
+                l.setAttribute("class", "q1")
+                l.setAttribute("x1", t1[0] = scale*(s[0]*p + c1[0]*q) );
+                l.setAttribute("y1", t1[1] = scale*(s[1]*p + c1[1]*q) );
+                l.setAttribute("x2", t2[0] = scale*(c1[0]*p + c2[0]*q) );
+                l.setAttribute("y2", t2[1] = scale*(c1[1]*p + c2[1]*q) );
+                g.appendChild(l);
+
+                l = doc.createElementNS(svgNS, "line");
+                l.setAttribute("class", "q2")
+                l.setAttribute("x1", t2[0] );
+                l.setAttribute("y1", t2[1] );
+                l.setAttribute("x2", t3[0] = scale*(c2[0]*p + e[0]*q) );
+                l.setAttribute("y2", t3[1] = scale*(c2[1]*p + e[1]*q) );
+                g.appendChild(l);
+
+                l = doc.createElementNS(svgNS, "line");
+                l.setAttribute("class", "cubic")
+                l.setAttribute("x1", t1[0]*p + t2[0]*q );
+                l.setAttribute("y1", t1[1]*p + t2[1]*q );
+                l.setAttribute("x2", t2[0]*p + t3[0]*q );
+                l.setAttribute("y2", t2[1]*p + t3[1]*q );
+                g.appendChild(l);
+
+                drawing.appendChild(g);
+            }
+
+            var path = doc.createElementNS(svgNS, "path");
+            path.setAttribute("d", 
+                    ["M",  s[0]*scale,  s[1]*scale, 
+                     "C", c1[0]*scale, c1[1]*scale, 
+                          c2[0]*scale, c2[1]*scale, 
+                           e[0]*scale,  e[1]*scale
+                    ].join(" ")
+                 );
+            drawing.appendChild(path);
+        }
+})()
+]]></script>
+</svg>

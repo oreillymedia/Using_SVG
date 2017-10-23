@@ -5,6 +5,17 @@
   <title>Path Commands Reference
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  
+  <meta name="twitter:title" property="og:title" 
+        content="Path Commands Reference — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="A guide to they cryptic code used to draw SVG paths. Part of the supplementary material for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -17,15 +28,236 @@
   </header>
   <main>
     <h1>Path Commands</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
     <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+      <p>The following commands are used in the <code>d</code> attribute of <code>&lt;path&gt;</code> elements. The same syntax is also used to describe path geometry in the <code>path</code> attribute of the <code>&lt;animateMotion&gt;</code> and (in SVG 2) <code>&lt;textPath&gt;</code> elements. The syntax is also used in the CSS <code>path()</code> function and in HTML canvas methods.</p>
+
+      <p>For all commands, uppercase letters are followed by absolute coordinates, while lowercase letters are followed by relative coordinates (offset values). Each path segment starts from the destination or end point of the previous command.</p>
+
+      <p>If path data contains an error, the browser draws all segments of the path up until the one with the error in it. This makes debugging <em>slightly</em> easier.</p>
     </div>
+<dl class="columns-children">
+  <dt id="M"><code>M</code> or <code>m</code><a href="#M" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dd>
+    <p><i>Move-to</i> command. Moves the “pen” position without drawing anything.</p>
+
+    <ul>
+      <li>
+        <p>followed by two numbers, representing the <em>x</em> and <em>y</em> position (for <code>M</code>) or offset (for <code>m</code>) of the destination point in user coordinates</p>
+      </li>
+      <li>
+        <p>additional pairs of coordinates are interpretted as line-to commands: <code>L</code> for <code>M</code> and <code>l</code> for <code>m</code></p>
+      </li>
+      <li>
+        <p>an odd-numbered list of coordinates is an error</p>
+      </li>
+      <li>
+        <p>all paths must start with a move-to command</p>
+      </li>
+      <li>
+        <p>a relative <code>m</code> command at the start of a path is calculated relative to the (0,0) origin point</p>
+      </li>
+    </ul>
+  </dd>
+  <dt id="L"><code>L</code> or <code>l</code><a href="#L" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dd>
+    <p><i>Line-to</i> command. Draws a straight line from the current position to the specified point.</p>
+
+    <ul>
+      <li>
+        <p>followed by two numbers, representing the <em>x</em> and <em>y</em> position (for <code>L</code>) or offset (for <code>l</code>) of the destination point in user coordinates</p>
+      </li>
+      <li>
+        <p>additional pairs of coordinates draw additional line segments</p>
+      </li>
+      <li>
+        <p>for multiple relative lines (<code>l</code>), the relative point is reset for each line segment</p>
+      </li>
+      <li>
+        <p>an odd-numbered list of coordinates is an error</p>
+      </li>
+    </ul>
+  </dd>
+  <dt id="H"><code>H</code> or <code>h</code><a href="#H" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dd>
+    <p><i>Horizontal line-to</i> command. Draws a straight horizontal line to the specified position.</p>
+
+    <ul>
+      <li>
+        <p>followed by one number, representing the <em>x</em> position (for <code>H</code>) or offset (for <code>h</code>) of the destination point in user coordinates</p>
+      </li>
+      <li>
+        <p>additional numbers draw additional line segments</p>
+      </li>
+      <li>
+        <p>for multiple relative lines (<code>h</code>), the relative point is reset for each line segment</p>
+      </li>
+    </ul>
+  </dd>
+  <dt id="V"><code>V</code> or <code>v</code><a href="#V" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dd>
+    <p><i>Vertical line-to</i> command. Draws a straight vertical line to the specified position.</p>
+
+    <ul>
+      <li>
+        <p>followed by one number, representing the <em>y</em> position (for <code>V</code>) or offset (for <code>v</code>) of the destination point in user coordinates</p>
+      </li>
+      <li>
+        <p>additional numbers draw additional line segments</p>
+      </li>
+      <li>
+        <p>for multiple relative lines (<code>v</code>), the relative point is reset for each line segment</p>
+      </li>
+    </ul>
+  </dd>
+  <dt id="Q"><code>Q</code> or <code>q</code><a href="#Q" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dd>
+    <p><i>Quadratic curve-to</i> command. Draws a quadratic Bézier curve, using a specified control point, to the specified end point.</p>
+
+    <ul>
+      <li>
+        <p>followed by four numbers: the first two are the <em>x</em> and <em>y</em> position or offset of the control point, the second two are the <em>x</em> and <em>y</em> position or offset of the end point, all in user coordinates</p>
+      </li>
+      <li>
+        <p>additional sets of four numbers draw additional curve segments</p>
+      </li>
+      <li>
+        <p>relative positions are calculated relative to the start point of each segment, for both the control point and the end point</p>
+      </li>
+      <li>
+        <p>a list of coordinates that cannot be grouped into sets of four is an error</p>
+      </li>
+    </ul>
+  </dd>
+  <dt id="T"><code>T</code> or <code>t</code><a href="#T" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dd>
+    <p><i>Smooth quadratic curve-to</i> command. Draws a quadratic Bézier curve to the specified end point, calculating the control point automatically to ensure a smooth continuation of the previous quadratic curve segment.</p>
+
+    <ul>
+      <li>
+        <p>followed by two numbers, representing the <em>x</em> and <em>y</em> position (for <code>T</code>) or offset (for <code>t</code>) of the destination point in user coordinates</p>
+      </li>
+      <li>
+        <p>the control point is calculated by determining the <em>x</em>- and <em>y</em>-offset from the previous segment’s control point to its end point, then adding those offsets again</p>
+      </li>
+      <li>
+        <p>if the previous path segment was not a quadratic curve, the new control point is the start point</p>
+      </li>
+      <li>
+        <p>additional pairs of numbers draw additional curves</p>
+      </li>
+      <li>
+        <p>for multiple curves, the calculation of the control point, and the relative position of the end point for <code>t</code> commands, is always based on the previous segment</p>
+      </li>
+      <li>
+        <p>an odd-numbered list of coordinates is an error</p>
+      </li>
+    </ul>
+  </dd>
+  <dt id="C"><code>C</code> or <code>c</code><a href="#C" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dd>
+    <p><i>Cubic curve-to</i> command. Draws a cubic Bézier curve, using the specified control points, to the specified end point.</p>
+
+    <ul>
+      <li>
+        <p>followed by six numbers: the first two are the <em>x</em> and <em>y</em> position or offset of the first control point, the next two are the position or offset of the second control point, and the final pair define the end point, all in user coordinates</p>
+      </li>
+      <li>
+        <p>additional sets of six numbers draw additional curve segments</p>
+      </li>
+      <li>
+        <p>relative positions are calculated relative to the start point of each segment, for both the control points and the end point</p>
+      </li>
+      <li>
+        <p>a list of coordinates that cannot be grouped into sets of six is an error</p>
+      </li>
+    </ul>
+  </dd>
+  <dt id="S"><code>S</code> or <code>s</code><a href="#S" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dd>
+    <p><i>Smooth cubic curve-to</i> command. Draws a cubic Bézier curve to the specified end point, calculating the first control point automatically to ensure a smooth continuation of the previous cubic curve segment, and using the specified second control point.</p>
+
+    <ul>
+      <li>
+        <p>followed by four numbers: the first two are the <em>x</em> and <em>y</em> position or offset of the second control point, and the final pair define the end point, all in user coordinates</p>
+      </li>
+      <li>
+        <p>the first control point is calculated by determining the <em>x</em>- and <em>y</em>-offset from the previous segment’s control point to its end point, then adding those offsets again</p>
+      </li>
+      <li>
+        <p>if the previous path segment was not a cubic curve, the new control point is the start point</p>
+      </li>
+      <li>
+        <p>additional sets of four numbers draw additional curves</p>
+      </li>
+      <li>
+        <p>for multiple curves, the calculation of the control point, and the relative position of all points for <code>s</code> commands, is always based on the previous segment</p>
+      </li>
+      <li>
+        <p>a list of coordinates that cannot be grouped into sets of four is an error</p>
+      </li>
+    </ul>
+  </dd>
+  <dt id="A"><code>A</code> or <code>a</code><a href="#A" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dd>
+    <p><i>Arc-to</i> command. Draws an elliptical arc segment to the specified end point, using the specified parameters to construct the arc.</p>
+
+    <ul>
+      <li>
+        <p>followed by seven numbers, as follows:</p>
+
+        <ul>
+          <li>
+            <p>the <em>x</em>-radius of the ellipse, in user coordinates</p>
+          </li>
+          <li>
+            <p>the <em>y</em>-radius of the ellipse, in user coordinates</p>
+          </li>
+          <li>
+            <p>the rotation, in degrees, of the ellipse’s <em>x</em>-axis relative to the path’s <em>x</em>-axis</p>
+          </li>
+          <li>
+            <p>a 1 or 0, to indicate whether or not the larger arc should be used</p>
+          </li>
+          <li>
+            <p>a 1 or 0, to indicate whether or not the positive-sweep (clockwise) arc should be used</p>
+          </li>
+          <li>
+            <p>the <em>x</em> position (for <code>A</code>) or offset (for <code>a</code>) of the end point, in user coordinates</p>
+          </li>
+          <li>
+            <p>the <em>y</em> position (for <code>A</code>) or offset (for <code>a</code>) of the end point, in user coordinates</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>additional sets of seven numbers create additional arcs</p>
+      </li>
+      <li>
+        <p>a list of coordinates that cannot be grouped into sets of seven is an error</p>
+      </li>
+      <li>
+        <p>a value other than 1 or 0 for the flag parameters is an error</p>
+      </li>
+    </ul>
+  </dd>
+  <dt id="Z"><code>Z</code> or <code>z</code><a href="#Z" class="hash-link" aria-label="Permalink">#</a></dt>
+  <dd>
+    <p><i>Close-path</i> command. Draws a straight line (if necessary) from the current position to the point defined by the most-recent move-to command, and connects the two line ends into a line join.</p>
+
+    <ul>
+      <li>
+        <p>Any numbers following a close path command are in error</p>
+      </li>
+      <li>
+        <p>The only command that may follow a close-path is a move-to</p>
+      </li>
+    </ul>
+  </dd>
+</dl>
+
+    <p>The definition of the relative commands will be modified if the <i>bearing</i> command (<code>B</code> or <code>b</code>), proposed for SVG 2, is used. In that case, all relative offsets would be calculated after rotating to the current bearing angle.</p>
+
+    <p>The rules for the number of required coordinates will change when the SVG 2 rules for the <code>Z</code> or <code>z</code> <i>close-path</i> are adopted. In SVG 2, a close-path could be used to automatically fill in the final point of a preceeding curve command.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

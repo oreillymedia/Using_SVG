@@ -5,6 +5,19 @@
   <title>The Winding Order of the Fill Rule
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title"
+        content="The Winding Order of the Fill Rule — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description"
+        content="What do the nonzero and evenodd keywords mean, and how do they relate to the shape of your path? An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt"
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +31,161 @@
   </header>
   <main>
     <h1>The Winding Order of the Fill Rule</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+    
+<p>SVG paths, polygons, and polylines can include criss-crossing lines. Paths can also include intersecting or overlapping subpaths. In any of these cases, it can be a bit confusing to determine which sections of a shape are inside or outside.</p>
+
+<p>There are two different options for calculating which parts of a path are “inside” the shape. They are defined as the values of the <code>fill-rule</code> style property:</p>
+
+<ul>
+  <li>
+    <p>With a <code>fill-rule</code> of <code>evenodd</code>, the inside/outside state changes every time you cross a path edge.</p>
+  </li>
+  <li>
+    <p>With a <code>fill-rule</code> of <code>nonzero</code> (the default), it depends on the direction of the path: paths that loop in the same direction make that section “more” inside.</p>
+  </li>
+</ul>
+
+<p>The same two keywords (and the same default) are used in CSS shapes functions and in the SVG <code>clip-rule</code> property, which determines which parts are inside or outside for SVG shapes that are children of a <code>&lt;clipPath&gt;</code>.</p>
+
+<p>To show how the fill region is calculated with each fill rule, <a data-type="xref" href="#fill-rule-evenodd-example">Example 6-X1</a> creates four different paths that look suspiciously the same, but have very different structures:</p>
+
+<ul>
+  <li>
+    <p>a single subpath that crosses itself</p>
+  </li>
+  <li>
+    <p>a single subpath that bumps into itself, then reverses direction without crossing</p>
+  </li>
+  <li>
+    <p>a path with a cut-out subpath that is drawn in the same direction (clockwise) as the outer subpath</p>
+  </li>
+  <li>
+    <p>a path with a cut-out subpath that is drawn in the opposite direction as the outer subpath</p>
+  </li>
+</ul>
+
+<p>With <code>fill-rule: evenodd</code>, all four paths have the same stroke and fill area, as shown in <a data-type="xref" href="#fill-rule-evenodd-figure">Figure 6-X1</a>. The outer region of the shape is filled, but the central triangle isn’t.</p>
+
+<figure class="page-float">
+  <div id="fill-rule-evenodd-figure" class="figure">
+    <img src="../ch06-path-files/fill-rule-evenodd.svg" alt="Four identical shapes.  The two on the left are labelled one subpath, either crossing or reversing.  The two on the right are labelled two subpaths, either same-direction or opposite.  The shapes appear to consist of a single stroke starting from top left, to top right, crossing on a diagonal towards the bottom left, but not all the way to the corner, then straight up and a then diagonal back towards bottom right crossing back over the previous diagonal, before closing the shape across the bottom and back up the left edge.  The shapes are stroked in red and are filled in blue, except for the triangular cut-out area inside the criss-crossed strokes, which is unfilled white." />
+    <figcaption><span class="label">Figure 6-X1. </span>Four suspiciously identical shapes, with <code>evenodd</code> fill</figcaption>
+  </div>
+</figure>
+
+<p>If you switch to <code>fill-rule: nonzero</code>, as shown in <a data-type="xref" href="#fill-rule-nonzero-figure">Figure 6-X2</a>, the crossing-over path and the same-direction subpath switch to being filled in. The other two shapes don’t change.</p>
+
+<figure class="page-float">
+  <div id="fill-rule-nonzero-figure" class="figure">
+    <img src="../ch06-path-files/fill-rule-nonzero.svg" alt="The same layout as the previous figure, except that now the criss-cross triangle region is filled in blue in the shape labelled 'one subpath crossing' and the shape labelled 'two subpaths same-direction'.  The other two shapes are unchanged, the center region unfilled white." />
+    <figcaption><span class="label">Figure 6-X2. </span>Four similar-but-not-identical shapes, with <code>nonzero</code> fill</figcaption>
+  </div>
+</figure>
+
+<p>What’s going on? First the code, then the explanation.</p>
+<div id="fill-rule-evenodd-example" data-type="example">
+  <h5><span class="label">Example 6-X1. </span>Defining paths with winding order in mind</h5>
+
+  <pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">viewBox=</code><code class="s">"0 0 540 170"</code><code> </code><code class="na">width=</code><code class="s">"4in"</code><code> </code><code class="na">height=</code><code class="s">"1.25in"</code><code class="nt">&gt;</code><code>
+  </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Fill-rule shapes</code><code class="nt">&lt;/title&gt;</code><code>
+  </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+</code><code class="nt">path</code><code> </code><code class="p">{</code><code>
+  </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="n">lightSkyBlue</code><code class="p">;</code><code>
+  </code><code class="k">stroke</code><code class="o">:</code><code> </code><code class="n">darkRed</code><code class="p">;</code><code>
+  </code><code class="k">stroke-width</code><code class="o">:</code><code> </code><code class="m">4</code><code class="p">;</code><code>
+  </code><code class="k">fill-rule</code><code class="o">:</code><code> </code><code class="n">evenodd</code><code class="p">;</code><code>                  </code><a class="co" id="co_online_extras_CO3-1" href="#callout_online_extras_CO3-1"><img src="callouts/1.svg" alt="1" /></a><code>
+</code><code class="p">}</code><code>
+</code><code class="nt">text</code><code> </code><code class="p">{</code><code>
+  </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="nb">indigo</code><code class="p">;</code><code>
+  </code><code class="k">font</code><code class="o">:</code><code> </code><code class="nb">bold</code><code> </code><code class="m">18px</code><code> </code><code class="n">Segoe</code><code> </code><code class="n">UI</code><code class="o">,</code><code> </code><code class="nb">sans-serif</code><code class="p">;</code><code>
+</code><code class="p">}</code><code>
+  </code><code class="nt">&lt;/style&gt;</code><code>
+  </code><code class="nt">&lt;g</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"70"</code><code> </code><code class="na">y=</code><code class="s">"164"</code><code class="nt">&gt;</code><code>one sub-path</code><code class="nt">&lt;/text&gt;</code><code>
+
+    </code><code class="nt">&lt;path</code><code> </code><code class="na">d=</code><code class="s">"M 10,5
+             l 100,10 -80,80 0,-60 80,80 -100,10 z"</code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"5"</code><code> </code><code class="na">y=</code><code class="s">"144"</code><code class="nt">&gt;</code><code>crossing</code><code class="nt">&lt;/text&gt;</code><code>               </code><a class="co" id="co_online_extras_CO3-2" href="#callout_online_extras_CO3-2"><img src="callouts/2.svg" alt="2" /></a><code>
+
+    </code><code class="nt">&lt;path</code><code> </code><code class="na">d=</code><code class="s">"M 150,5
+             l 100,10 -50,50 -30,-30 0,60 30,-30 50,50 -100,10 z"</code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"145"</code><code> </code><code class="na">y=</code><code class="s">"144"</code><code class="nt">&gt;</code><code>reversing</code><code class="nt">&lt;/text&gt;</code><code>            </code><a class="co" id="co_online_extras_CO3-3" href="#callout_online_extras_CO3-3"><img src="callouts/3.svg" alt="3" /></a><code>
+  </code><code class="nt">&lt;/g&gt;</code><code>
+  </code><code class="nt">&lt;g</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"350"</code><code> </code><code class="na">y=</code><code class="s">"164"</code><code class="nt">&gt;</code><code>two sub-paths</code><code class="nt">&lt;/text&gt;</code><code>
+
+    </code><code class="nt">&lt;path</code><code> </code><code class="na">d=</code><code class="s">"M 290,5
+             l 100,10 -50,50 50,50 -100,10 z
+             m 50,60
+             l-30,30 0,-60 z"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"285"</code><code> </code><code class="na">y=</code><code class="s">"144"</code><code class="nt">&gt;</code><code>same-direction</code><code class="nt">&lt;/text&gt;</code><code>       </code><a class="co" id="co_online_extras_CO3-4" href="#callout_online_extras_CO3-4"><img src="callouts/4.svg" alt="4" /></a><code>
+
+    </code><code class="nt">&lt;path</code><code> </code><code class="na">d=</code><code class="s">"M 430,5
+             l 100,10 -50,50 50,50 -100,10 z
+             m 50,60
+             l -30,-30 0,60 z"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"425"</code><code> </code><code class="na">y=</code><code class="s">"144"</code><code class="nt">&gt;</code><code>opposite</code><code class="nt">&lt;/text&gt;</code><code>             </code><a class="co" id="co_online_extras_CO3-5" href="#callout_online_extras_CO3-5"><img src="callouts/5.svg" alt="5" /></a><code>
+  </code><code class="nt">&lt;/g&gt;</code><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+  <dl class="calloutlist columns">
+    <dt><a class="co" id="callout_online_extras_CO3-1" href="#co_online_extras_CO3-1"><img src="callouts/1.svg" alt="1" /></a></dt>
+    <dd>
+      <p>This version of the code sets the <code>evenodd</code> value of <code>fill-rule</code>. To see the difference, change it to <code>nonzero</code>; or just remove this line, as <code>nonzero</code> is the default.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO3-2" href="#co_online_extras_CO3-2"><img src="callouts/2.svg" alt="2" /></a></dt>
+    <dd>
+      <p>The first shape is a single subpath that starts from the top left and proceeds in a clockwise direction. The path crosses over itself to form a triangular loop in the middle, and then wraps around the outside.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO3-3" href="#co_online_extras_CO3-3"><img src="callouts/3.svg" alt="3" /></a></dt>
+    <dd>
+      <p>The second shape is also a single subpath, but it never crosses itself. Instead, when the paths reach the point where they would intersect, they reverse course, and wrap around the inner triangle in the opposite direction before continuing with the outside edge of the path.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO3-4" href="#co_online_extras_CO3-4"><img src="callouts/4.svg" alt="4" /></a></dt>
+    <dd>
+      <p>The remaining paths are drawn as two subpaths each. Both have an outer subpath that wraps around in a clockwise direction, and an inner triangular subpath. In the same-direction shape, the inner triangle is also drawn in a clockwise direction, starting from the intersection point on the right, then the bottom left, then vertically up (negative <em>y</em> direction), before closing it off.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO3-5" href="#co_online_extras_CO3-5"><img src="callouts/5.svg" alt="5" /></a></dt>
+    <dd>
+      <p>In the final shape, with the opposite-direction subpath, the inner triangle is drawn in a counter clockwise direction, touching the points in the same direction as the “reversing” single-path shape: from the intersection point, going to the top left of the triangle, then down, and finally closed.</p>
+    </dd>
+  </dl>
+</div>
+
+<p>The path data in <a data-type="xref" href="#fill-rule-evenodd-example">Example 6-X1</a> uses relative coordinates so you can more easily compare the differences in shapes, and track the direction of each line segment: up and down correspond to negative versus positive <em>y</em> values, while negative versus positive <em>x</em> values map to left versus right.</p>
+
+<p>The example also shows the relative <code>m</code> <em>move-to</em> command. As we mentioned in the book, this moves the pen relative to the final point of the previous subpath. Here, that’s the implicit point created by the <code>z</code> <em>close-path</em> commands.</p>
+
+<p>To understand how path direction and <code>fill-rule</code> options are connected, you need to determine the <em>winding order</em> of different regions.</p>
+
+<p>For any region within the shape, the winding order is calculated from the directions of every path segment you need to cross to reach that point. A point outside the graphic has a winding-order value of 0. Starting from there, every clockwise path boundary you cross over will add one to your winding order. Every counter-clockwise path that you cross over <em>subtracts</em> one from your winding order. The more loops there are in your shape, the more “wound up” you get.</p>
+
+<p>In <a data-type="xref" href="#fill-rule-markers-figure">Figure 6-X3</a>, we show how the winding order is calculated for each version of our shape. Arrowheads mark the directions of each line segment. To make things a <em>little</em> easier to follow, the points have been shifted slightly, to separate the strokes which don’t actually intersect.</p>
+
+<figure class="page-float">
+  <div id="fill-rule-markers-figure" class="figure">
+    <img src="../ch06-path-files/fill-rule-markers.svg" alt="Approximately the same shapes as before, but enlarged in a grid.  Arrows on each stroke show the direction.  The shifted points clearly show the difference between the single path and two subpath shapes, and also make it clear that the cut-out in the 'reversing' shape is really just an inlet from the outside.  The different regions of each shape are labelled 0, +1, or +2, and a curved arrow from the outside to inside of each shape passes by the different labels as it crosses each stroke." />
+    <figcaption><span class="label">Figure 6-X3. </span>Four no-longer identical shapes, with <code>nonzero</code> fill, showing the winding order calculations</figcaption>
+  </div>
+</figure>
+
+<p>If the value of <code>fill-rule</code> is <code>evenodd</code>, regions will be filled if their winding order is an odd number; since the winding order changes by 1 every time you cross a path segment, the fill alternates between inside and out. However, if the value of <code>fill-rule</code> is <code>nonzero</code> (the default, as shown in <a data-type="xref" href="#fill-rule-markers-figure">Figure 6-X3</a>), regions will be filled <em>unless</em> the winding-order sum cancels out back to zero. Paths that loop in the same direction will add together to create a value farther from zero.</p>
+
+<p>Winding orders are related to the rasterization process we mentioned in <a data-type="xref" href="../ch01-overview-files/">Chapter 1</a> and in the <a data-type="xref" href="ch01-vectors.html">“Understanding Vector Graphics”</a> article. When a computer fills in a vector shape, it doesn’t see the entire shape at once. Instead, it scans across it one row of pixels at a time, looking at each edge independently.</p>
+
+<p>Looking at <a data-type="xref" href="#fill-rule-markers-figure">Figure 6-X3</a>, with the slightly adjusted points, it is now obvious that the central triangle in the “reversing” path is actually just an extension of the outside. Of course it isn’t ever filled in.</p>
+
+<p>But to a rasterizer scanning across the top half of the shape, it looks identical to the shape with the opposite-direction subpath. The edges all follow the same directions. So the opposite-direction subpath is also never filled in.</p>
+
+<p>One final note on <code>fill-rule</code>: neither of the fill-rule values care if your winding order is positive or negative. If <em>all</em> the paths were reversed, the result would be the same.</p>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>For SVG, the important thing isn’t clockwise versus counter-clockwise, it’s same versus opposite direction. (And even that can be ignored when you set <code>fill-rule</code> to <code>evenodd</code>.)</p>
+</div>
+
+<p>Positive versus negative winding order becomes much more important in mapping, where a single path can wrap all the way around the globe and back again. In that case, it isn’t clear which side of the path is “outside” to start with. For example, if you created a path that traced around the coastlines of every continent, which would be <em>inside</em> the path: the oceans or the land?</p>
+
+<p>Many mapping applications—including the d3.js modules that convert map data to SVG—rely on the rule that clockwise paths <em>enclose</em> content and counter-clockwise paths <em>exclude</em> them.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

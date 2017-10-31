@@ -5,6 +5,18 @@
   <title>Creating Embeddable Fonts as Data URIs
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Creating Embeddable Fonts as Data URIs — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="The old SVG &lt;font&gt; element to include a font in an SVG file doesn't work on the web. Data URIs do. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,69 @@
   </header>
   <main>
     <h1>Creating Embeddable Fonts as Data URIs</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
+    
+<p>SVG 1 defined <code>&lt;font&gt;</code> and <code>&lt;glyph&gt;</code> elements that allowed you to include a custom font within an SVG file. That way, you could create graphics using real, accessible text, while still ensuring a guaranteed rendering of each letter, without any dependencies on separate font files.</p>
+
+<p>But SVG fonts had their own problems, and they have very poor browser support on the web.</p>
+
+<p>Today, the best approach for embedding fonts directly in your SVG file is to use an OpenType-compatible web font, converted to a data URI, as the <code>src</code> URL in a CSS <code>@font-face</code> rule.</p>
+
+<p>Nonetheless, think carefully before using a data URI font on the web. Embedding a font means that the font data cannot be shared between multiple web pages or SVGs. The data needs to be downloaded with each file that uses it, and the SVG cannot be fully parsed and displayed until the font is downloaded. And you can’t give browsers a choice of which format to download—because they’ve downloaded it already—which means that you’ll probably have to use an older format, with better browser support but larger file sizes (e.g., WOFF instead of WOFF2).</p>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>Only use data URIs for fonts that are essential for this particular SVG, but which aren’t used elsewhere in the website. Always subset the font to only include the characters you need.</p>
+</div>
+
+<p>If you do decide to embed a font, you’ll need to do the processing yourself. Most graphics editors now have settings to embed raster images as data URIs, but their font embedding options currently rely on (poorly supported) SVG fonts. You’ll need two sets of tools:</p>
+<dl>
+  <dt>A font-subsetting and conversion tool</dt>
+  <dd>
+    <p>Two options are FontFont’s <a href="http://www.subsetter.com/">Subsetter</a> (which currently only works with WOFF files), or Font Squirrel’s <a href="https://www.fontsquirrel.com/tools/webfont-generator">Webfont Generator</a> (which also creates WOFF from other font formats).</p>
+
+    <p>Select the letters and OpenType features (e.g., ligatures) that you’re using. Both tools have options to allow you to copy and paste the specific text you want to display in this font:</p>
+    <div class="openblock">
+      <ul>
+        <li>
+          <p>In FontFont Subsetter, use the “Expert Subsetting” option, then use the “Minimal containing Characters” option.</p>
+        </li>
+        <li>
+          <p>In Font Squirrel, use the “Expert” generator option, then scroll down to “Subsetting”, select “Custom” and use the “Single Characters” field.</p>
+        </li>
       </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
     </div>
+
+
+    <p>Save the output font as a <em role="filename">.woff</em> file—or WOFF2, if you’re from the future where you don’t need to support older browsers anymore.</p>
+  </dd>
+  <dt>A base64 data URI converter</dt>
+  <dd>
+    <p>There are lots of online options, although not all of them support font files (<a href="http://software.hixie.ch/utilities/cgi/data/data">The data: URI kitchen</a> does). You might also have a converter as part of your website’s build tools. Alternatively, Font Squirrel can output a CSS file containing data URIs—and the rest of the <code>@font-face</code> rule—as one of its “Expert” options.</p>
+
+    <p>Whatever you use: upload the subsetted WOFF file, and the tool should create a string starting with the following:</p>
+
+    <pre data-type="programlisting">data:application/font-woff;base64,</pre>
+
+    <p>…and ending with something that looks like a cat walked across your keyboard.</p>
+  </dd>
+</dl>
+
+<p>Carefully copy and paste the generated data URI into the <code>src</code> URL of your <code>@font-face</code> rule:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;style </code><code class="na">type=</code><code class="s">"text/css"</code><code class="nt">&gt;</code>
+<code class="k">@font-face</code> <code class="p">{</code>
+    <code class="nt">font-family</code><code class="o">:</code> <code class="s2">"Incredible Font"</code><code class="o">;</code>
+    <code class="nt">font-weight</code><code class="o">:</code> <code class="nt">bold</code><code class="o">;</code> <code class="c">/* descriptors should match your styles */</code>
+    <code class="nt">src</code><code class="o">:</code> <code class="nt">url</code><code class="o">(</code><code class="s2">"/*data URI goes here*/"</code><code class="o">)</code> <code class="nt">format</code><code class="o">(</code><code class="nt">woff</code><code class="o">);</code>
+<code class="p">}</code>
+<code class="nt">&lt;/style&gt;</code></pre>
+
+<p>Data URI fonts have the benefit that—in most browsers—they can be used, even in SVG used as an image (<code>&lt;img&gt;</code> sources, or CSS <code>background-image</code>). Images do not trigger downloads of additional asset files, so separate font files will never load in these situations.</p>
+<div data-type="warning" epub:type="warning">
+  <h6>Warning</h6>
+  <p>WebKit doesn’t support data URIs in SVG-as-image: they are treated the same as external files.</p>
+</div>
+
+<p>Even in browsers that use a data URI font in an image, the text in an <code>&lt;img&gt;</code> or CSS image won’t be accessible from the main web page. For accessible text, use inline SVG or embedded objects.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

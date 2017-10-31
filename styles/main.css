@@ -69,8 +69,13 @@ main {
 header, footer {
   background: hsla(0, 0%, 100%, 0.5);
   max-width: 50rem;
-  padding: 0 calc(50% - 25rem);
+  padding: 0 0.5rem;
   box-sizing: content-box;
+}
+@media (min-width: 51rem) {
+  header, footer {
+    padding: 0 calc(50% - 25rem);
+  }
 }
 header {
   padding-bottom: 0.5rem;

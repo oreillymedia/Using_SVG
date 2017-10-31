@@ -5,6 +5,18 @@
   <title>Interactive Text
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Interactive Text — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Don't bake-in labels on your photos: add them with SVG text, and you can style them dynamically. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,127 @@
   </header>
   <main>
     <h1>Interactive Text</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<p>
+  Because SVG text is part of the DOM, in an interactive web document, it can be updated or restyled in response to user interaction.</p>
+
+<p>In the simplest version, the CSS <code>:hover</code> class can be used to show and hide text labels, thereby reducing the amount of visual clutter as the user explores the image.</p>
+
+<p>In Example 7-3, in the book, we added text labels to a product photograph of bicycle. Then, we showed how media queries could automatically increase the size of those labels when the graphic is scaled down.</p>
+
+<p>With hover styles, we can hide and show those labels as the user explores the graphic, helping to focus attention on the individual parts.</p>
+
+<p>We make the connection with invisible shapes that outline the features in the photograph that correspond to each label, turning the SVG into a simple image map. When the CSS registers a <code>:hover</code> on any of the shapes, the matching text element is revealed.</p>
+
+<p>To keep things accessible, we’re only going to hide the labels if a hover-effect is detected <em>somewhere</em> on the SVG. Without mouse movement or active tap interaction, all the labels will display.</p>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>If the interaction was essential, we could make the elements keyboard-focusable and use the <code>:focus</code> pseudoclass, but too many tab stops can be an accessibility problem, too. So keyboard users will just see all the labels at once.</p>
+</div>
+
+<p><a data-type="xref" href="#bike-interactive-example">Example 7-X1</a> provides the complete code; <a data-type="xref" href="#bike-interactive-figure">Figure 7-X1</a> shows each label revealed in turn.</p>
+
+<figure class="page-float">
+  <div id="bike-interactive-figure" class="figure">
+    <img src="../ch07-text-files/bike-interactive.jpg" alt="Four versions of the labelled bicycle, with only one label visible in each." />
+    <figcaption><span class="label">Figure 7-X1. </span>The interactive labels, revealed one at a time</figcaption>
+  </div>
+</figure>
+<div id="bike-interactive-example" data-type="example">
+  <h5><span class="label">Example 7-X1. </span>Making SVG text labels interactive on mouseover</h5>
+
+  <p><strong>SVG markup:</strong></p>
+
+  <pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">width=</code><code class="s">"1000"</code><code> </code><code class="na">height=</code><code class="s">"586"</code><code>
+     </code><code class="na">viewBox=</code><code class="s">"0 0 1000 586"</code><code> </code><code class="na">id=</code><code class="s">"lynskey"</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Lynskey 2017 Vialé Technical Details</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+        </code><code class="c">/* see below */</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+    </code><code class="nt">&lt;image</code><code> </code><code class="na">width=</code><code class="s">"100%"</code><code> </code><code class="na">height=</code><code class="s">"100%"</code><code> </code><code class="na">xlink:href=</code><code class="s">"viale.jpg"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;circle</code><code> </code><code class="na">class=</code><code class="s">"target"</code><code> </code><code class="na">cx=</code><code class="s">"770"</code><code> </code><code class="na">cy=</code><code class="s">"400"</code><code> </code><code class="na">r=</code><code class="s">"172"</code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;circle</code><code> </code><code class="na">class=</code><code class="s">"target"</code><code> </code><code class="na">cx=</code><code class="s">"220"</code><code> </code><code class="na">cy=</code><code class="s">"380"</code><code> </code><code class="na">r=</code><code class="s">"172"</code><code class="nt">/&gt;</code><code>       </code><a class="co" id="co_online_extras_CO4-1" href="#callout_online_extras_CO4-1"><img src="callouts/1.svg" alt="1" /></a><code>
+        </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"360"</code><code> </code><code class="na">y=</code><code class="s">"520"</code><code class="nt">&gt;</code><code>DTSwiss TK540/X.9 Wheelset</code><code class="nt">&lt;/text&gt;</code><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;polygon</code><code> </code><code class="na">class=</code><code class="s">"target"</code><code>
+                 </code><code class="na">points=</code><code class="s">"250,25 443,25 443,60 357,101 260,65"</code><code> </code><code class="nt">/&gt;</code><code> </code><a class="co" id="co_online_extras_CO4-2" href="#callout_online_extras_CO4-2"><img src="callouts/2.svg" alt="2" /></a><code>
+        </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"80"</code><code> </code><code class="na">y=</code><code class="s">"120"</code><code class="nt">&gt;</code><code>Selle Italia X1 Flow Saddle</code><code class="nt">&lt;/text&gt;</code><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;polygon</code><code> </code><code class="na">class=</code><code class="s">"target"</code><code>
+                 </code><code class="na">points=</code><code class="s">"646,105 367,130 245,350 283,409
+                         390,434 413,379 456,370 500,400
+                         677,207 684,229 700,217 669,120"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"420"</code><code> </code><code class="na">y=</code><code class="s">"200"</code><code class="nt">&gt;</code><code>Titanium frame</code><code class="nt">&lt;/text&gt;</code><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;circle</code><code> </code><code class="na">class=</code><code class="s">"target"</code><code> </code><code class="na">cx=</code><code class="s">"225"</code><code> </code><code class="na">cy=</code><code class="s">"400"</code><code> </code><code class="na">r=</code><code class="s">"55"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;polygon</code><code> </code><code class="na">class=</code><code class="s">"target"</code><code>
+                 </code><code class="na">points=</code><code class="s">"210,400 230,480 260,480 280,390"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"80"</code><code> </code><code class="na">y=</code><code class="s">"570"</code><code class="nt">&gt;</code><code>SRAM Apex rear dérailleur</code><code class="nt">&lt;/text&gt;</code><code>    </code><a class="co" id="co_online_extras_CO4-3" href="#callout_online_extras_CO4-3"><img src="callouts/3.svg" alt="3" /></a><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+  <dl class="calloutlist columns">
+    <dt><a class="co" id="callout_online_extras_CO4-1" href="#co_online_extras_CO4-1"><img src="callouts/1.svg" alt="1" /></a></dt>
+    <dd>
+      <p>Each <code>&lt;text&gt;</code> label is now part of a group (<code>&lt;g&gt;</code> element) that also contains the shapes that outline the labelled regions of the photograph.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO4-2" href="#co_online_extras_CO4-2"><img src="callouts/2.svg" alt="2" /></a></dt>
+    <dd>
+      <p>The mouse-target elements include a mix of <code>&lt;circle&gt;</code> and <code>&lt;polygon&gt;</code> elements. The <code>target</code> class will be used to make the elements invisible, so it doesn’t matter if the shapes are only rough approximations for the photographic regions.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO4-3" href="#co_online_extras_CO4-3"><img src="callouts/3.svg" alt="3" /></a></dt>
+    <dd>
+      <p>Although they won’t be displayed, the order of the shapes still matters: the dérailleur (gear-shift) region overlaps one of the wheels, but it is later in the document and therefore “on top” as far as mouse events are concerned.</p>
+    </dd>
+  </dl>
+
+  <p><strong>CSS styles:</strong></p>
+
+  <pre data-type="programlisting" data-code-language="css"><code class="nt">svg</code><code> </code><code class="nt">text</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">font</code><code class="o">:</code><code> </code><code class="m">20px</code><code> </code><code class="nb">sans-serif</code><code class="p">;</code><code>
+    </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="n">darkBlue</code><code class="p">;</code><code>
+    </code><code class="k">transition</code><code class="o">:</code><code> </code><code class="k">font-size</code><code> </code><code class="m">0.5s</code><code class="o">,</code><code> </code><code class="n">opacity</code><code> </code><code class="m">0.3s</code><code class="p">;</code><code>    </code><a class="co" id="co_online_extras_CO5-1" href="#callout_online_extras_CO5-1"><img src="callouts/1.svg" alt="1" /></a><code>
+</code><code class="p">}</code><code>
+</code><code class="k">@media</code><code> </code><code class="p">(</code><code class="k">max-width</code><code class="o">:</code><code> </code><code class="m">600px</code><code class="p">)</code><code class="o">,</code><code> </code><code class="p">(</code><code class="k">max-height</code><code class="o">:</code><code> </code><code class="m">342px</code><code class="p">)</code><code> </code><code class="p">{</code><code>
+    </code><code class="nt">svg</code><code> </code><code class="nt">text</code><code> </code><code class="p">{</code><code> </code><code class="k">font-size</code><code class="o">:</code><code> </code><code class="m">28px</code><code class="p">;</code><code> </code><code class="p">}</code><code>                </code><a class="co" id="co_online_extras_CO5-2" href="#callout_online_extras_CO5-2"><img src="callouts/2.svg" alt="2" /></a><code>
+</code><code class="p">}</code><code>
+</code><code class="k">@media</code><code> </code><code class="p">(</code><code class="k">max-width</code><code class="o">:</code><code> </code><code class="m">400px</code><code class="p">)</code><code class="o">,</code><code> </code><code class="p">(</code><code class="k">max-height</code><code class="o">:</code><code> </code><code class="m">235px</code><code class="p">)</code><code> </code><code class="p">{</code><code>
+    </code><code class="nt">svg</code><code> </code><code class="nt">text</code><code> </code><code class="p">{</code><code> </code><code class="k">font-size</code><code class="o">:</code><code> </code><code class="m">36px</code><code class="p">;</code><code> </code><code class="p">}</code><code>
+</code><code class="p">}</code><code>
+</code><code class="nc">.target</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="nb">none</code><code class="p">;</code><code>
+    </code><code class="k">pointer-events</code><code class="o">:</code><code> </code><code class="n">visibleFill</code><code class="p">;</code><code>                 </code><a class="co" id="co_online_extras_CO5-3" href="#callout_online_extras_CO5-3"><img src="callouts/3.svg" alt="3" /></a><code>
+</code><code class="p">}</code><code>
+</code><code class="nt">svg</code><code class="nd">:hover</code><code> </code><code class="nt">g</code><code class="nd">:not</code><code class="o">(</code><code class="nd">:hover</code><code class="o">)</code><code> </code><code class="nt">text</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">opacity</code><code class="o">:</code><code> </code><code class="m">0</code><code class="p">;</code><code>                                  </code><a class="co" id="co_online_extras_CO5-4" href="#callout_online_extras_CO5-4"><img src="callouts/4.svg" alt="4" /></a><code>
+</code><code class="p">}</code></pre>
+  <dl class="calloutlist columns">
+    <dt><a class="co" id="callout_online_extras_CO5-1" href="#co_online_extras_CO5-1"><img src="callouts/1.svg" alt="1" /></a></dt>
+    <dd>
+      <p>We previously added the <code>transition</code> property to smooth out <code>font-size</code> changes from the media queries. An additional transition has been added for the <code>opacity</code> property of the <code>&lt;text&gt;</code> elements, so that the labels fade in and out neatly.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO5-2" href="#co_online_extras_CO5-2"><img src="callouts/2.svg" alt="2" /></a></dt>
+    <dd>
+      <p>The media queries for adjusting <code>font-size</code> are as described in <a data-type="xref" href="ch07.html#text-responsive-section">“Responsive Text Scaling”</a> in <a data-type="xref" href="ch07.html#text-chapter">Chapter 7</a> of the book.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO5-3" href="#co_online_extras_CO5-3"><img src="callouts/3.svg" alt="3" /></a></dt>
+    <dd>
+      <p>The shapes with the <code>target</code> class <em>aren’t</em> painted (<code>fill</code> is <code>none</code> instead of the default black) but they <em>do</em> respond to mouse-pointer events. The <code>visibleFill</code> value for the <code>pointer-events</code> property means that the fill region of the shape is active unless the shape is explicitly hidden with the <code>visibility</code> property, regardless of whether or not it is actually painted. (We discuss <code>pointer-events</code> in more detail in <a data-type="xref" href="ch18.html#interaction-chapter">Chapter 18</a>.)</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO5-4" href="#co_online_extras_CO5-4"><img src="callouts/4.svg" alt="4" /></a></dt>
+    <dd>
+      <p>When the SVG is hovered by a mouse pointer, the text elements are transparent (<code>opacity: 0</code>), <em>unless</em> they are inside a group that is also receiving the mouse hover event. The <code>opacity</code> property is used, instead of <code>visibility</code> or <code>display</code>, because it can be smoothly transitioned, and because it doesn’t affect pointer events on the text itself.</p>
+    </dd>
+  </dl>
+</div>
+
+<p>Interactive effects don’t work in an SVG used as an image. Mouse events on an <code>&lt;img&gt;</code> element are handled by the parent document, not passed to the SVG.</p>
+
+<p>However, as we discussed in the book, there are already many other reasons why this example shouldn’t be used in an image: the text would be inaccessible, and the external photograph file would not load! So this approach is for <code>&lt;object&gt;</code> or (with adjusted media queries) inline SVG, only.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

@@ -5,6 +5,18 @@
   <title>Perfecting Paths for &lt;textPath&gt;
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Perfecting Paths for textPath — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Tips for mastering geometry when wrapping SVG text around shapes. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,132 @@
   </header>
   <main>
     <h1>Perfecting Paths for &lt;textPath&gt;</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<p>
+  In SVG 1.1 (and all existing browsers), the “path” used by a <code>&lt;textPath&gt;</code> layout must truly be a <code>&lt;path&gt;</code> element: you can’t yet make text ride a <code>&lt;circle&gt;</code> or <code>&lt;rect&gt;</code>.</p>
+
+<p>This can be somewhat frustrating, as they (along with ellipses) are the most common shapes people want to wrap text around. If you have a basic shape, and want to convert it to a <code>&lt;path&gt;</code> without having to code or draw it one point at a time, there are various tools you can use:</p>
+
+<ul>
+  <li>
+    <p>Most visual editors have tools to convert the shape into a path. In Illustrator, use Object → Compound Path → Make; in Inkscape, use Path → Object to Path.</p>
+  </li>
+  <li>
+    <p>In some editors, including Illustrator, moving any point on a regular shape, even slightly, will also convert it into a path.</p>
+  </li>
+  <li>
+    <p>If a counter-clockwise circle or ellipse is all you need, <a href="http://complexdan.com/svg-circleellipse-to-path-converter/">Dan Hansen’s neat little JavaScript tool</a> to grab the equivalent path data.</p>
+  </li>
+</ul>
+
+<p>The text will proceed along the path in the direction the path is drawn in the code. If your paths have a clockwise <a href="ch06-fill-rule.html">winding order</a>, the text will be on the <em>outside</em> of the shape. If the path is counter-clockwise, the text will be on the inside. In either case, it is possible to end up with upside-down letters. If your path is in the wrong direction, your graphics editor can reverse it for you:</p>
+
+<ul>
+  <li>
+    <p>In Adobe Illustrator, there is a Reverse Path Direction command in the application’s Attributes panel (you may have to use Show Options in the top right corner of the panel to see the path direction controls). This assumes that the path is a compound path (Object → Compound Path → Make).</p>
+  </li>
+  <li>
+    <p>In Inkscape, select the path, and use the Reverse option in the Path menu.</p>
+  </li>
+  <li>
+    <p>If you’re manipulating SVG with scripts rather than visual editors, Mike Kamermans has created a <a href="https://github.com/pomax/svg-path-reverse/">JavaScript utility to do the reversal</a>.</p>
+  </li>
+</ul>
+
+<p>Finally, you may want to adjust the starting point of the text to a position other than the starting point from the path code. Unfortunately, <code>startOffset</code> is not enough here: although it shifts the text around the shape, it doesn’t change the fact that text gets cropped off when it reaches the path start and end points. (SVG 2 proposes to change this, but browsers aren’t yet on board.)</p>
+
+<p>Tools for changing the start point of a path aren’t as common as for reversing it, but in most graphic editors you can force the matter by breaking and then re-joining your path at the chosen point.</p>
+
+<p>Alternatively, you can avoid the cut-off text issue by duplicating the path data string inside the <code>&lt;path&gt;</code> element, so that text will happily wrap around and continue along a second “lap” of the path. Just remember that now your total path is twice as long, so percentage <code>startOffset</code> values need to be divided in half.</p>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>For symmetrical shapes, such as a circle, you can instead use a <code>rotate</code> transformation on the <code>&lt;path&gt;</code> itself (or on the <code>&lt;text&gt;</code> containing the <code>&lt;textPath&gt;</code>) to re-position the start of the text as you wish.</p>
+</div>
+
+<p>With all those tips in mind, we’re ready to arrange text around a closed path. <a data-type="xref" href="#one-for-all-example">Example 2-X3</a> creates a circular crest out of the Three Musketeer’s “All for One &amp; One for All” motto. <a data-type="xref" href="#one-for-all-figure">Figure 2-X3</a> is the output.</p>
+
+<figure class="page-float">
+  <div id="one-for-all-figure" class="figure">
+    <img src="../ch07-text-files/one-for-all.svg" alt="The text 'All for One &amp; One for', arranged in a circle so that the 'All' from the beginning also serves as the final word of the motto." />
+    <figcaption><span class="label">Figure 2-X3. </span>Circular text using <code>&lt;textPath&gt;</code> and <code>textLength</code></figcaption>
+  </div>
+</figure>
+<div id="one-for-all-example" data-type="example">
+  <h5><span class="label">Example 2-X3. </span>Controlling text length for text on a closed path</h5>
+
+  <pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code> <code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code> <code class="na">xml:lang=</code><code class="s">"en"</code>
+    <code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code> <code class="na">viewBox=</code><code class="s">"0 0 500 500"</code><code class="nt">&gt;</code>
+    <code class="nt">&lt;title&gt;</code>Circular Text Path<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;style&gt;</code>
+        <code class="nt">text</code> <code class="p">{</code>
+            <code class="k">font-size</code><code class="o">:</code> <code class="m">76px</code><code class="p">;</code>
+            <code class="k">font-family</code><code class="o">:</code> <code class="n">Copperplate</code><code class="o">,</code> <code class="n">Copperplate</code> <code class="n">Gothic</code><code class="o">,</code> <code class="nb">serif</code><code class="p">;</code>
+            <code class="k">font-weight</code><code class="o">:</code> <code class="nb">bold</code><code class="p">;</code>
+            <code class="k">font-variant</code><code class="o">:</code> <code class="nb">small-caps</code><code class="p">;</code>
+            <code class="k">font-variant-ligatures</code><code class="o">:</code> <code class="nb">none</code><code class="p">;</code>
+            <code class="k">stroke</code><code class="o">:</code> <code class="nb">black</code><code class="p">;</code>
+            <code class="k">stroke-width</code><code class="o">:</code> <code class="m">1.5px</code><code class="p">;</code>
+            <code class="k">fill</code><code class="o">:</code> <code class="nb">white</code><code class="p">;</code>
+        <code class="p">}</code>
+    <code class="nt">&lt;/style&gt;</code>
+    <code class="nt">&lt;defs&gt;</code>
+        <code class="nt">&lt;path</code> <code class="na">id=</code><code class="s">"textcircle"</code>
+              <code class="na">d=</code><code class="s">"M250,400</code>
+<code class="s">                 a150,150 0 0,1 0,-300a150,150 0 0,1 0,300Z"</code>
+              <code class="na">transform=</code><code class="s">"rotate(12,250,250)"</code><code class="nt">/&gt;</code>
+    <code class="nt">&lt;/defs&gt;</code>
+    <code class="nt">&lt;rect</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code> <code class="na">fill=</code><code class="s">"silver"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;text&gt;</code>
+        <code class="nt">&lt;textPath</code> <code class="na">xlink:href=</code><code class="s">"#textcircle"</code>
+                  <code class="na">aria-label=</code><code class="s">"All for One &amp;amp; One for All"</code>
+                  <code class="na">textLength=</code><code class="s">"942"</code><code class="nt">&gt;</code><code class="ni">&amp;#160;</code>One for All
+                                         for One <code class="ni">&amp;amp;</code><code class="nt">&lt;/textPath&gt;</code>
+    <code class="nt">&lt;/text&gt;</code>
+<code class="nt">&lt;/svg&gt;</code></pre>
+</div>
+
+<p>The circle is created with a <code>&lt;path&gt;</code> element containing two half-circle arcs of 150-unit radius. As we mentioned in <a data-type="xref" href="../ch06-path-files/">Chapter 6</a>, you can’t draw a complete circle with a single arc segment, because it doesn’t have enough positioning information.</p>
+
+<p>The <code>textLength</code> attribute constrains the text to match the circumference of the circle (2π times the radius), and a rotational <code>transform</code> is used to tweak the alignment so that the ampersand (&amp;) is centered at the base of the circle.</p>
+<div data-type="warning" epub:type="warning">
+  <h6>Warning</h6>
+  <p>Or at least, that’s the end result. Creating this layout was more difficult than expected, due to issues with <code>textLength</code> on nested elements, <code>textLength</code> in combination with centered text, and inconsistent treatment of whitespace. Code that looked nice in one browser was horribly out of alignment in others. The markup in <a data-type="xref" href="#one-for-all-example">Example 2-X3</a> was the result of a lot of tweaking and testing in different browsers, and it still isn’t perfectly aligned everywhere.</p>
+</div>
+
+<p>As we mentioned in <a data-type="xref" href="ch07-rotate-vertical.html">“Beyond Horizontal: Rotated and Vertical Text”</a>, <code>textLength</code> declares the total length you want the text to meet, and browsers adjust the letter spacing to make it fit. It <em>should</em> work on any text element, including <code>&lt;textPath&gt;</code>, but browser implementations are buggy in conflicting ways, and some will ignore it. <code>textLength</code> can only be used reliably for <code>&lt;text&gt;</code> elements without children.</p>
+
+<p>When adjusting the <code>textLength</code> to match the path, you’ll need to know the length of the path you’re using. The browser can calculate it for you with the <code>getTotalLength()</code> method on the <code>&lt;path&gt;</code> element. The value returned by that method can be directly used in the <code>textLength</code> attribute of a <code>&lt;textPath&gt;</code> to make the text exactly fit.</p>
+
+<p>For example, by opening the SVG from <a data-type="xref" href="#one-for-all-example">Example 2-X3</a> in a browser, and then opening up the developer’s console, you can find the path length as follows:</p>
+
+<pre data-type="programlisting" data-code-language="javascript"><code class="nb">document</code><code class="p">.</code><code class="nx">getElementById</code><code class="p">(</code><code class="s2">"textcircle"</code><code class="p">).</code><code class="nx">getTotalLength</code><code class="p">()</code>
+<code class="c1">//returns 942.61083984375</code></pre>
+
+<p>This gives essentially the same result as calculating it from the geometry of the circle:</p>
+
+<pre data-type="programlisting" data-code-language="javascript"><code class="mi">150</code> <code class="o">*</code> <code class="mi">2</code> <code class="o">*</code> <code class="nb">Math</code><code class="p">.</code><code class="nx">PI</code>
+<code class="c1">//returns 942.4777960769379</code></pre>
+
+<p>It’s not a perfect match, because the browser uses approximations to draw circular paths, and approximations to calculate the length of paths. But it’s close enough for the drawing. And <code>getTotalLength()</code> is invaluable for more complicated paths, whose lengths can’t be converted into a simple formula.</p>
+
+<p>In SVG 2 and the latest versions of Chromium browsers, <code>getTotalLength()</code> can be used on any shape element, not only a <code>&lt;path&gt;</code>. So you can use it in your Chrome console, even if you can’t rely on it in your scripts. But that won’t be useful for text paths until non-path shapes can be referenced by the <code>&lt;textPath&gt;</code> element.</p>
+
+<p>There are a few other things to note in <a data-type="xref" href="#one-for-all-example">Example 2-X3</a>:</p>
+
+<ul>
+  <li>
+    <p>An <code>aria-label</code> attribute replaces the text content of the <code>&lt;textPath&gt;</code> with a more screen-reader friendly version.</p>
+  </li>
+  <li>
+    <p>The <code>&amp;amp;</code> entity is used for an ampersand (&amp;), while the numeric entity <code>&amp;#160;</code> is used for a non-breaking space, to prevent the space at the beginning of the text from collapsing. Because this is a standalone SVG file, the equivalent HTML entity <code>&amp;nbsp;</code> is not available.</p>
+  </li>
+  <li>
+    <p>The <code>font-variant-ligatures</code> property is used to turn off common ligatures, which can cause a chunky appearance when text is positioned around tight curves.</p>
+  </li>
+</ul>
+
+<p>If the path is <em>very</em> sharply curved, text may appear too “tight” on the inside of a curve, or too “loose” on the outside. You can adjust the vertical relationship between text and its path by modifying the value of a <code>dy</code> attribute for the parent <code>&lt;text&gt;</code> element (or a child <code>&lt;tspan&gt;</code> element). A positive value will pull the text baseline down to be more centered over the path, loosening up those tight inside curves and tightening the outside ones.</p>
+
+<p>One day, it may be possible to use the CSS baseline-related properties to adjust the position of text relative to the path, in a more intuitive manner. For now, <code>dy</code> has the better browser support.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

@@ -91,10 +91,17 @@ figure img {
 /* code blocks */
 pre[data-type="programlisting"] {
   padding: 0.5em;
-  max-width: 70ch;
+  max-width: 72ch;
   margin: 0.5em auto;
+  overflow-x: auto;
 }
-pre[data-type="programlisting"] code { color: inherit}
+pre[data-type="programlisting"] code,
+pre[data-type="programlisting"] a.co /* for fallback text on callout markers */
+{ color: inherit;
+  text-decoration: none;
+}
+pre[data-type="programlisting"] a.co img::before { content: "("; }
+pre[data-type="programlisting"] a.co img::after { content: ")"; }
 
 /* callouts */
 .calloutlist dt {

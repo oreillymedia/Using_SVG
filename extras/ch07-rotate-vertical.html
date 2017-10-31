@@ -5,6 +5,18 @@
   <title>Beyond Horizontal: Rotated and Vertical Text
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Beyond Horizontal: Rotated and Vertical Text — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Horizontal text is so HTML. SVG was designed for more than that. And now, CSS is too. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,183 @@
   </header>
   <main>
     <h1>Beyond Horizontal: Rotated and Vertical Text</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<p>SVG text is designed for decorative layouts, allowing you to position individual characters exactly where you want them. We showed in the book how you can shift individual characters in the <em>x</em> and <em>y</em> dimensions, with attributes on the containing element.</p>
+
+<p>The final option for character positioning is the <code>rotate</code> attribute, allowing you to set the angle of those characters.</p>
+
+<p>Like <code>x</code>, <code>y</code>, <code>dx</code>, and <code>dy</code>, the <code>rotate</code> attribute takes a list of values which are assigned, one-by-one, to the characters in the text content. The last value in the list affects all remaining characters in the current element—but, unlike with the positioning attributes, the rotation doesn’t persist for characters after the element’s end tag.</p>
+
+<p>The values in <code>rotate</code> are measured in degrees, but are given as numbers without units. Positive numbers are clockwise rotation, negative numbers are counter-clockwise.</p>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>Each rotation value is absolute, relative to normal layout, regardless of the previous value.</p>
+</div>
+
+<p>Each character is rotated relative to its own origin, rather than around the center of the glyph: this is normally the point at the “start” side of the baseline of the text. The rotations are applied after the rest of layout, and spacing of letters isn’t adjusted to fit. These details mean that <code>rotate</code> is best used in combination with exact character placement with the other positioning attributes—don’t expect the browser to automatically create typographically-pleasing results with rotated characters.</p>
+
+<p>To create more elegant rotated text, you can use <code>&lt;textPath&gt;</code> (which we discuss in the book and in the <a data-type="xref" href="ch07-textpaths.html">“Perfecting Paths for &lt;textPath&gt;”</a> article) to curve or angle a continuous line of text.</p>
+
+<p>For vertical or sideways text, the <code>writing-mode</code> property is a better option—although current browser implementations are not guaranteed to result in perfect typography, either.</p>
+
+<p>Nonetheless, <code>rotate</code> can be very effective at creating layouts that convey a sense of complete disorder, as done in <a data-type="xref" href="#scream-example">Example 7-X2</a> (with the results in <a data-type="xref" href="#scream-figure">Figure 7-X2</a>) to visualize a screaming voice falling out of control. In this case, we’re taking a vertical line of text and rotating each character by 15° more than the character before it, so that the letters flip around a full turn by the time they reach the bottom.</p>
+
+<figure class="page-float">
+  <div id="scream-figure" class="figure">
+    <img src="../ch07-text-files/scream.png" alt="A tall vertical comic book speech bubble. The text 'Aaaaaaaaaaaaaaaaahhh!!!!' is written from top to bottom, letters successively twisting around sideways, upside-down, then back upright again. Letters also get smaller as it goes, with the final exclamation points each getting larger again." width="200" />
+    <figcaption><span class="label">Figure 7-X2. </span>Rotated letters in SVG comic book text (<a href="../ch07-text-files/scream.svg" target="_blank">view live SVG file, including linked <code>@font-face</code> font</a>)</figcaption>
+  </div>
+</figure>
+<div id="scream-example" data-type="example">
+  <h5><span class="label">Example 7-X2. </span>Using <code>rotate</code> to alter the angle of individual characters</h5>
+
+  <pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">viewBox=</code><code class="s">"0 0 200 500"</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Scream—Comic Book text</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+</code><code class="k">@font-face</code><code> </code><code class="p">{</code><code>
+    </code><code class="nt">font-family</code><code class="o">:</code><code> </code><code class="s1">'SequentialistBB'</code><code class="o">;</code><code>
+    </code><code class="nt">src</code><code class="o">:</code><code> </code><code class="nt">url</code><code class="o">(</code><code class="s1">'fonts/SequentialistBB.woff2'</code><code class="o">)</code><code> </code><code class="nt">format</code><code class="o">(</code><code class="s1">'woff2'</code><code class="o">)</code><code class="o">,</code><code>
+         </code><code class="nt">url</code><code class="o">(</code><code class="s1">'fonts/SequentialistBB.woff'</code><code class="o">)</code><code> </code><code class="nt">format</code><code class="o">(</code><code class="s1">'woff'</code><code class="o">)</code><code class="o">;</code><code>
+    </code><code class="nt">font-style</code><code class="o">:</code><code> </code><code class="nt">normal</code><code class="o">;</code><code>
+    </code><code class="nt">font-weight</code><code class="o">:</code><code> </code><code class="nt">400</code><code class="o">;</code><code>
+</code><code class="p">}</code><code>                                                          </code><a class="co" id="co_online_extras_CO6-1" href="#callout_online_extras_CO6-1"><img src="callouts/1.svg" alt="1" /></a><code>
+</code><code class="nt">text</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">font-family</code><code class="o">:</code><code> </code><code class="n">SequentialistBB</code><code class="o">,</code><code>
+                 </code><code class="n">Papyrus</code><code class="o">-</code><code class="nb">condensed</code><code class="o">,</code><code> </code><code class="n">Impact</code><code class="o">,</code><code>
+                 </code><code class="nb">sans-serif</code><code class="o">-</code><code class="nb">condensed</code><code class="o">,</code><code> </code><code class="nb">sans-serif</code><code class="p">;</code><code>
+    </code><code class="k">font-stretch</code><code class="o">:</code><code> </code><code class="nb">condensed</code><code class="p">;</code><code>
+    </code><code class="k">writing-mode</code><code class="o">:</code><code> </code><code class="n">tb</code><code class="p">;</code><code>           </code><code class="c">/* SVG 1 syntax */</code><code>
+    </code><code class="k">glyph-orientation-vertical</code><code class="o">:</code><code> </code><code class="m">0</code><code class="p">;</code><code>                         </code><a class="co" id="co_online_extras_CO6-2" href="#callout_online_extras_CO6-2"><img src="callouts/2.svg" alt="2" /></a><code>
+    </code><code class="k">writing-mode</code><code class="o">:</code><code> </code><code class="n">vertical</code><code class="o">-</code><code class="n">rl</code><code class="p">;</code><code>  </code><code class="c">/* CSS3 syntax */</code><code>
+    </code><code class="nb">text</code><code class="o">-</code><code class="n">orientation</code><code class="o">:</code><code> </code><code class="n">upright</code><code class="p">;</code><code>
+    </code><code class="k">font-size</code><code class="o">:</code><code> </code><code class="m">28px</code><code class="p">;</code><code>
+</code><code class="p">}</code><code>
+</code><code class="nt">tspan</code><code> </code><code class="p">{</code><code> </code><code class="k">font-size</code><code class="o">:</code><code> </code><code class="m">75%</code><code class="p">;</code><code> </code><code class="p">}</code><code>                                  </code><a class="co" id="co_online_extras_CO6-3" href="#callout_online_extras_CO6-3"><img src="callouts/3.svg" alt="3" /></a><code>
+</code><code class="nt">path</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="m">#fff</code><code class="p">;</code><code>
+    </code><code class="k">stroke</code><code class="o">:</code><code> </code><code class="m">#000</code><code class="p">;</code><code>
+    </code><code class="k">stroke-width</code><code class="o">:</code><code> </code><code class="m">2</code><code class="p">;</code><code>
+</code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+    </code><code class="nt">&lt;path</code><code> </code><code class="na">d=</code><code class="s">"M175,495 L140,465 C30,500 40,400 30,200
+             S70,10 100,10 S170,0 170,200 S170,400 150,450 Z"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"100"</code><code> </code><code class="na">y=</code><code class="s">"12"</code><code>
+          </code><code class="na">rotate=</code><code class="s">"0 15 30 45 60 75 90 105 120 135 150 165 180
+                  195 210 225 240 255 270 285 300 315 330 345 360"</code><code>
+          </code><code class="na">textLength=</code><code class="s">"450"</code><code class="nt">&gt;</code><code>                                </code><a class="co" id="co_online_extras_CO6-4" href="#callout_online_extras_CO6-4"><img src="callouts/4.svg" alt="4" /></a><code>
+          AAAaaaa</code><code class="nt">&lt;tspan</code><code class="nt">&gt;</code><code>aaaa</code><code class="nt">&lt;tspan</code><code class="nt">&gt;</code><code>aaaa</code><code class="nt">&lt;tspan</code><code class="nt">&gt;</code><code>aahhh!</code><code class="nt">&lt;/tspan
+          &gt;</code><code>!</code><code class="nt">&lt;/tspan&gt;</code><code>!</code><code class="nt">&lt;/tspan&gt;</code><code>!</code><code class="nt">&lt;/text&gt;</code><code>                      </code><a class="co" id="co_online_extras_CO6-5" href="#callout_online_extras_CO6-5"><img src="callouts/5.svg" alt="5" /></a><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+  <dl class="calloutlist columns">
+    <dt><a class="co" id="callout_online_extras_CO6-1" href="#co_online_extras_CO6-1"><img src="callouts/1.svg" alt="1" /></a></dt>
+    <dd>
+      <p>The <code>@font-face</code> rule is the same as previous examples in the book, as are the font styles designed to ensure that a similarly-proportioned fallback font will be used if the web font doesn’t load.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO6-2" href="#co_online_extras_CO6-2"><img src="callouts/2.svg" alt="2" /></a></dt>
+    <dd>
+      <p>The vertical layout is defined with the <code>writing-mode</code> and orientation properties: first, with the old SVG 1 syntax, and then with the new CSS3 syntax.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO6-3" href="#co_online_extras_CO6-3"><img src="callouts/3.svg" alt="3" /></a></dt>
+    <dd>
+      <p>As part of the “falling” layout, the text will get progressively smaller, using nested <code>&lt;tspan&gt;</code> elements, each set to a <code>font-size</code> that is 75% of its parent’s size.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO6-4" href="#co_online_extras_CO6-4"><img src="callouts/4.svg" alt="4" /></a></dt>
+    <dd>
+      <p>The remaining aspects of the layout are defined by attributes on the <code>&lt;text&gt;</code> element itself: the <code>rotate</code> attribute lists different angles for each character, while the <code>textLength</code> attribute sets the overall length of the text to fit within the speech-bubble path.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO6-5" href="#co_online_extras_CO6-5"><img src="callouts/5.svg" alt="5" /></a></dt>
+    <dd>
+      <p>The nested <code>&lt;tspan&gt;</code> elements break up the stream of letters, with the final exclamation marks breaking out of the nested layers—and therefore each being larger than the last, back to the original <code>font-size</code>.</p>
+    </dd>
+  </dl>
+</div>
+
+<p>We’ve mentioned vertical text before, but haven’t discussed it in full. It is only recently getting to the point of good browser support. Results are still somewhat buggy and inconsistent in web browsers (at the time of writing). However, it can be used for decorative effects like this where you’re not too worried about exact layout and perfect typography.</p>
+
+<p>There are two syntaxes which can be combined to get almost-complete browser support for vertical writing modes:</p>
+<dl>
+  <dt>SVG 1.1 vertical text</dt>
+  <dd>
+
+    <ul>
+      <li>
+        <p>uses <code>writing-mode</code> property with value <code>tb</code> to create vertical (top-to-bottom) lines of text;</p>
+      </li>
+      <li>
+        <p>uses <code>glyph-orientation-vertical</code> property to set the type of vertical text layout, set to one of these values:</p>
+
+        <ul>
+          <li>
+            <p><code>0</code> for always upright (un-rotated) characters, stacked one under the other,</p>
+          </li>
+          <li>
+            <p><code>90</code> to have the entire line rotated sideways, 90° clockwise,</p>
+          </li>
+          <li>
+            <p><code>auto</code> (the default) to have sideways text for normally-horizontal scripts, but upright characters for scripts (like Chinese and Japanese) for which this is a standard writing style;</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>is fully supported in WebKit and Blink; Internet Explorer &amp; Edge support <code>writing-mode</code> but not glyph orientation control; older Firefox had no support, but the latest Firefox versions now support <code>writing-mode: tb</code> as a synonym for CSS 3 writing modes.</p>
+      </li>
+    </ul>
+  </dd>
+  <dt>CSS 3 vertical text</dt>
+  <dd>
+
+    <ul>
+      <li>
+        <p>uses <code>writing-mode</code> property to set vertical text and line-wrapping direction, using one of these values:</p>
+
+        <ul>
+          <li>
+            <p><code>vertical-rl</code> for vertical text that wraps so that the first line of a paragraph is on the right (this is standard for Japanese and Chinese vertical text),</p>
+          </li>
+          <li>
+            <p><code>vertical-lr</code> for vertical text that wraps so that the first line of a paragraph is on the left;</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>uses <code>text-orientation</code> property to set the type of vertical text:</p>
+
+        <ul>
+          <li>
+            <p><code>mixed</code> (the default, and the same as <code>glyph-orientation-vertical: auto</code>),</p>
+          </li>
+          <li>
+            <p><code>upright</code> for un-rotated characters,</p>
+          </li>
+          <li>
+            <p><code>sideways</code> for sideways text rotated clockwise;</p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p>is currently (mid-2017) only supported in Firefox and Chrome/Blink, but is expected to be adopted everwhere eventually.</p>
+      </li>
+    </ul>
+  </dd>
+</dl>
+
+<p><a data-type="xref" href="#scream-example">Example 7-X2</a> uses both syntaxes, relying on the CSS parser to let the new values override the old in supporting browsers. The double declarations provide full support for Blink, WebKit, and Firefox versions from 2016 and later, and partial support in IE and Edge.</p>
+<div data-type="warning" epub:type="warning">
+  <h6>Warning</h6>
+  <p>In IE and Edge, the text will be laid out sideways before <code>rotate</code> is applied, so each letter will be rotated an additional 90°.</p>
+</div>
+
+<p>Sideways text takes up a lot less vertical space than upright vertical text. And even among browsers that support upright vertical text, there is a lot of variation in how they space out the letters. The Sequentialist BB web font, like most fonts for normally-horizontal scripts, doesn’t include suggested vertical spacing in the font data.</p>
+
+<p>To make sure the text fits the speech bubble in all these cases, and also with fallback fonts, we’ve used another new attribute: <code>textLength</code>. The <code>textLength</code> defines the exact total length that the text should cover. The browser then adjusts the spacing between characters to make it fit.</p>
+
+<p><code>textLength</code> is a regular XML attribute, not a style property that can be set in CSS. It’s value is always a number, representing a distance in SVG user units (px units).</p>
+<div data-type="warning" epub:type="warning">
+  <h6>Warning</h6>
+  <p>Browsers are all a little inconsistent about how they handle <code>textLength</code> values when there are <code>&lt;tspan&gt;</code> elements nested inside <code>&lt;text&gt;</code> elements. Test carefully, and don’t use the attribute if you don’t have to.</p>
+</div>
+
+<p>The <code>textLength</code> value means that we don’t have to worry about changing the <code>text-anchor</code> to have a better fallback experience: we know exactly where the start, middle, and end of the text will be positioned because it will always have the same total length. But for other cases, it’s worth repeating: for vertical text, <code>text-anchor</code> defines the <em>vertical</em> alignment, relative to the <code>y</code> position of the text chunk.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

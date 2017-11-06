@@ -5,6 +5,18 @@
   <title>Dynamically Changing preserveAspectRatio
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Dynamically Changing preserveAspectRatio — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="A ready-to-use playground for exploring meet, slice, and none preserveAspectRatio options. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,317 @@
   </header>
   <main>
     <h1>Dynamically Changing preserveAspectRatio</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<p>In Example 8-2 and the following sections in the book, we built a resizable inline SVG, for testing the effect of <code>viewBox</code> and <code>preserveAspectRatio</code> values in viewports of different sizes and aspect ratios.</p>
+
+<p><a data-type="xref" href="#flex-scale-preserve-options-example">Example 8-X1</a>, goes one step further, creating a dynamic web page in which you can switch between the options using form inputs.</p>
+<div id="flex-scale-preserve-options-example" data-type="example">
+  <h5><span class="label">Example 8-X1. </span>Dynamic demonstration of <code>preserveAspectRatio</code> options</h5>
+
+  <p><strong>HTML markup:</strong></p>
+
+  <pre data-type="programlisting" data-code-language="html"><code class="cp">&lt;!DOCTYPE html&gt;</code><code>
+</code><code class="nt">&lt;html</code><code> </code><code class="na">lang=</code><code class="s">"en"</code><code class="nt">&gt;</code><code>
+</code><code class="nt">&lt;head</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;meta</code><code> </code><code class="na">charset=</code><code class="s">"utf-8"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>preserveAspectRatio options</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;link</code><code> </code><code class="na">rel=</code><code class="s">"stylesheet"</code><code> </code><code class="na">href=</code><code class="s">"flex-scale-viewBox.css"</code><code> </code><code class="nt">/&gt;</code><code>  </code><a class="co" id="co_online_extras_CO7-1" href="#callout_online_extras_CO7-1"><img src="callouts/1.svg" alt="1"/></a><code>
+    </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+        </code><code class="c">/* additional styles for form */</code><code>
+        </code><code class="nt">form</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">max-width</code><code class="o">:</code><code> </code><code class="m">25em</code><code class="p">;</code><code>
+            </code><code class="k">text-align</code><code class="o">:</code><code> </code><code class="nb">right</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nt">label</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">display</code><code class="o">:</code><code> </code><code class="nb">block</code><code class="p">;</code><code>
+            </code><code class="k">margin</code><code class="o">:</code><code> </code><code class="m">0.2em</code><code> </code><code class="m">0</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+    </code><code class="nt">&lt;script </code><code class="na">src=</code><code class="s">"flex-scale-preserve-options.js"</code><code class="nt">&gt;</code><code class="nt">&lt;/script&gt;</code><code>   </code><a class="co" id="co_online_extras_CO7-2" href="#callout_online_extras_CO7-2"><img src="callouts/2.svg" alt="2"/></a><code>
+</code><code class="nt">&lt;/head&gt;</code><code>
+</code><code class="nt">&lt;body</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;form</code><code> </code><code class="na">id=</code><code class="s">"preserve-options"</code><code class="nt">&gt;</code><code>                             </code><a class="co" id="co_online_extras_CO7-3" href="#callout_online_extras_CO7-3"><img src="callouts/3.svg" alt="3"/></a><code>
+        </code><code class="nt">&lt;label</code><code class="nt">&gt;</code><code class="nt">&lt;code</code><code class="nt">&gt;</code><code>preserveAspectRatio</code><code class="nt">&lt;/code&gt;</code><code>
+                mode
+            </code><code class="nt">&lt;select</code><code> </code><code class="na">id=</code><code class="s">"preserve"</code><code class="nt">&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"none"</code><code> </code><code class="nt">&gt;</code><code>none</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"meet"</code><code> </code><code class="na">selected</code><code> </code><code class="nt">&gt;</code><code>meet</code><code class="nt">&lt;/option&gt;</code><code> </code><a class="co" id="co_online_extras_CO7-4" href="#callout_online_extras_CO7-4"><img src="callouts/4.svg" alt="4"/></a><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"slice"</code><code> </code><code class="nt">&gt;</code><code>slice</code><code class="nt">&lt;/option&gt;</code><code>
+            </code><code class="nt">&lt;/select&gt;</code><code>
+        </code><code class="nt">&lt;/label&gt;</code><code>
+        </code><code class="nt">&lt;label</code><code class="nt">&gt;</code><code class="nt">&lt;i</code><code class="nt">&gt;</code><code>x</code><code class="nt">&lt;/i&gt;</code><code>-alignment
+            </code><code class="nt">&lt;select</code><code> </code><code class="na">id=</code><code class="s">"x-align"</code><code class="nt">&gt;</code><code>                            </code><a class="co" id="co_online_extras_CO7-5" href="#callout_online_extras_CO7-5"><img src="callouts/5.svg" alt="5"/></a><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"xMin"</code><code> </code><code class="nt">&gt;</code><code>min</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"xMid"</code><code> </code><code class="na">selected</code><code> </code><code class="nt">&gt;</code><code>mid</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"xMax"</code><code> </code><code class="nt">&gt;</code><code>max</code><code class="nt">&lt;/option&gt;</code><code>
+            </code><code class="nt">&lt;/select&gt;</code><code>
+        </code><code class="nt">&lt;/label&gt;</code><code>
+        </code><code class="nt">&lt;label</code><code class="nt">&gt;</code><code class="nt">&lt;i</code><code class="nt">&gt;</code><code>y</code><code class="nt">&lt;/i&gt;</code><code>-alignment
+            </code><code class="nt">&lt;select</code><code> </code><code class="na">id=</code><code class="s">"y-align"</code><code class="nt">&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"YMin"</code><code> </code><code class="nt">&gt;</code><code>min</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"YMid"</code><code> </code><code class="na">selected</code><code> </code><code class="nt">&gt;</code><code>mid</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"YMax"</code><code> </code><code class="nt">&gt;</code><code>max</code><code class="nt">&lt;/option&gt;</code><code>
+            </code><code class="nt">&lt;/select&gt;</code><code>
+        </code><code class="nt">&lt;/label&gt;</code><code>
+    </code><code class="nt">&lt;/form&gt;</code><code>
+    </code><code class="nt">&lt;div</code><code> </code><code class="na">class=</code><code class="s">"wrapper"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;svg</code><code> </code><code class="na">id=</code><code class="s">"preserve-svg"</code><code> </code><code class="na">viewBox=</code><code class="s">"0,0 20,20"</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Spade</code><code class="nt">&lt;/title&gt;</code><code>
+            </code><code class="nt">&lt;path</code><code> </code><code class="na">d=</code><code class="s">"M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+                     S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;/svg&gt;</code><code>
+    </code><code class="nt">&lt;/div&gt;</code><code>
+</code><code class="nt">&lt;/body&gt;</code><code>
+</code><code class="nt">&lt;/html&gt;</code></pre>
+  <dl class="calloutlist columns">
+    <dt><a class="co" id="callout_online_extras_CO7-1" href="#co_online_extras_CO7-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+    <dd>
+      <p>The <a data-type="xref" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch08-coordinates-files/flex-scale-viewBox.css">stylesheet from Example 8-2</a> is re-used, to create the resizable SVG. That could include any modifications you added to make the SVG resizable without the CSS <code>resize</code> property.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO7-2" href="#co_online_extras_CO7-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+    <dd>
+      <p>A linked script will add the behavior to listen for user input and update the SVG accordingly.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO7-3" href="#co_online_extras_CO7-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+    <dd>
+      <p>The webpage includes a <code>&lt;form&gt;</code> with the three drop-down lists for each of the three independent parts of the <code>preserveAspectRatio</code> attribute. The lists are created using the HTML <code>&lt;select&gt;</code> and <code>&lt;option&gt;</code> elements. A <code>&lt;label&gt;</code> wrapped around each selection set associates the description with the form field.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO7-4" href="#co_online_extras_CO7-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+    <dd>
+      <p>The <code>meet</code> option is selected by default, to match the default <code>preserveAspectRatio</code> value on the SVG.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO7-5" href="#co_online_extras_CO7-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+    <dd>
+      <p>For the <em>x</em>- and <em>y</em>-alignment options, the <code>value</code> attribute for each <code>&lt;option&gt;</code> is the exact keyword that will be used in the final <code>preserveAspectRatio</code> value (including capitalization), but the visible text is more readable. Again, the default <code>xMidYMid</code> options are checked.</p>
+    </dd>
+  </dl>
+
+  <p><strong>JavaScript: <em role="filename">flex-scale-preserve-options.js</em></strong></p>
+
+  <pre data-type="programlisting" data-code-language="javascript"><code class="nb">window</code><code class="p">.</code><code class="nx">addEventListener</code><code class="p">(</code><code class="s2">"load"</code><code class="p">,</code><code> </code><code class="kd">function</code><code class="p">(</code><code class="p">)</code><code class="p">{</code><code>                  </code><a class="co" id="co_online_extras_CO8-1" href="#callout_online_extras_CO8-1"><img src="callouts/1.svg" alt="1"/></a><code>
+    </code><code class="kd">var</code><code> </code><code class="nx">doc</code><code> </code><code class="o">=</code><code> </code><code class="nb">document</code><code class="p">;</code><code>
+    </code><code class="kd">var</code><code> </code><code class="nx">svg</code><code> </code><code class="o">=</code><code> </code><code class="nx">doc</code><code class="p">.</code><code class="nx">getElementById</code><code class="p">(</code><code class="s2">"preserve-svg"</code><code class="p">)</code><code class="p">;</code><code>            </code><a class="co" id="co_online_extras_CO8-2" href="#callout_online_extras_CO8-2"><img src="callouts/2.svg" alt="2"/></a><code>
+
+    </code><code class="kd">var</code><code> </code><code class="nx">preserve</code><code> </code><code class="o">=</code><code> </code><code class="nx">doc</code><code class="p">.</code><code class="nx">getElementById</code><code class="p">(</code><code class="s2">"preserve"</code><code class="p">)</code><code class="p">;</code><code>
+    </code><code class="kd">var</code><code> </code><code class="nx">xAlign</code><code> </code><code class="o">=</code><code> </code><code class="nx">doc</code><code class="p">.</code><code class="nx">getElementById</code><code class="p">(</code><code class="s2">"x-align"</code><code class="p">)</code><code class="p">;</code><code>
+    </code><code class="kd">var</code><code> </code><code class="nx">yAlign</code><code> </code><code class="o">=</code><code> </code><code class="nx">doc</code><code class="p">.</code><code class="nx">getElementById</code><code class="p">(</code><code class="s2">"y-align"</code><code class="p">)</code><code class="p">;</code><code>
+
+    </code><code class="nx">doc</code><code class="p">.</code><code class="nx">getElementById</code><code class="p">(</code><code class="s2">"preserve-options"</code><code class="p">)</code><code>
+       </code><code class="p">.</code><code class="nx">addEventListener</code><code class="p">(</code><code class="s2">"change"</code><code class="p">,</code><code> </code><code class="nx">update</code><code class="p">)</code><code class="p">;</code><code>                  </code><a class="co" id="co_online_extras_CO8-3" href="#callout_online_extras_CO8-3"><img src="callouts/3.svg" alt="3"/></a><code>
+
+    </code><code class="kd">function</code><code> </code><code class="nx">update</code><code class="p">(</code><code class="nx">event</code><code class="p">)</code><code> </code><code class="p">{</code><code>                                 </code><a class="co" id="co_online_extras_CO8-4" href="#callout_online_extras_CO8-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="kd">var</code><code> </code><code class="nx">p</code><code class="p">,</code><code> </code><code class="nx">string</code><code class="p">;</code><code>
+        </code><code class="nx">p</code><code> </code><code class="o">=</code><code> </code><code class="nx">preserve</code><code class="p">.</code><code class="nx">value</code><code class="p">;</code><code>
+        </code><code class="k">if</code><code> </code><code class="p">(</code><code class="nx">p</code><code> </code><code class="o">==</code><code> </code><code class="s2">"none"</code><code class="p">)</code><code> </code><code class="p">{</code><code>
+            </code><code class="nx">xAlign</code><code class="p">.</code><code class="nx">disabled</code><code> </code><code class="o">=</code><code> </code><code class="nx">yAlign</code><code class="p">.</code><code class="nx">disabled</code><code> </code><code class="o">=</code><code> </code><code class="kc">true</code><code class="p">;</code><code>        </code><a class="co" id="co_online_extras_CO8-5" href="#callout_online_extras_CO8-5"><img src="callouts/5.svg" alt="5"/></a><code>
+            </code><code class="nx">string</code><code> </code><code class="o">=</code><code> </code><code class="nx">p</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="k">else</code><code> </code><code class="p">{</code><code>
+            </code><code class="nx">xAlign</code><code class="p">.</code><code class="nx">disabled</code><code> </code><code class="o">=</code><code> </code><code class="nx">yAlign</code><code class="p">.</code><code class="nx">disabled</code><code> </code><code class="o">=</code><code> </code><code class="kc">false</code><code class="p">;</code><code>
+            </code><code class="nx">string</code><code> </code><code class="o">=</code><code> </code><code class="nx">xAlign</code><code class="p">.</code><code class="nx">value</code><code> </code><code class="o">+</code><code> </code><code class="nx">yAlign</code><code class="p">.</code><code class="nx">value</code><code> </code><code class="o">+</code><code> </code><code class="s2">" "</code><code> </code><code class="o">+</code><code> </code><code class="nx">p</code><code class="p">;</code><code>  </code><a class="co" id="co_online_extras_CO8-6" href="#callout_online_extras_CO8-6"><img src="callouts/6.svg" alt="6"/></a><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nx">svg</code><code class="p">.</code><code class="nx">setAttribute</code><code class="p">(</code><code class="s2">"preserveAspectRatio"</code><code class="p">,</code><code> </code><code class="nx">string</code><code class="p">)</code><code class="p">;</code><code>
+    </code><code class="p">}</code><code>
+
+    </code><code class="nx">update</code><code class="p">(</code><code class="p">)</code><code class="p">;</code><code>                                                </code><a class="co" id="co_online_extras_CO8-7" href="#callout_online_extras_CO8-7"><img src="callouts/7.svg" alt="7"/></a><code>
+</code><code class="p">}</code><code class="p">)</code><code class="p">;</code></pre>
+  <dl class="calloutlist columns">
+    <dt><a class="co" id="callout_online_extras_CO8-1" href="#co_online_extras_CO8-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+    <dd>
+      <p>As usual, the script is contained inside an anonymous function. However, instead of running the function automatically, it is set to run when the document finishes loading (and the <code>load</code> event is triggered on the window). The script can therefore be included in the HTML <code>&lt;head&gt;</code>, instead of at the end, and it will still not run until all the elements had been initialized.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO8-2" href="#co_online_extras_CO8-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+    <dd>
+      <p>All the key elements in the markup have <code>id</code> attributes, so they are easy to access from the script. They won’t change, so they are selected once and stored in variables. The <code>doc</code> variable is just a convenient alias for <code>document</code>, to reduce typing.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO8-3" href="#co_online_extras_CO8-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+    <dd>
+      <p>A single listener function will react to all changes within the form, regardless of which input element triggered the change. We don’t need to access the form again, so it isn’t saved to a variable; instead, the <code>addEventListener</code> method is called directly on the object returned by <code>getElementById</code>.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO8-4" href="#co_online_extras_CO8-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+    <dd>
+      <p>The <code>update(event)</code> function determines the currently selected options in the form, and sets the SVG’s <code>preserveAspectRatio</code> accordingly. The <code>value</code> property of an <code>HTMLSelectElement</code> is equal to the <code>value</code> attribute of the currently selected <code>&lt;option&gt;</code>.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO8-5" href="#co_online_extras_CO8-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+    <dd>
+      <p>If the selected mode is <code>none</code>, the alignment options are disabled. These only have an effect for <code>meet</code> and <code>slice</code>.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO8-6" href="#co_online_extras_CO8-6"><img src="callouts/6.svg" alt="6"/></a></dt>
+    <dd>
+      <p>For options other than <code>none</code>, the current alignment selections are accessed, and all three keywords are composed into a single <code>preserveAspectRatio</code> string (paying attention to the spacing between values).</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO8-7" href="#co_online_extras_CO8-7"><img src="callouts/7.svg" alt="7"/></a></dt>
+    <dd>
+      <p>The update function is also called once when the script is run after loading. That way, the SVG matches the form selections if the browser remembers choices from a previous visit to the web page.</p>
+    </dd>
+  </dl>
+</div>
+
+<p>The web page, with the SVG set to <code>xMinYMax slice</code> is displayed in <a data-type="xref" href="#flex-scale-preserve-options-figure">Figure 8-X1</a>. To get the complete effect, <a href="../ch08-coordinates-files/flex-scale-preserve-options.html">view the live example in your browser</a>. Try out all the options, and resize the SVG for each.</p>
+
+<figure class="page-float">
+  <div id="flex-scale-preserve-options-figure" class="figure">
+    <img src="../ch08-coordinates-files/flex-scale-preserve-options.png" alt="A web page, consisting of the three labelled drop-down inputs, followed by a frame with the spade shape in it.  The selected options are slice, x-min, and y-max. The frame is wider than it is tall, and only the bottom half of the spade shape is visible, scaled to fit the width of the frame." />
+    <figcaption><span class="label">Figure 8-X1. </span>Setting the graphic to slice using a dynamic web form</figcaption>
+  </div>
+</figure>
+
+<p>As you experiment, it should become clear that only one of the alignment options has an effect at a time. The graphic always <em>exactly</em> fits one dimension of the available space. Whether its the <em>x</em> or <em>y</em> dimension is determined both by the shape of the space, and by <code>meet</code> versus <code>slice</code>.</p>
+
+<p>In <a data-type="xref" href="../ch10-reuse-files/">Chapter 10</a>, we look at <code>preserveAspectRatio</code> again, for images. We can, of course, adapt the form and script from <a data-type="xref" href="#flex-scale-preserve-options-example">Example 8-X1</a> to instead set the attribute on the <code>&lt;image&gt;</code> element. <a data-type="xref" href="#flex-scale-image-options-example">Example 8-X2</a> does that, using the multi-image layout from <a data-type="xref" href="ch10.html#flex-scale-image-meet-example">Example 10-4</a>.</p>
+<div id="flex-scale-image-options-example" data-type="example">
+  <h5><span class="label">Example 8-X2. </span>Demonstrating <code>preserveAspectRatio</code> options on embedded images</h5>
+
+  <pre data-type="programlisting" data-code-language="html"><code class="cp">&lt;!DOCTYPE html&gt;</code><code>
+</code><code class="nt">&lt;html</code><code> </code><code class="na">lang=</code><code class="s">"en"</code><code class="nt">&gt;</code><code>
+</code><code class="nt">&lt;head</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;meta</code><code> </code><code class="na">charset=</code><code class="s">"utf-8"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>preserveAspectRatio for Images</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">body</code><code> </code><code class="p">{</code><code> </code><code class="k">margin</code><code class="o">:</code><code> </code><code class="m">0</code><code class="p">;</code><code> </code><code class="p">}</code><code>
+        </code><code class="nt">form</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">max-width</code><code class="o">:</code><code> </code><code class="m">400px</code><code class="p">;</code><code>
+            </code><code class="k">text-align</code><code class="o">:</code><code> </code><code class="nb">right</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nt">label</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">display</code><code class="o">:</code><code> </code><code class="nb">block</code><code class="p">;</code><code>
+            </code><code class="k">margin</code><code class="o">:</code><code> </code><code class="m">0.2em</code><code> </code><code class="m">0</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nt">svg</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">display</code><code class="o">:</code><code> </code><code class="nb">block</code><code class="p">;</code><code>
+            </code><code class="k">max-height</code><code class="o">:</code><code> </code><code class="n">calc</code><code class="p">(</code><code class="m">100vh</code><code> </code><code class="o">-</code><code> </code><code class="m">5em</code><code class="p">);</code><code>
+            </code><code class="k">max-width</code><code class="o">:</code><code> </code><code class="m">100%</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+</code><code class="nt">&lt;/head&gt;</code><code>
+</code><code class="nt">&lt;body</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;form</code><code> </code><code class="na">id=</code><code class="s">"preserve-options"</code><code class="nt">&gt;</code><code>                             </code><a class="co" id="co_online_extras_CO9-1" href="#callout_online_extras_CO9-1"><img src="callouts/1.svg" alt="1"/></a><code>
+        </code><code class="nt">&lt;label</code><code class="nt">&gt;</code><code class="nt">&lt;code</code><code class="nt">&gt;</code><code>preserveAspectRatio</code><code class="nt">&lt;/code&gt;</code><code>
+                mode
+            </code><code class="nt">&lt;select</code><code> </code><code class="na">id=</code><code class="s">"preserve"</code><code class="nt">&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"none"</code><code> </code><code class="nt">&gt;</code><code>none</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"meet"</code><code> </code><code class="na">selected</code><code> </code><code class="nt">&gt;</code><code>meet</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"slice"</code><code> </code><code class="nt">&gt;</code><code>slice</code><code class="nt">&lt;/option&gt;</code><code>
+            </code><code class="nt">&lt;/select&gt;</code><code>
+        </code><code class="nt">&lt;/label&gt;</code><code>
+        </code><code class="nt">&lt;label</code><code class="nt">&gt;</code><code class="nt">&lt;i</code><code class="nt">&gt;</code><code>x</code><code class="nt">&lt;/i&gt;</code><code>-alignment
+            </code><code class="nt">&lt;select</code><code> </code><code class="na">id=</code><code class="s">"x-align"</code><code class="nt">&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"xMin"</code><code> </code><code class="nt">&gt;</code><code>min</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"xMid"</code><code> </code><code class="na">selected</code><code> </code><code class="nt">&gt;</code><code>mid</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"xMax"</code><code> </code><code class="nt">&gt;</code><code>max</code><code class="nt">&lt;/option&gt;</code><code>
+            </code><code class="nt">&lt;/select&gt;</code><code>
+        </code><code class="nt">&lt;/label&gt;</code><code>
+        </code><code class="nt">&lt;label</code><code class="nt">&gt;</code><code class="nt">&lt;i</code><code class="nt">&gt;</code><code>y</code><code class="nt">&lt;/i&gt;</code><code>-alignment
+            </code><code class="nt">&lt;select</code><code> </code><code class="na">id=</code><code class="s">"y-align"</code><code class="nt">&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"YMin"</code><code> </code><code class="nt">&gt;</code><code>min</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"YMid"</code><code> </code><code class="na">selected</code><code> </code><code class="nt">&gt;</code><code>mid</code><code class="nt">&lt;/option&gt;</code><code>
+                </code><code class="nt">&lt;option</code><code> </code><code class="na">value=</code><code class="s">"YMax"</code><code> </code><code class="nt">&gt;</code><code>max</code><code class="nt">&lt;/option&gt;</code><code>
+            </code><code class="nt">&lt;/select&gt;</code><code>
+        </code><code class="nt">&lt;/label&gt;</code><code>
+    </code><code class="nt">&lt;/form&gt;</code><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">width=</code><code class="s">"400"</code><code> </code><code class="na">height=</code><code class="s">"600"</code><code> </code><code class="na">viewBox=</code><code class="s">"0 0 400 600"</code><code class="nt">&gt;</code><code>       </code><a class="co" id="co_online_extras_CO9-2" href="#callout_online_extras_CO9-2"><img src="callouts/2.svg" alt="2"/></a><code>
+    </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">text</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">font</code><code class="o">:</code><code> </code><code class="m">20px</code><code> </code><code class="n">Tahoma</code><code class="o">,</code><code> </code><code class="nb">sans-serif</code><code class="p">;</code><code>
+            </code><code class="k">text-anchor</code><code class="o">:</code><code> </code><code class="nb">middle</code><code class="p">;</code><code>
+            </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="n">darkRed</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nc">.bird-colors</code><code> </code><code class="nt">rect</code><code> </code><code class="p">{</code><code> </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="m">#5f6cb9</code><code class="p">;</code><code> </code><code class="p">}</code><code>
+        </code><code class="nc">.bird-colors</code><code> </code><code class="nt">text</code><code> </code><code class="p">{</code><code> </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="m">#bbde60</code><code class="p">;</code><code> </code><code class="p">}</code><code>
+        </code><code class="nc">.theme-colors</code><code> </code><code class="nt">rect</code><code> </code><code class="p">{</code><code> </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="m">#00aaa9</code><code class="p">;</code><code> </code><code class="p">}</code><code>
+        </code><code class="nc">.theme-colors</code><code> </code><code class="nt">text</code><code> </code><code class="p">{</code><code> </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="nb">white</code><code class="p">;</code><code> </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+    </code><code class="nt">&lt;svg</code><code> </code><code class="na">viewBox=</code><code class="s">"50 5 500 750"</code><code> </code><code class="na">width=</code><code class="s">"50%"</code><code> </code><code class="na">height=</code><code class="s">"50%"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;image</code><code> </code><code class="na">height=</code><code class="s">"900"</code><code> </code><code class="na">width=</code><code class="s">"600"</code><code>
+               </code><code class="na">class=</code><code class="s">"preserve-image"</code><code>
+               </code><code class="na">aria-label=</code><code class="s">"Using SVG cover image"</code><code>
+               </code><code class="na">xlink:href=</code><code class="s">"using_svg_cover.png"</code><code class="nt">/&gt;</code><code>          </code><a class="co" id="co_online_extras_CO9-3" href="#callout_online_extras_CO9-3"><img src="callouts/3.svg" alt="3"/></a><code>
+    </code><code class="nt">&lt;/svg&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code> </code><code class="na">class=</code><code class="s">"bird-colors"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">x=</code><code class="s">"50%"</code><code> </code><code class="na">height=</code><code class="s">"50%"</code><code> </code><code class="na">width=</code><code class="s">"50%"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"75%"</code><code> </code><code class="na">y=</code><code class="s">"45"</code><code> </code><code class="na">dy=</code><code class="s">"-0.5em"</code><code class="nt">&gt;</code><code>Amelia
+            </code><code class="nt">&lt;tspan</code><code> </code><code class="na">x=</code><code class="s">"75%"</code><code> </code><code class="na">dy=</code><code class="s">"1em"</code><code class="nt">&gt;</code><code>Bellamy-Royds</code><code class="nt">&lt;/tspan&gt;</code><code class="nt">&lt;/text&gt;</code><code>
+        </code><code class="nt">&lt;image</code><code> </code><code class="na">x=</code><code class="s">"50%"</code><code> </code><code class="na">y=</code><code class="s">"80"</code><code> </code><code class="na">height=</code><code class="s">"220"</code><code> </code><code class="na">width=</code><code class="s">"200"</code><code>
+               </code><code class="na">class=</code><code class="s">"preserve-image"</code><code>
+               </code><code class="na">aria-label=</code><code class="s">"Amelia in the sunshine"</code><code>
+               </code><code class="na">xlink:href=</code><code class="s">"Amelia.jpg"</code><code class="nt">/&gt;</code><code>                   </code><a class="co" id="co_online_extras_CO9-4" href="#callout_online_extras_CO9-4"><img src="callouts/4.svg" alt="4"/></a><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code> </code><code class="na">class=</code><code class="s">"bird-colors"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">y=</code><code class="s">"50%"</code><code> </code><code class="na">height=</code><code class="s">"50%"</code><code> </code><code class="na">width=</code><code class="s">"50%"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"25%"</code><code> </code><code class="na">y=</code><code class="s">"345"</code><code class="nt">&gt;</code><code>Kurt Cagle</code><code class="nt">&lt;/text&gt;</code><code>
+        </code><code class="nt">&lt;image</code><code> </code><code class="na">y=</code><code class="s">"380"</code><code> </code><code class="na">height=</code><code class="s">"220"</code><code> </code><code class="na">width=</code><code class="s">"200"</code><code>
+               </code><code class="na">class=</code><code class="s">"preserve-image"</code><code>
+               </code><code class="na">aria-label=</code><code class="s">"Kurt in a top hat"</code><code>
+               </code><code class="na">xlink:href=</code><code class="s">"Kurt.jpg"</code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code> </code><code class="na">class=</code><code class="s">"theme-colors"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">x=</code><code class="s">"50%"</code><code> </code><code class="na">y=</code><code class="s">"50%"</code><code> </code><code class="na">height=</code><code class="s">"50%"</code><code> </code><code class="na">width=</code><code class="s">"50%"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"75%"</code><code> </code><code class="na">y=</code><code class="s">"345"</code><code class="nt">&gt;</code><code>Dudley Storey</code><code class="nt">&lt;/text&gt;</code><code>
+        </code><code class="nt">&lt;image</code><code> </code><code class="na">x=</code><code class="s">"50%"</code><code> </code><code class="na">y=</code><code class="s">"380"</code><code> </code><code class="na">height=</code><code class="s">"220"</code><code> </code><code class="na">width=</code><code class="s">"200"</code><code>
+               </code><code class="na">class=</code><code class="s">"preserve-image"</code><code>
+               </code><code class="na">aria-label=</code><code class="s">"Dudley, re-imagined as a tiny warrior"</code><code>
+               </code><code class="na">xlink:href=</code><code class="s">"Dudley.jpg"</code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+    </code><code class="nt">&lt;/svg&gt;</code><code>
+    </code><code class="nt">&lt;script</code><code class="nt">&gt;</code><code>
+    </code><code class="nb">window</code><code class="p">.</code><code class="nx">addEventListener</code><code class="p">(</code><code class="s2">"load"</code><code class="p">,</code><code> </code><code class="kd">function</code><code class="p">(</code><code class="p">)</code><code class="p">{</code><code>
+        </code><code class="kd">var</code><code> </code><code class="nx">doc</code><code> </code><code class="o">=</code><code> </code><code class="nb">document</code><code class="p">;</code><code>
+        </code><code class="kd">var</code><code> </code><code class="nx">images</code><code> </code><code class="o">=</code><code> </code><code class="nx">doc</code><code class="p">.</code><code class="nx">getElementsByClassName</code><code class="p">(</code><code class="s2">"preserve-image"</code><code class="p">)</code><code class="p">;</code><code>
+
+        </code><code class="kd">var</code><code> </code><code class="nx">preserve</code><code> </code><code class="o">=</code><code> </code><code class="nx">doc</code><code class="p">.</code><code class="nx">getElementById</code><code class="p">(</code><code class="s2">"preserve"</code><code class="p">)</code><code class="p">;</code><code>
+        </code><code class="kd">var</code><code> </code><code class="nx">xAlign</code><code> </code><code class="o">=</code><code> </code><code class="nx">doc</code><code class="p">.</code><code class="nx">getElementById</code><code class="p">(</code><code class="s2">"x-align"</code><code class="p">)</code><code class="p">;</code><code>
+        </code><code class="kd">var</code><code> </code><code class="nx">yAlign</code><code> </code><code class="o">=</code><code> </code><code class="nx">doc</code><code class="p">.</code><code class="nx">getElementById</code><code class="p">(</code><code class="s2">"y-align"</code><code class="p">)</code><code class="p">;</code><code>
+
+        </code><code class="nx">doc</code><code class="p">.</code><code class="nx">getElementById</code><code class="p">(</code><code class="s2">"preserve-options"</code><code class="p">)</code><code>
+           </code><code class="p">.</code><code class="nx">addEventListener</code><code class="p">(</code><code class="s2">"change"</code><code class="p">,</code><code> </code><code class="nx">update</code><code class="p">)</code><code class="p">;</code><code>
+
+        </code><code class="kd">function</code><code> </code><code class="nx">update</code><code class="p">(</code><code class="nx">event</code><code class="p">)</code><code> </code><code class="p">{</code><code>
+            </code><code class="kd">var</code><code> </code><code class="nx">p</code><code class="p">,</code><code> </code><code class="nx">string</code><code class="p">;</code><code>
+            </code><code class="nx">p</code><code> </code><code class="o">=</code><code> </code><code class="nx">preserve</code><code class="p">.</code><code class="nx">value</code><code class="p">;</code><code>
+            </code><code class="k">if</code><code> </code><code class="p">(</code><code class="nx">p</code><code> </code><code class="o">==</code><code> </code><code class="s2">"none"</code><code class="p">)</code><code> </code><code class="p">{</code><code>
+                </code><code class="nx">xAlign</code><code class="p">.</code><code class="nx">disabled</code><code> </code><code class="o">=</code><code> </code><code class="nx">yAlign</code><code class="p">.</code><code class="nx">disabled</code><code> </code><code class="o">=</code><code> </code><code class="kc">true</code><code class="p">;</code><code>
+                </code><code class="nx">string</code><code> </code><code class="o">=</code><code> </code><code class="nx">p</code><code class="p">;</code><code>
+            </code><code class="p">}</code><code>
+            </code><code class="k">else</code><code> </code><code class="p">{</code><code>
+                </code><code class="nx">xAlign</code><code class="p">.</code><code class="nx">disabled</code><code> </code><code class="o">=</code><code> </code><code class="nx">yAlign</code><code class="p">.</code><code class="nx">disabled</code><code> </code><code class="o">=</code><code> </code><code class="kc">false</code><code class="p">;</code><code>
+                </code><code class="nx">string</code><code> </code><code class="o">=</code><code> </code><code class="nx">xAlign</code><code class="p">.</code><code class="nx">value</code><code> </code><code class="o">+</code><code> </code><code class="nx">yAlign</code><code class="p">.</code><code class="nx">value</code><code> </code><code class="o">+</code><code> </code><code class="s2">" "</code><code> </code><code class="o">+</code><code> </code><code class="nx">p</code><code class="p">;</code><code>
+            </code><code class="p">}</code><code>
+            </code><code class="k">for</code><code> </code><code class="p">(</code><code class="kd">var</code><code> </code><code class="nx">i</code><code class="o">=</code><code class="mi">0</code><code class="p">,</code><code> </code><code class="nx">n</code><code class="o">=</code><code class="nx">images</code><code class="p">.</code><code class="nx">length</code><code class="p">;</code><code> </code><code class="nx">i</code><code class="o">&lt;</code><code class="nx">n</code><code class="p">;</code><code> </code><code class="nx">i</code><code class="o">++</code><code class="p">)</code><code> </code><code class="p">{</code><code>
+                </code><code class="nx">images</code><code class="p">[</code><code class="nx">i</code><code class="p">]</code><code class="p">.</code><code class="nx">setAttribute</code><code class="p">(</code><code>
+                    </code><code class="s2">"preserveAspectRatio"</code><code class="p">,</code><code> </code><code class="nx">string</code><code class="p">)</code><code class="p">;</code><code>          </code><a class="co" id="co_online_extras_CO9-5" href="#callout_online_extras_CO9-5"><img src="callouts/5.svg" alt="5"/></a><code>
+            </code><code class="p">}</code><code>
+        </code><code class="p">}</code><code>
+
+        </code><code class="nx">update</code><code class="p">(</code><code class="p">)</code><code class="p">;</code><code>
+    </code><code class="p">}</code><code class="p">)</code><code class="p">;</code><code>
+    </code><code class="nt">&lt;/script&gt;</code><code>
+</code><code class="nt">&lt;/body&gt;</code><code>
+</code><code class="nt">&lt;/html&gt;</code></pre>
+  <dl class="calloutlist columns">
+    <dt><a class="co" id="callout_online_extras_CO9-1" href="#co_online_extras_CO9-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+    <dd>
+      <p>The form hasn’t changed from <a data-type="xref" href="#flex-scale-preserve-options-example">Example 8-X1</a>; since the embedded images are not SVG, the <code>defer</code> option is not relevant for <code>preserveAspectRatio</code>.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO9-2" href="#co_online_extras_CO9-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+    <dd>
+      <p>The main SVG has a fixed height and width in the markup, but CSS <code>max-height</code> and <code>max-width</code> will scale it down to fit the screen.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO9-3" href="#co_online_extras_CO9-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+    <dd>
+      <p>Each image is identified by the class <code>preserve-image</code> to allow it to be selected in the script. (However, the book-cover image exactly matches its aspect ratio, and won’t ever change.)</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO9-4" href="#co_online_extras_CO9-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+    <dd>
+      <p>All three photographs are given the same dimensions, in the SVG’s coordinate system: 200px wide and 220px tall.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO9-5" href="#co_online_extras_CO9-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+    <dd>
+      <p>Because we are modifying multiple elements, the script has been changed to cycle through them in a loop; otherwise, it is the same as <a data-type="xref" href="#flex-scale-preserve-options-example">Example 8-X1</a>.</p>
+    </dd>
+  </dl>
+</div>
+
+<p><a href="../ch10-reuse-files/flex-scale-image-options.html">View the live example.</a></p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

@@ -3,15 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <title>Using slice and padding to scale inline SVG</title>
+    <link rel="stylesheet" href="fixed-ratio-slice.css" />
     <style>
-/* page styles */
-body {
-    padding: 0.5em 2em;
-    font-family: sans-serif;
-    background-color: lightSteelBlue;
-    color: indigo;
-}
-svg  { background-color: plum; }
+/* additional page styles */
 figure {
     margin: 0.5em 0;
     padding: 4%;
@@ -23,25 +17,6 @@ figcaption {
     font-style: italic;
     margin-top: 0.5em;
     margin-bottom: -0.3em;
-}
-
-/* aspect-ratio control styles */
-.sliced-svg { 
-    display: block;
-    width: 100%;
-    height: 1px;
-    box-sizing: content-box;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-}
-.sliced-svg.square {
-    padding-bottom: 100%;
-    padding-bottom: calc(100% - 1px);
-}
-.sliced-svg.ratio-2-1 {
-    padding-bottom: 50%;
-    padding-bottom: calc(50% - 1px);
 }
     </style>
 </head>
@@ -60,15 +35,5 @@ figcaption {
         </figcaption>
     </figure>
     <p>Before you go skiing, make sure you know what the trail signs mean!</p>
-    <!--
-    <figure>
-        <svg class="sliced-svg square" viewBox="-10,-10 20,20" 
-             preserveAspectRatio="xMidYMin slice">
-            <title>Green Circle</title>
-            <circle r="9" fill="seaGreen" />
-        </svg>
-        <figcaption>A green circle marks beginner-friendly slopes.
-        </figcaption>
-    </figure><!-- -->
 </body>
 </html>

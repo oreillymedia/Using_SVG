@@ -5,6 +5,17 @@
   <title>The Limits of Numbers in SVG
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="The Limits of Numbers in SVG — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="SVG coordinates are scalable, independent of pixels. But in practice, you can't use just any scale you choose. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +29,47 @@
   </header>
   <main>
     <h1>The Limits of Numbers in SVG</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<p>SVG describes shapes and layouts with mathematical precision. The perfect curve of a path exists separate from the limited pixels used to display it. But in order to convert your mathematical curves into visible pixels, the computer needs a binary number to calculate with. And numbers in computers have their limits.</p>
+
+<p>The SVG coordinate plane may be theoretically infinite, but you’ll fall off the edge of the world if you exceed the size of a 32-bit (single-precision) floating point number. The SVG specifications don’t require browsers to keep track of any coordinates larger than that.</p>
+
+<p>Theoretically, that means that you should only have to worry about too-big numbers if you’re navigating in the neighborhood of 1 trillion trillion trillion units.</p>
+
+<p>In reality, when drawing SVG in web browsers, even much smaller numbers can cause problems.</p>
+
+<p>Even if all web browsers used floating point arithmetic (like they are supposed to), you can get in trouble with medium-sized numbers if you need them to be precise to many decimal places.</p>
+
+<p><strong role="term">Floating point numbers</strong> encode the value of the number (the <strong role="term">significand</strong>) separately from its size (the <strong role="term">exponent</strong>, equivalent to the number of digits left or right of the decimal place, but in binary format). Floats can therefore store very large or very small numbers—but they can’t reliably add or subtract the two.</p>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>If you ever <em>do</em> need to use numbers in the trillions—or trillion<em>th</em>s—you’ll be glad to know that you can use scientific notation to express really large numbers (like 6.022e23, the Avogadro number) or really small numbers (like 6.626e-34, the Planck constant). But don’t expect those numbers to be stored with high precision—only the first few digits would remain accurate.</p>
+</div>
+
+<p>Using single-precision floats, SVG viewers are not expected to correctly draw differences between two values finer than <sup>1</sup>/<sub>4,000,000</sub> of the larger number (that’s 1 over 2 to the power of 22, approximately). In practice, very few achieve even that.</p>
+
+<p>Now, even with the latest high-resolution widescreen monitors, it’s unlikely that you will be able to display the difference between 4 million and 4 million plus one, anyway.</p>
+
+<p>The issue with mid-sized numbers arise when you zoom in to coordinates with large values but small differences between them. In other words, trying to use latitude and longitude degrees to map a city block (with individual buildings measured in hundred-thousandths of a degree) would cause floating-point errors.</p>
+
+<p>But that’s not your biggest problem.</p>
+
+<p>Your biggest problem is that many low-level vector graphics languages were designed to work with screen coordinates, not scientific ones. SVG viewers that build upon these graphics languages are limited in the numbers they can handle.</p>
+
+<p>The numerical precision limits described above are the theoretical ones, based on the SVG specifications. If your SVG display software follows the SVG specifications, it would use 32-bit (“single precision”) floating-point numbers for all calculations, and 64-bit (“double precision”) for calculating transformations.</p>
+
+<p>However, some low-level vector graphics languages use <strong role="term">fixed-point</strong> numbers. And many web browsers use those low-level languages to draw SVG.</p>
+
+<p>Fixed point means that only the value is stored, and the exponent is always the same; larger numbers or tiny decimals cannot be encoded at all.</p>
+<div data-type="warning" epub:type="warning">
+  <h6>Warning</h6>
+  <p>For reliable results cross-browser, use numbers with no more than 2 digits after the decimal and four digits before it.</p>
+
+  <p>Also, Firefox (as of version 55) does not correctly calculate <code>&lt;svg&gt;</code> aspect ratios with a <code>viewBox</code> where the width or height is less than 1, even though it may correctly draw the scaled graphics.</p>
+</div>
+
+<p>If you stick with coordinates that are reasonably close to the default scale of one unit per pixel—and with graphics that will fit on your screen—you don’t usually have to worry about the precision and range of possible numbers. However, if you’re working with technical coordinates that have a meaning separate from their visual display, you will often need to scale them to screen dimensions before using them in your SVG code.</p>
+
+<p>If you are creating a large, detailed SVG drawing (such as a map), you may need to break it into tiles with their own coordinate system, instead of using a continuous coordinate system for the entire map. Each point should use decimals no more precise than 0.01, and the largest numbers should be no bigger than ±5,000. You can then use transformations and nested coordinate systems to position your tiles correctly in the overall layout.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

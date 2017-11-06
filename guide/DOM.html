@@ -5,6 +5,31 @@
   <title>Select SVG DOM Methods and Objects Reference
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+  <style>
+/* code blocks */
+pre[data-type="programlisting"] {
+  padding: 0.5em;
+  max-width: 72ch;
+  margin: 0.5em auto;
+  overflow-x: auto;
+}
+pre[data-type="programlisting"] code {
+  color: inherit;
+  text-decoration: none;
+}
+  </style>
+  
+  <meta name="twitter:title" property="og:title" 
+        content="Select SVG DOM Methods and Objects Reference — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="A guide to the DOM and JavaScript objects, properties, and methods we used to manipulate SVG. Part of the supplementary material for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -22,10 +47,759 @@
         <li><a href="#intro">Introduction</a></li>
       </ul>
     </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<div id="intro" class="columns">
+
+  <p>The document object model (DOM) is a representation of web documents as connected objects that you can manipulate with JavaScript. SVG documents in web browsers support the core DOM methods defined for all XML and HTML elements.</p>
+
+  <p>For the most part, these core methods are the easiest and best-supported way to control the SVG DOM. The main concern is that you use the XML-compatible core DOM methods, and not HTML-specific methods.</p>
+
+  <p>However, there are also numerous unique SVG DOM features. This book hasn’t discussed them in depth. But we have highlighted a few particularly useful—and well-supported—DOM features that are unique to SVG.</p>
+
+  <p>This appendix collects all the DOM functions and objects we’ve used in the examples into one reference. It is <em>not</em> a complete list of all possible DOM methods for working with SVG.</p>
+
+  <p>The list also does not include the basic JavaScript data structures (like objects and arrays), or the HTML DOM methods we used with the HTML form elements in <a data-type="xref" href="../ch08-coordinates-files/">Example 8-X1</a>.</p>
+
+  <p>The official references for SVG DOM methods are now scattered between SVG 2, the draft SVG Animation Elements spec, and the Geometry Interfaces Module Level 1 spec. The most up-to-date reference for shared DOM methods is <a href="https://dom.spec.whatwg.org/"><em class="hyperlink">https://dom.spec.whatwg.org/</em></a>. But in all cases, remember: what is in the spec may not match what is in all browsers that you need to support. Test carefully.</p>
+</div>
+
+<section data-type="sect1" data-pdf-bookmark="Global Objects and Functions">
+  <h2 id="dom-globals-section">Global Objects and Functions<a href="#dom-globals-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+    <p>These objects are defined as part of the global scope when you run JavaScript in a web document. That means that they are defined as part of the <code>window</code> object. You can use them directly in your scripts, in the same way that you would use variables that you have declared yourself.</p>
+    <dl class="columns">
+      <dt id="document"><code>document</code> <a href="#document" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>A <code>Document</code> object that is the root of the DOM tree. See <a data-type="xref" href="#dom-document-section">“<code>Document</code> Properties and Methods”</a> for methods and properties.</p>
+      </dd>
+      <dt id="requestAnimationFrame"><code>requestAnimationFrame(<em>callbackFunction</em>)</code> <a href="#requestAnimationFrame" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Asks the browser to callback the screen as soon as practical, and to run the callback function before doing so. The callback function will be passed a timestamp value (in milliseconds) when it is run.</p>
+
+        <ul>
+          <li>
+            <p><code><em>callbackFunction</em></code> is a JavaScript function object: either an anonymous function or the name of a function declared elsewhere in the script.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="cancelAnimationFrame"><code>cancelAnimationFrame(<em>ref</em>)</code> <a href="#cancelAnimationFrame" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Cancels an existing animation frame request; the <code><em>ref</em></code> is the value returned from <code>requestAnimationFrame()</code>.</p>
+      </dd>
+      <dt id="setInterval"><code>setInterval(<em>callbackFunction</em>, <em>time</em>)</code> <a href="#setInterval" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Asks the browser to run the callback function at regular intervals, for as long as the document is open or until the request is cleared.</p>
+
+        <ul>
+          <li>
+            <p><code><em>time</em></code> is the approximate number of milliseconds between intervals.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="clearInterval"><code>clearInterval(<em>ref</em>)</code> <a href="#clearInterval" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Clears (cancels) an existing interval request; the <code><em>ref</em></code> is the value returned from <code>setInterval()</code>.</p>
+      </dd>
+      <dt id="setTimeout"><code>setTimeout(<em>callbackFunction</em>, <em>time</em>)</code> <a href="#setTimeout" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Asks the browser to run the callback function after the specified delay.</p>
+
+        <ul>
+          <li>
+            <p><code><em>time</em></code> is the approximate number of milliseconds until the function is called.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="clearTimeout"><code>clearTimeout(<em>ref</em>)</code> <a href="#clearTimeout" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Clears (cancels) an existing timeout request; the <code><em>ref</em></code> is the value returned from <code>setTimeout()</code>.</p>
+      </dd>
+      <dt id="encodeURIComponent"><code>encodeURIComponent(<em>string</em>)</code> <a href="#encodeURIComponent" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Converts a string to a safe format for including in URL query parameters or data URIs.</p>
+      </dd>
+      <dt id="btoa"><code>btoa(<em>data</em>)</code> <a href="#btoa" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dt id="atob"><code>atob(<em>string</em>)</code> <a href="#atob" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Converts arbitrary binary data (“b”) to base64-encoded format (“a” for ASCII or alphabetical), and vice versa.</p>
+      </dd>
+      <dt id="Math"><code>Math</code> <a href="#Math" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>A core JavaScript object with properties for mathematical constants and static methods for mathematical functions. These are the ones we used in the examples or supplementary material:</p>
+
+        <ul>
+          <li>
+            <p><code>Math.PI</code> for the constant π, used for calculating the geometry of circles and for converting degrees to radians.</p>
+          </li>
+          <li>
+            <p><code>Math.min(...)</code> and <code>Math.max(...)</code> for finding the minimum and maximum of a list of values.</p>
+          </li>
+          <li>
+            <p><code>Math.random()</code> to generate a random number between 0 and 1.</p>
+          </li>
+          <li>
+            <p><code>Math.cos(<em>a</em>)</code> and <code>Math.sin(<em>a</em>)</code> for calculating trigonometric ratios from an angle in radians.</p>
+          </li>
+          <li>
+            <p><code>Math.atan2(<em>dy</em>, <em>dx</em>)</code> for calculating an angle (in radians) from the vertical change (<code><em>dy</em></code>) relative to the horizontal change (<code><em>dx</em></code>).</p>
+          </li>
+          <li>
+            <p>There’s also <code>Math.round(n)</code> for rounding numbers. However, we instead used a <code>Number</code> method <code>n.toFixed(<em>digits</em>)</code>, which converts the number to a formatted string, rounded to the specified amount of decimal digits.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="Date"><code>Date</code> <a href="#Date" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>The JavaScript data type for dates, which also has static functions for parsing dates and accessing the current date. We used <code>Date.now()</code> to generate timestamps.</p>
+      </dd>
+      <dt id="performance"><code>performance</code> <a href="#performance" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>An object containing a collection of methods for recording the time it takes your code to execute. The <code>performance.now()</code> timestamp is compatible with the timestamps used by <code>requestAnimationFrame()</code> (but it doesn’t have as good browser support as <code>Date.now()</code>).</p>
+      </dd>
+      <dt id="location"><code>location</code> <a href="#location" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>An object describing the URL of the current document. We used the <code>assign()</code> method to simulate link clicks in <a data-type="xref" href="../ch18-interaction-files/">Example 18-7</a>.</p>
+      </dd>
+      <dt id="XMLHttpRequest"><code>XMLHttpRequest</code> <a href="#XMLHttpRequest" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>The class object for requests to the browser to fetch files from the internet for use in this document’s scripts. See <a data-type="xref" href="../extras/ch10-ajax.html">“Importing SVG Assets, with AJAX”</a> for more.</p>
+      </dd>
+    </dl>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="Document Properties and Methods">
+  <h2 id="dom-document-section"><code>Document</code> Properties and Methods<a href="#dom-document-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+    <p>The following properties and methods are available on the <code>document</code> object, for accessing existing elements and creating new ones:</p>
+    <dl class="columns">
+      <dt id="documentElement"><code>documentElement</code> <a href="#documentElement" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Gets the root element of the DOM tree for this document.</p>
+          </li>
+          <li>
+            <p>Setting has no effect.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="createElement"><code>createElement(<em>tagName</em>)</code> <a href="#createElement" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Returns a new element with that tag name, that is not part of any DOM tree yet.</p>
+          </li>
+          <li>
+            <p>If this is an <code>HTMLDocument</code>, the new element will be in the HTML namespace; if the tag name is a recognized HTML tag, the object will be of the correct type to create a fully-functioning HTML element.</p>
+          </li>
+          <li>
+            <p>If this is an XML or SVG document, the new element will not have a namespace and will not have any particular behavior or appearance.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="createElementNS"><code>createElementNS(<em>namespaceURI</em>, <em>tagName</em>)</code> <a href="#createElementNS" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p><code><em>namespaceURI</em></code> is the namespace of the attribute as a URL string (<em>not</em> a prefix from the markup).</p>
+          </li>
+          <li>
+            <p>Returns a new element with that tag name, in the specified namespace.</p>
+          </li>
+          <li>
+            <p>If the tag name is a recognized tag for that namespace, the object will be of the correct type, with the appropriate behavior and appearance.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getElementById"><code>getElementById(<em>id</em>)</code> <a href="#getElementById" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Returns the first element in the document with the specified <code>id</code>.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getElementsByClassName"><code>getElementsByClassName(<em>className</em>)</code> <a href="#getElementsByClassName" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Returns a <em>live</em> list of elements in the document that have the specified class; the list object will be updated as elements are added or removed from the document, or have their class changed.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getElementsByTagName"><code>getElementsByTagName(<em>tagName</em>)</code> <a href="#getElementsByTagName" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Returns a <em>live</em> list of elements in the document that have the specified tag name; the list object will be updated as elements are added or removed from the document.</p>
+          </li>
+          <li>
+            <p>There’s also a <code>getElementsByTagNameNS</code> method for namespace-specific searches.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="querySelector"><code>querySelector(<em>selector</em>)</code> <a href="#querySelector" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Returns the first element in the document that matches the selector.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="querySelectorAll"><code>querySelectorAll(<em>selector</em>)</code> <a href="#querySelectorAll" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Returns a <em>fixed</em> list of all elements in the document that currently match the selector.</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="Element Properties and Methods">
+  <h2 id="dom-element-section"><code>Element</code> Properties and Methods<a href="#dom-element-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+    <p>The following properties and methods are available on any DOM object representing an element, in all browsers that support SVG:</p>
+    <dl class="columns">
+      <dt id="textContent"><code>textContent</code> <a href="#textContent" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Gets the concatenated text content of this element and all its children, as a single string.</p>
+          </li>
+          <li>
+            <p>Setting replaces all child text content and elements with the specified string of un-formatted text.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="namespaceURI"><code>namespaceURI</code> <a href="#namespaceURI" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Gets the namespace of the current element as a string, which you can use in <code>createElementNS()</code> methods. Works regardless of whether this element was created by a parser or by scripts. Will be <code>null</code> if you used <code>createElement()</code> in an XML document.</p>
+          </li>
+          <li>
+            <p>Setting has no effect.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getAttribute"><code>getAttribute(<em>attrName</em>)</code> <a href="#getAttribute" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p><code><em>attrName</em></code> is the name of an attribute (without a namespace) on this element.</p>
+          </li>
+          <li>
+            <p>Returns the string value of that attribute (or <code>null</code>, if there’s no matching attribute).</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="setAttribute"><code>setAttribute(<em>attrName</em>, <em>attrValue</em>)</code> <a href="#setAttribute" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p><code><em>attrName</em></code> is the name of the attribute (without a namespace) that you want to create or change.</p>
+          </li>
+          <li>
+            <p><code><em>attrValue</em></code> is any object, which will be converted to a string value using that object’s <code>toString()</code> method.</p>
+          </li>
+          <li>
+            <p>No return value, although invalid values may create errors or warnings.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getAttributeNS"><code>getAttributeNS(<em>namespaceURI</em>, <em>attrName</em>)</code><a href="#getAttributeNS" class="hash-link" aria-label="Permalink">#</a></dt>      
+      <dt id="setAttributeNS"><code>setAttributeNS(<em>namespaceURI</em>, <em>attrName</em>, <em>attrValue</em>)</code> <a href="#setAttributeNS" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Versions of the attribute functions for XML-namespaced attributes.</p>
+          </li>
+          <li>
+            <p><code><em>namespaceURI</em></code> is the namespace of the attribute as a URL string (<em>not</em> a prefix from the markup).</p>
+          </li>
+          <li>
+            <p><code><em>attrName</em></code> is the attribute name after removing the prefix and <code>:</code> separator.</p>
+          </li>
+          <li>
+            <p>For example, to access the <code>xlink:href</code> attribute value:</p>
+
+            <pre data-type="programlisting" data-code-language="javascript"><code class="nx">h</code> <code class="o">=</code> <code class="nx">element</code><code class="p">.</code><code class="nx">getAttributeNS</code><code class="p">(</code>
+        <code class="s2">"http://www.w3.org/1999/xlink"</code><code class="p">,</code> <code class="s2">"href"</code><code class="p">);</code></pre>
+          </li>
+          <li>
+            <p>Returns values are the same as the un-namespaced versions.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="appendChild"><code>appendChild(<em>node</em>)</code> <a href="#appendChild" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Adds the specified <code>Node</code> object (an element or a text node object) as the last child of the current element; if necessary, it removes the node from whatever DOM tree it is currently a child of.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="insertBefore"><code>insertBefore(<em>node</em>, <em>sibling</em>)</code> <a href="#insertBefore" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Adds the specified <code>Node</code> object as a child .</p>
+          </li>
+          <li>
+            <p>For example, to add a newly-created <code>&lt;title&gt;</code> element to a <code>&lt;g&gt;</code> as the first child of that group, you’d need to insert it before the current first child element:</p>
+
+            <pre data-type="programlisting" data-code-language="javascript"><code class="nx">group</code><code class="p">.</code><code class="nx">insertBefore</code><code class="p">(</code><code class="nx">title</code><code class="p">,</code> <code class="nx">group</code><code class="p">.</code><code class="nx">firstChild</code><code class="p">);</code></pre>
+          </li>
+          <li>
+            <p>If <code><em>sibling</em></code> is <code>null</code>, this is the same as <code>appendChild(<em>node</em>)</code>.</p>
+          </li>
+          <li>
+            <p>If <code><em>sibling</em></code> isn’t a direct child of this element, creates an error.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="addEventListener"><code>addEventListener(<em>eventName</em>, <em>listenerFunction</em>, <em>options</em>)</code> <a href="#addEventListener" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p><code><em>eventName</em></code> is a string describing the event, like “click” or “keypress”.</p>
+          </li>
+          <li>
+            <p><code><em>listenerFunction</em></code> is a JavaScript function object: either an anonymous function or the name of a function declared elsewhere in the script. When the event happens, the function will be run with the <code>Event</code> object as a parameter.</p>
+          </li>
+          <li>
+            <p><code><em>options</em></code> modify when and how the listener function is triggered; consult a DOM scripting reference for more.</p>
+          </li>
+          <li>
+            <p>No return value.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="removeEventListener"><code>removeEventListener(<em>eventName</em>, <em>listenerFunction</em>, <em>options</em>)</code> <a href="#removeEventListener" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Cancels an event listener.</p>
+          </li>
+          <li>
+            <p><code><em>eventName</em></code>, <code><em>listenerFunction</em></code>, and <code><em>options</em></code> must exactly match the values used in <code>addEventListener()</code>.</p>
+          </li>
+          <li>
+            <p>No return value.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="cloneNode"><code>cloneNode(<em>deepCloneFlag</em>)</code> <a href="#cloneNode" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Returns an independent clone of the current element; unlike <code>&lt;use&gt;</code> clones, this clone can be modified independently from the original.</p>
+          </li>
+          <li>
+            <p><code><em>deepCloneFlag</em></code> is a boolean value (something that equals either <code>true</code> or <code>false</code>); if true, the text content and child elements of this element will be cloned as well.</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+
+    <p>The following properties and methods are <em>not</em> part of the core DOM <code>Element</code> interface, but <em>should</em> be available on both SVG and HTML elements. However, except for <code>style</code>, browser support on SVG elements is not as good as for HTML elements, so remember to test carefully:</p>
+    <dl class="columns">
+      <dt id="style"><code>style</code> <a href="#style" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>An object representing all inline styles set on this element. Modifying it is equivalent to modifying the <code>style</code> attribute.</p>
+
+        <ul>
+          <li>
+            <p>The easiest way to read and modify styles is to use JavaScript object notation, with the property name as the object key. CSS properties with hyphens (<code>-</code>) in the name can be optionally accessed in camelCase format (hyphens removed, letters after a hyphen capitalized). This allows you to use dot notation (<code>.propertyName</code>) instead of array notation (<code>["property-name"]</code>).</p>
+
+            <p>For example, the following would create a dashed stroke with dashes and gaps equal to the <code>stroke-width</code>:</p>
+
+            <pre data-type="programlisting" data-code-language="javascript"><code class="nx">path</code><code class="p">.</code><code class="nx">style</code><code class="p">[</code><code class="s2">"stroke-dasharray"</code><code class="p">]</code> <code class="o">=</code> 
+             <code class="nx">path</code><code class="p">.</code><code class="nx">style</code><code class="p">.</code><code class="nx">strokeWidth</code><code class="p">;</code></pre>
+          </li>
+          <li>
+            <p><code>setProperty(<em>propertyName</em>, <em>newValue</em>, <em>important</em>)</code> can also be used to set properties; it is currently required for setting CSS variables. If <code><em>important</em></code> is used, it must be either an empty string (<code>""</code>) or the literal string <code>"important"</code>. If you provide a <code><em>newValue</em></code> that the CSS parser does not consider valid for this property, the method has no effect.</p>
+          </li>
+          <li>
+            <p><code>getPropertyValue(<em>propertyName</em>)</code> returns the value of the style property, if it is set.</p>
+          </li>
+          <li>
+            <p><code>getPropertyPriority(<em>propertyName</em>)</code> returns <code>"important"</code> or <code>""</code>.</p>
+          </li>
+          <li>
+            <p><code>removeProperty(<em>propertyName</em>)</code> removes the style declaration.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="classList"><code>classList</code> <a href="#classList" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>An object representing the set of class names on this element, as a list. Modifying it is equivalent to modifying the <code>class</code> attribute.</p>
+
+        <ul>
+          <li>
+            <p><code>add(<em>className</em>)</code> adds the specified class if it isn’t already in the list.</p>
+          </li>
+          <li>
+            <p><code>remove(<em>className</em>)</code> removes the class if it <em>is</em> in the list.</p>
+          </li>
+          <li>
+            <p><code>contains(<em>className</em>)</code> returns <code>true</code> or <code>false</code> depending on whether the class is in the list.</p>
+          </li>
+          <li>
+            <p><code>toggle(<em>className</em>)</code> removes the class if it is already in the list, or adds it otherwise, and returns <code>true</code> or <code>false</code> depending on whether the list contains the class after the toggle is complete.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="innerHTML"><code>innerHTML</code> <a href="#innerHTML" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Gets all the child elements and text content of this element as a single markup string.</p>
+          </li>
+          <li>
+            <p>Setting replaces all the child content of this element with the result of parsing the (markup string) value you set it to; the type of parser (HTML or XML) depends on the type of the current document.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="focus()"><code>focus()</code> <a href="#focus()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Gives this element keyboard focus, if it is focusable.</p>
+      </dd>
+      <dt id="blur()"><code>blur()</code> <a href="#blur()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Removes keyboard focus from this element if it has it (usually switching it to the document window or body). Not recommended; instead, apply <code>focus()</code> to a specific other element.</p>
+      </dd>
+    </dl>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="DOM Events">
+  <h2 id="dom-event-section">DOM Events<a href="#dom-event-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+    <p>Event listener functions are called with an <code>Event</code> object as a parameter. Some properties of the object are shared by all events, others are specific to the event type:</p>
+    <dl class="columns">
+      <dt id="target"><code>target</code> <a href="#target" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>The object (usually an element) that initially received the event. For example, the most specific element that a user clicked, or the element that had keyboard focus when a keyboard event was made.</p>
+      </dd>
+      <dt id="currentTarget"><code>currentTarget</code> <a href="#currentTarget" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>The object to which the listener function was attached. It could be the <code>target</code>, or it could be an ancestor in the DOM tree.</p>
+      </dd>
+      <dt id="preventDefault()"><code>preventDefault()</code> <a href="#preventDefault()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Marks this event as having already been handled, so that the browser does not react to it as well.</p>
+      </dd>
+      <dt id="clientX"><code>clientX</code> and <code>clientY</code> <a href="#clientX" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>On mouse and touch events, describe the location of the event, measured in <code>px</code> units relative to the browser window. This is the coordinate system used as the reference for <code>getScreenCTM()</code> method on SVG elements.</p>
+      </dd>
+      <dt id="charCode"><code>charCode</code> <a href="#charCode" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>On keyboard events, represents the key that was pressed as an integer value. Non-standard, but well-supported. The newer, standard <code>key</code> property will replace it eventually.</p>
+      </dd>
+    </dl>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="Shared SVG DOM Element Properties and Methods">
+  <h2 id="dom-svgelement-section">Shared SVG DOM Element Properties and Methods<a href="#dom-svgelement-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+    <p>Any element in the SVG namespace inherits from the class <code>SVGElement</code>, and therefore shares some common properties and methods.</p>
+
+    <p>In addition, there are shared subclasses specifically for elements with visual representation on the screen, and for shapes in particular. The exact structure of classes and inheritance has changed from SVG 1 to SVG 2, but the following methods should be available on shapes, <code>&lt;text&gt;</code>, <code>&lt;foreignObject&gt;</code>, <code>&lt;image&gt;</code>, <code>&lt;g&gt;</code>, <code>&lt;a&gt;</code>, and <code>&lt;svg&gt;</code>:</p>
+    <dl class="columns">
+      <dt id="getBBox()"><code>getBBox()</code> <a href="#getBBox()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Calculates the object bounding box of this element, in its own coordinate system.</p>
+
+        <ul>
+          <li>
+            <p>Returns an <code>SVGRect</code> (SVG 1) or <code>DOMRect</code> (SVG 2) object.</p>
+          </li>
+          <li>
+            <p>SVG 2 adds an <code><em>options</em></code> parameter that can change how the bounding box is calculated.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getScreenCTM()"><code>getScreenCTM()</code> <a href="#getScreenCTM()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Calculates the cumulative transformation matrix for this element, relative to the browser’s base coordinate system.</p>
+
+        <ul>
+          <li>
+            <p>Returns an <code>SVGMatrix</code> (SVG 1) or <code>DOMMatrix</code> (SVG 2) object, representing the transformation required to convert points in this element’s coordinate system into measurements relative to the browser window rectangle and the default browser zoom scale (which is known elsewhere in the DOM as the “client” coordinate system).</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="Path-related Methods">
+  <h2 id="dom-shapes-section">Path-related Methods<a href="#dom-shapes-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+    <p>The following methods were defined in SVG 1 to only apply to <code>&lt;path&gt;</code> elements. In SVG 2 (and some of the latest browsers), they are available for all shapes.</p>
+    <dl class="columns">
+      <dt id="getTotalLength()"><code>getTotalLength()</code> <a href="#getTotalLength()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Calculates the length of the path (stroking distance), combining together all subpaths and skipping all <em>move-to</em> discontinuities. Not affected by the <code>pathLength</code> attribute.</p>
+
+        <ul>
+          <li>
+            <p>Returns a number, representing the length in SVG user units (scaled <code>px</code> units).</p>
+          </li>
+          <li>
+            <p>Length calculations may be slightly different from one browser to the next.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getPointAtLength"><code>getPointAtLength(<em>distance</em>)</code> <a href="#getPointAtLength" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Locates a point on the path that is the specified distance from the start of the path, using the same measurement rules as <code>getTotalLength()</code> and the same start point as stroke dashing. Not affected by the <code>pathLength</code> attribute.</p>
+
+        <ul>
+          <li>
+            <p><code><em>distance</em></code> is a number representing a length in SVG user units (scaled <code>px</code> units); the browser will clamp the value you provide to the range from 0 to the total length of the path.</p>
+          </li>
+          <li>
+            <p>Returns an <code>SVGPoint</code> (SVG 1) or <code>DOMPoint</code> (SVG 2) object, with <code>x</code> and <code>y</code> set to the coordinates of the point.</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="Text-related Methods">
+  <h2 id="dom-text-section">Text-related Methods<a href="#dom-text-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+    <p>SVG text elements (<code>&lt;text&gt;</code>, <code>&lt;tspan&gt;</code>, and <code>&lt;textPath&gt;</code>) have a number of methods for measuring text, as described in “Measuring the Message” in <a data-type="xref" href="../ch07-text-files/">Chapter 7</a>. This reference includes a few methods we couldn’t fit into that section.</p>
+
+    <p>All the character-counting methods use UTF-16 blocks, the same as the basic JavaScript string methods. If multiple characters are represented by the same visual glyph (letter-shape), then they will return the same geometry data. See <a data-type="xref" href="#dom-geometry-section">“Geometry Objects and Methods”</a> for details on the geometry objects returned; SVG 1 and older browsers use the <code>SVG*</code> names, SVG 2 and some new browsers use <code>DOM*</code> names.</p>
+    <dl class="columns">
+      <dt id="getComputedTextLength()"><code>getComputedTextLength()</code> <a href="#getComputedTextLength()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Calculates the total offset length of the text for this element in the inline (writing mode) direction, including letter and word spacing and <code>dx</code> or <code>dy</code> offsets, but not including absolute changes in position. Not affected by <code>textLength</code>.</p>
+
+        <ul>
+          <li>
+            <p>Returns a number representing the length in SVG user units (scaled <code>px</code> units).</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getSubStringLength"><code>getSubStringLength(<em>charIndex</em>, <em>numChars</em>)</code> <a href="#getSubStringLength" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Calculates the total offset length for a substring of the text.</p>
+
+        <ul>
+          <li>
+            <p><code><em>charIndex</em></code> is an integer for the index of the first character; also equal to the number of characters to skip before the start.</p>
+          </li>
+          <li>
+            <p><code><em>numChars</em></code> is the (integer) number of characters to include.</p>
+          </li>
+          <li>
+            <p>Returns a number representing the length in SVG user units (scaled <code>px</code> units).</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getStartPositionOfChar"><code>getStartPositionOfChar(<em>charIndex</em>)</code> <a href="#getStartPositionOfChar" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Calculates the text layout position <em>before</em> positioning this character. For left-to-right text, this will be the intersection of the baseline with the <em>left</em> edge of the character.</p>
+
+        <ul>
+          <li>
+            <p>Returns an <code>SVGPoint</code> or <code>DOMPoint</code> object.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getEndPositionOfChar"><code>getEndPositionOfChar(<em>charIndex</em>)</code> <a href="#getEndPositionOfChar" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Calculates the text layout position <em>after</em> positioning this character. For left-to-right text, this will be the intersection of the baseline with the <em>right</em> edge of the character.</p>
+
+        <ul>
+          <li>
+            <p>Returns an <code>SVGPoint</code> or <code>DOMPoint</code> object.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getExtentOfChar"><code>getExtentOfChar(<em>charIndex</em>)</code> <a href="#getExtentOfChar" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Calculates a bounding box for this character. The box is the tightest rectangle that will fit around the (possibly rotated) glyph layout box. It is not based on the actual glyph shape.</p>
+
+        <ul>
+          <li>
+            <p>Returns an <code>SVGRect</code> or <code>DOMRect</code> object.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getRotationOfChar"><code>getRotationOfChar(<em>charIndex</em>)</code> <a href="#getRotationOfChar" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Calculates the rotation angle for this character, whether set by <code>rotate</code> or by <code>&lt;textPath&gt;</code>.</p>
+
+        <ul>
+          <li>
+            <p>Returns a number for the angle in degrees.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="getCharNumAtPosition"><code>getCharNumAtPosition(<em>point</em>)</code> <a href="#getCharNumAtPosition" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Identifies which character would be underneath a particular point within the text element, using the “top” character layer for overlapping letters.</p>
+
+        <ul>
+          <li>
+            <p><code><em>point</em></code> is an <code>SVGPoint</code> or <code>DOMPoint</code> object, such as could be generated from a mouse event and the <code>getScreenCTM()</code> for this element.</p>
+          </li>
+          <li>
+            <p>Returns an integer for the index of the character within the string, or -1 if the point isn’t in any glyph layout boxes.</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="SVG/SMIL Animation Methods">
+  <h2 id="dom-smil-section">SVG/SMIL Animation Methods<a href="#dom-smil-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+    <p>The <code>SVGSVGElement</code> has methods for controlling the SVG/SMIL animation timeline in a coordinated way. These methods only affect SVG/SMIL animations, not CSS animations or <code>requestAnimationFrame()</code>:</p>
+    <dl class="columns">
+      <dt id="getCurrentTime()"><code>getCurrentTime()</code> <a href="#getCurrentTime()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Returns the time relative to the animation timeline, as a number of seconds (with decimals). If you haven’t used the other methods, this will be the time since the document’s load event.</p>
+      </dd>
+      <dt id="setCurrentTime"><code>setCurrentTime(<em>time</em>)</code> <a href="#setCurrentTime" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Changes the time on the animation timeline, causing all animations to advance or rewind in sync.</p>
+
+        <ul>
+          <li>
+            <p><code><em>time</em></code> is a number representing a time in seconds</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="pauseAnimations()"><code>pauseAnimations()</code> <a href="#pauseAnimations()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Pauses all animations; the current time on the animation timeline does not change while animations are paused.</p>
+      </dd>
+      <dt id="unPauseAnimations()"><code>unPauseAnimations()</code> <a href="#unPauseAnimations()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Restarts paused animations, allowing the current time to move forward as normal.</p>
+      </dd>
+    </dl>
+
+    <p>Individual animation elements (<code>&lt;animate&gt;</code>, <code>&lt;set&gt;</code>, <code>&lt;animateTransform&gt;</code>, and <code>&lt;animateMotion&gt;</code>) have a variety of properties and methods, of which the most useful are:</p>
+    <dl class="columns">
+      <dt id="targetElement"><code>targetElement</code> <a href="#targetElement" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+
+        <ul>
+          <li>
+            <p>Gets the element which this animation will affect, regardless of whether that is the parent element or an element defined by an <code>xlink:href</code> cross-reference.</p>
+          </li>
+          <li>
+            <p>Read-only</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="beginElement()"><code>beginElement()</code> <a href="#beginElement()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Creates a new begin trigger for this element, starting it unless prevented by <code>restart="never"</code> attribute.</p>
+      </dd>
+      <dt id="endElement()"><code>endElement()</code> <a href="#endElement()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Creates a new end trigger for this element, ending any active animation (possibly with a delay caused by a <code>min</code> attribute).</p>
+      </dd>
+      <dt id="beginElementAt"><code>beginElementAt(<em>delay</em>)</code><a href="#beginElementAt" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dt id="endElementAt"><code>endElementAt(<em>delay</em>)</code><a href="#endElementAt" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Sets a begin or end trigger for this element, to apply after a certain delay</p>
+
+        <ul>
+          <li>
+            <p><code><em>delay</em></code> is a number representing a time in seconds</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="Geometry Objects and Methods">
+  <h2 id="dom-geometry-section">Geometry Objects and Methods<a href="#dom-geometry-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+    <p>The SVG DOM defined three geometry-related data objects, which have now been extended and replaced (in the Geometry Interfaces Module Level 1 spec) by generic DOM geometry objects.</p>
+    <dl class="columns">
+      <dt id="SVGRect"><code>SVGRect</code> or <code>DOMRect</code> <a href="#SVGRect" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>A geometric rectangle, used as the result of <code>getBBox()</code> and <code>getExtentOfChar()</code>. <em>Not</em> a <code>&lt;rect&gt;</code> element.</p>
+
+        <ul>
+          <li>
+            <p><code>x</code>, <code>y</code>, <code>width</code>, <code>height</code> are numbers representing the position and size of the rectangle, in SVG user units (scaled <code>px</code> units) for the current coordinate system.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="SVGPoint"><code>SVGPoint</code> or <code>DOMPoint</code> <a href="#SVGPoint" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>A geometric (<em>x</em>,<em>y</em>) point. For <code>DOMPoint</code>, can also be used for a point in 3D space.</p>
+
+        <ul>
+          <li>
+            <p><code>x</code> and <code>y</code> are numbers representing the position of the point, in SVG user units (scaled <code>px</code> units) for the current coordinate system.</p>
+          </li>
+          <li>
+            <p><code>matrixTransform(<em>matrix</em>)</code> returns a new point object which is the result of transforming the current point by the specified matrix.</p>
+          </li>
+        </ul>
+      </dd>
+      <dt id="SVGMatrix"><code>SVGMatrix</code> or <code>DOMMatrix</code> <a href="#SVGMatrix" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>A transformation matrix. For <code>SVGMatrix</code>, this is a 2D transformation matrix. For <code>DOMMatrix</code>, it can represent either a 2D or 3D transformation. Various methods allow you to do transformation-related matrix math. We only used one:</p>
+
+        <ul>
+          <li>
+            <p><code>inverse()</code> returns a new matrix object that has the reverse effect as this one.</p>
+          </li>
+        </ul>
+      </dd>
+    </dl>
+
+    <p>The new (<code>DOM*</code>) versions of these objects have constructor forms, so you can create new objects with the <code>new</code> JavaScript keyword. However, for best compatibility, create them with the utility methods available on every <code>&lt;svg&gt;</code> element:</p>
+    <dl class="columns">
+      <dt id="createSVGPoint()"><code>createSVGPoint()</code> <a href="#createSVGPoint()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Returns a new <code>SVGPoint</code> or <code>DOMPoint</code> object, initialized to the point (0,0).</p>
+      </dd>
+      <dt id="createSVGMatrix()"><code>createSVGMatrix()</code><a href="#createSVGMatrix()" class="hash-link" aria-label="Permalink">#</a></dt>
+      <dd>
+        <p>Returns a new <code>SVGMatrix</code> or <code>DOMMatrix</code> object, initialized to an identity matrix (that is, a matrix representing a transformation that doesn’t change anything).</p>
+      </dd>
+    </dl>
+</section>
+
+<section data-type="sect1" data-pdf-bookmark="Other SVG DOM Objects">
+  <h2 id="dom-other-section">Other SVG DOM Objects<a href="#dom-other-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+    <p>In SVG 1, the cloned versions of SVG graphics within a <code>&lt;use&gt;</code> element shadow tree are <code>SVGElementInstance</code> objects. Their most important property is <code>correspondingUseElement</code>, which references the <code>&lt;use&gt;</code> element in the main document tree.</p>
+</section>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

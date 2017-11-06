@@ -38,44 +38,234 @@
       </ul>
     </nav>
     <div id="intro" class="columns">
-      <p>
-      </p>
+<p>This chapter briefly introduces the three main types of SVG text <span class="keep-together">layout</span>:</p>
+
+<ul>
+  <li>
+    <p>short labels positioned around a single anchor point</p>
+  </li>
+  <li>
+    <p>precise character-by-character positioned graphical text</p>
+  </li>
+  <li>
+    <p>text arranged on a path</p>
+  </li>
+</ul>
+
+<p>The features described here are relatively well-supported in web browsers, at least for Western languages. If you are using right-to-left languages such as Hebrew or Arabic, or scripted languages that use complex text shaping (changing or re-arranging the appearance of characters based on their context), beware of browsers making a mess of your text when using character positioning or text on a path.</p>
+
+<p>We also include tips on working with web fonts and fallback system fonts.</p>
+
+<p>The font-selection properties in SVG are entirely borrowed from core CSS. If you’re familiar with styling text with CSS (and we’re assuming you are) you are halfway to styling SVG text. You can even use web fonts declared with an <code>@font-face</code> rule, although external font files—like external stylesheets—are restricted in some SVG contexts.</p>
+
+<p>SVG text layout, in contrast, does <em>not</em> reuse CSS layout. When used to style HTML, CSS lays out text by dividing the page into boxes and then wrapping streams of text within them. If you change the styles of a section of HTML text so that it takes up more space, the rest of the text is pushed out of the way, or wraps to a new line. SVG text doesn’t (yet) work like that.</p>
+
+<p>In SVG, each <code>&lt;text&gt;</code> element is independent, positioned exactly where you place it, even if it overlaps other content. There are ways to make SVG text flow in continuous streams, but it takes much more work than the equivalent CSS layout. SVG text is therefore best reserved for its intended purposes: figure labels and short snippets of precisely positioned decorative text.</p>
     </div>
     <h2 id="examples">Figures and Examples<a href="#examples" class="hash-link" aria-label="Permalink">#</a></h2>
     <p>The file names link to the code view on GitHub. <em>Beware: the linked screenshots are hi-resolution; some have very large file sizes.</em></p>
     <p><a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/">View all files for this chapter on GitHub</a>.</p>
     <dl class="columns directory">
-      <dd><em>(to do)</em></dd>
-      <!-- --
-      <dt><span class="label">Figure 3-. </span></dt>
-      <dt><span class="label">Example 3-. </span></dt>
+      <dt><span class="label">Figure 7-1. </span>SVG text, with minimal style and layout</dt>
+      <dt><span class="label">Example 7-1. </span>Defining basic text in an SVG</dt>
       <dd>
         <ul>
-          <li><a href="qx.svg">Live SVG file</a>,
-            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/qx.svg">qx.svg</a>
-          <li><a href="qx.html">Live HTML file</a>,
-            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/qx.html">qx.html</a>
-          </li>
-          <li><a href="qx.css">Raw CSS file</a>,
-            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/qx.css">qx.css</a>
-          </li>
-          <li><a href="qx.png">PNG screenshot</a>,
-            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/qx.png">qx.png</a></li>
+          <li><a href="simple-text.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/simple-text.svg">simple-text.svg</a></li>
+          <li><a href="simple-text.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/simple-text.png">simple-text.png</a></li>
         </ul>
       </dd>
-      -->
+      <dt><span class="label">Example 7-2. </span>Using CSS rules to style text in an SVG</dt>
+      <dd>
+        <ul>
+          <li><a href="simple-text-css.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/simple-text-css.svg">simple-text-css.svg</a>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-2. </span>SVG text, filled in red and stroked in black</dt>
+      <dd>
+        <ul>
+          <li><a href="simple-text-painted.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/simple-text-painted.svg">simple-text-painted.svg</a></li>
+          <li><a href="simple-text-painted.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/simple-text-painted.png">simple-text-painted.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-3. </span>The labeled photograph</dt>
+      <dt><span class="label">Example 7-3. </span>Using SVG text to label a photograph</dt>
+      <dd>
+        <ul>
+          <li><a href="bike.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/bike.svg">bike.svg</a></li>
+          <li><a href="viale.jpg">Original JPEG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/viale.jpg">viale.jpg</a></li>
+          <li><a href="bike.jpg">JPEG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/bike.jpg">bike.jpg</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-4. </span>The labeled photograph, scaled down, with and without font-size media queries</dt>
+      <dd>
+        <ul>
+          <li><a href="bike-responsive.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/bike-responsive.svg">bike-responsive.svg</a></li>
+          <li><a href="bike-responsive-partly.svg">SVG file with a <code>viewBox</code> but no media queries</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/bike-responsive-partly.svg">bike-responsive-partly.svg</a></li>
+          <li><a href="bike-responsive-compare.jpg">JPEG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/bike-responsive-compare.jpg">bike-responsive-compare.jpg</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-X1. </span>The interactive labels, revealed one at a time</dt>
+      <dt><span class="label">Example 7-X1. </span>Making SVG text labels interactive on mouseover</dt>
+      <dd>
+        <ul>
+          <li><a href="bike-interactive.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/bike-interactive.svg">bike-interactive.svg</a></li>
+          <li><a href="viale.jpg">Original JPEG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/viale.jpg">viale.jpg</a>
+          </li>
+          <li><a href="bike-interactive.jpg">JPEG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/bike-interactive.jpg">bike-interactive.jpg</a></li>
+          <li>From the <a href="../extras/ch07-interactive-labels.html">“Interactive Text”</a> extra article</li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-5. </span>SVG text in a comic book bubble</dt>
+      <dt><span class="label">Example 7-4. </span>Positioning graphical SVG text</dt>
+      <dt><span class="label">Figure 7-6. </span>SVG text in a comic book bubble, displayed in default handwriting fonts</dt>
+      <dd>
+        <ul>
+          <li><a href="moby-dick.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/moby-dick.svg">moby-dick.svg</a></li>
+          <li><a href="moby-dick.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/moby-dick.png">moby-dick.png</a></li>
+          <li><a href="moby-dick.noWebFont-compare.png">PNG screenshot (with fallback fonts)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/moby-dick.noWebFont-compare.png">moby-dick.noWebFont-compare.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-7. </span>SVG text in a comic book bubble, after text anchors are adjusted, displayed in default handwriting fonts</dt>
+      <dt><span class="label">Figure 7-8. </span>SVG text in a comic book bubble, after text anchors are adjusted and fallback fonts are specified</dt>
+      <dt><span class="label">Figure 7-9. </span>SVG comic book text, with fallback fonts in mobile browsers</dt>
+      <dd>
+        <ul>
+          <li><a href="moby-dick-fallbacks.svg">Final SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/moby-dick-fallbacks.svg">moby-dick-fallbacks.svg</a></li>
+          <li><a href="moby-dick-fallbacks.defaultCursive-compare.png">Desktop screenshots, without default cursive fonts</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/moby-dick-fallbacks.defaultCursive-compare.png">moby-dick-fallbacks.defaultCursive-compare.png</a></li>
+          <li><a href="moby-dick-fallbacks.Desktop-compare.png">Desktop screenshots, without fallback fonts</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/moby-dick-fallbacks.Desktop-compare.png">moby-dick-fallbacks.Desktop-compare.png</a></li>
+          <li><a href="moby-dick-fallbacks.Mobile-compare.png">Mobile screenshots, without fallback fonts</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/moby-dick-fallbacks.Mobile-compare.png">moby-dick-fallbacks.Mobile-compare.png</a></li>
+          <li><a href="moby-dick-tspan.svg">Final, final SVG file, using <code>&lt;tspan&gt;</code> to posiiton each line</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/moby-dick-tspan.svg">moby-dick-tspan.svg</a> (from the unlabelled code snippet after Figure 7-11</li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-10. </span>Styled SVG text in a comic book bubble</dt>
+      <dt><span class="label">Example 7-5. </span>Using <code>&lt;tspan&gt;</code> to modify text styles</dt>
+      <dd>
+        <ul>
+          <li><a href="fefifofum.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/fefifofum.svg">fefifofum.svg</a></li>
+          <li><a href="fefifofum.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/fefifofum.png">fefifofum.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-11. </span>Styled and vertically staggered SVG text in a comic book bubble</dt>
+      <dd>
+        <ul>
+          <li><a href="fefifofum-dy.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/fefifofum-dy.svg">fefifofum-dy.svg</a></li>
+          <li><a href="fefifofum-dy.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/fefifofum-dy.png">fefifofum.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-12. </span>SVG text with staggered letters</dt>
+      <dt><span class="label">Example 7-6. </span>Using multiple values in text positioning attributes</dt>
+      <dd>
+        <ul>
+          <li><a href="deadpool.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/deadpool.svg">deadpool.svg</a></li>
+          <li><a href="deadpool.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/deadpool.png">deadpool.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-X2. </span>Rotated letters in SVG comic book text</dt>
+      <dt><span class="label">Example 7-X2. </span>Using rotate to alter the angle of individual characters</dt>
+      <dd>
+        <ul>
+          <li><a href="scream.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/scream.svg">scream.svg</a></li>
+          <li><a href="scream.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/scream.png">scream.png</a></li>
+          <li>From the <a href="../extras/ch07-rotate-vertical.html">“Beyond Horizontal: Rotated and Vertical Text”</a> extra article</li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-13. </span>Curved text positioned using <code>&lt;textPath&gt;</code></dt>
+      <dd>
+        <ul>
+          <li><a href="basic-textPath-inline.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/basic-textPath-inline.html">basic-textPath-inline.html</a></li>
+          <li><a href="basic-textPath-inline.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/basic-textPath-inline.png">basic-textPath-inline.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-14. </span>Curved text positioned using <code>&lt;textPath&gt;</code> (<cite>The Walrus and the Carpenter</cite>)</dt>
+      <dt><span class="label">Example 7-7. </span>Arranging text using <code>&lt;textPath&gt;</code> elements</dt>
+      <dd>
+        <ul>
+          <li><a href="walrus-carpenter.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/walrus-carpenter.svg">walrus-carpenter.svg</a></li>
+          <li><a href="walrus-carpenter.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/walrus-carpenter.png">walrus-carpenter.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-15. </span>The paths used to position the curved text</dt>
+      <dd>
+        <ul>
+          <li><a href="walrus-carpenter-with-lines.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/walrus-carpenter-with-lines.svg">walrus-carpenter-with-lines.svg</a></li>
+          <li><a href="walrus-carpenter-with-lines.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/walrus-carpenter-with-lines.png">walrus-carpenter-with-lines.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-16. </span>Curved text positioned using multiple lines offset from a single <code>&lt;textPath&gt;</code></dt>
+      <dt><span class="label">Example 7-8. </span>Positioning multiple lines of text above and below the same path</dt>
+      <dd>
+        <ul>
+          <li><a href="walrus-carpenter-dy.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/walrus-carpenter-dy.svg">walrus-carpenter-dy.svg</a></li>
+          <li><a href="walrus-carpenter-dy.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/walrus-carpenter-dy.png">walrus-carpenter-dy.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-17. </span><code>&lt;textPath&gt;</code> lines adjusted with startOffset</dt>
+      <dd>
+        <ul>
+          <li><a href="walrus-carpenter-startOffset.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/walrus-carpenter-startOffset.svg">walrus-carpenter-startOffset.svg</a></li>
+          <li><a href="walrus-carpenter-startOffset.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/walrus-carpenter-startOffset.png">walrus-carpenter-startOffset.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 7-X3. </span></dt>
+      <dt><span class="label">Example 7-X3. </span></dt>
+      <dd>
+        <ul>
+          <li><a href="one-for-all.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/one-for-all.svg">one-for-all.svg</a></li>
+          <li><a href="one-for-all.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch07-text-files/one-for-all.png">one-for-all.png</a></li>
+          <li>From the <a href="../extras/ch07-textpaths.html">“Perfecting Paths for &lt;textPath&gt;”</a> extra article</li>
+        </ul>
+      </dd>
     </dl>
     <h2 id="extras">Online Extras<a href="#extras" class="hash-link" aria-label="Permalink">#</a></h2>
     <ul class="columns directory">
-      <li><a href="../extras/ch07-dataURI-fonts.html">“Creating Embeddable Fonts as Data URIs”</a>: The old <code>SVG &lt;font&gt;</code> element to include a font in an SVG file doesn't work on the web. Data URIs do.</li>
+      <li><a href="../extras/ch07-dataURI-fonts.html">“Creating Embeddable Fonts as Data URIs”</a>: The old SVG <code>&lt;font&gt;</code> element to include a font in an SVG file doesn't work on the web. Data URIs do.</li>
       <li><a href="../extras/ch07-interactive-labels.html">“Interactive Text”</a>: Don't bake-in labels on your photos: add them with SVG text, and you can style them dynamically.</li>
       <li><a href="../extras/ch07-rotate-vertical.html">“Beyond Horizontal: Rotated and Vertical Text”</a>: Horizontal text is so HTML. SVG was designed for more than that. And now, CSS is too.</li>
       <li><a href="../extras/ch07-textpaths.html">“Perfecting Paths for &lt;textPath&gt;”</a>: Tips for mastering geometry when wrapping SVG text around shapes.</li>
       <li>Reference: <a href="../guide/markup.html">SVG Elements and Attributes</a></li>
-      <!--
-      <li><a>“”</a>: </li>
-      <li>Reference: <a href="../guide/markup.html">SVG Elements and Attributes</a></li>
-      -->
+      <li>Reference: <a href="../guide/DOM.html">Select SVG DOM Methods and Objects</a></li>
     </ul>
   </main>
   <footer>

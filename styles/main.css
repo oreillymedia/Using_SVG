@@ -114,6 +114,8 @@ header nav .home {
 }
 nav.toc li {
   list-style: none;
+  margin-bottom: 0.5em;
+  line-height: 1.1;
 }
 @media (min-width: 24em) {
   header nav .home + * {

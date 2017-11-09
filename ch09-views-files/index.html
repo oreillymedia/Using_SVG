@@ -1,45 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><meta charset="utf-8" />
-    <title>ch09-views-files/</title>
-    <link rel="stylesheet" href="../styles/main.css" />
-  </head>
-  <body>
-    <div id="wrapper">
-      <h2>All files in ch09-views-files</h2>
-      <ul class="columns narrow directory"><li><a href=".." title="Parent folder">..</a></li>
-<li><a href="Drupe_fruit_diagram-en-2.svg" title="Drupe_fruit_diagram-en-2.svg">Drupe_fruit_diagram-en-2.svg</a></li>
-<li><a href="Drupe_fruit_diagram-en.svg" title="Drupe_fruit_diagram-en.svg">Drupe_fruit_diagram-en.svg</a></li>
-<li><a href="club-alternate-views-2.svg" title="club-alternate-views-2.svg">club-alternate-views-2.svg</a></li>
-<li><a href="club-alternate-views.svg" title="club-alternate-views.svg">club-alternate-views.svg</a></li>
-<li><a href="picture-media-views-2.html" title="picture-media-views-2.html">picture-media-views-2.html</a></li>
-<li><a href="picture-media-views.html" title="picture-media-views.html">picture-media-views.html</a></li>
-<li><a href="picture-media-views.png" title="picture-media-views.png">picture-media-views.png</a></li>
-<li><a href="sprites-suits.css" title="sprites-suits.css">sprites-suits.css</a></li>
-<li><a href="sprites-suits.html" title="sprites-suits.html">sprites-suits.html</a></li>
-<li><a href="sprites-suits.png" title="sprites-suits.png">sprites-suits.png</a></li>
-<li><a href="suits-stack.png" title="suits-stack.png">suits-stack.png</a></li>
-<li><a href="suits-stack.svg" title="suits-stack.svg">suits-stack.svg</a></li>
-<li><a href="suits-views.svg" title="suits-views.svg">suits-views.svg</a></li>
-<li><a href="view-fragments-whitespace.html" title="view-fragments-whitespace.html">view-fragments-whitespace.html</a></li>
-<li><a href="view-fragments.html" title="view-fragments.html">view-fragments.html</a></li>
-<li><a href="view-fragments.png" title="view-fragments.png">view-fragments.png</a></li>
-<li><a href="view-linkTarget.html" title="view-linkTarget.html">view-linkTarget.html</a></li>
-<li><a href="view-linkTarget.svg" title="view-linkTarget.svg">view-linkTarget.svg</a></li>
-<li><a href="view-suits-autosize.html" title="view-suits-autosize.html">view-suits-autosize.html</a></li>
-<li><a href="view-suits-autosize.png" title="view-suits-autosize.png">view-suits-autosize.png</a></li>
-<li><a href="view-suits-stack.html" title="view-suits-stack.html">view-suits-stack.html</a></li>
-<li><a href="view-suits-stack.png" title="view-suits-stack.png">view-suits-stack.png</a></li>
-<li><a href="view-suits.html" title="view-suits.html">view-suits.html</a></li>
-<li><a href="view-suits.png" title="view-suits.png">view-suits.png</a></li>
-<li><a href="view-targets.html" title="view-targets.html">view-targets.html</a></li>
-<li><a href="view-targets.png" title="view-targets.png">view-targets.png</a></li>
-<li><a href="viewStyles.svg" title="viewStyles.svg">viewStyles.svg</a></li>
-<li><a href="viewTarget.svg" title="viewTarget.svg">viewTarget.svg</a></li>
-<li><a href="zoomable.in.png" title="zoomable.in.png">zoomable.in.png</a></li>
-<li><a href="zoomable.out.png" title="zoomable.out.png">zoomable.out.png</a></li>
-<li><a href="zoomable.png" title="zoomable.png">zoomable.png</a></li>
-<li><a href="zoomable.svg" title="zoomable.svg">zoomable.svg</a></li></ul>
-    </div>
+<head>
+  <meta charset="utf-8" />
+  <title>Chapter 09, A New Point of View: 
+    Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <link rel="stylesheet" href="../styles/main.css" />
   
-</body></html>
+  <meta name="twitter:title" property="og:title" 
+        content="A New Point of View — Ch09, Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Cropping Embedded SVG Files. Online extras and example code for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
+</head>
+
+<body>
+  <header>
+    <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
+    <p>Example code and online extras for the <a href="http://shop.oreilly.com/product/0636920037972.do">O'Reilly Media book</a> by Amelia Bellamy-Royds, Kurt Cagle, and Dudley Storey.</p>
+    <nav>
+      <a class="home" href="../index.html#chapters">Chapter List</a>
+      <a href="../">Previous Chapter</a>
+      <a href="../">Next Chapter</a>
+    </nav>
+  </header>
+  <main>
+    <h1><div>Chapter 9</div> A New Point of View: <i>Cropping Embedded SVG Files</i></h1>
+    <nav class="toc" aria-label="Page Contents">On this page:
+      <ul class="columns narrow">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#examples">Figures and Examples</a></li>
+        <li><a href="#extras">Online Extras</a></li>
+      </ul>
+    </nav>
+    <div id="intro" class="columns">
+<p>This chapter discusses ways to control the coordinate system when you embed the SVG in a web page, changing the graphic’s scale or crop, without editing the SVG file. These <strong role="term">SVG view</strong> options allow you to override the SVG file’s <code>viewBox</code> or <code>preserveAspectRatio</code> by modifying the URL you use to access the SVG file.</p>
+
+<p>There are two ways to apply views:</p>
+
+<ul>
+  <li>
+    <p>by using a <strong role="term">target fragment</strong> (the part of the URL after the <code>#</code> or hash character) to reference the <code>id</code> of a <code>&lt;view&gt;</code> element in the SVG file, or</p>
+  </li>
+  <li>
+    <p>by using the <strong role="term">SVG view fragment syntax</strong> to directly set the view information in the URL.</p>
+  </li>
+</ul>
+
+<p>The chapter also covers a related technique, known as <strong role="term">SVG stacks</strong>, which also uses URL fragments to activate different versions of the same SVG file.</p>
+
+<p>These techniques only apply to embedded SVG: a separate <em role="filename">.svg</em> file that is included as an image or object in the HTML, or an image in the CSS. 
+Since we’re working with embedded SVG, we’ll also be looking a little more closely at your embedding options (<code>&lt;img&gt;</code>, <code>&lt;object&gt;</code>, and <code>&lt;iframe&gt;</code>), and how they differ now that we’re working with <code>viewBox</code> and <em>scalable</em> SVG. Unfortunately, that also includes how they differ from one browser to another.</p>
+      
+<p>In the course of discussing these options, we’ll also introduce <strong role="term">nested</strong> SVG coordinate systems: <code>&lt;svg&gt;</code> inside <code>&lt;svg&gt;</code>.</p>
+    </div>
+    <h2 id="examples">Figures and Examples<a href="#examples" class="hash-link" aria-label="Permalink">#</a></h2>
+    <p>The file names link to the code view on GitHub. <em>Beware: the linked screenshots are hi-resolution; some have very large file sizes.</em></p>
+    <p><a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/">View all files for this chapter on GitHub</a>.</p>
+    <dl class="columns directory">
+      <dt><span class="label">Figure 9-1. </span>A web page using SVG views, some of which can be changed dynamically</dt>
+      <dt><span class="label">Example 9-1. </span>Using an SVG with multiple views in a web page</dt>
+      <dd>
+        <ul>
+          <li><a href="view-targets.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/view-targets.html">view-targets.html</a></li>
+          <li><a href="club-alternate-views.svg">Embedded SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/club-alternate-views.svg">club-alternate-views.svg</a></li>
+          <li><a href="view-targets.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/view-targets.png">view-targets.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 9-2. </span>A web page using SVG view fragments to modify an existing file</dt>
+      <dd>
+        <ul>
+          <li><a href="view-fragments.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/view-fragments.html">view-fragments.html</a></li>
+          <li><a href="../ch06-path-files/heart.svg">Embedded SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch06-path-files/heart.svg">heart.svg</a> (from <a href="../ch06-path-files/">Chapter 6</a>)</li>
+          <li><a href="view-fragments.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/view-fragments.png">view-fragments.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 9-3. </span>An interactive SVG, before and after being zoomed in to a view</dt>
+      <dt><span class="label">Example 9-2. </span>Using SVG links and views to create interactive zooming</dt>
+      <dd>
+        <ul>
+          <li><a href="zoomable.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/zoomable.svg">zoomable.svg</a></li>
+          <li><a href="zoomable.png">PNG screenshot collage</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/zoomable.png">zoomable.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 9-X1. </span>The same web page, in browsers of different dimensions</dt>
+      <dt><span class="label">Example 9-X1. </span>Using views and nested SVGs to arrange multiple icons in a single file</dt>
+      <dd>
+        <ul>
+          <li><a href="picture-media-views.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/picture-media-views.html">picture-media-views.html</a></li>
+          <li><a href="Drupe_fruit_diagram-en.svg">Original embedded SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/Drupe_fruit_diagram-en.svg">Drupe_fruit_diagram-en.svg</a></li>
+          <li><a href="picture-media-views.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/picture-media-views.png">picture-media-views.png</a></li>
+          <li><a href="Drupe_fruit_diagram-en-2.svg">Modified embedded SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/Drupe_fruit_diagram-en-2.svg">Drupe_fruit_diagram-en-2.svg</a> (using <code>&lt;view&gt;</code> and <code>:target</code> styles)</li>
+          <li><a href="picture-media-views-2.html">Modified HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/picture-media-views-2.html">picture-media-views-2.html</a></li>
+          <li>From the <a href="../extras/ch09-picture.html">“Picking the Perfect View”</a> extra article</li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 9-4. </span>An SVG icon sprite</dt>
+      <dt><span class="label">Example 9-3. </span>Using views and nested SVGs to arrange multiple icons in a single file</dt>
+      <dd>
+        <ul>
+          <li><a href="suits-views.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/suits-views.svg">suits-views.svg</a> (edit the URL to add <code>#diamond</code>, <code>#club</code>, <code>#spade</code>, or <code>#heart</code> to see the individual views)</li>
+          <li><a href="suits-views.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/suits-views.png">suits-views.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 9-5. </span>A web page with many images that all come from one image file</dt>
+      <dt><span class="label">Example 9-4. </span>Using an SVG view sprite within a web page</dt>
+      <dd>
+        <ul>
+          <li><a href="sprites-suits.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/sprites-suits.html">sprites-suits.html</a></li>
+          <li><a href="sprites-suits.css">Raw CSS file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/sprites-suits.css">sprites-suits.css</a></li>
+          <li><a href="sprites-suits.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/sprites-suits.png">sprites-suits.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 9-6. </span>An SVG icon sprite used in a web page, without clipping to the icon dimensions</dt>
+      <dt><span class="label">Example 9-5. </span>Using an SVG view sprite, without constraining the image dimensions to the aspect ratio</dt>
+      <dd>
+        <ul>
+          <li><a href="view-suits.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/view-suits.html">view-suits.html</a></li>
+          <li><a href="view-suits.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/view-suits.png">view-suits.png</a></li>
+          <li><a href="view-suits-autosize.html">Alternative HTML file with autosizing images</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/view-suits-autosize.html">view-suits-autosize.html</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 9-7. </span>An SVG stack used in a web page</dt>
+      <dt><span class="label">Figure 9-8. </span>An SVG stack, as it appears in a graphics editor</dt>
+      <dt><span class="label">Example 9-6. </span>Using :target styles to stack multiple icons in a single file</dt>
+      <dd>
+        <ul>
+          <li><a href="suits-stack.svg#club">SVG stack file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/suits-stack.svg">suits-stack.svg</a> (nothing will display without a target fragment, use one of <code>#diamond</code>, <code>#club</code>, <code>#spade</code>, or <code>#heart</code> on the live file)</li>
+          <li><a href="suits-stack.png">PNG screenshot of the stack layers in Inkscape</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/suits-stack.png">suits-stack.png</a></li>
+          <li><a href="view-suits-stack.html">Live HTML file using the stack</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/view-suits-stack.html">view-suits-stack.html</a></li>
+          <li><a href="view-suits-stack.png">PNG screenshot of the web page</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/view-suits-stack.png">view-suits-stack.png</a></li>
+        </ul>
+      </dd>
+    </dl>
+    <h2 id="extras">Online Extras<a href="#extras" class="hash-link" aria-label="Permalink">#</a></h2>
+    <ul class="columns directory">
+      <li><a href="../extras/ch09-picture.html">“Picking the Perfect View”</a>: SVG views and the HTML <code>&lt;picture&gt;</code> element are a responsive design power team, letting you crop an embedded graphic based on media queries.</li>
+      <li>Reference: <a href="../guide/markup.html">SVG Elements and Attributes</a></li>
+      <li>Reference: <a href="../guide/embedding.html">Embedding SVG in HTML</a></li>
+    </ul>
+  </main>
+  <footer>
+    <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
+    </p>
+    <p>
+      View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files, suggest a correction, or see when a page was last updated.</p>
+  </footer>
+</body>
+</html>

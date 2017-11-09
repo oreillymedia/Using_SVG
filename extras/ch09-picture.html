@@ -5,6 +5,18 @@
   <title>Picking the Perfect View
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Picking the Perfect View — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="SVG views and the HTML picture element are a responsive design power team, letting you crop an embedded graphic based on media queries. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,150 @@
   </header>
   <main>
     <h1>Picking the Perfect View</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<p>In a complex web design, you may wish to change the view of your SVG to fit the screen. For example, your full SVG may look best in landscape orientation. On a mobile device in portrait mode, you might want to switch to a cropped version of the graphic that zooms in on the important parts.</p>
+
+<p>We can’t currently adjust the crop with CSS media queries <em>inside</em> the SVG file, since CSS can’t control <code>viewBox</code>. But an SVG view can.</p>
+
+<p>Both pre-defined <code>&lt;view&gt;</code> elements inside your SVG file and custom <code>#svgView()</code> fragments can change the root <code>viewBox</code> of the SVG file. But in order to activate a view, you must include the correct target fragment in the URL that embeds the SVG file.</p>
+
+<p>So, what we need is a way to change the URL of an embedded SVG when the screen is in portrait mode instead of landscape.</p>
+
+<p>The HTML <code>&lt;picture&gt;</code> element can do that.</p>
+
+<p>The <code>media</code> attribute for <code>&lt;source&gt;</code> elements within a <code>&lt;picture&gt;</code> was originally intended to allow you to switch to a completely different (raster) image file for different media queries. But it also works with SVG views.</p>
+
+<p><a data-type="xref" href="#picture-media-views-example">Example 9-X1</a> uses <code>&lt;picture&gt;</code> and SVG views to crop a large header image. The graphic (a diagram of a peach by contributor LadyofHats) is taken directly from Wikimedia Commons. Instead of editing the file to add a <code>&lt;view&gt;</code>, the crop is defined from the HTML file, with the SVG view fragment syntax.</p>
+
+<p><a data-type="xref" href="#picture-media-views-figure">Figure 9-X1</a> shows the resulting page, in browser windows of different dimensions.</p>
+
+<figure class="page-float">
+  <div id="picture-media-views-figure" class="figure">
+    <img src="../ch09-views-files/picture-media-views.png" alt="Two web browser windows, overlapping on a computer desktop.  One is very tall and narrow, the other short and wide.  Both have a botanical diagram of a peach at the top, then the heading 'A Rosaceae by any other name…'.  In the narrow window, the image is a square tightly cropped around the peach.  In the wide window, the image is wider, showinglabels describing the different parts of the fruit's anatomy." />
+    <figcaption><span class="label">Figure 9-X1. </span>The same web page, in browsers of different dimensions</figcaption>
+  </div>
+</figure>
+<div id="picture-media-views-example" data-type="example">
+  <h5><span class="label">Example 9-X1. </span>Using views and nested SVGs to arrange multiple icons in a single file</h5>
+
+  <pre data-type="programlisting" data-code-language="html"><code class="cp">&lt;!DOCTYPE html&gt;</code><code>
+</code><code class="nt">&lt;html</code><code> </code><code class="na">lang=</code><code class="s">"en"</code><code class="nt">&gt;</code><code>
+</code><code class="nt">&lt;head</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;meta</code><code> </code><code class="na">charset=</code><code class="s">"utf-8"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Using SVG Views and </code><code class="ni">&amp;lt;</code><code>picture</code><code class="ni">&amp;gt;</code><code>
+        to crop for different layouts</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">header</code><code>    </code><code class="p">{</code><code> </code><code class="k">color</code><code class="o">:</code><code> </code><code class="n">cadetBlue</code><code class="p">;</code><code> </code><code class="p">}</code><code>
+        </code><code class="nt">header</code><code> </code><code class="nt">h1</code><code> </code><code class="p">{</code><code> </code><code class="k">margin-top</code><code class="o">:</code><code> </code><code class="m">0.2em</code><code class="p">;</code><code> </code><code class="p">}</code><code>
+        </code><code class="nt">header</code><code> </code><code class="nt">img</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">border</code><code class="o">:</code><code> </code><code class="nb">solid</code><code> </code><code class="nb">thin</code><code class="p">;</code><code>
+            </code><code class="k">display</code><code class="o">:</code><code> </code><code class="nb">block</code><code class="p">;</code><code>
+            </code><code class="k">margin</code><code class="o">:</code><code> </code><code class="nb">auto</code><code class="p">;</code><code>
+            </code><code class="k">width</code><code class="o">:</code><code> </code><code class="m">86vw</code><code class="p">;</code><code>
+            </code><code class="k">height</code><code class="o">:</code><code> </code><code class="m">64vw</code><code class="p">;</code><code>
+            </code><code class="k">max-height</code><code class="o">:</code><code> </code><code class="m">80vh</code><code class="p">;</code><code>               </code><a class="co" id="co_online_extras_CO10-1" href="#callout_online_extras_CO10-1"><img src="callouts/1.svg" alt="1"/></a><code>
+        </code><code class="p">}</code><code>
+        </code><code class="k">@media</code><code> </code><code class="p">(</code><code class="n">orientation</code><code class="o">:</code><code> </code><code class="nb">portrait</code><code class="p">)</code><code> </code><code class="p">{</code><code>
+            </code><code class="nt">header</code><code> </code><code class="nt">img</code><code> </code><code class="p">{</code><code>
+              </code><code class="k">width</code><code class="o">:</code><code> </code><code class="m">90vw</code><code class="p">;</code><code>
+              </code><code class="k">height</code><code class="o">:</code><code> </code><code class="m">90vw</code><code class="p">;</code><code>                 </code><a class="co" id="co_online_extras_CO10-2" href="#callout_online_extras_CO10-2"><img src="callouts/2.svg" alt="2"/></a><code>
+            </code><code class="p">}</code><code>
+        </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+</code><code class="nt">&lt;/head&gt;</code><code>
+</code><code class="nt">&lt;body</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;header</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;picture</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;source</code><code> </code><code class="na">type=</code><code class="s">"image/svg+xml"</code><code>
+</code><code class="na">srcset=</code><code class="s">"Drupe_fruit_diagram-en.svg#svgView(viewBox(20,10,300,300))"</code><code>
+                    </code><code class="na">media=</code><code class="s">"(orientation: portrait)"</code><code> </code><code class="nt">/&gt;</code><code>     </code><a class="co" id="co_online_extras_CO10-3" href="#callout_online_extras_CO10-3"><img src="callouts/3.svg" alt="3"/></a><code>
+            </code><code class="nt">&lt;img</code><code> </code><code class="na">src=</code><code class="s">"Drupe_fruit_diagram-en.svg"</code><code>
+                 </code><code class="na">type=</code><code class="s">"image/svg+xml"</code><code>
+                 </code><code class="na">alt=</code><code class="s">"Botanical diagram of a peach."</code><code> </code><code class="nt">/&gt;</code><code>    </code><a class="co" id="co_online_extras_CO10-4" href="#callout_online_extras_CO10-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="nt">&lt;/picture&gt;</code><code>
+        </code><code class="nt">&lt;h1</code><code class="nt">&gt;</code><code>A </code><code class="nt">&lt;i</code><code> </code><code class="na">lang=</code><code class="s">"la"</code><code class="nt">&gt;</code><code>Rosaceae</code><code class="nt">&lt;/i&gt;</code><code> by any other name…</code><code class="nt">&lt;/h1&gt;</code><code>
+    </code><code class="nt">&lt;/header&gt;</code><code>
+    </code><code class="nt">&lt;p</code><code class="nt">&gt;</code><code>The rose family is arguably one of the six most economically
+    important crop plant families, and includes apples, pears,
+    quinces, medlars, loquats, almonds, peaches, apricots, plums,
+    cherries, strawberries, raspberries, sloes, and roses among the
+    crop plants belonging to the family.</code><code class="nt">&lt;/p&gt;</code><code>
+    </code><code class="nt">&lt;small</code><code class="nt">&gt;</code><code>Text adapted from
+</code><code class="nt">&lt;a</code><code> </code><code class="na">href=</code><code class="s">"https://en.wikipedia.org/wiki/Rosaceae"</code><code class="nt">&gt;</code><code>Wikipedia</code><code class="nt">&lt;/a&gt;</code><code>
+    </code><code class="nt">&lt;/small&gt;</code><code>
+</code><code class="nt">&lt;/body&gt;</code><code>
+</code><code class="nt">&lt;/html&gt;</code></pre>
+  <dl class="calloutlist columns">
+    <dt><a class="co" id="callout_online_extras_CO10-1" href="#co_online_extras_CO10-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+    <dd>
+      <p>The basic dimensions of the header image are defined with CSS <code>vw</code> viewport units, to fill up most of the screen width, while still preserving the 4:3 aspect ratio of the original SVG. A <code>max-height</code> setting limits the image size on very wide and short screens, to leave some room for the header text.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO10-2" href="#co_online_extras_CO10-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+    <dd>
+      <p>On portrait screens, the media query kicks in, making the image square. The <code>orientation</code> media query only has two options (<code>portrait</code> and <code>landscape</code>), but you could use the <code>aspect-ratio</code> media query if you needed more control.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO10-3" href="#co_online_extras_CO10-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+    <dd>
+      <p>Within the markup, the same media query is used in the <code>media</code> attribute of a <code>&lt;source&gt;</code> element. The <code>srcset</code> attribute for that source includes the SVG view URL for the square-cropped version of the graphic. As we mentioned in <a data-type="xref" href="ch02.html#bigpicture-chapter">Chapter 2</a> when we introduced <code>&lt;picture&gt;</code> for SVG fallback, you have to use <code>srcset</code> with a picture <code>&lt;source&gt;</code>, not <code>src</code>, even when you only have one source value.</p>
+    </dd>
+    <dt><a class="co" id="callout_online_extras_CO10-4" href="#co_online_extras_CO10-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+    <dd>
+      <p>The <code>&lt;img&gt;</code> element within the <code>&lt;picture&gt;</code> has the basic URL for the SVG, which will be used if the media query doesn’t apply. Alternatively, you could use two different SVG <code>&lt;source&gt;</code> elements, and have a raster fallback (e.g., PNG) in the <code>&lt;img&gt;</code>.</p>
+    </dd>
+  </dl>
+</div>
+
+<p><a href="../ch09-views-files/picture-media-views.html">View the live example in your browser.</a></p>
+
+<p>If views aren’t supported—or if <code>&lt;picture&gt;</code> isn’t supported—you would get the regular view of the SVG, scaled according to the default <code>viewBox</code> to fit the height and width of the <code>&lt;img&gt;</code>. The width and height, however, would still be adjusted by the media query in the main page’s CSS. The result won’t be perfect, but it will still be functional.</p>
+<div data-type="warning" epub:type="warning">
+  <h6>Warning</h6>
+  <p>As we warn a few times in the book, Safari/WebKit only applies SVG views on HTTPS pages, for same-origin SVG embeds.</p>
+</div>
+
+<p>The view only crops the image, it doesn’t edit it. Which means that even though we’ve cropped out the labels in the portrait version of <a data-type="xref" href="#picture-media-views-figure">Figure 9-X1</a>, the lines connecting those labels to the graphic are still visible.</p>
+
+<p>If you did want to edit the SVG file to add a <code>&lt;view&gt;</code>, you could also add <code>:target</code> rules to hide extraneous content. Because the actual target is the <code>&lt;view&gt;</code> element, you’d need to place the <code>&lt;view&gt;</code> near the top of the file, and then use CSS sibling selectors to select the graphics.</p>
+
+<p>For example, we could edit the SVG to add a <code>&lt;view&gt;</code> with an <code>id</code> of <code>cropped</code>, like this:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;view</code> <code class="na">id=</code><code class="s">"cropped"</code> <code class="na">viewBox=</code><code class="s">"20,10,300,300"</code> <code class="nt">/&gt;</code></pre>
+
+<p>We would put that <code>&lt;view&gt;</code> near the top of the file (e.g., right after the <code>&lt;title&gt;</code>), and then group all the drawing code together with a <code>&lt;g&gt;</code> element that is a sibling to the <code>&lt;view&gt;</code>.</p>
+
+<p>Then we would give the elements that we want to remove a shared class (e.g., <code>hide-when-cropped</code>), and add a <code>&lt;style&gt;</code> block to our SVG file, with a CSS rule like this:</p>
+
+<pre data-type="programlisting" data-code-language="css"><code class="nf">#cropped</code><code class="nd">:target</code> <code class="o">~</code> <code class="nt">g</code> <code class="nc">.hide-when-cropped</code> <code class="p">{</code>
+    <code class="k">display</code><code class="o">:</code> <code class="nb">none</code><code class="p">;</code>
+<code class="p">}</code></pre>
+
+<p>Finally, the <code>&lt;picture&gt;</code> element in our main web page would be updated to use the <code>id</code> of the <code>&lt;view&gt;</code> instead of the <code>#svgView()</code> fragment:</p>
+
+<pre data-type="programlisting" data-code-language="html"><code class="nt">&lt;picture&gt;</code>
+    <code class="nt">&lt;source</code> <code class="na">type=</code><code class="s">"image/svg+xml"</code>
+            <code class="na">srcset=</code><code class="s">"Drupe_fruit_diagram-en-2.svg#cropped"</code>
+            <code class="na">media=</code><code class="s">"(orientation: portrait)"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;img</code> <code class="na">src=</code><code class="s">"Drupe_fruit_diagram-en-2.svg"</code>
+         <code class="na">type=</code><code class="s">"image/svg+xml"</code>
+         <code class="na">alt=</code><code class="s">"Botanical diagram of a peach."</code> <code class="nt">/&gt;</code>
+<code class="nt">&lt;/picture&gt;</code></pre>
+
+<p>Now, when the web browser switches to portrait mode, not only will the SVG be cropped to only show the diagram, but the labels and their lines will disappear, too.</p>
+
+<p><a href="../ch09-views-files/picture-media-views-2.html">View the modified example in your browser.</a></p>
+<div data-type="warning" epub:type="warning">
+  <h6>Warning</h6>
+  <p>Older versions of Firefox (prior to 39) did not apply the <code>:target</code> pseudoclass for <code>&lt;view&gt;</code> element targets. So you’d get the same result as <a data-type="xref" href="#picture-media-views-figure">Figure 9-X1</a>.</p>
+</div>
+
+<p>However, whether the labels are visible or not, remember that text inside an <code>&lt;img&gt;</code> is not accessible. And, unfortunately, there is no equivalent to <code>&lt;picture&gt;</code> for embedded objects; you’d need to use JavaScript to swap the view of an SVG embedded with <code>&lt;object&gt;</code> or <code>&lt;iframe&gt;</code>. JavaScript is also currently needed to update views of inline SVG (by directly changing the <code>viewBox</code> attribute).</p>
+<div data-type="note" epub:type="note">
+  <h6>Note</h6>
+  <p>If you look at the source code for the SVG file we’re using, you’ll discover that the inaccessible text doesn’t actually change anything—the text in the labels has already been converted to inaccessible paths!</p>
+
+  <p>Remember to check for text-that-isn’t-text when using diagrams from Wikipedia or other clip-art sources.</p>
+</div>
+
+<p>You <em>should</em> also be able to use views for SVG used as CSS background images. A media query in your CSS can change the <code>background-image</code> property to use the URL with the SVG view fragment. However, as we’ve warned a few times in the book, WebKit and older Blink browsers do not support URL target fragments for images in CSS. Those browsers would show the regular view of the SVG, scaled to fit the image dimensions.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

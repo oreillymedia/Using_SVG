@@ -1,44 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><meta charset="utf-8" />
-    <title>ch10-reuse-files/</title>
-    <link rel="stylesheet" href="../styles/main.css" />
-  </head>
-  <body>
-    <div id="wrapper">
-      <h2>All files in ch10-reuse-files</h2>
-      <ul class="columns narrow directory"><li><a href=".." title="Parent folder">..</a></li>
-<li><a href="Amelia.jpg" title="Amelia.jpg">Amelia.jpg</a></li>
-<li><a href="Dudley.jpg" title="Dudley.jpg">Dudley.jpg</a></li>
-<li><a href="Elizabeth_I.jpg" title="Elizabeth_I.jpg">Elizabeth_I.jpg</a></li>
-<li><a href="Kurt.jpg" title="Kurt.jpg">Kurt.jpg</a></li>
-<li><a href="Marie-Antoinette.jpg" title="Marie-Antoinette.jpg">Marie-Antoinette.jpg</a></li>
-<li><a href="cards-face.png" title="cards-face.png">cards-face.png</a></li>
-<li><a href="cards-face.svg" title="cards-face.svg">cards-face.svg</a></li>
-<li><a href="cards.png" title="cards.png">cards.png</a></li>
-<li><a href="cards.svg" title="cards.svg">cards.svg</a></li>
-<li><a href="cards2.svg" title="cards2.svg">cards2.svg</a></li>
-<li><a href="external-SVG-ajax-replaceIDs.js" title="external-SVG-ajax-replaceIDs.js">external-SVG-ajax-replaceIDs.js</a></li>
-<li><a href="external-SVG-ajax.js" title="external-SVG-ajax.js">external-SVG-ajax.js</a></li>
-<li><a href="external-suits-ajax-embeddedScript.html" title="external-suits-ajax-embeddedScript.html">external-suits-ajax-embeddedScript.html</a></li>
-<li><a href="external-suits-ajax.html" title="external-suits-ajax.html">external-suits-ajax.html</a></li>
-<li><a href="external-suits.html" title="external-suits.html">external-suits.html</a></li>
-<li><a href="external-suits.pdf" title="external-suits.pdf">external-suits.pdf</a></li>
-<li><a href="external-suits.png" title="external-suits.png">external-suits.png</a></li>
-<li><a href="flex-scale-image-meet.png" title="flex-scale-image-meet.png">flex-scale-image-meet.png</a></li>
-<li><a href="flex-scale-image-meet.svg" title="flex-scale-image-meet.svg">flex-scale-image-meet.svg</a></li>
-<li><a href="flex-scale-image-options.html" title="flex-scale-image-options.html">flex-scale-image-options.html</a></li>
-<li><a href="flex-scale-image-slice.png" title="flex-scale-image-slice.png">flex-scale-image-slice.png</a></li>
-<li><a href="flex-scale-image-slice.svg" title="flex-scale-image-slice.svg">flex-scale-image-slice.svg</a></li>
-<li><a href="flex-scale-image.1.png" title="flex-scale-image.1.png">flex-scale-image.1.png</a></li>
-<li><a href="flex-scale-image.2.png" title="flex-scale-image.2.png">flex-scale-image.2.png</a></li>
-<li><a href="flex-scale-image.3.png" title="flex-scale-image.3.png">flex-scale-image.3.png</a></li>
-<li><a href="flex-scale-image.jpg" title="flex-scale-image.jpg">flex-scale-image.jpg</a></li>
-<li><a href="flex-scale-image.png" title="flex-scale-image.png">flex-scale-image.png</a></li>
-<li><a href="flex-scale-image.xcf" title="flex-scale-image.xcf">flex-scale-image.xcf</a></li>
-<li><a href="scalable-card.svg" title="scalable-card.svg">scalable-card.svg</a></li>
-<li><a href="suits-symbols.svg" title="suits-symbols.svg">suits-symbols.svg</a></li>
-<li><a href="using_svg_cover.png" title="using_svg_cover.png">using_svg_cover.png</a></li></ul>
-    </div>
+<head>
+  <meta charset="utf-8" />
+  <title>Chapter 10, Seeing Double: 
+    Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <link rel="stylesheet" href="../styles/main.css" />
   
-</body></html>
+  <meta name="twitter:title" property="og:title" 
+        content="Seeing Double — Ch10, Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Reusing Content. Online extras and example code for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
+</head>
+
+<body>
+  <header>
+    <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
+    <p>Example code and online extras for the <a href="http://shop.oreilly.com/product/0636920037972.do">O'Reilly Media book</a> by Amelia Bellamy-Royds, Kurt Cagle, and Dudley Storey.</p>
+    <nav>
+      <a class="home" href="../index.html#chapters">Chapter List</a>
+      <a href="../">Previous Chapter</a>
+      <a href="../">Next Chapter</a>
+    </nav>
+  </header>
+  <main>
+    <h1><div>Chapter 10</div> Seeing Double: <i>Reusing Content</i></h1>
+    <nav class="toc" aria-label="Page Contents">On this page:
+      <ul class="columns narrow">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#examples">Figures and Examples</a></li>
+        <li><a href="#extras">Online Extras</a></li>
+      </ul>
+    </nav>
+    <div id="intro" class="columns">
+<p>This chapter examines the key structural SVG elements that allow you to copy content defined elsewhere into your graphic.</p>
+
+<p>When it comes to reusing content, there are two distinct strategies used in SVG.  On the one hand, you can reuse entire images, embedding the complete graphic in your SVG similar to how an <code>&lt;img&gt;</code> element embeds an image in an HTML page.  On the other hand, you can reuse individual SVG shapes or groups, from another file or another part of the same file.</p>
+
+<p>With the SVG <code>&lt;image&gt;</code> element, you can embed not only SVG files but also raster image formats.  This allows an SVG to include photos and other graphics that cannot effectively be represented with vector drawing elements.  Regardless of whether an embedded image was originally SVG or not, when you embed it <em>as</em> an image, it is treated as an indivisible element.  It can be manipulated with graphical effects, but its component parts are inaccessible to styles or scripts from the main document.</p>
+
+<p>In contrast, when you duplicate SVG content with a <code>&lt;use&gt;</code> element, you duplicate the vector graphics <em>instructions</em> for that content.  The duplicated elements are rendered almost as if they were cloned into the markup, inheriting new styles from the context where they are used.</p>
+    </div>
+    <h2 id="examples">Figures and Examples<a href="#examples" class="hash-link" aria-label="Permalink">#</a></h2>
+    <p>The file names link to the code view on GitHub. <em>Beware: the linked screenshots are hi-resolution; some have very large file sizes.</em></p>
+    <p><a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/">View all files for this chapter on GitHub</a>.</p>
+    <dl class="columns directory">
+      <dt><span class="label">Figure 10-1. </span>Playing card graphics created with reused SVG icons</dt>
+      <dt><span class="label">Example 10-1. </span>Reusing SVG icons to draw playing cards</dt>
+      <dd>
+        <ul>
+          <li><a href="cards.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/cards.svg">cards.svg</a></li>
+          <li><a href="cards.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/cards.png">cards.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 10-2. </span>A web page using external SVG icons as inline code</dt>
+      <dt><span class="label">Example 10-2. </span>Using SVG icons from an external file in a web page</dt>
+      <dd>
+        <ul>
+          <li><a href="suits-symbols.svg">SVG symbol file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/suits-symbols.svg">suits-symbols.svg</a></li>
+          <li><a href="external-suits.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/external-suits.html">external-suits.html</a></li>
+          <li><a href="external-suits.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/external-suits.png">external-suits.png</a></li>
+          <li>See also Example 9-4 in <a href="../ch09-views-files/#examples">Chapter 9</a>, including the 
+            <a href="sprites-suits.css">Raw CSS file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch09-views-files/sprites-suits.css">sprites-suits.css</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 10-3. </span>Playing card queens using photographs embedded in the SVG</dt>
+      <dt><span class="label">Example 10-3. </span>Using external images in SVG</dt>
+      <dd>
+        <ul>
+          <li><a href="cards-face.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/cards-face.svg">cards-face.svg</a></li>
+          <li><a href="cards-face.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/cards-face.png">cards-face.png</a></li>
+          <li>Embedded JPEG files: <a href="Elizabeth_I.jpg">Elizabeth I as the Queen of Diamonds</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/Elizabeth_I.jpg">Elizabeth_I.jpg</a> (<a href="https://commons.wikimedia.org/wiki/File:Elizabeth_I_in_coronation_robes_detail.jpg">Wikimedia source page</a>), and <a href="Marie-Antoinette.jpg">Marie Antoinette as the Queen of Spades</a>, <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/Marie-Antoinette.jpg">Marie-Antoinette.jpg</a> (<a href="https://commons.wikimedia.org/wiki/File:Marie-Antoinette,_1775_-_Mus%C3%A9e_Antoine_L%C3%A9cuyer2.jpg">Wikimedia source page</a>)</li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 10-4. </span>Profile photos with different aspect ratios: (left) with meet aspect ratio options, and (right) slice settings</dt>
+      <dt><span class="label">Example 10-4. </span>Demonstrating preserveAspectRatio options on embedded images</dt>
+      <dd>
+        <ul>
+          <li><a href="flex-scale-image-meet.svg">Live SVG file with <code>meet</code> scaling</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/flex-scale-image-meet.svg">flex-scale-image-meet.svg</a></li>
+          <li><a href="flex-scale-image-slice.svg">Live SVG file with <code>slice</code> scaling</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/flex-scale-image-slice.svg">flex-scale-image-slice.svg</a></li>
+          <li><a href="flex-scale-image.jpg">JPEG screenshot collage</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/flex-scale-image.jpg">flex-scale-image.jpg</a></li>
+          <li>Source images: <a href="using_svg_cover.png"><cite>Using SVG</cite> book cover</a>, <a href="Amelia.jpg">Amelia</a>, <a href="Kurt.jpg">Kurt</a>, <a href="Dudley.jpg">Dudley</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Example 8-X2. </span>Demonstrating preserveAspectRatio options on embedded images, dynamically</dt>
+      <dd>
+        <ul>
+          <li><a href="flex-scale-image-options.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/flex-scale-image-options.html">flex-scale-image-options.html</a></li>
+          <li>From the <a href="../extras/ch08-preserveAspectRatio-swap.html">“Dynamically Changing preserveAspectRatio”</a> extra article.</li>
+        </ul>
+      </dd>
+      <dt><span class="label">Example 10-X2. </span>Copying external SVG content into a document for reuse</dt>
+      <dd>
+        <ul>
+          <li><a href="external-SVG-ajax.js">Raw JS file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/external-SVG-ajax.js">external-SVG-ajax.js</a></li>
+          <li><a href="external-suits-ajax.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch10-reuse-files/external-suits-ajax.html">external-suits-ajax.html</a>, using that script in the code from Example 10-2</li>
+          <li>See the warnings in the <a href="../extras/ch10-ajax.html">“Importing SVG Assets, with AJAX”</a> article before using this script!</li>
+        </ul>
+      </dd>
+    </dl>
+    <h2 id="extras">Online Extras<a href="#extras" class="hash-link" aria-label="Permalink">#</a></h2>
+    <ul class="columns directory">
+      <li><a href="../extras/ch08-preserveAspectRatio-swap.html">“Dynamically Changing preserveAspectRatio”</a>: A ready-to-use playground for exploring meet, slice, and none preserveAspectRatio options.</li>
+      <li><a href="../extras/ch10-cors.html">“Understanding CORS and SVG”</a>: Why doesn't it just work? Cross-origin services and static asset servers are part of modern web development, but they can be a headache for SVG.</li>
+      <li><a href="../extras/ch10-ajax.html">“Importing SVG Assets, with AJAX”</a>: Browser support limitations can restrict your ability to share SVG assets between web pages. A little JavaScript can patch the gaps.</li>
+      <li>Reference: <a href="../guide/markup.html">SVG Elements and Attributes</a></li>
+    </ul>
+  </main>
+  <footer>
+    <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
+    </p>
+    <p>
+      View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files, suggest a correction, or see when a page was last updated.</p>
+  </footer>
+</body>
+</html>

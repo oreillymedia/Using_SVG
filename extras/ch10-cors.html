@@ -5,6 +5,17 @@
   <title>Understanding CORS and SVG
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Understanding CORS and SVG — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Why doesn't it just work? Cross-origin services and static asset servers are part of modern web development, but they can be a headache for SVG. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +29,91 @@
   </header>
   <main>
     <h1>Understanding CORS and SVG</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+
+<p>Web browsers are designed to strictly limit features that allow one web page to access another, to protect your privacy.</p>
+
+<p>Each web page the browser downloads from a server may have been customized for you based on log-in or preferences information. If another web site could access that data via a script, it could then pass the information to its web server, and a malicious script could therefore access your private data. This is known as a cross-site scripting attack.</p>
+
+<p>Browsers therefore strictly limit the ability of scripts to access content from other web servers. By default, files can only be accessed from other web pages on the same <strong role="term">origin</strong>.</p>
+
+<p>A web page origin is defined by the combination of a complete web domain, protocol (e.g., HTTP versus HTTPS), and port number (usually only relevant for local web servers). Any two pages are either same-origin or <strong role="term">cross-origin</strong>, meaning from different origins.</p>
+<div data-type="note" epub:type="note">
+  <h6>Note</h6>
+  <p>In many complex modern websites—with many users uploading different files without oversight by a system administrator—even same-origin file access can be a security problem. Although same-origin files are not blocked by default, the newer <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">Content Security Protocol (CSP)</a> HTTP headers can be used to restrict the ability of files to send data to other origins.</p>
+</div>
+
+<p>If you’re not using JavaScript to fetch files, it’s often easy to ignore cross-origin issues.</p>
+
+<p>For many aspects of web sites, cross-origin files are not restricted. By default, any web page can embed an image, or even an <code>&lt;iframe&gt;</code>, from anywhere on the web. You can also use cross-origin stylesheets and library scripts. (Although Content Security Policy directives can change this, explicitly telling the browser not to allow a page to be embedded in another origin’s page.)</p>
+
+<p>The browser maintains your privacy by trying to limit ways for scripts in the host web page to access the data of the embedded or linked file.</p>
+
+<p>So it surprises many devs when it doesn’t work this simply for SVG.</p>
+
+<p>Many SVG features that use external files do more than just embed them like an image. The referenced SVG file interacts with the current document in ways that can’t easily be shielded from scripts. This includes <code>&lt;use&gt;</code> element clones and also graphical effects like filters, masks, and clipping paths. Since the SVG document from the other origin could have (theoretically) been customized based on private data, they are subject to cross-origin limitations.</p>
+
+<p>Cross-origin restrictions on scripts and embeds have been around since the beginning of JavaScript on the web. However, many scripted applications on the web today <em>rely</em> on the ability to access data from other web servers. How do they do it?</p>
+
+<p>By getting permission.</p>
+
+<p>Cross-origin restrictions exist because the content from the other web server <em>may</em> be sensitive private data. The browser needs permission from that server before it lets another web page access the file.</p>
+
+<p>One web server grants permission to another via HTTP headers sent with the file. These are known as cross-origin headers, or CORS.</p>
+
+<p>Here’s the complicated part: cross-origin headers are only provided by web servers if the browser asks for them. And the browser only asks for them under certain circumstances.</p>
+
+<p>For <code>XMLHttpRequest</code> from JavaScript, the browser calculates whether to ask for permissions automatically: if the URL is on a different origin, it asks for CORS permissions when it requests the file.</p>
+
+<p>Other requests, such as HTML <code>&lt;img&gt;</code>, <code>&lt;script&gt;</code>, stylesheet <code>&lt;link&gt;</code>, and <code>&lt;iframe&gt;</code> sources, usually <em>don’t</em> request cross-origin permissions. The default behavior of these elements doesn’t need special permissions. But if you want to use the same file for something that <em>does</em> require cross-origin permissions, you can tell the browser that it should request them by adding a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes"><code>crossorigin</code> attribute</a> on the HTML element.</p>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>In SVG 2, the SVG <code>&lt;script&gt;</code> and <code>&lt;image&gt;</code> elements also get <code>crossorigin</code> attributes, with the same options and behavior as in HTML (although browser support won’t be as good).</p>
+</div>
+
+<p>Other contexts, such as images loaded by JavaScript for use in canvas, or <code>&lt;link&gt;</code> preload references, can be made with or without request permissions, depending on what you’re going to ask the browser to do with the file.</p>
+
+<p>But the SVG spec was written before any of these rules were developed.</p>
+
+<p>SVG <code>&lt;use&gt;</code> elements don’t currently have any way to ask for cross-origin permissions. They just don’t work cross-origin, at all.</p>
+<div data-type="tip">
+  <h6>Tip</h6>
+  <p>There is currently no way for a <code>&lt;use&gt;</code> element to reuse content from another web domain, even if that content is served with cross-origin HTTP headers.</p>
+
+  <p>Plans to include cross-origin <code>&lt;use&gt;</code> in SVG 2 were put on hold, until the new shadow DOM model of <code>&lt;use&gt;</code> elements was more consistently implemented in browsers.</p>
+</div>
+
+<p>If you want to use SVG <code>&lt;use&gt;</code> references to an asset file that you host on a different web domain then your main web pages, the only solution (currently) is JavaScript. A JavaScript <code>XMLHTTPRequest</code> or <code>fetch</code> request can download the file—with cross-origin headers—and inject the markup into your page, where the SVG renderer can access it.</p>
+
+<p>In contrast, new CSS specifications recommend that browsers use “anonymous” cross-origin mode when requesting assets such as SVG masks, filters, and clipping paths, or images that will be used in advanced features such as <code>shape-outside</code>. That means that they <em>will</em> ask for cross-origin permissions, but they won’t send any cookies from previous visits to that web server. The web server must also be configured to specifically allow anonymous CORS.</p>
+
+<p>However, you can still face problems with CORS and CSS assets.</p>
+
+<p>Because servers only send CORS permission headers on request, the browser can’t reuse a cached copy of a file from a previous request, such as an ordinary image download. If it tries, it will treat the file as if the server had sent a no-CORS-allowed response.</p>
+
+<p>If you’re using a separate server (e.g., CDN) to host SVG assets like filters and masks, or images that you want to use in <code>shape-outside</code>, you need a two-pronged approach to avoid bad caches:</p>
+
+<ul>
+  <li>
+    <p>The server needs to indicate in its caching HTTP headers that the browser must not reuse the file for a request that would have a different CORS-request header.</p>
+  </li>
+  <li>
+    <p>The website code needs to use the <code>crossorigin</code> attribute (with the <code>anonymous</code> value) to upgrade <code>&lt;img&gt;</code> requests or file preload requests, so that they ask for the correct cross-origin permissions the first time—so you don’t download the file twice.</p>
+  </li>
+</ul>
+
+<p>Unfortunately, there currently isn’t a way to indicate that normal CSS image requests, such as <code>background-image</code> references, should request cross-origin permissions. You can use an HTML “preload” <code>&lt;link&gt;</code> element to force the browser to fetch the image file, and request cross-origin permissions when it does.</p>
+
+<p>There’s one final complication to consider when using CORS.</p>
+
+<p>Because the cross-origin information is included in the HTTP header, the external files must be served to the web browser using the hypertext protocol—in other words, a URL starting with <code>http:</code> or <code>https:</code>.</p>
+
+<p>The <code>file:</code> protocol normally used to access files from your own computer doesn’t provide cross-origin permissions. When working with web pages saved on your own computer, you will need to run an HTTP development web server on your own machine in order to test scripts that access other files. You’ll need to specifically grant that server access to the folder with the relevant files.</p>
+<div data-type="warning" epub:type="warning">
+  <h6>Warning</h6>
+  <p>Firefox allows files saved to your computer to access other local files in the same directory or sub-directories, as if they were on the same web server origin. This is convenient when doing development work, but be careful about opening saved web page files when using Firefox!</p>
+</div>
+
+<p>Other features that are restricted to same-origin files—like SVG <code>&lt;use&gt;</code> references—are also restricted, in most browsers, for <code>file:</code> URLs. So if you’re developing any SVG that uses multiple files, you’ll definitely want to set up a local test server.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

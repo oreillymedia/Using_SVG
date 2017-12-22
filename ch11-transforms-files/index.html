@@ -1,59 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><meta charset="utf-8" />
-    <title>ch11-transforms-files/</title>
-    <link rel="stylesheet" href="../styles/main.css" />
-  </head>
-  <body>
-    <div id="wrapper">
-      <h2>All files in ch11-transforms-files</h2>
-      <ul class="columns narrow directory"><li><a href=".." title="Parent folder">..</a></li>
-<li><a href="3D-orthographic-fixed.png" title="3D-orthographic-fixed.png">3D-orthographic-fixed.png</a></li>
-<li><a href="3D-orthographic-fixed.svg" title="3D-orthographic-fixed.svg">3D-orthographic-fixed.svg</a></li>
-<li><a href="3D-orthographic-flat.png" title="3D-orthographic-flat.png">3D-orthographic-flat.png</a></li>
-<li><a href="3D-orthographic-flat.svg" title="3D-orthographic-flat.svg">3D-orthographic-flat.svg</a></li>
-<li><a href="3D-orthographic.svg" title="3D-orthographic.svg">3D-orthographic.svg</a></li>
-<li><a href="3D-perspective-broken-in-Firefox.svg" title="3D-perspective-broken-in-Firefox.svg">3D-perspective-broken-in-Firefox.svg</a></li>
-<li><a href="3D-perspective-fixed.Chrome.png" title="3D-perspective-fixed.Chrome.png">3D-perspective-fixed.Chrome.png</a></li>
-<li><a href="3D-perspective-fixed.png" title="3D-perspective-fixed.png">3D-perspective-fixed.png</a></li>
-<li><a href="3D-perspective-fixed.svg" title="3D-perspective-fixed.svg">3D-perspective-fixed.svg</a></li>
-<li><a href="3D-perspective-scaled.svg" title="3D-perspective-scaled.svg">3D-perspective-scaled.svg</a></li>
-<li><a href="3D-perspective.FF55.png" title="3D-perspective.FF55.png">3D-perspective.FF55.png</a></li>
-<li><a href="3D-perspective.png" title="3D-perspective.png">3D-perspective.png</a></li>
-<li><a href="3D-perspective.svg" title="3D-perspective.svg">3D-perspective.svg</a></li>
-<li><a href="3D-shadow-fixed.Chrome.png" title="3D-shadow-fixed.Chrome.png">3D-shadow-fixed.Chrome.png</a></li>
-<li><a href="3D-shadow-fixed.png" title="3D-shadow-fixed.png">3D-shadow-fixed.png</a></li>
-<li><a href="3D-shadow-fixed.svg" title="3D-shadow-fixed.svg">3D-shadow-fixed.svg</a></li>
-<li><a href="3D-shadow.Chrome.png" title="3D-shadow.Chrome.png">3D-shadow.Chrome.png</a></li>
-<li><a href="3D-shadow.svg" title="3D-shadow.svg">3D-shadow.svg</a></li>
-<li><a href="face-matrix.png" title="face-matrix.png">face-matrix.png</a></li>
-<li><a href="face-matrix.svg" title="face-matrix.svg">face-matrix.svg</a></li>
-<li><a href="left-hand-3d-coordinates-alt.svg" title="left-hand-3d-coordinates-alt.svg">left-hand-3d-coordinates-alt.svg</a></li>
-<li><a href="left-hand-3d-coordinates.svg" title="left-hand-3d-coordinates.svg">left-hand-3d-coordinates.svg</a></li>
-<li><a href="rotations-origin.png" title="rotations-origin.png">rotations-origin.png</a></li>
-<li><a href="rotations-origin.svg" title="rotations-origin.svg">rotations-origin.svg</a></li>
-<li><a href="rotations-point.png" title="rotations-point.png">rotations-point.png</a></li>
-<li><a href="rotations-point.svg" title="rotations-point.svg">rotations-point.svg</a></li>
-<li><a href="scaling-flips.png" title="scaling-flips.png">scaling-flips.png</a></li>
-<li><a href="scaling-flips.svg" title="scaling-flips.svg">scaling-flips.svg</a></li>
-<li><a href="scaling-non-uniform.png" title="scaling-non-uniform.png">scaling-non-uniform.png</a></li>
-<li><a href="scaling-non-uniform.svg" title="scaling-non-uniform.svg">scaling-non-uniform.svg</a></li>
-<li><a href="scaling-strokes.png" title="scaling-strokes.png">scaling-strokes.png</a></li>
-<li><a href="scaling-strokes.svg" title="scaling-strokes.svg">scaling-strokes.svg</a></li>
-<li><a href="scaling-with-transform-centered-with-translate.svg" title="scaling-with-transform-centered-with-translate.svg">scaling-with-transform-centered-with-translate.svg</a></li>
-<li><a href="scaling-with-transform-centered.png" title="scaling-with-transform-centered.png">scaling-with-transform-centered.png</a></li>
-<li><a href="scaling-with-transform-centered.svg" title="scaling-with-transform-centered.svg">scaling-with-transform-centered.svg</a></li>
-<li><a href="scaling-with-transform.svg" title="scaling-with-transform.svg">scaling-with-transform.svg</a></li>
-<li><a href="scaling-with-viewBox-symbol.png" title="scaling-with-viewBox-symbol.png">scaling-with-viewBox-symbol.png</a></li>
-<li><a href="scaling-with-viewBox-symbol.svg" title="scaling-with-viewBox-symbol.svg">scaling-with-viewBox-symbol.svg</a></li>
-<li><a href="skew-concepts.png" title="skew-concepts.png">skew-concepts.png</a></li>
-<li><a href="skew-concepts.svg" title="skew-concepts.svg">skew-concepts.svg</a></li>
-<li><a href="skew-orthographic.png" title="skew-orthographic.png">skew-orthographic.png</a></li>
-<li><a href="skew-orthographic.svg" title="skew-orthographic.svg">skew-orthographic.svg</a></li>
-<li><a href="skew-shadow.png" title="skew-shadow.png">skew-shadow.png</a></li>
-<li><a href="skew-shadow.svg" title="skew-shadow.svg">skew-shadow.svg</a></li>
-<li><a href="translations.png" title="translations.png">translations.png</a></li>
-<li><a href="translations.svg" title="translations.svg">translations.svg</a></li></ul>
-    </div>
+<head>
+  <meta charset="utf-8" />
+  <title>Chapter 11, Transformative Changes: 
+    Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <link rel="stylesheet" href="../styles/main.css" />
   
-</body></html>
+  <meta name="twitter:title" property="og:title" 
+        content="Transformative Changes — Ch11, Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Coordinate System Transformations. Online extras and example code for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
+</head>
+
+<body>
+  <header>
+    <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
+    <p>Example code and online extras for the <a href="http://shop.oreilly.com/product/0636920037972.do">O'Reilly Media book</a> by Amelia Bellamy-Royds, Kurt Cagle, and Dudley Storey.</p>
+    <nav>
+      <a class="home" href="../index.html#chapters">Chapter List</a>
+      <a href="../ch10-reuse-files">Previous Chapter</a>
+      <a href="../ch12-fill-files">Next Chapter</a>
+    </nav>
+  </header>
+  <main>
+    <h1><div>Chapter 11</div> Transformative Changes: <i>Coordinate System Transformations</i></h1>
+    <nav class="toc" aria-label="Page Contents">On this page:
+      <ul class="columns narrow">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#examples">Figures and Examples</a></li>
+        <li><a href="#extras">Online Extras</a></li>
+      </ul>
+    </nav>
+    <div id="intro" class="columns">
+<p>This chapter introduces the SVG <strong role="term"><code>transform</code> attribute</strong>, and examines the ways in which you can work with the SVG coordinate system to make the most of transformations.</p>
+
+<p><a data-type="indexterm" data-primary="nested coordinate systems" data-secondary="vs transformations" data-secondary-sortas="transformations" id="idm139966398621120"/>Like the nested coordinate systems created with <code>&lt;svg&gt;</code> and <code>&lt;symbol&gt;</code>, transformations allow you to reposition your origin or change the scale of your units.  But transformations don’t stop there.</p>
+
+<p>Transformations can change the definition of what “horizontal” or “vertical” means.  This means you can draw rectangles and ellipses that don’t align with the browser window, without having to use <code>&lt;path&gt;</code> notation and trigonometry.</p>
+
+<p>Furthermore, while new coordinate systems must be defined with a separate <code>&lt;svg&gt;</code> or <code>&lt;symbol&gt;</code> element, a <code>transform</code> can be applied directly—as an attribute—on individual shapes or on groups.  This makes transformations incredibly flexible, and they are widely used in SVG.</p>
+
+<p><a data-type="indexterm" data-primary="CSS3 modules" data-secondary="Transforms" id="idm139966398768112"/><a data-type="indexterm" data-primary="Transforms module" data-see="CSS3 modules" id="idm139966398767136"/><a data-type="indexterm" data-primary="transform attribute or style property" data-secondary="attribute vs style" id="idm139966398766192"/>Since transformations control the geometry of your drawing, <code>transform</code> was originally defined as a core XML attribute.  However, transformations are so useful that web designers wanted to use them for non-SVG content.
+The CSS Transforms module defines how transformations can be set using CSS style rules, for any content controlled by CSS.</p>
+    </div>
+    <h2 id="examples">Figures and Examples<a href="#examples" class="hash-link" aria-label="Permalink">#</a></h2>
+    <p>The file names link to the code view on GitHub. <em>Beware: the linked screenshots are hi-resolution; some have very large file sizes.</em></p>
+    <p><a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/">View all files for this chapter on GitHub</a>.</p>
+    <dl class="columns directory">
+      <dt><span class="label">Figure 11-1. </span>A heart icon at many scales</dt>
+      <dt><span class="label">Example 11-1. </span>Scaling an icon with <code>&lt;symbol&gt;</code> and <code>&lt;use&gt;</code></dt>
+      <dd>
+        <ul>
+          <li><a href="scaling-with-viewBox-symbol.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-with-viewBox-symbol.svg">scaling-with-viewBox-symbol.svg</a></li>
+          <li><a href="scaling-with-viewBox-symbol.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-with-viewBox-symbol.png">scaling-with-viewBox-symbol.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Example 11-2. </span>Scaling an icon with transformations</dt>
+      <dd>
+        <ul>
+          <li><a href="scaling-with-transform.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-with-transform.svg">scaling-with-transform.svg</a></li>
+          <li><a href="scaling-with-transform.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-with-transform.png">scaling-with-transform.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-2. </span>Scaling a heart icon within a centered coordinate system</dt>
+      <dt><span class="label">Example 11-3. </span>Centering an icon within the coordinate system to control the scaling origin</dt>
+      <dd>
+        <ul>
+          <li><a href="scaling-with-transform-centered.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-with-transform-centered.svg">scaling-with-transform-centered.svg</a></li>
+          <li><a href="scaling-with-transform-centered.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-with-transform-centered.png">scaling-with-transform-centered.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-3. </span>Stroked circles at various scales</dt>
+      <dt><span class="label">Example 11-4. </span>Scaling a stroked shape</dt>
+      <dd>
+        <ul>
+          <li><a href="scaling-strokes.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-strokes.svg">scaling-strokes.svg</a></li>
+          <li><a href="scaling-strokes.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-strokes.png">scaling-strokes.png</a></li>
+        </ul>
+      </dd>
+      <dt>Another example of non-uniform scales (which was cut from the book)</dt>
+      <dd>
+        <ul>
+          <li><a href="scaling-non-uniform.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-non-uniform.svg">scaling-non-uniform.svg</a></li>
+          <li><a href="scaling-non-uniform.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-non-uniform.png">scaling-non-uniform.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-4. </span>Mirrored text created with negative scaling factors</dt>
+      <dt><span class="label">Example 11-5. </span>Using negative scaling factors to create reflections of text</dt>
+      <dd>
+        <ul>
+          <li><a href="scaling-flips.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-flips.svg">scaling-flips.svg</a></li>
+          <li><a href="scaling-flips.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-flips.png">scaling-flips.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-5. </span>A forest pattern created with translated club icons</dt>
+      <dt><span class="label">Example 11-6. </span>Using translations to position a repeated icon</dt>
+      <dd>
+        <ul>
+          <li><a href="translations.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/translations.svg">translations.svg</a></li>
+          <li><a href="translations.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/translations.png">translations.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-6. </span>Scaling a heart icon after centering it with translations</dt>
+      <dt><span class="label">Example 11-7. </span>Using translations to center a coordinate system for scaling</dt>
+      <dd>
+        <ul>
+          <li><a href="scaling-with-transform-centered-with-translate.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-with-transform-centered-with-translate.svg">scaling-with-transform-centered-with-translate.svg</a></li>
+          <li><a href="scaling-with-transform-centered-with-translate.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/scaling-with-transform-centered-with-translate.png">scaling-with-transform-centered-with-translate.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-7. </span>A wreath of icons created with rotations</dt>
+      <dt><span class="label">Example 11-8. </span>Rotating a graphic around the origin</dt>
+      <dd>
+        <ul>
+          <li><a href="rotations-origin.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/rotations-origin.svg">rotations-origin.svg</a></li>
+          <li><a href="rotations-origin.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/rotations-origin.png">rotations-origin.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-8. </span>A complex pattern created by rotating a single icon around two centers</dt>
+      <dt><span class="label">Example 11-9. </span>Rotations around arbitrary points</dt>
+      <dd>
+        <ul>
+          <li><a href="rotations-point.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/rotations-point.svg">rotations-point.svg</a></li>
+          <li><a href="rotations-point.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/rotations-point.png">rotations-point.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-9. </span>Understanding skew: flattening a cardboard grid versus skewing an SVG grid</dt>
+      <dd>
+        <ul>
+          <li><a href="skew-concepts.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/skew-concepts.svg">skew-concepts.svg</a></li>
+          <li><a href="skew-concepts.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/skew-concepts.png">skew-concepts.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-10 and 11-X2. </span>A pseudo-3D drawing of a box built from skewed rectangles</dt>
+      <dt><span class="label">Example 11-10. </span>Using skew transformations to simulate three dimensions</dt>
+      <dd>
+        <ul>
+          <li><a href="skew-orthographic.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/skew-orthographic.svg">skew-orthographic.svg</a></li>
+          <li><a href="skew-orthographic.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/skew-orthographic.png">skew-orthographic.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-11. </span>Text with a projected shadow created with skew transformations</dt>
+      <dt><span class="label">Example 11-11. </span>Creating a projected shadow effect with skew transformations</dt>
+      <dd>
+        <ul>
+          <li><a href="skew-shadow.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/skew-shadow.svg">skew-shadow.svg</a></li>
+          <li><a href="skew-shadow.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/skew-shadow.png">skew-shadow.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-12. </span>An SVG face, and the same drawing with a matrix transformation applied</dt>
+      <dd>
+        <ul>
+          <li><a href="qx.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/qx.svg">qx.svg</a> (the code isn't exactly as described in the book: to have before and after versions in the same figure, it uses a <code>transform</code> on a <code>&lt;use&gt;</code> instead of a <code>&lt;g&gt;</code>)</li>
+          <li><a href="qx.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/qx.png">qx.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-X1. </span>A schematic for determining the direction of the z axis in a left-handed coordinate system</dt>
+      <dd>
+        <ul>
+          <li><a href="left-hand-3d-coordinates.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/left-hand-3d-coordinates.svg">left-hand-3d-coordinates.svg</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-X3. </span>A 3D “box”, when each side is flattened onto a canvas before the canvas is tilted towards the viewer</dt>
+      <dd>
+        <ul>
+          <li><a href="3D-orthographic-flat.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-orthographic-flat.svg">3D-orthographic-flat.svg</a></li>
+          <li><a href="3D-orthographic-flat.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-orthographic-flat.png">3D-orthographic-flat.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Example 11-X1. </span>Using 3D transformations to build a box in preserve-3d space</dt>
+      <dd>
+        <ul>
+          <li><a href="3D-orthographic.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-orthographic.svg">3D-orthographic.svg</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-X4. </span>A 3D box, tilted towards a viewer at an infinite perspective distance</dt>
+      <dt><span class="label">Example 11-X2. </span>Using 3D transformations to build a box in preserve-3d space</dt>
+      <dd>
+        <ul>
+          <li><a href="3D-orthographic-fixed.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-orthographic-fixed.svg">3D-orthographic-fixed.svg</a></li>
+          <li><a href="3D-orthographic-fixed.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-orthographic-fixed.png">3D-orthographic-fixed.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-X5. </span>A 3D box, viewed from above and to the side (as rendered in Firefox 54)</dt>
+      <dt><span class="label">Example 11-X3. </span>Using 3D transformations to build a box, and 3D perspective to display it</dt>
+      <dd>
+        <ul>
+          <li><a href="3D-perspective.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-perspective.svg">3D-perspective.svg</a></li>
+          <li><a href="3D-perspective.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-perspective.png">3D-perspective.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-X6. </span>A 3D box, viewed from above and to the side, as rendered in Firefox 54 after changing the viewBox scale to match the display scale</dt>
+      <dt><span class="label">Figure 11-X7. </span>A 3D box, viewed from above and to the side, as rendered in Chrome 57 after converting perspective effects into transform function lists</dt>
+      <dt><span class="label">Example 11-X4. </span>Integrating 3D perspective effects in an individual element’s transformation sequence</dt>
+      <dd>
+        <ul>
+          <li><a href="3D-perspective-fixed.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-perspective-fixed.svg">3D-perspective-fixed.svg</a></li>
+          <li><a href="3D-perspective-fixed.png">PNG screenshot (Firefox 54)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-perspective-fixed.png">3D-perspective-fixed.png</a></li>
+          <li><a href="3D-perspective-fixed.Chrome.png">PNG screenshot (Chrome 57)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-perspective-fixed.Chrome.png">3D-perspective-fixed.Chrome.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 11-X8. </span>Text that casts a shadow in three dimensions</dt>
+      <dt><span class="label">Figure 11-X9. </span>Text that casts a shadow in three dimensions, in a different browser</dt>
+      <dt><span class="label">Example 11-X5. </span>Using 3D transformations to cast a shadow</dt>
+      <dd>
+        <ul>
+          <li><a href="3D-shadow-fixed.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-shadow-fixed.svg">3D-shadow-fixed.svg</a></li>
+          <li><a href="3D-shadow-fixed.png">PNG screenshot (Firefox 54)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-shadow-fixed.png">3D-shadow-fixed.png</a></li>
+          <li><a href="3D-shadow-fixed.Chrome.png">PNG screenshot (Chrome 57)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch11-transforms-files/3D-shadow-fixed.Chrome.png">3D-shadow-fixed.Chrome.png</a></li>
+        </ul>
+      </dd>
+    </dl>
+    <h2 id="extras">Online Extras<a href="#extras" class="hash-link" aria-label="Permalink">#</a></h2>
+    <ul class="columns directory">
+      <li><a href="../extras/ch11-3d.html">“The Next Dimension: 3D Transformations”</a>: CSS transforms include 3D effects. How do they work, and how do you work around the browser bugs for SVG?</li>
+      <li>Reference: <a>Transform Functions</a></li>
+    </ul>
+  </main>
+  <footer>
+    <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
+    </p>
+    <p>
+      View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files, suggest a correction, or see when a page was last updated.</p>
+  </footer>
+</body>
+</html>

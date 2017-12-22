@@ -41,7 +41,7 @@
         </g>
     </g>
     </svg>
-    <svg x="4.3in" width="4.3in" height="4.8in">>
+    <svg x="4.3in" width="4.3in" height="4.8in">
         <use xlink:href="#face" transform="matrix(1,2,3,-1,-2,-3)" />
     </svg>
 </svg>

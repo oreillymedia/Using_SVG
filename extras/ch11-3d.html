@@ -5,6 +5,18 @@
   <title>The Next Dimension: 3D Transformations
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="The Next Dimension: 3D Transformations — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="CSS transforms include 3D effects. How do they work, and how do you work around the browser bugs for SVG? An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,476 @@
   </header>
   <main>
     <h1>The Next Dimension: 3D Transformations</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<p>The CSS transformations module includes three-dimensional transformation functions.  They allow you to move your flat vector graphics around in three-dimensional space as if they were cut out of incredibly thin—but incredibly sturdy—paper.  Or perhaps rubber would be a better description than paper, since you can still stretch your graphics using scale and skew!</p>
+
+<p>It isn’t a full 3D environment (since you can’t create three-dimensional curves), but you can build boxes and other three-dimensional structures with flat surfaces.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>All the 3D transformation functions described in this section should be considered “future” SVG.  Support is inconsistent between browsers.  Even when applied to HTML elements, there are many bugs and edge cases.  Recognizing this, the CSS working group has separated all the 3D transformation functions into a CSS Transforms Level 2 module.</p>
+</div>
+
+<p>A three-dimensional transformation consists of two steps:</p>
+<ol>
+<li>
+<p>Transformation functions that manipulate the plane on which your graphic is drawn, in a theoretical 3D space.</p>
+</li>
+<li>
+<p>Perspective effects that then convert them to a flattened representation that can be drawn to your computer screen.</p>
+</li>
+
+</ol>
+
+<p>The transformation functions are extensions of the basic 2D transformations, applied to a 3D coordinate system.  The third axis, <em>z</em>, is initially pointing out of the screen towards the viewer: positive <em>z</em> coordinates are “in front” of the screen, negative <em>z</em> coordinates are behind it.  Factoring in the normal <em>x</em> and <em>y</em> directions in SVG, this creates a <em>left-handed coordinate system</em>.</p>
+
+<p>Knowing that you’re working in a left-handed system can be useful when you twist and rotate the coordinates until the <em>x</em> and <em>y</em> axes are no longer anywhere near vertical and horizontal.  There are a number of heuristics that can be used to keep your bearings in a transformed three-dimensional coordinate system.  <a data-type="xref" href="#left-hand-3d-coordinates-figure">Figure 11-X1</a> shows one heuristic: using your left hand, if your thumb is oriented towards the positive <em>x</em>-axis, and your index finger points straight out towards the positive <em>y</em>-axis, then your bent middle finger will point towards the positive <em>z</em>-axis.</p>
+
+<figure><div id="left-hand-3d-coordinates-figure" class="figure">
+<img src="../ch11-transforms-files/left-hand-3d-coordinates.svg" alt="A sketch of a (left) hand with the thumb and first finger extended, and the second finger extended but bent forward."/>
+<figcaption><span class="label">Figure 11-X1. </span>A schematic for determining the direction of the <em>z</em> axis in a left-handed coordinate system</figcaption>
+</div></figure>
+
+<p>An alternative heuristic—with the same result—is to hold your left hand out flat with the fingers pointing towards the positive <em>x</em>-axis, then curl your fingers in towards the positive <em>y</em>-axis (the curl they make will follow the direction of a positive angle rotation); if you stick out your thumb, it points towards the positive <em>z</em>-axis.</p>
+
+<p>The left-handed orientation is preserved through translations and rotations, but not when you apply a negative scale.  Since a negative scaling factor on one dimension creates a reflection of the coordinate system, this mirrors the left-hand system into a right-hand system.  If you apply a negative scale to <em>two</em> axes, you flip it back to left-handedness, and so on.</p>
+
+<p>Your graphics all start as flat drawings in the <em>x</em>/<em>y</em> plane, with <em>z</em> coordinate 0.  The following 3D transformation functions can shift the position of that plane in the 3D coordinate space:</p>
+
+<ul>
+<li>
+<p><code>translate3d(<em>tx</em>, <em>ty</em>, <em>tz</em>)</code>: translate it by the given lengths along each axis</p>
+</li>
+<li>
+<p><code>translateZ(<em>tz</em>)</code>: similar to the new <code>translateX</code> and <code>translateY</code> functions, this shorthand allows you to specify a translation along the <em>z</em>-axis only</p>
+</li>
+<li>
+<p><code>scale3d(<em>sx</em>,<em>sy</em>,<em>sz</em>)</code>: change the scale in all dimensions by the specified factors</p>
+</li>
+<li>
+<p><code>scaleZ(<em>sz</em>)</code>: change the <em>z</em>-scale only (similar to the new <code>scaleX</code> and <code>scaleY</code> functions)</p>
+</li>
+<li>
+<p><code>rotateX(<em>a</em>)</code>: use the <em>x</em>-axis as a pivot (or hinge) to rotate the coordinate system by the specified angle; <em>x</em>-coordinates will not change, but <em>y</em> and <em>z</em> coordinates will</p>
+</li>
+<li>
+<p><code>rotateY(<em>a</em>)</code>: use the <em>y</em>-axis as a pivot to rotate the coordinate system by the specified angle; <em>y</em>-coordinates will not change, but <em>x</em> and <em>z</em> coordinates will</p>
+</li>
+<li>
+<p><code>rotateZ(<em>a</em>)</code>: use the <em>z</em>-axis as a pivot to rotate the coordinate system by the specified angle; this has the same effect on coordinates as the 2D <code>rotate</code> function, but it forces 3D drawing methods to be used</p>
+</li>
+<li>
+<p><code>rotate3d(<em>vx</em>,<em>vy</em>,<em>vz</em>,a)</code>: create a pivot using the vector (straight line) from the origin to the point (<em>vx</em>,<em>vy</em>,<em>vz</em>), and rotate the coordinate system around it by the angle <em>a</em>.  The official definition of how to calculate the rotation involves extensive trigonometry.  As an heuristic, the direction of rotation for a positive angle is determined by pointing the thumb along the pivot vector, and then curving the fingers; as always, you would use the left hand for the default coordinate system and the right hand for a reflected coordinate system.</p>
+</li>
+</ul>
+
+<p>For all these functions, the CSS syntax rules apply: angles and lengths must include units.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>Although <em>x</em> and <em>y</em> lengths can be percentages, <em>z</em> lengths cannot.  All SVG and CSS reference boxes are 2D, so there’s no reference <code>depth</code> length to define 100% on the <em>z</em>-axis.</p>
+</div>
+
+<p>Having rotated and translated your content into three dimensions, how is it displayed on your two dimensional screen?  Most of us aren’t using holographic displays!</p>
+
+<p>The browser uses additional projection calculations to transform the different sections according to the way they would appear from a certain point (perspective) in three-dimensional space.  The final image is strongly affected by <em>which</em> point is used for this “point of view”.</p>
+
+<p>Think about it this way:  If you hold up a box in front of you, so that you’re looking straight at one side of it, you can’t see the other sides at all.  If you shift your view off to the side, and above or below, then you can see multiple sides.</p>
+
+<p>What you see also depends on how far away you are. Hold that box close to your face, and the end nearest your eye will take up a larger part of your field of view then the more distant end.  Move the entire box farther away from your eyes, and the difference in apparent size between the near and far ends dissipates.</p>
+
+<p>The orthographic projection of a box drawn in <a data-type="xref" href="ch11.html#skew-orthographic-example">Example 11-10</a>, repeated below as <a data-type="xref" href="#skew-orthographic-figure-2">Figure 11-X2</a>, using skew transformations, did not have any shrinking effect.</p>
+
+<figure><div id="skew-orthographic-figure-2" class="figure">
+<img src="../ch11-transforms-files/skew-orthographic.png" alt="An approximate drawing of an empty box. The front and right sides visible from the outside (in gray), and parts of the inner surface of the back and left side (in brown) visible behind them. The left and right sides of the box are drawn as parallelagrams, angling away from the front. The back rectangle is offset vertically, relative to the front, in order to match the angled sides."/>
+<figcaption><span class="label">Figure 11-X2. </span>A pseudo-3D drawing of a box built from skewed rectangles</figcaption>
+</div></figure>
+
+<p>The affine transformations used in 2D SVG cannot shrink one end of a shape more than the other.  That’s why it doesn’t look <em>quite</em> right.</p>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>In the real world, you only get angled perspective <em>without</em> depth perspective when you’re looking through a telescope or a high-zoom camera: in that situation, you’re so far away from the object that <em>its</em> depth is insignificant.</p>
+</div>
+
+<p>By default, the CSS 3D transformations work this way as well: as if you’re looking at the box from infinitely far away, but zoomed in.  However, a separate <code>perspective</code> property allows you to control the theoretical “point of view” from which the flattened image is calculated.</p>
+
+<p>To demonstrate, we’ll re-create our basic box graphic, first without perspective, then with it.  The sides of the box are redrawn using 3D transformations to position them, instead of skews.  The back will be translated along the <em>z</em>-axis to position it behind the front, and the sides will be rotated at 90° around the vertical axis.</p>
+
+<p>There’s a problem, though.  If the front of the box is facing us, and the sides of the box are at exact right angles, the front is all that we’ll see.  In order to be able to see the sides and back of the box, we need to rotate the entire object slightly in 3D space, tilting the open top and one side towards the viewer.</p>
+
+<p>Logically, rotating the entire object should be achievable by transforming a <code>&lt;g&gt;</code> containing all the sides of the box.  But it’s a little more complicated than that.</p>
+
+<p>By default, the browser calculates the 2D representation of 3D-transformed elements individually—it flattens them one at a time.  Each shape is re-drawn in the main plane of the graphic before any transformations on parent elements are calculated.  For building a box, that won’t do: Since the sides of the box are rotated 90° from the plane of the main graphic, they become invisible when flattened.  The back of the box, when flattened, is completely hidden by the front.  Rotating the entire flattened group results in a skewed grey rectangle with no depth at all, as shown in <a data-type="xref" href="#x3D-orthographic-flat-figure">Figure 11-X3</a>.</p>
+
+<figure><div id="x3D-orthographic-flat-figure" class="figure">
+<img src="../ch11-transforms-files/3D-orthographic-flat.png" alt="A gray parallelogram, with a bit of brown visible along the bottom and right edges."/>
+<figcaption><span class="label">Figure 11-X3. </span>A 3D “box”, when each side is flattened onto a canvas before the canvas is tilted towards the viewer</figcaption>
+</div></figure>
+
+<p>To create nested structures of elements transformed in 3D space, the CSS Transforms module defines a new property.  An element with <code>transform-style: preserve-3d</code> can have a transformation of its own, without flattening its children.  Instead, each child element’s 3D coordinates while transforming the parent group.</p>
+
+<p><a data-type="xref" href="#x3D-orthographic-example">Example 11-X1</a> provides the code for how this <em>should</em> work.  Unfortunately, <code>preserve-3d</code> and SVG are currently not well-behaved in web browsers, so this example is mostly theoretical at the time of writing.</p>
+<div id="x3D-orthographic-example" data-type="example">
+<h5><span class="label">Example 11-X1. </span>Using 3D transformations to build a box in <code>preserve-3d</code> space</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">width=</code><code class="s">"400px"</code><code> </code><code class="na">height=</code><code class="s">"300px"</code><code> </code><code class="na">viewBox=</code><code class="s">"0 0 40 30"</code><code> </code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>3D transformations</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style </code><code class="na">type=</code><code class="s">"text/css"</code><code class="nt">&gt;</code><code>
+        </code><code class="nc">.box</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">transform-style</code><code class="o">:</code><code> </code><code class="n">preserve</code><code class="m">-3</code><code class="n">d</code><code class="p">;</code><code>             </code><a class="co" id="co_online_extras_CO12-1" href="#callout_online_extras_CO12-1"><img src="callouts/1.svg" alt="1"/></a><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nt">rect</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">stroke-width</code><code class="o">:</code><code> </code><code class="m">0</code><code class="o">.</code><code class="m">3</code><code class="p">;</code><code>
+            </code><code class="k">stroke-linejoin</code><code class="o">:</code><code> </code><code class="n">round</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nc">.inside</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="nb">burlywood</code><code class="p">;</code><code>
+            </code><code class="k">stroke</code><code class="o">:</code><code> </code><code class="n">saddleBrown</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nc">.outside</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="n">lightGray</code><code class="p">;</code><code>
+            </code><code class="k">stroke</code><code class="o">:</code><code> </code><code class="nb">gray</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code> </code><code class="na">class=</code><code class="s">"box"</code><code> </code><code class="na">style=</code><code class="s">"transform: translate(5px,10px)
+                          rotate3d(1,1,0,-30deg)"</code><code class="nt">&gt;</code><code>    </code><a class="co" id="co_online_extras_CO12-2" href="#callout_online_extras_CO12-2"><img src="callouts/2.svg" alt="2"/></a><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"inside"</code><code> </code><code class="na">width=</code><code class="s">"25"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code>
+              </code><code class="na">style=</code><code class="s">"transform: translateZ(-10px)"</code><code class="nt">/&gt;</code><code>  </code><a class="co" id="co_online_extras_CO12-3" href="#callout_online_extras_CO12-3"><img src="callouts/3.svg" alt="3"/></a><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"inside"</code><code> </code><code class="na">width=</code><code class="s">"10"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code>
+              </code><code class="na">style=</code><code class="s">"transform: rotateY(90deg)"</code><code class="nt">/&gt;</code><code>     </code><a class="co" id="co_online_extras_CO12-4" href="#callout_online_extras_CO12-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"outside"</code><code> </code><code class="na">width=</code><code class="s">"25"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code> </code><code class="nt">/&gt;</code><code> </code><a class="co" id="co_online_extras_CO12-5" href="#callout_online_extras_CO12-5"><img src="callouts/5.svg" alt="5"/></a><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"outside"</code><code> </code><code class="na">width=</code><code class="s">"10"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code>
+              </code><code class="na">style=</code><code class="s">"transform: translate(25px,0)
+                                rotateY(90deg)"</code><code class="nt">/&gt;</code><code>     </code><a class="co" id="co_online_extras_CO12-6" href="#callout_online_extras_CO12-6"><img src="callouts/6.svg" alt="6"/></a><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO12-1" href="#co_online_extras_CO12-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>The <code>preserve-3d</code> style is applied to the <code>&lt;g&gt;</code> element, so that the box as a whole can be tilted towards the viewer without losing its three-dimensionality.  The rest of the styles haven’t changed from <a data-type="xref" href="ch11.html#skew-orthographic-example">Example 11-10</a>, which drew the box using skews.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO12-2" href="#co_online_extras_CO12-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>The transformations are all declared using CSS syntax in <code>style</code> attributes (browsers do not yet support 3D transformations within the SVG <code>transform</code> attribute).  The <code>rotate3d</code> function rotates the box around a line going from the origin (top left front corner) down across the front of the box at a 45° angle.  The negative rotation angle tilts the bottom-left corner back and the top-right corner forward.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO12-3" href="#co_online_extras_CO12-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>The first rectangle is the back panel, positioned using <code>translateZ</code>.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO12-4" href="#co_online_extras_CO12-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>The second rectangle is the left side, swiveled into place using <code>rotateY</code>.  The rectangle is 10 units wide (i.e., the box is 10 units deep), but will take up less space on screen because of the angled perspective.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO12-5" href="#co_online_extras_CO12-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+<dd><p>The third <code>&lt;rect&gt;</code> is the front of the box.  The only transforms that apply are those declared on the parent <code>&lt;g&gt;</code>.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO12-6" href="#co_online_extras_CO12-6"><img src="callouts/6.svg" alt="6"/></a></dt>
+<dd><p>The final <code>&lt;rect&gt;</code> is the right side of the box; it is shifted over with <code>translate</code>, then swiveled into place with <code>rotateY</code>.</p></dd>
+</dl>
+
+<p><a href="../ch11-transforms-files/3D-orthographic.svg">View the live file.</a></p></div>
+
+<p>There are two other options for the <code>transform-style</code> property: <code>auto</code> (the default) and <code>flat</code>.  They both have the same effect on an element that has 3D transformations applied, causing the 3D effect to be flattened.  The difference is when a child element has <code>preserve-3d</code> effects but the parent <em>isn’t</em> transformed: a <code>flat</code> parent element forces the child content to be flattened, while an <code>auto</code> transform-style doesn’t affect the rendering of child content.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>Various other CSS style properties will force a flattening of 3D child content, such as partial opacity, filters, clipping, or hidden or scrolling overflow.  <code>preserve-3d</code> will be ignored in these cases.</p>
+</div>
+
+<p><a data-type="xref" href="#x3D-orthographic-example">Example 11-X1</a> is “mostly theoretical” because at the time of writing, no browser renders it nicely.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>At the time of writing, Blink and WebKit browsers do not respect the <code>preserve-3d</code> option on SVG content.
+Firefox applies the transforms, but it draws the shapes at a scale of one screen pixel per SVG user unit, then scales them up like raster images, creating a blurry mess.  Up until version 55, Firefox also had problems with the layering of the shapes.  Recent versions of Firefox also do not support the <code>auto</code> value of <code>transform-style</code> (for SVG or HTML): any element that isn’t explicitly <code>preserve-3d</code> applies a flattening effect.</p>
+</div>
+
+<p>If need be, you can reduce—but not eliminate—browser support problems by transforming CSS layout boxes instead of SVG, using inline SVG in HTML: draw each SVG shape in its own <code>&lt;svg&gt;</code> element, each of which is absolutely positioned to fill a shared <code>&lt;div&gt;</code> container, and transform the <code>&lt;svg&gt;</code> elements instead of the shapes.</p>
+
+<p>Alternatively, you can create complex 3D objects without the <code>preserve-3d</code> option.  To do so, you need to specify the entire sequence of 3D transformations on each element.  In other words, remove the <code>transform</code> property for the <code>&lt;g&gt;</code>, and copy that list of functions into the beginning of the <code>transform</code> property for each child rectangle—including the front of the box, which doesn’t have its own transformation!</p>
+
+<p>The changed code is given in <a data-type="xref" href="#x3D-orthographic-fixed-example">Example 11-X2</a>; the result in most new browsers is shown in <a data-type="xref" href="#x3D-orthographic-fixed-figure-2">Figure 11-X4</a>.</p>
+
+<p>Because we’re focusing on compatibility here, another change has been made: fallback support for browsers which don’t apply CSS 3D transforms to SVG at all.  The <code>transform</code> attributes, with skew effects, ensure that these browsers will still get the rendering from <a data-type="xref" href="#skew-orthographic-figure-2">Figure 11-X2</a>.  In other browsers, the skews in the <code>transform</code> attribute will be replaced by the 3D functions in the <code>transform</code> property of the inline styles.</p>
+
+<figure><div id="x3D-orthographic-fixed-figure" class="figure">
+<img src="../ch11-transforms-files/3D-orthographic-fixed.png" alt="A structure that approximates an open box with gray outside surfaces and brown inside surfaces.  Relative to the previous box, the sides appear shallower, and the entire structure is tilted at an angle."/>
+<figcaption><span class="label">Figure 11-X4. </span>A 3D box, tilted towards a viewer at an infinite perspective distance</figcaption>
+</div></figure>
+<div id="x3D-orthographic-fixed-example" data-type="example">
+<h5><span class="label">Example 11-X2. </span>Using 3D transformations to build a box, without needing `preserve-3d`</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">width=</code><code class="s">"400px"</code><code> </code><code class="na">height=</code><code class="s">"300px"</code><code> </code><code class="na">viewBox=</code><code class="s">"0 0 40 30"</code><code> </code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>3D transformations</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style </code><code class="na">type=</code><code class="s">"text/css"</code><code class="nt">&gt;</code><code>
+        </code><code class="nc">.box</code><code> </code><code class="p">{</code><code>
+            </code><code class="c">/*transform-style: preserve-3d;*/</code><code>              </code><a class="co" id="co_online_extras_CO13-1" href="#callout_online_extras_CO13-1"><img src="callouts/1.svg" alt="1"/></a><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nt">rect</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">stroke-width</code><code class="o">:</code><code> </code><code class="m">0</code><code class="o">.</code><code class="m">3</code><code class="p">;</code><code>
+            </code><code class="k">stroke-linejoin</code><code class="o">:</code><code> </code><code class="n">round</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nc">.inside</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="nb">burlywood</code><code class="p">;</code><code>
+            </code><code class="k">stroke</code><code class="o">:</code><code> </code><code class="n">saddleBrown</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nc">.outside</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="n">lightGray</code><code class="p">;</code><code>
+            </code><code class="k">stroke</code><code class="o">:</code><code> </code><code class="nb">gray</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code> </code><code class="na">class=</code><code class="s">"box"</code><code> </code><code class="na">transform=</code><code class="s">"translate(5,10)"</code><code class="nt">&gt;</code><code>            </code><a class="co" id="co_online_extras_CO13-2" href="#callout_online_extras_CO13-2"><img src="callouts/2.svg" alt="2"/></a><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"inside"</code><code> </code><code class="na">width=</code><code class="s">"25"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code>
+              </code><code class="na">transform=</code><code class="s">"translate(5,-5)"</code><code>
+              </code><code class="na">style=</code><code class="s">"transform: rotate3d(1,1,0,-30deg)
+                                translateZ(-10px)"</code><code class="nt">/&gt;</code><code>       </code><a class="co" id="co_online_extras_CO13-3" href="#callout_online_extras_CO13-3"><img src="callouts/3.svg" alt="3"/></a><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"inside"</code><code> </code><code class="na">width=</code><code class="s">"10"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code>
+              </code><code class="na">transform=</code><code class="s">"skewY(-45) scale(0.5,1)"</code><code>
+              </code><code class="na">style=</code><code class="s">"transform: rotate3d(1,1,0,-30deg)
+                                rotateY(90deg)"</code><code class="nt">/&gt;</code><code>          </code><a class="co" id="co_online_extras_CO13-4" href="#callout_online_extras_CO13-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"outside"</code><code> </code><code class="na">width=</code><code class="s">"25"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code>
+              </code><code class="na">style=</code><code class="s">"transform: rotate3d(1,1,0,-30deg)"</code><code class="nt">/&gt;</code><code>  </code><a class="co" id="co_online_extras_CO13-5" href="#callout_online_extras_CO13-5"><img src="callouts/5.svg" alt="5"/></a><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"outside"</code><code> </code><code class="na">width=</code><code class="s">"10"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code>
+              </code><code class="na">transform=</code><code class="s">"translate(25,0) skewY(-45) scale(0.5,1)"</code><code>
+              </code><code class="na">style=</code><code class="s">"transform: rotate3d(1,1,0,-30deg)
+                                translate(25px,0) rotateY(90deg)"</code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO13-1" href="#co_online_extras_CO13-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>The problematic <code>transform-style: preserve-3d</code> is removed.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO13-2" href="#co_online_extras_CO13-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>The 2D translate is left behind on the <code>&lt;g&gt;</code> element, since it doesn’t cause any problems.  Since it will also be part of the fallback rendering, it is written in the SVG 1 <code>transform</code> attribute syntax.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO13-3" href="#co_online_extras_CO13-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>The <code>rotate3d</code> function—originally designed to rotate the box as a whole—has been copied into the start of the <code>transform</code> style property of each side of the box.  A <code>transform</code> attribute uses 2D transformations to create the fallback layout.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO13-4" href="#co_online_extras_CO13-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>The fallback transformation on the sides of the box is slightly different from <a data-type="xref" href="ch11.html#skew-orthographic-example">Example 11-10</a>: because the rectangles are twice as wide in this case, they need to be scaled down with <code>scale(0.5,1)</code>.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO13-5" href="#co_online_extras_CO13-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+<dd><p>The front of the box did not have any transformations in the skew or preserve-3d code, but it still needs the “inherited” <code>rotate3d</code> transformation, to keep it aligned with the rest of the box.</p></dd>
+</dl>
+
+<p><a href="../ch11-transforms-files/3D-orthographic-fixed.svg">View the live file.</a></p></div>
+
+<p>The box in <a data-type="xref" href="#x3D-orthographic-fixed-figure">Figure 11-X4</a> still doesn’t look <em>quite</em> right.  And it’s more than just that the strokes on the rectangles throw off the exact alignment of the box’s sides.</p>
+
+<p>The perspective is still wrong.  Most of us are not used to seeing three-dimensional objects as if we were viewing them through a highly magnified telephoto camera lens.</p>
+
+<p>To create a more natural perspective on your 3D web design, CSS Transforms defines the <code>perspective</code> and <code>perspective-origin</code> properties to set the position of the viewer, in 3D space, that the browser should use when calculating the flattened representation of the graphic.  These properties are defined on a <em>parent</em> element, to create a context for 3D transformations of the children.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p><code>perspective</code> and <code>perspective-origin</code> are only supported in browsers that support a <code>preserve-3d</code> context.  Which at the time of writing means only in Firefox, for SVG elements.</p>
+</div>
+
+<p>The value of <code>perspective</code> is the distance of the viewer <em>above</em> the drawing surface, as measured in units for the current coordinate system’s <em>z</em>-axis.  The default value is <code>none</code>, which creates the telephoto perspective effect.  Very large perspective distances—relative to the size of the screen in the current coordinate system—create a similar result.  Very short perspective distances create strong distortions in size between parts of the graphic with low and high <em>z</em>-coordinates.  If the <em>z</em>-coordinate of a shape (or part of a shape) is <em>greater</em> than the perspective distance, it will be “behind” the viewer and not drawn.</p>
+
+<p>The <code>perspective-origin</code> is the (<em>x</em>,<em>y</em>) position of the viewer, relative to the 2D <code>transform-origin</code>; it can be specified using lengths, percentages, or CSS position keywords such as <code>top</code> or <code>center</code>.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>Because the perspective effect is all about angles, the values of <code>perspective</code> and <code>perspective-origin</code> need to be considered together.  At very short perspective distances, even slight perspective-origin offsets can have significant effects.</p>
+</div>
+
+<p>Both <code>perspective</code> and <code>perspective-origin</code> are applied to a container element, to describe the perspective you wish to use when flattening their child elements.  This allows multiple transformed elements to have a shared point of view, defined in the container’s coordinate system.</p>
+
+<p><a data-type="xref" href="#x3D-perspective-example">Example 11-X3</a> uses these properties to take another go at drawing the box.  This time, it remains flat within its coordinate system.  Instead of tilting the box towards the viewer, we are going to move the viewer (perspective origin) so that it can see inside the box.  The interior and right side are displayed using perspective effects.</p>
+
+<p>Once again, we’re going to create the effect twice: first, the theoretical code, using <code>preserve-3d</code>, <code>perspective</code> and <code>perspective-origin</code>.  Then we’ll do it all again with cross-browser-compatible code.  <a data-type="xref" href="#x3D-perspective-figure">Figure 11-X5</a> shows how the code in <a data-type="xref" href="#x3D-perspective-example">Example 11-X3</a> displays in the one browser that currently supports it, Firefox (albeit with blurry scaling issues).</p>
+
+<figure><div id="x3D-perspective-figure" class="figure">
+<img src="../ch11-transforms-files/3D-perspective.png" alt="A gray and brown open box, drawn with 3D perspective so you can see the back and sides.  However, all the edges are blurred and semi-transparent."/>
+<figcaption><span class="label">Figure 11-X5. </span>A 3D box, viewed from above and to the side (as rendered in Firefox 54)</figcaption>
+</div></figure>
+<div id="x3D-perspective-example" data-type="example">
+<h5><span class="label">Example 11-X3. </span>Using 3D transformations to build a box, and 3D perspective to display it</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">width=</code><code class="s">"400px"</code><code> </code><code class="na">height=</code><code class="s">"300px"</code><code> </code><code class="na">viewBox=</code><code class="s">"0 0 40 30"</code><code> </code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>3D perspective on transformed shapes</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style </code><code class="na">type=</code><code class="s">"text/css"</code><code class="nt">&gt;</code><code>
+        </code><code class="nc">.scene</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">perspective</code><code class="o">:</code><code> </code><code class="m">100px</code><code class="p">;</code><code>
+            </code><code class="k">perspective-origin</code><code class="o">:</code><code> </code><code class="m">80px</code><code> </code><code class="m">-40px</code><code class="p">;</code><code>    </code><a class="co" id="co_online_extras_CO14-1" href="#callout_online_extras_CO14-1"><img src="callouts/1.svg" alt="1"/></a><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nc">.box</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">transform-style</code><code class="o">:</code><code> </code><code class="n">preserve</code><code class="m">-3</code><code class="n">d</code><code class="p">;</code><code>      </code><a class="co" id="co_online_extras_CO14-2" href="#callout_online_extras_CO14-2"><img src="callouts/2.svg" alt="2"/></a><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nt">rect</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">stroke-width</code><code class="o">:</code><code> </code><code class="m">0</code><code class="o">.</code><code class="m">3</code><code class="p">;</code><code>
+            </code><code class="k">stroke-linejoin</code><code class="o">:</code><code> </code><code class="n">round</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nc">.inside</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="nb">burlywood</code><code class="p">;</code><code>
+            </code><code class="k">stroke</code><code class="o">:</code><code> </code><code class="n">saddleBrown</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nc">.outside</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="n">lightGray</code><code class="p">;</code><code>
+            </code><code class="k">stroke</code><code class="o">:</code><code> </code><code class="nb">gray</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code> </code><code class="na">class=</code><code class="s">"scene"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;g</code><code> </code><code class="na">class=</code><code class="s">"box"</code><code> </code><code class="na">style=</code><code class="s">"transform: translate(5px,10px)"</code><code class="nt">&gt;</code><code> </code><a class="co" id="co_online_extras_CO14-3" href="#callout_online_extras_CO14-3"><img src="callouts/3.svg" alt="3"/></a><code>
+            </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"inside"</code><code> </code><code class="na">width=</code><code class="s">"25"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code>
+                  </code><code class="na">style=</code><code class="s">"transform: translateZ(-10px)"</code><code class="nt">/&gt;</code><code>
+            </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"inside"</code><code> </code><code class="na">width=</code><code class="s">"10"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code>
+                  </code><code class="na">style=</code><code class="s">"transform: rotateY(90deg)"</code><code class="nt">/&gt;</code><code>
+            </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"outside"</code><code> </code><code class="na">width=</code><code class="s">"25"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code> </code><code class="nt">/&gt;</code><code>
+            </code><code class="nt">&lt;rect</code><code> </code><code class="na">class=</code><code class="s">"outside"</code><code> </code><code class="na">width=</code><code class="s">"10"</code><code> </code><code class="na">height=</code><code class="s">"15"</code><code>
+                  </code><code class="na">style=</code><code class="s">"transform: translate(25px,0)
+                                    rotateY(90deg)"</code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;/g&gt;</code><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO14-1" href="#co_online_extras_CO14-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>A new group (<code>.scene</code>) defines the <code>perspective</code> and <code>perspective-origin</code> properties that will apply to its children.  The perspective origin is off to the right of the SVG’s dimensions (80px being much wider than the 40px <code>viewBox</code> width), and above (-40px meaning above the origin).</p></dd>
+<dt><a class="co" id="callout_online_extras_CO14-2" href="#co_online_extras_CO14-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>Although the box itself no longer has a 3D rotation, it still needs a <code>preserve-3d</code> setting, so that the perspective properties set on its parent will affect its children.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO14-3" href="#co_online_extras_CO14-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>Only the 2D transformation remains on the <code>.box</code> group; however, the 3D transformations used to position the individual <code>&lt;rect&gt;</code> elements have not changed since <a data-type="xref" href="#x3D-orthographic-example">Example 11-X1</a>.</p></dd>
+</dl>
+
+<p><a href="../ch11-transforms-files/3D-perspective.svg">View the live file.</a></p></div>
+<div data-type="tip"><h6>Tip</h6>
+<p>The blurry effects in <a data-type="xref" href="#x3D-perspective-figure">Figure 11-X5</a> are created by the browser drawing the graphic in the SVG user-unit coordinate space, then scaling it up to the final dimensions.  You can avoid it by defining your SVG <code>viewBox</code> to be equal or larger than the actual dimensions it will be drawn at.</p>
+</div>
+
+<p>The <code>perspective</code> effects are defined on a new <code>&lt;g&gt;</code> element that contains the box.  This allows them to be defined in the SVG’s <code>viewBox</code> coordinate space.  In contrast, if the perspective was defined on the parent <code>&lt;svg&gt;</code>, it would be measured in the “outside” coordinate space: the units used to measure the <code>&lt;svg&gt;</code> element’s width and height.  (It would also break in Firefox, which treats an SVG <code>viewBox</code> as a flattening transform.)</p>
+
+<p>So, that was the theoretical code, using <code>perspective</code> and <code>preserve-3d</code>.  But neither are supported in Blink and WebKit for SVG: they just show the plain gray rectangle of the front side of the box.</p>
+
+<p>In <a data-type="xref" href="#x3D-orthographic-fixed-figure">Figure 11-X4</a> (without perspective effects), we worked around the missing 3D SVG context by pushing the parent transformations down the tree.  Transformations for the group as a whole were specified as part of the transform function list for the child <code>&lt;rect&gt;</code> elements.  We’re going to do that again, but in order to so, we need a way to describe the perspective effects in a transform function list.</p>
+
+<p>The uneven scaling effect of <code>perspective</code> can also be created using a <code>perspective(<em>dz</em>)</code> transformation function within the <code>transform</code> list.  The value in the brackets is the perspective distance length, the same as a value for the <code>perspective</code> property.  A <code>perspective</code> property on a parent element is equivalent to a <code>perspective()</code> function with the same length, added at the beginning of the child’s transformation list.</p>
+
+<p>There is no function equivalent to the <code>perspective-origin</code> property.  Instead, like with <code>transform-origin</code>, <code>perspective-origin</code> is equivalent to before-and-after translations: this time, the translations are applied before and after the <code>perspective()</code> function.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>This assumes that the reference coordinate system for <code>perspective-origin</code> is the same for the parent as the child element.  With SVG, this works so long as you’re using <code>viewBox</code> coordinates, which currently means absolute lengths only: percentages suffer from the same browser bugs as <code>transform-origin</code>.</p>
+</div>
+
+<p><a data-type="xref" href="#x3D-perspective-fixed-example">Example 11-X4</a> shows the final code, including fallback <code>transform</code> attributes to create the original skew effect for MS Edge and older browsers.  While we’re fixing things, the blurry rendering in Firefox has been fixed by scaling every length value in the code (from the <code>viewBox</code> to the <code>stroke-width</code>) by 10.  <a data-type="xref" href="#x3D-perspective-fixed-figure">Figure 11-X6</a> shows the result in Firefox 54.</p>
+
+<figure><div id="x3D-perspective-fixed-figure" class="figure">
+<img src="../ch11-transforms-files/3D-perspective-fixed.png" alt="A nice rendering of a gray-on-the-outside, brown-on-the-inside, open box, with correct 3D perspective."/>
+<figcaption><span class="label">Figure 11-X6. </span>A 3D box, viewed from above and to the side, as rendered in Firefox 54 after changing the viewBox scale to match the display scale</figcaption>
+</div></figure>
+<div id="x3D-perspective-fixed-example" data-type="example">
+<h5><span class="label">Example 11-X4. </span>Integrating 3D perspective effects in an individual element’s transformation sequence</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code> <code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code> <code class="na">xml:lang=</code><code class="s">"en"</code>
+     <code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code>
+     <code class="na">width=</code><code class="s">"400px"</code> <code class="na">height=</code><code class="s">"300px"</code> <code class="na">viewBox=</code><code class="s">"0 0 400 300"</code> <code class="nt">&gt;</code>
+    <code class="nt">&lt;title&gt;</code>3D perspective on transformed shapes<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;style </code><code class="na">type=</code><code class="s">"text/css"</code><code class="nt">&gt;</code>
+        <code class="nt">rect</code> <code class="p">{</code>
+            <code class="k">stroke-width</code><code class="o">:</code> <code class="m">3</code><code class="p">;</code>
+            <code class="k">stroke-linejoin</code><code class="o">:</code> <code class="n">round</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nc">.inside</code> <code class="p">{</code>
+            <code class="k">fill</code><code class="o">:</code> <code class="nb">burlywood</code><code class="p">;</code>
+            <code class="k">stroke</code><code class="o">:</code> <code class="n">saddleBrown</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nc">.outside</code> <code class="p">{</code>
+            <code class="k">fill</code><code class="o">:</code> <code class="n">lightGray</code><code class="p">;</code>
+            <code class="k">stroke</code><code class="o">:</code> <code class="nb">gray</code><code class="p">;</code>
+        <code class="p">}</code>
+    <code class="nt">&lt;/style&gt;</code>
+    <code class="nt">&lt;g</code> <code class="na">transform=</code><code class="s">"translate(50,100)"</code><code class="nt">&gt;</code>
+        <code class="nt">&lt;rect</code> <code class="na">class=</code><code class="s">"inside"</code> <code class="na">width=</code><code class="s">"250"</code> <code class="na">height=</code><code class="s">"150"</code>
+              <code class="na">transform=</code><code class="s">"translate(50,-50)"</code>
+              <code class="na">style=</code><code class="s">"transform: translate(800px, -400px)</code>
+<code class="s">                     perspective(1000px) translate(-800px, 400px)</code>
+<code class="s">                     translateZ(-100px)"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;rect</code> <code class="na">class=</code><code class="s">"inside"</code> <code class="na">width=</code><code class="s">"100"</code> <code class="na">height=</code><code class="s">"150"</code>
+              <code class="na">transform=</code><code class="s">"skewY(-45) scale(0.5,1)"</code>
+              <code class="na">style=</code><code class="s">"transform: translate(800px, -400px)</code>
+<code class="s">                     perspective(1000px) translate(-800px, 400px)</code>
+<code class="s">                     rotateY(90deg)"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;rect</code> <code class="na">class=</code><code class="s">"outside"</code> <code class="na">width=</code><code class="s">"250"</code> <code class="na">height=</code><code class="s">"150"</code>
+              <code class="na">style=</code><code class="s">"transform: translate(800px, -400px)</code>
+<code class="s">                     perspective(1000px) translate(-800px, 400px)"</code> <code class="nt">/&gt;</code>
+        <code class="nt">&lt;rect</code> <code class="na">class=</code><code class="s">"outside"</code> <code class="na">width=</code><code class="s">"100"</code> <code class="na">height=</code><code class="s">"150"</code>
+              <code class="na">transform=</code><code class="s">"translate(250,0) skewY(-45) scale(0.5,1)"</code>
+              <code class="na">style=</code><code class="s">"transform: translate(800px, -400px)</code>
+<code class="s">                     perspective(1000px) translate(-800px, 400px)</code>
+<code class="s">                     translate(250px,0) rotateY(90deg)"</code><code class="nt">/&gt;</code>
+    <code class="nt">&lt;/g&gt;</code>
+
+<code class="nt">&lt;/svg&gt;</code></pre>
+
+<p><a href="../ch11-transforms-files/3D-perspective-fixed.svg">View the live file.</a></p></div>
+
+<p><a data-type="xref" href="#x3D-perspective-fixed-Chrome-figure">Figure 11-X7</a> shows the rendering in Chrome 57; Safari 10 looks the same.  It’s not quite right (the back edges <em>should</em> be smaller than the front, not larger), but it’s a significant improvement on the no-depth gray rectangle.</p>
+
+<figure><div id="x3D-perspective-fixed-Chrome-figure" class="figure">
+<img src="../ch11-transforms-files/3D-perspective-fixed.Chrome.png" alt="A not-quite-so-nice rendering of a gray-on-the-outside, brown-on-the-inside, open box, which appears larger in the back than the front. Unless you look at it the wrong way, and then your brain starts trying to correct the 3D perspective by flipping it inside out, so that it's a gray room with a brown ceiling, but that's not quite right either, so it flips back to box. Basically, it's rather annoying to look at."/>
+<figcaption><span class="label">Figure 11-X7. </span>A 3D box, viewed from above and to the side, as rendered in Chrome 57 after converting perspective effects into transform function lists</figcaption>
+</div></figure>
+
+<p>If we could create an acceptable fallback for <code>preserve-3d</code> and <code>perspective-origin</code> by simply shifting all the transformation functions into the child elements, why can’t the smart folks on the Blink and WebKit teams do the same?  Because not all examples are this simple.</p>
+
+<p>The fallback approach given here—transforming each element individually—only works if the painting order of the elements doesn’t change when they are transformed in 3D space.  The back, sides, and front of the box are still being painted individually, in the order they are specified in the SVG file.  In contrast, in a true <code>preserve-3d</code> space, elements might end up transformed so they are behind or in front of other elements, or even so they intersect.  Getting the paint order correct in those cases is one of the most difficult parts of 3D rendering.</p>
+
+<p>To finish off the discussion of 3D transformations, <a data-type="xref" href="#x3D-shadow-fixed-example">Example 11-X5</a> re-draws the shadowed text from <a data-type="xref" href="ch11.html#skew-shadow-example">Example 11-11</a> using a <code>rotateX</code> transformation to position the shadow, and perspective effects to display it.</p>
+
+<p>Again, we’ve maximized compatibility by stacking all the transformations, including the perspective origin, in the child elements.  In browsers that don’t support 3D transforms on SVG, fallback <code>transform</code> attributes ensure a rendering identical to <a data-type="xref" href="ch11.html#skew-shadow-figure">Figure 11-11</a>, with the shadow created by skews.  <a data-type="xref" href="#x3D-shadow-fixed-figure">Figure 11-X8</a> is the result with 3D effects (in Firefox).</p>
+
+<figure><div id="x3D-shadow-fixed-figure" class="figure">
+<img src="../ch11-transforms-files/3D-shadow-fixed.png" alt="The letters SVG in large blue text. Behind, the 'shadow' of the same letters, in gray fading to white."/>
+<figcaption><span class="label">Figure 11-X8. </span>Text that casts a shadow in three dimensions</figcaption>
+</div></figure>
+<div id="x3D-shadow-fixed-example" data-type="example">
+<h5><span class="label">Example 11-X5. </span>Using 3D transformations to cast a shadow</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+    </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+    </code><code class="na">width=</code><code class="s">"400px"</code><code> </code><code class="na">height=</code><code class="s">"140px"</code><code> </code><code class="na">viewBox=</code><code class="s">"0 0 400 140"</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>3D shadows</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style </code><code class="na">type=</code><code class="s">"text/css"</code><code class="nt">&gt;</code><code>
+        </code><code class="nc">.container</code><code> </code><code class="p">{</code><code>
+            </code><code class="c">/* perspective: 500px;
+            perspective-origin: 1000px -550px; */</code><code>        </code><a class="co" id="co_online_extras_CO15-1" href="#callout_online_extras_CO15-1"><img src="callouts/1.svg" alt="1"/></a><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nc">.container</code><code> </code><code class="o">&gt;</code><code> </code><code class="o">*</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">transform</code><code class="o">:</code><code> </code><code class="n">translate</code><code class="p">(</code><code class="m">1000px</code><code class="o">,</code><code> </code><code class="m">-550px</code><code class="p">)</code><code> </code><code class="nb">perspective</code><code class="p">(</code><code class="m">500px</code><code class="p">)</code><code>
+                       </code><code class="n">translate</code><code class="p">(</code><code class="m">-1000px</code><code class="o">,</code><code> </code><code class="m">550px</code><code class="p">);</code><code>        </code><a class="co" id="co_online_extras_CO15-2" href="#callout_online_extras_CO15-2"><img src="callouts/2.svg" alt="2"/></a><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nc">.shadow</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">transform</code><code class="o">:</code><code> </code><code class="n">translate</code><code class="p">(</code><code class="m">1000px</code><code class="o">,</code><code> </code><code class="m">-550px</code><code class="p">)</code><code> </code><code class="nb">perspective</code><code class="p">(</code><code class="m">500px</code><code class="p">)</code><code>
+                       </code><code class="n">translate</code><code class="p">(</code><code class="m">-1000px</code><code class="o">,</code><code> </code><code class="m">550px</code><code class="p">)</code><code>
+                       </code><code class="n">rotateX</code><code class="p">(</code><code class="m">90deg</code><code class="p">)</code><code> </code><code class="n">scale</code><code class="p">(</code><code class="m">1</code><code class="o">,</code><code class="m">0</code><code class="o">.</code><code class="m">5</code><code class="p">);</code><code>      </code><a class="co" id="co_online_extras_CO15-3" href="#callout_online_extras_CO15-3"><img src="callouts/3.svg" alt="3"/></a><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nt">text</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">font</code><code class="o">:</code><code> </code><code class="nb">bold</code><code> </code><code class="m">144px</code><code> </code><code class="n">Georgia</code><code class="o">,</code><code> </code><code class="nb">serif</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+    </code><code class="nt">&lt;defs</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;linearGradient</code><code> </code><code class="na">id=</code><code class="s">"fadeGray"</code><code> </code><code class="na">y2=</code><code class="s">"100%"</code><code> </code><code class="na">x2=</code><code class="s">"0%"</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"gray"</code><code> </code><code class="na">stop-opacity=</code><code class="s">"0"</code><code> </code><code class="na">offset=</code><code class="s">"0"</code><code class="nt">/&gt;</code><code>
+            </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"gray"</code><code> </code><code class="na">stop-opacity=</code><code class="s">"1"</code><code> </code><code class="na">offset=</code><code class="s">"1"</code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;/linearGradient&gt;</code><code>
+    </code><code class="nt">&lt;/defs&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code> </code><code class="na">class=</code><code class="s">"container"</code><code> </code><code class="na">transform=</code><code class="s">"translate(10,120)"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;use</code><code> </code><code class="na">class=</code><code class="s">"shadow"</code><code> </code><code class="na">xlink:href=</code><code class="s">"#t"</code><code> </code><code class="na">fill=</code><code class="s">"url(#fadeGray)"</code><code>
+             </code><code class="na">transform=</code><code class="s">"skewX(-45) scale(1,0.7)"</code><code> </code><code class="nt">/&gt;</code><code>      </code><a class="co" id="co_online_extras_CO15-4" href="#callout_online_extras_CO15-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="nt">&lt;g</code><code> </code><code class="na">fill=</code><code class="s">"blue"</code><code> </code><code class="na">stroke=</code><code class="s">"navy"</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;text</code><code> </code><code class="na">id=</code><code class="s">"t"</code><code class="nt">&gt;</code><code>SVG</code><code class="nt">&lt;/text&gt;</code><code>
+        </code><code class="nt">&lt;/g&gt;</code><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO15-1" href="#co_online_extras_CO15-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>The <code>perspective-origin</code> and <code>perspective</code> properties are included, commented-out, to show the effect we are trying to achieve.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO15-2" href="#co_online_extras_CO15-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>Because of the lack of support, the perspective effects are instead created with a <code>transform</code> sequence on the container’s child elements.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO15-3" href="#co_online_extras_CO15-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>In addition to the perspective effect, the shadow is shifted into a horizontal plane using <code>rotateX(90deg)</code>; a scaling factor is still used, since the height of a shadow will often be different from the height of the object that casts it.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO15-4" href="#co_online_extras_CO15-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>The container and the shadow both have <code>transform</code> attributes so that they will be positioned properly in browsers that don’t apply CSS transforms on SVG.  In browsers that do support them, the skewed transform on the <code>shadow</code> element will be over-ridden by the value set in CSS.  However, the transform on the <code>container</code> element does not need to change, so it hasn’t been over-ridden.</p></dd>
+</dl>
+
+<p><a href="../ch11-transforms-files/3D-shadow-fixed.svg">View the live file.</a></p></div>
+
+<p>This graphic has been designed to be <em>almost</em> the same as the version created using skewed 2D coordinates, so the perspective effect is subtle.  However, the far edge of the shadow is slightly narrower than its base.</p>
+
+<p>The screenshot in <a data-type="xref" href="#x3D-shadow-fixed-figure">Figure 11-X8</a> is from Firefox 54.  Again, the perspective effects look slightly different in Chrome and Webkit: the shadow ends up streched out, as shown in <a data-type="xref" href="#x3D-shadow-fixed-Chrome-figure">Figure 11-X9</a>, from Chrome 57.</p>
+
+<figure><div id="x3D-shadow-fixed-Chrome-figure" class="figure">
+<img src="../ch11-transforms-files/3D-shadow-fixed.Chrome.png" alt="The letters SVG in large blue text. Behind, the 'shadow' of the same letters, in gray fading to white.  The shadow is more strongly angled than in the previous figure, stretching out to the edge of the page."/>
+<figcaption><span class="label">Figure 11-X9. </span>Text that casts a shadow in three dimensions, in a different browser</figcaption>
+</div></figure>
+
+<p>The exact mathematics for applying perspective effects to 3D transformed graphics are somewhat complex, and require calculating intersections, clipping shapes that extend behind the “viewer”, and finally some trigonometry to get the scale and position correct for every point, relative to the perspective distance and origin.  Many of these calculations are not explicitly defined in CSS.  The lesson being: when using 3D transformations of SVG, test thoroughly, and accept a little bit of inter-browser differences.</p>
+
+<p>In contrast, the mathematics for the underlying transformations in the theoretical 3D space are simply three-dimensional versions of the affine transformations used in 2D.  Again, the key to simple calculation is matrix multiplication.</p>
+
+<p>The 3D transformation matrices have an extra row and column to describe the <em>z</em>-coordinate.  They also make use of the final row of the matrix to hold information about the perspective distance.  However, the final conversion of the 3D coordinates to a flattened representation cannot be described using the same matrix structure.</p>
+
+<p>If you’re calculating out 3D transformations yourself, there’s a <code>matrix3d</code> transformation function: it requires all 16 of the matrix values to be specified, in column order: top-to-bottom, then left-to-right.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

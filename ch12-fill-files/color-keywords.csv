@@ -42,12 +42,12 @@ deepPink,255,20,147
 deepSkyBlue,0,191,255
 dimGray,105,105,105
 dimGrey,105,105,105
-dodgerBlue,30,144,255
+DodgerBlue,30,144,255
 firebrick,178,34,34
 floralWhite,255,250,240
 forestGreen,34,139,34
 fuchsia,255,0,255
-gainsboro,220,220,220
+Gainsboro,220,220,220
 ghostWhite,248,248,255
 gold,255,215,0
 goldenrod,218,165,32
@@ -57,7 +57,7 @@ greenYellow,173,255,47
 grey,128,128,128
 honeydew,240,255,240
 hotPink,255,105,180
-indianRed,205,92,92
+IndianRed,205,92,92
 indigo,75,0,130
 ivory,255,255,240
 khaki,240,230,140
@@ -98,7 +98,7 @@ midnightBlue,25,25,112
 mintCream,245,255,250
 mistyRose,255,228,225
 moccasin,255,228,181
-navajoWhite,255,222,173
+NavajoWhite,255,222,173
 navy,0,0,128
 oldLace,253,245,230
 olive,128,128,0
@@ -117,7 +117,7 @@ pink,255,192,203
 plum,221,160,221
 powderBlue,176,224,230
 purple,128,0,128
-rebeccaPurple,102,51,153
+RebeccaPurple,102,51,153
 red,255,0,0
 rosyBrown,188,143,143
 royalBlue,65,105,225

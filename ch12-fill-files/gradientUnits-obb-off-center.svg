@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
      xmlns:xlink="http://www.w3.org/1999/xlink"
      width="400px" height="300px" viewBox="0 0 400 300">
-    <title>objectBoundingBox Gradient Units</title>
-    <radialGradient id="gradient">                       <!--1-->
+    <title>objectBoundingBox Gradient Units (asymmetric gradient)</title>
+    <radialGradient id="gradient" cx="1" cy="0.5" r="1">   <!--1-->
         <stop stop-color="deepPink" offset="0" />
         <stop stop-color="mediumBlue" offset="0.3" />    <!--2-->
         <stop stop-color="lightBlue" offset="0.7" />

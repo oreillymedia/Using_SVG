@@ -1,14 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
      xmlns:xlink="http://www.w3.org/1999/xlink"
      width="400px" height="300px" viewBox="0 0 400 300">
-    <title>objectBoundingBox Gradient Units</title>
+    <title>objectBoundingBox pattern to create a non-distorted gradient</title>
     <radialGradient id="gradient">                       <!--1-->
         <stop stop-color="deepPink" offset="0" />
         <stop stop-color="mediumBlue" offset="0.3" />    <!--2-->
         <stop stop-color="lightBlue" offset="0.7" />
         <stop stop-color="darkGreen" offset="1" />
     </radialGradient>
-    <g fill="url(#gradient)">                            <!--3-->
+    <pattern id="pattern-gradient"
+             width="1" height="1" viewBox="0 0 1 1">
+      <rect x="-10" y="-10" width="21" height="21" 
+            fill="darkGreen" />
+      <rect width="1" height="1" fill="url(#gradient)" />
+    </pattern>
+    <g fill="url(#pattern-gradient)">                    <!--3-->
         <path id="swoosh" 
               d="M5,5 Q 185,50 5,95 Q 100,50 5,5 Z" />   <!--4-->
         <path id="swoosh2" 

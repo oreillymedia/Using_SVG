@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:lang="en"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="400px" height="250px" viewBox="0 0 400 250">
+    <title>Text Bounding Boxes, Theoretical vs Browser Calculations</title>
+    <style>
+    text {
+        font: bold 60px/1 Edwardian Script ITC, Brush Script MT, cursive;
+        fill: darkSlateGray;
+    }
+    .glyph-boxes {
+        fill: royalBlue;
+        stroke: royalBlue;
+        fill-opacity: 0.4;
+    }
+    .bbox {
+        fill: none;
+        stroke: indigo;
+        stroke-width: 2px;
+        stroke-dasharray: 4px 2px;
+    }
+    .bbox.text {
+      stroke: firebrick;
+    }
+    </style>
+    <defs>
+        <path id="p" d="M80,220C0,60 200,180 350,50" />
+    </defs>
+    <rect width="100%" height="100%" fill="darkSeaGreen" />
+    <text><textPath xlink:href="#p">The Bounding Box</textPath></text>
+    <text x="380" y="200" text-anchor="end">…of Text!</text>
+    
+<script><![CDATA[
+var svgNS ="http://www.w3.org/2000/svg";
+var texts = document.getElementsByTagName("text");
+for (var i=0, n=texts.length; i<n; i++) {
+    var t = texts[i];
+
+    var bbox = t.getBBox();
+    var rect = document.createElementNS(svgNS, "rect");
+    rect.setAttribute("x", bbox.x);
+    rect.setAttribute("y", bbox.y);
+    rect.setAttribute("width", bbox.width);
+    rect.setAttribute("height", bbox.height);
+    rect.setAttribute("class", "bbox text");
+    t.parentNode.insertBefore(rect, t);
+}
+]]> </script>
+</svg>

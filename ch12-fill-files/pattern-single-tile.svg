@@ -28,24 +28,24 @@
               d="M5,5 Q 185,50 5,95 Q 100,50 5,5 Z" />
         <path id="swoosh2" 
               d="M105,105 Q 465,150 105,195 Q 300,150 105,105 Z" />
-        <path id="swoosh-transformed"
-              d="M5,5 Q 185,50 5,95 Q 100,50 5,5 Z"
-              transform="translate(300,200) rotate(90)" />
+        <use xlink:href="#swoosh"
+              transform="translate(400,100) rotate(90)" />
         
-        <polygon id="plaque" 
-                 points="105,30 140,5 260,5 295,30 
-                         295,70 260,95 140,95 105,70"/>
-        <use xlink:href="#plaque" 
-             transform="translate(-100,+200)" />
-        <polygon id="plaque2" 
-                 points="330,105 370,105 395,140 395,260 
-                         370,295 330,295 305,260 305,140" />
+        <path id="plaque" 
+              d="M105,30 l 35 -25 h 120 l 35 25
+                 v 40 l -35 25 h -120 l -35 -25 z" />
+        <use xlink:href="#plaque"
+             transform="translate(100, 200)" />
+        <path id="plaque2"
+              d="M10,80 l 35 -25 h 120 l 35 25
+                 v 40 l -35 25 h -120 l -35 -25 z"
+              transform="scale(0.5,2)"/>
         
-        <path id="cross" d="M5,105 m10,0 
+        <path id="cross" d="M305,5 m10,0 
                             l35,35 l35,-35 l10,10
                             l-35,35 l35,35 l-10,10
                             l-35,-35 l-35,35 l-10,-10
                             l35,-35 l-35,-35 z" />
-        <use xlink:href="#cross" x="300" y="-100" />
+        <use xlink:href="#cross" x="-200" y="+200" />
     </g>
 </svg>

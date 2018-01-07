@@ -5,6 +5,18 @@
   <title>Drawing with Dashes
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Drawing with Dashes — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="SVG's stroke-dasharray property was designed for dotted lines, but when animated it creates a shape that draws itself. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,110 @@
   </header>
   <main>
     <h1>Drawing with Dashes</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+
+<p>One of the most popular SVG animations uses stroke dashing to imitate the effect of a path being drawn from one end to the other.</p>
+
+<p>The concept: start with a dash pattern where the entire shape is covered by a gap, and then adjust it until the entire shape is outlined by a single dash.</p>
+
+<p>As you can imagine, the <code>getTotalLength()</code> method introduced in the book is essential for determining how long your dash and gap need to be to cover the entire stroke.  To recap:</p>
+
+<ul>
+<li>
+<p><code><em>path</em>.getTotalLength()</code> returns a positive number that is the length of the path outline, measured in the user units (px units) of the local coordinate system.</p>
+</li>
+<li>
+<p>The length includes all sub-paths, but doesn’t include any jumps from <em>move-to</em> commands in the middle of the path.</p>
+</li>
+<li>
+<p>You can use the method in JavaScript that will run on your website, or you can use your browser Dev Tools as a calculator, selecting the shape and calculating a length value, which you then use in your SVG or CSS code.</p>
+</li>
+</ul>
+
+<p>Because browser length calculations vary, if you’re hard-coding the numbers in advance you’ll want to slightly overestimate the length required, so that the entire path will start empty and finish stroked, in any browser.</p>
+
+<p>However, if you’re animating with JavaScript anyway, it is better to can calculate the path length dynamically in the current browser, so it is always exact.  You can also use JavaScript to calculate a value that you set in an inline style, which is particularly useful in combination with CSS variables.</p>
+
+<p>But beware: most browsers still only support <code>getTotalLength()</code> on <code>&lt;path&gt;</code> elements.  In SVG 2 and in new versions of Chrome, it is supported on all SVG shape elements.</p>
+
+<p>There are two variations of the drawing animation method:</p>
+
+<ul>
+<li>
+<p>Use a fixed dash pattern consisting of a dash that is the full length of the path followed by a gap the full length as well.  You can create this pattern with a single value (equal to the path length) in the <code>stroke-dasharray</code> property, since a single value will automatically be duplicated to create identical dash and gap values.</p>
+
+<p>Then, animate the <code>stroke-dashoffset</code> from the full length down to 0 to move the single dash into place.</p>
+</li>
+<li>
+<p>Animate <code>stroke-dasharray</code> directly, from a zero-length dash and full-length gap, to a full-length dash and zero-length gap.</p>
+
+<p>The <code>stroke-dashoffset</code> can be whatever you want, to control the point on the path where the drawing effect starts from.</p>
+</li>
+</ul>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>Certain SVG implementations, including older Firefox versions on Linux systems, implemented <code>stroke-dashoffset</code> in such a way that negative and positive offsets had the reverse effect.  This causes the <code>stroke-dashoffset</code> drawing animation to run backwards.  For consistent results, animate <code>stroke-dasharray</code>, not the dash offset.</p>
+</div>
+
+<p><a data-type="xref" href="#dashdrawing-animation-example">Example 13-X1</a> uses a CSS animation sequence of <code>stroke-dasharray</code> to complete the outlines of the heart and spade icons.  It then fades in a fill color inside the outlined shapes.  <a data-type="xref" href="#dashdrawing-animation-figure">Figure 13-X1</a> compares different stages of the animation.</p>
+    
+<p><a href="../ch13-strokes-files/dashdrawing-animation.svg" target="_blank">View the live example</a>.</p>
+
+<figure class="page-float"><div id="dashdrawing-animation-figure" class="figure">
+<img src="../ch13-strokes-files/dashdrawing-animation.png" alt="Four copies of the heart and spade. In top left, the shapes aren't yet recognizable, just a partial stroke around one lobe of each.  In top right, the strokes are finishing up the second lobe of each shape, but haven't yet connected up.  In bottom left, the strokes are complete, and the fill is starting to be colored.  In bottom right, the finished shapes with complete stroke and colored fill."/>
+<figcaption><span class="label">Figure 13-X1. </span>Various stages of an animation to draw and then fill in shapes</figcaption>
+</div></figure>
+<div id="dashdrawing-animation-example" data-type="example">
+<h5><span class="label">Example 13-X1. </span>“Drawing” a shape by animating a dash pattern</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">width=</code><code class="s">"410px"</code><code> </code><code class="na">height=</code><code class="s">"205px"</code><code> </code><code class="na">viewBox=</code><code class="s">"-1 -1 44 22"</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Drawing SVG Shapes</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style </code><code class="na">type=</code><code class="s">"text/css"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">path</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">stroke-dashoffset</code><code class="o">:</code><code> </code><code class="m">-1</code><code class="p">;</code><code>               </code><a class="co" id="co_online_extras_CO19-1" href="#callout_online_extras_CO19-1"><img src="callouts/1.svg" alt="1"/></a><code>
+            </code><code class="k">stroke-linejoin</code><code class="o">:</code><code> </code><code class="n">round</code><code class="p">;</code><code>
+            </code><code class="k">stroke-linecap</code><code class="o">:</code><code> </code><code class="n">round</code><code class="p">;</code><code>
+            </code><code class="k">animation</code><code class="o">:</code><code> </code><code class="n">draw</code><code> </code><code class="m">5s</code><code> </code><code class="n">ease</code><code class="o">-</code><code class="n">in</code><code class="p">;</code><code>          </code><a class="co" id="co_online_extras_CO19-2" href="#callout_online_extras_CO19-2"><img src="callouts/2.svg" alt="2"/></a><code>
+        </code><code class="p">}</code><code>
+        </code><code class="k">@keyframes</code><code> </code><code class="nt">draw</code><code> </code><code class="p">{</code><code>
+            </code><code class="nt">0%</code><code> </code><code class="p">{</code><code>
+                </code><code class="k">stroke-dasharray</code><code class="o">:</code><code> </code><code class="m">0</code><code> </code><code class="m">83</code><code class="p">;</code><code>          </code><a class="co" id="co_online_extras_CO19-3" href="#callout_online_extras_CO19-3"><img src="callouts/3.svg" alt="3"/></a><code>
+                </code><code class="k">fill-opacity</code><code class="o">:</code><code> </code><code class="m">0</code><code class="p">;</code><code>
+            </code><code class="p">}</code><code>
+            </code><code class="nt">90%</code><code> </code><code class="p">{</code><code>
+                </code><code class="k">stroke-dasharray</code><code class="o">:</code><code> </code><code class="m">83</code><code> </code><code class="m">0</code><code class="p">;</code><code>          </code><a class="co" id="co_online_extras_CO19-4" href="#callout_online_extras_CO19-4"><img src="callouts/4.svg" alt="4"/></a><code>
+                </code><code class="k">fill-opacity</code><code class="o">:</code><code> </code><code class="m">0</code><code class="p">;</code><code>
+            </code><code class="p">}</code><code>
+            </code><code class="nt">100%</code><code> </code><code class="p">{</code><code>
+                </code><code class="k">stroke-dasharray</code><code class="o">:</code><code> </code><code class="m">83</code><code> </code><code class="m">0</code><code class="p">;</code><code>
+                </code><code class="k">fill-opacity</code><code class="o">:</code><code> </code><code class="m">1</code><code class="p">;</code><code>                 </code><a class="co" id="co_online_extras_CO19-5" href="#callout_online_extras_CO19-5"><img src="callouts/5.svg" alt="5"/></a><code>
+            </code><code class="p">}</code><code>
+        </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+
+    </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"heart"</code><code> </code><code class="na">stroke=</code><code class="s">"darkRed"</code><code> </code><code class="na">fill=</code><code class="s">"crimson"</code><code>
+          </code><code class="na">d=</code><code class="s">"M10,6 Q10,0 15,0T20,6Q20,10 15,14
+             T10,20Q10,18 5,14T0,6Q0,0 5,0T10,6Z"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"spade"</code><code> </code><code class="na">stroke=</code><code class="s">"#222"</code><code> </code><code class="na">fill=</code><code class="s">"gray"</code><code>
+          </code><code class="na">transform=</code><code class="s">"translate(22,0)"</code><code>
+          </code><code class="na">d=</code><code class="s">"M9,15C9,20 0,21 0,16S6,9 10,0C14,9 20,11 20,16
+             S11,20 11,15Q11,20 13,20H7Q9,20 9,15Z"</code><code> </code><code class="nt">/&gt;</code><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO19-1" href="#co_online_extras_CO19-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>To avoid having a dash end exactly at a corner—ruining a line join—the dash pattern is offset by 1 unit.  With the <code>round</code> line joins and caps used here, the difference will not be noticeable, but with other styles it would be.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO19-2" href="#co_online_extras_CO19-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>The animation property applies the <code>draw</code> keyframes, timed to last 5s, with no repeats, and uses an <code>ease-in</code> mode to slowly ramp up the rate of change to full speed.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO19-3" href="#co_online_extras_CO19-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>The initial value of the animation is set using the <code>0%</code> keyframe selector.  It sets <code>fill-opacity</code> to 0 (completely transparent) and <code>stroke-dasharray</code> to a zero-length dash followed by an 83-unit gap.  The length of 83 was chosen because it is slightly larger than the longest path length calculated for the spade in any browsers tested.  The heart—which has a shorter path length—will be fully stroked before the animation is completed.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO19-4" href="#co_online_extras_CO19-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>After 90% of the animation time has passed, the <code>stroke-dasharray</code> has transitioned to an 83-unit dash and zero-length gap.  The <code>fill-opacity</code>, however, is still 0.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO19-5" href="#co_online_extras_CO19-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+<dd><p>The transition to the final keyframe keeps <code>stroke-dasharray</code> the same, but shifts <code>fill-opacity</code> to completely opaque.</p></dd>
+</dl></div>
+
+<p>Because the <code>stroke-dasharray</code> and <code>fill-opacity</code> properties are <em>only</em> set within the animation keyframes, browsers that do not support animation will simply present the shapes fully stroked and filled.  As we will discuss in <a data-type="xref" href="ch19.html#animation-chapter">Chapter 19</a>, it’s a good idea to always consider the fallback static version of your animated SVG. For “enter” animations like this, you usually want that static graphic to be the final appearance.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

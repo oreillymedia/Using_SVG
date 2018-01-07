@@ -3,7 +3,7 @@
      width="410px" height="205px" viewBox="-1 -1 44 22">
     <title>Drawing SVG Shapes</title> 
     <style type="text/css">
-        svg {
+        path {
             stroke-dashoffset: -1;               <!--1-->
             stroke-linejoin: round;
             stroke-linecap: round;

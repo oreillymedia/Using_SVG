@@ -5,6 +5,18 @@
   <title>objectBoundingBox versus userSpaceOnUse
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="objectBoundingBox versus userSpaceOnUse — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="SVG graphical effects can be defined in terms of the bounding box of the element they apply to or its user-space coordinate system. But what does that really mean? An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -21,12 +33,260 @@
     <nav class="toc" aria-label="Page Contents">On this page:
       <ul class="columns narrow">
         <li><a href="#intro">Introduction</a></li>
+        <li><a href="#extras-fill-bounding-boxes-comparison-section">Bounding Boxes and Transformations</a></li>
+        <li><a href="#extras-fill-bounding-boxes-text-section">Stretching Paint To Fit Text</a></li>
+        <li><a href="#extras-fill-bounding-boxes-groups-section">Group Bounding Boxes</a></li>
       </ul>
     </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+    <div id="intro">
+<p>We introduced the idea of bounding-box versus user-space units in <a data-type="xref" href="../ch12-fill-files/">Chapter 12</a> in the book.  But the concepts are worth a deeper look.  Not only are these options used in gradients and patterns, but also in filters, masks, and clipping paths.</p>
+
+<p>This article is a two-parter: first, we look a little more closely at the differences between <code>objectBoundingBox</code> and <code>userSpaceOnUse</code>, with a particular focus on transformed or re-used elements. Then, we take a closer look at the bounding boxes of text elements.  We end with a few notes on bounding boxes of grouping elements, which will become important in later chapters.</p>
+</div>
+
+<section>
+<h2 id="extras-fill-bounding-boxes-comparison-section">Bounding Boxes and Transformations<a href="#extras-fill-bounding-boxes-comparison-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>There are pros and cons to both options.  Which you should use depends on what you’re trying to do.  Bounding box effects are often easiest to control for a single shape, but user space effects allow better coordination with the overall layout of your graphic.  User-space effects also avoid the distorting effect of a non-uniform bounding box scale.</p>
+
+<p><a data-type="xref" href="#gradientUnits-obb-example">Example 12-X1</a> uses a radial gradient to show what <code>objectBoundingBox</code> (the default for gradients) looks like in practice, when applied to many different shapes in a drawing.  The gradient transitions from deep pink in the middle to medium blue, then light blue, and finally dark green at the edges.  The shapes are different sizes and different aspect ratios—some have square bounding boxes, some rectangular—and some of them are positioned directly, some with transforms, and some with <code>&lt;use&gt;</code> elements.</p>
+
+<p><a data-type="xref" href="#gradientUnits-obb-figure">Figure 12-X1</a> shows the result.
+The three shapes across the top of the figure, and the one in the middle, are drawn exactly where they are defined in the coordinate system.  The others have transformations or <code>&lt;use&gt;</code> repositioning.</p>
+
+<figure class="page-float"><div id="gradientUnits-obb-figure" class="figure">
+<img src="../ch12-fill-files/gradientUnits-obb.png" alt="Eight assorted shapes. Some are boomerang-shaped swooshes, made of two nested curves, one shallower than the other, joined at their ends in points. In these, the pink center of the gradient is positioned near the inner curved edge; the points and the far edge of the outer curve show the dark green.  Others are plaque-shapes: stretched octagons, or rectangles with their corners cut out.  One is vertical, the other two horizontal; for all of them, the gradient forms a centered elliptical pattern, neatly filling the shape so all the edges are dark green.  The final shapes are diagonal crosses or X-es, with the pink center of the gradient neatly centered in the middle, and then colors transitioning to green along the arms of the X."/>
+<figcaption><span class="label">Figure 12-X1. </span>Assorted SVG shapes filled with a radial gradient</figcaption>
+</div></figure>
+<div id="gradientUnits-obb-example" data-type="example">
+<h5><span class="label">Example 12-X1. </span>Filling shapes with a gradient sized to the object bounding box</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">width=</code><code class="s">"400px"</code><code> </code><code class="na">height=</code><code class="s">"300px"</code><code> </code><code class="na">viewBox=</code><code class="s">"0 0 400 300"</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>objectBoundingBox Gradient Units</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;radialGradient</code><code> </code><code class="na">id=</code><code class="s">"gradient"</code><code class="nt">&gt;</code><code>                       </code><a class="co" id="co_online_extras_CO16-1" href="#callout_online_extras_CO16-1"><img src="callouts/1.svg" alt="1"/></a><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"deepPink"</code><code> </code><code class="na">offset=</code><code class="s">"0"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"mediumBlue"</code><code> </code><code class="na">offset=</code><code class="s">"0.3"</code><code> </code><code class="nt">/&gt;</code><code>    </code><a class="co" id="co_online_extras_CO16-2" href="#callout_online_extras_CO16-2"><img src="callouts/2.svg" alt="2"/></a><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"lightBlue"</code><code> </code><code class="na">offset=</code><code class="s">"0.7"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"darkGreen"</code><code> </code><code class="na">offset=</code><code class="s">"1"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;/radialGradient&gt;</code><code>
+    </code><code class="nt">&lt;g</code><code> </code><code class="na">fill=</code><code class="s">"url(#gradient)"</code><code class="nt">&gt;</code><code>                            </code><a class="co" id="co_online_extras_CO16-3" href="#callout_online_extras_CO16-3"><img src="callouts/3.svg" alt="3"/></a><code>
+        </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"swoosh"</code><code>
+              </code><code class="na">d=</code><code class="s">"M5,5 Q 185,50 5,95 Q 100,50 5,5 Z"</code><code> </code><code class="nt">/&gt;</code><code>   </code><a class="co" id="co_online_extras_CO16-4" href="#callout_online_extras_CO16-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"swoosh2"</code><code>
+              </code><code class="na">d=</code><code class="s">"M105,105 Q 465,150 105,195 Q 300,150 105,105 Z"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;use</code><code> </code><code class="na">xlink:href=</code><code class="s">"#swoosh"</code><code>
+              </code><code class="na">transform=</code><code class="s">"translate(400,100) rotate(90)"</code><code> </code><code class="nt">/&gt;</code><code>
+
+        </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"plaque"</code><code>
+              </code><code class="na">d=</code><code class="s">"M105,30 l 35 -25 h 120 l 35 25
+                 v 40 l -35 25 h -120 l -35 -25 z"</code><code> </code><code class="nt">/&gt;</code><code>    </code><a class="co" id="co_online_extras_CO16-5" href="#callout_online_extras_CO16-5"><img src="callouts/5.svg" alt="5"/></a><code>
+        </code><code class="nt">&lt;use</code><code> </code><code class="na">xlink:href=</code><code class="s">"#plaque"</code><code>
+             </code><code class="na">transform=</code><code class="s">"translate(100, 200)"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"plaque2"</code><code>
+              </code><code class="na">d=</code><code class="s">"M10,80 l 35 -25 h 120 l 35 25
+                 v 40 l -35 25 h -120 l -35 -25 z"</code><code>
+              </code><code class="na">transform=</code><code class="s">"scale(0.5,2)"</code><code class="nt">/&gt;</code><code>
+
+        </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"cross"</code><code> </code><code class="na">d=</code><code class="s">"M305,5 m10,0
+                            l35,35 l35,-35 l10,10
+                            l-35,35 l35,35 l-10,10
+                            l-35,-35 l-35,35 l-10,-10
+                            l35,-35 l-35,-35 z"</code><code> </code><code class="nt">/&gt;</code><code>       </code><a class="co" id="co_online_extras_CO16-6" href="#callout_online_extras_CO16-6"><img src="callouts/6.svg" alt="6"/></a><code>
+        </code><code class="nt">&lt;use</code><code> </code><code class="na">xlink:href=</code><code class="s">"#cross"</code><code> </code><code class="na">x=</code><code class="s">"-200"</code><code> </code><code class="na">y=</code><code class="s">"+200"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;/g&gt;</code><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO16-1" href="#co_online_extras_CO16-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>The gradient is given the (easy-to-remember) <code>id</code> value <code>gradient</code>. No other attributes are set, so its geometry will be based on the defaults for <code>&lt;radialGradient&gt;</code> elements: a circle centered in the bounding-box, then scaled/stretched to fit that box.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO16-2" href="#co_online_extras_CO16-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>The four color <code>&lt;stop&gt;</code> elements are arranged from center to edge of the gradient.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO16-3" href="#co_online_extras_CO16-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>The gradient is assigned to the shapes using a <code>fill</code> presentation attribute on a <code>&lt;g&gt;</code> element.  The <code>fill</code> property has no direct effect on a <code>&lt;g&gt;</code>, but it will inherit to the shapes and <code>&lt;use&gt;</code> elements inside the group.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO16-4" href="#co_online_extras_CO16-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>The <code>swoosh</code> path is made of two quadratic curves that create a 90×90 bounding box in the upper left of the drawing.  The <code>swoosh2</code> path has a similar shape, but twice as wide, and is positioned in the middle of the drawing.  The final swoosh is a <code>&lt;use&gt;</code> copy of the first, translated into place at the bottom of the drawing, then rotated 90°.  All three shapes have control points that extend well outside their bounding box, so if your browser is using the “fast” bounding-box calculation, you’ll see a much more stretched-out gradient than the version in <a data-type="xref" href="#gradientUnits-obb-figure">Figure 12-X1</a>.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO16-5" href="#co_online_extras_CO16-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+<dd><p>The <code>plaque</code> path has a 190×90 bounding box, and is positioned centered along the top of the drawing.  A copy is positioned along the bottom of the drawing with a <code>transform</code> on a <code>&lt;use&gt;</code> element.  An independently-defined <code>plaque2</code> has the same relative path commands—and therefore the same 190×90 bounding box dimensions—but redrawn on the left side of the drawing. It is then compressed horizontally and stretched vertically with a scale <code>transform</code>.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO16-6" href="#co_online_extras_CO16-6"><img src="callouts/6.svg" alt="6"/></a></dt>
+<dd><p>The <code>cross</code> path is initially defined on the top right of the drawing, then copied and re-positioned with a <code>&lt;use&gt;</code> element with <code>x</code> and <code>y</code> attributes.  It has a 90×90 square bounding box.</p></dd>
+</dl></div>
+
+<p>The gradient, using the <code>&lt;radialGradient&gt;</code> element, is defined by a circle that is centered in the bounding box and stretches to its edges.  The first stop (pink) is at the center, and the last stop (dark green) is at the edge.  The center is the center of the bounding box, which doesn’t always match the “visual center” of the largest fill region.</p>
+
+<p>SVG radial gradients are always circles, but they don’t always look that way.  When the shape’s bounding box isn’t a square, the circular gradient gets stretched into an ellipse by the non-uniform scaling.  Sometimes this is what you want, sometimes it isn’t.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>In <a data-type="xref" href="../ch13-strokes-files/">Chapter 13</a> we’ll discuss additional complications of <code>objectBoundingBox</code> when applied to strokes.  The bounding box is still calculated from the <em>fill</em> region, not the stroke region, and that can cause problems.</p>
+</div>
+
+<p>For this particular gradient, the transformations and <code>&lt;use&gt;</code> elements don’t have any visible effect.  For a different gradient or pattern, you would see that the gradient is transformed along with the shape that contains it, rotated or skewed accordingly.</p>
+
+<p>For example, <a data-type="xref" href="#gradientUnits-obb-off-center-figure">Figure 12-X2</a> shows the same shapes when the gradient is changed to be off-center—with the midpoint of the gradient positioned on the middle of the right side of the bounding box—by adding <code>cx</code>, <code>cy</code>, and <code>r</code> attributes:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;radialGradient</code> <code class="na">id=</code><code class="s">"gradient"</code> <code class="na">cx=</code><code class="s">"1"</code> <code class="na">cy=</code><code class="s">"0.5"</code> <code class="na">r=</code><code class="s">"1"</code><code class="nt">&gt;</code></pre>
+
+<p>The rotated “swoosh” shape is visible as the odd one out, with the pink center of the gradient rotated along with the outline.</p>
+
+<figure class="page-float"><div id="gradientUnits-obb-off-center-figure" class="figure">
+<img src="../ch12-fill-files/gradientUnits-obb-off-center.png" alt="The same eight shapes and positions as the previous figure, but with different coloring. The pink centers of the radial gradients are now on the right center edge of each shape, except for a rotated swoosh shape, where the pink center is at the bottom, making it a perfect rotation of the original swoosh."/>
+<figcaption><span class="label">Figure 12-X2. </span>Assorted SVG shapes filled with an asymmetrical objectBoundingBox radial gradient</figcaption>
+</div></figure>
+
+<p>Transformations—both rotations and translations—also become very visible if you switch to user-space scaling.</p>
+
+<p>To switch scaling methods, you only need one change to the code in <a data-type="xref" href="#gradientUnits-obb-example">Example 12-X1</a>.  Add a new <code>gradientUnits</code> attribute on the original gradient element (from <a data-type="xref" href="#gradientUnits-obb-example">Example 12-X1</a>), and set it to <code>userSpaceOnUse</code>, like this:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;radialGradient</code> <code class="na">id=</code><code class="s">"gradient"</code> <code class="na">gradientUnits=</code><code class="s">"userSpaceOnUse"</code><code class="nt">&gt;</code></pre>
+
+<p><a data-type="xref" href="#gradientUnits-usou-figure">Figure 12-X3</a> shows the result after the change.</p>
+
+<figure class="page-float"><div id="gradientUnits-usou-figure" class="figure">
+<img src="../ch12-fill-files/gradientUnits-usou.png" alt="The same eight shapes and positions as the previous figures, but with different coloring. The wide swoosh in the middle of the drawing now displays a large pink circle in the center transitioning to medium blue then starting to fade to light blue on its points and far edge. The plaques above and to the right, and the smaller swoosh and X cross on the left continue this gradient with a circle of light blue transitioning to dark green towards the edges of the drawing.  However, the remaining 3 shapes don't match the larger gradient: instead, they are exact color copies of the shapes from elsewhere in the graphic."/>
+<figcaption><span class="label">Figure 12-X3. </span>Assorted SVG shapes filled with a userSpaceOnUse radial gradient</figcaption>
+</div></figure>
+
+<p>With the user-space gradient, the gradients of different shapes share the same coordinate system.  When the shapes are actually drawn at the coordinates they are defined, this means that the gradient continues smoothly from one shape to the next.  The center of the gradient is the center of the drawing, and the color stops create circles around it, which evenly arc across the original shapes in the top row.</p>
+
+<p>The exceptions to the continuity are the transformed shapes and <code>&lt;use&gt;</code> elements.  These are drawn with the coloring they would have at that shape’s <em>original</em> position and scale, not the final position.</p>
+
+<p>Another important difference: the overal radial gradient shape remains circular, despite the fact that the overall SVG coordinate system is rectangular, not square.  The elliptical shape in the <code>objectBoundingBox</code> gradient was caused entirely by the non-uniform scale transform: with <code>userSpaceOnUse</code>, there is no scaling.  Again, there is an exception: a non-uniform scaling transformations on a shape itself (the plaque on the left of <a data-type="xref" href="#gradientUnits-usou-figure">Figure 12-X3</a>) also distorts the gradient it is drawn with.</p>
+
+<p>What if you want a real, circular gradient, but sized and positioned to match a bounding box?  Well, you could create a separate <code>userSpaceOnUse</code> gradient for each element.  And transform the gradients every time you transform the elements.  But that sounds like a lot of code.</p>
+
+<p>An alternative solution is to use the <code>viewBox</code> attribute on a <code>&lt;pattern&gt;</code> element to preserve the aspect ratio of the gradient.  The pattern would be a single tile, similar to the photo-fill effect we created in <a data-type="xref" href="ch12.html#pattern-image-example">Example 12-9</a> in the book.  It’s content is a square <code>&lt;rect&gt;</code> filled with the radial gradient.  A second <code>&lt;rect&gt;</code>, underneath, pads all sides of the tile, beyond the <code>viewBox</code>, with a solid backdrop color:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;pattern</code> <code class="na">id=</code><code class="s">"pattern-gradient"</code>
+         <code class="na">width=</code><code class="s">"1"</code> <code class="na">height=</code><code class="s">"1"</code> <code class="na">viewBox=</code><code class="s">"0 0 1 1"</code><code class="nt">&gt;</code>
+    <code class="nt">&lt;rect</code> <code class="na">x=</code><code class="s">"-10"</code> <code class="na">y=</code><code class="s">"-10"</code> <code class="na">width=</code><code class="s">"21"</code> <code class="na">height=</code><code class="s">"21"</code>
+          <code class="na">fill=</code><code class="s">"darkGreen"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;rect</code> <code class="na">width=</code><code class="s">"1"</code> <code class="na">height=</code><code class="s">"1"</code> <code class="na">fill=</code><code class="s">"url(#gradient)"</code> <code class="nt">/&gt;</code>
+<code class="nt">&lt;/pattern&gt;</code></pre>
+
+<p>When that <code>&lt;pattern&gt;</code> is added to the code from <a data-type="xref" href="#gradientUnits-obb-example">Example 12-X1</a>, and the shapes are changed to use <code>fill="url(#pattern-gradient)"</code>, the result is as shown in <a data-type="xref" href="#gradientUnits-obb-pattern-figure">Figure 12-X4</a>.</p>
+
+<figure class="page-float"><div id="gradientUnits-obb-pattern-figure" class="figure">
+<img src="../ch12-fill-files/gradientUnits-obb-pattern.png" alt="The same eight shapes and positions as the previous figures. The gradient now forms a neat circle at the center of each shape, except for the plaque on the left, where the gradient is stretched vertically down the middle of the shape."/>
+<figcaption><span class="label">Figure 12-X4. </span>Assorted SVG shapes filled with a controlled-aspect-ratio pattern, containing a radial gradient</figcaption>
+</div></figure>
+
+<p>Just like with the <code>userSpaceOnUse</code> gradient, the shape with a non-uniform scale transform has a distorted fill to match. For the other shapes, however, the gradient stays centered and circular.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>If the bounding box of a shape was <em>very</em> thin or very tall, the backdrop <code>&lt;rect&gt;</code> might need to be larger to be sure it covers the entire shape when the <code>viewBox</code> is scaled down to fit the smaller dimension.</p>
+</div>
+
+<p>You could of course add a <code>preserveAspectRatio</code> option to the <code>&lt;pattern&gt;</code> element if you wanted your circular gradient to align differently within rectangular bounding boxes.  With a <code>slice</code> mode, the gradient would scale to completely cover the bounding box—and you wouldn’t need the backdrop rectangle any more.</p>
+</section>
+
+<section>
+<h2 id="extras-fill-bounding-boxes-text-section">Stretching Paint To Fit Text<a href="#extras-fill-bounding-boxes-text-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>Think you’ve got a handle on bounding boxes now?  It gets a little more complicated when you switch from painting shapes to painting text.</p>
+
+<p>For <code>userSpaceOnUse</code>, <code>&lt;text&gt;</code> elements don’t do anything special.  But <code>objectBoundingBox</code> is another matter.</p>
+
+<p>The bounding boxes of text elements in SVG are calculated differently than for shapes.
+For starters, they are based on the character layout boxes, not the actual paths used for each character.  That means the overall bounding box <em>should</em> be calculated as if each character filled up a perfect rectangle that is 1em tall.</p>
+
+<p>To examine text bounding boxes, consider the following two <code>&lt;text&gt;</code> elements, one containing a <code>&lt;textPath&gt;</code>, the other just a single line of plain text.</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;text&gt;&lt;textPath</code> <code class="na">xlink:href=</code><code class="s">"#p"</code><code class="nt">&gt;</code>The Bounding Box<code class="nt">&lt;/textPath&gt;&lt;/text&gt;</code>
+<code class="nt">&lt;text</code> <code class="na">x=</code><code class="s">"380"</code> <code class="na">y=</code><code class="s">"200"</code> <code class="na">text-anchor=</code><code class="s">"end"</code><code class="nt">&gt;</code>…of Text!<code class="nt">&lt;/text&gt;</code></pre>
+
+<p>To highlight some complications, we’ll use a decorative cursive font with big swoopy letters.</p>
+
+<p><a data-type="xref" href="#bounding-box-text-figure">Figure 12-X5</a> shows how the bounding box should be calculated, according to the SVG specs.  Each character in the layout has a layout rectangle (blue fill).  The bounding box (dashed outline) is the box that contains all those rectangles.</p>
+
+<figure class="page-float"><div id="bounding-box-text-figure" class="figure">
+<img src="../ch12-fill-files/bounding-box-text.png" alt="The words 'The Bounding Box' along a curve, and then '…of Text!' straight across the bottom, written in a decorative italic script.  Each letter and space has a matching light-blue rectangle behind it.  On the path, the glyph rectangles spread out at different angles; in the straight text they are stacked side-by-side.  In both, the actual characters extend outside their rectangle.  The dashed bounding-box rectangle tightly fits the glyph rectangles when the letters are in a neat row, but it includes a lot of extra space for the text on a path."/>
+<figcaption><span class="label">Figure 12-X5. </span>The (official) bounding box of text elements, showing the individual glyph boxes</figcaption>
+</div></figure>
+
+<p>However, in practice every browser calculates the text bounding box slightly differently, either including glyphs that extend outside the layout box (like the final exclamation mark in <a data-type="xref" href="#bounding-box-text-figure">Figure 12-X5</a>), or including extra whitespace or line-height spacing, or some combination of any of the above.</p>
+
+<p><a data-type="xref" href="#bounding-box-text-compare-figure">Figure 12-X6</a> shows the bounding boxes for the same text, as calculated by two different browsers.</p>
+
+<figure class="page-float"><div id="bounding-box-text-compare-figure" class="figure">
+<img src="../ch12-fill-files/bounding-box-text-compare.png" alt="The same text as the previous figure, repeated in two side-by-side graphics. Each has red dotted-outline rectangles surrounding the text path and the line of text.  On the left, for MS Edge, the outline of the straight text is taller, and the box around the text path is larger in multiple directions. On the right, for Firefox the box on the straight text has been extended to include the italic exclamation mark."/>
+<figcaption><span class="label">Figure 12-X6. </span>The bounding box of text elements, as calculated by EdgeHTML 16 (left) versus Firefox 58 (right)</figcaption>
+</div></figure>
+
+<p>In other words, when painting text—or using any other effect or calculation based on the bounding box—assume a little bit of variation from browser to browser.  Don’t rely on details being precisely positioned at the edges of the text.</p>
+
+<p>The other unique feature of painting text is that the bounding box is always the bounding box of the entire <code>&lt;text&gt;</code> element—even if only a <code>&lt;tspan&gt;</code> is being filled.</p>
+
+<p><a data-type="xref" href="#text-bbox-gradient-example">Example 12-X2</a> uses linear gradients to show the effect.  There are two gradients: a left-to-right, gold-to-pink gradient on the <code>&lt;text&gt;</code> elements, and a top-to-bottom, blue-to-white gradient on alternating <code>&lt;tspan&gt;</code> elements.  <a data-type="xref" href="#text-bbox-gradient-figure">Figure 12-X7</a> shows the result.</p>
+
+<figure class="page-float"><div id="text-bbox-gradient-figure" class="figure">
+<img src="../ch12-fill-files/text-bbox-gradient.png" alt="On a purple background, the words 'Filling Text Boxes' in a column down the left, and 'One Two Three' in a column down the right.  Filling and Boxes are in gold-to-pink horizontal gradient, Two is in gold-to-pinkish-orange, never reaching as far as pink. One is blue, Three is mostly white, and Text is a pale blue gradient."/>
+<figcaption><span class="label">Figure 12-X7. </span>Text elements and <code>&lt;tspan&gt;</code> elements filled with linear gradients</figcaption>
+</div></figure>
+<div id="text-bbox-gradient-example" data-type="example">
+<h5><span class="label">Example 12-X2. </span>Filling text with object bounding-box gradients</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">width=</code><code class="s">"400px"</code><code> </code><code class="na">height=</code><code class="s">"250px"</code><code> </code><code class="na">viewBox=</code><code class="s">"0 0 400 250"</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Text with Linear Gradients</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;linearGradient</code><code> </code><code class="na">id=</code><code class="s">"horizontal"</code><code> </code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"gold"</code><code> </code><code class="na">offset=</code><code class="s">"0"</code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"deepPink"</code><code> </code><code class="na">offset=</code><code class="s">"1"</code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;/linearGradient&gt;</code><code>
+    </code><code class="nt">&lt;linearGradient</code><code> </code><code class="na">id=</code><code class="s">"vertical"</code><code> </code><code class="na">x2=</code><code class="s">"0"</code><code> </code><code class="na">y2=</code><code class="s">"1"</code><code class="nt">&gt;</code><code>      </code><a class="co" id="co_online_extras_CO17-1" href="#callout_online_extras_CO17-1"><img src="callouts/1.svg" alt="1"/></a><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"deepSkyBlue"</code><code> </code><code class="na">offset=</code><code class="s">"0"</code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"snow"</code><code> </code><code class="na">offset=</code><code class="s">"1"</code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;/linearGradient&gt;</code><code>
+    </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">text</code><code> </code><code class="p">{</code><code>
+        </code><code class="k">font</code><code class="o">:</code><code> </code><code class="nb">bold</code><code> </code><code class="m">56px</code><code> </code><code class="n">Arial</code><code> </code><code class="n">Rounded</code><code> </code><code class="n">MT</code><code class="o">,</code><code> </code><code class="n">Deja</code><code> </code><code class="n">Vu</code><code> </code><code class="n">Sans</code><code class="o">,</code><code> </code><code class="nb">sans-serif</code><code class="p">;</code><code>
+        </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="sx">url(#horizontal)</code><code class="p">;</code><code>
+    </code><code class="p">}</code><code>
+    </code><code class="nt">tspan</code><code class="nc">.em</code><code> </code><code class="p">{</code><code>
+        </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="sx">url(#vertical)</code><code class="p">;</code><code>                                   </code><a class="co" id="co_online_extras_CO17-2" href="#callout_online_extras_CO17-2"><img src="callouts/2.svg" alt="2"/></a><code>
+    </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+    </code><code class="nt">&lt;rect</code><code> </code><code class="na">width=</code><code class="s">"100%"</code><code> </code><code class="na">height=</code><code class="s">"100%"</code><code> </code><code class="na">fill=</code><code class="s">"darkViolet"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"10"</code><code> </code><code class="na">y=</code><code class="s">"60px"</code><code class="nt">&gt;</code><code>
+        Filling
+        </code><code class="nt">&lt;tspan</code><code> </code><code class="na">class=</code><code class="s">"highlight"</code><code> </code><code class="na">x=</code><code class="s">"10"</code><code> </code><code class="na">dy=</code><code class="s">"1.5em"</code><code class="nt">&gt;</code><code>Text</code><code class="nt">&lt;/tspan&gt;</code><code> </code><a class="co" id="co_online_extras_CO17-3" href="#callout_online_extras_CO17-3"><img src="callouts/3.svg" alt="3"/></a><code>
+        </code><code class="nt">&lt;tspan</code><code> </code><code class="na">x=</code><code class="s">"10"</code><code> </code><code class="na">dy=</code><code class="s">"1.5em"</code><code class="nt">&gt;</code><code>Boxes</code><code class="nt">&lt;/tspan&gt;</code><code>
+    </code><code class="nt">&lt;/text&gt;</code><code>
+    </code><code class="nt">&lt;text</code><code> </code><code class="na">x=</code><code class="s">"210"</code><code> </code><code class="na">y=</code><code class="s">"60px"</code><code class="nt">&gt;</code><code>                                     </code><a class="co" id="co_online_extras_CO17-4" href="#callout_online_extras_CO17-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="nt">&lt;tspan</code><code> </code><code class="na">class=</code><code class="s">"highlight"</code><code class="nt">&gt;</code><code>One</code><code class="nt">&lt;/tspan&gt;</code><code>
+        </code><code class="nt">&lt;tspan</code><code> </code><code class="na">x=</code><code class="s">"210"</code><code> </code><code class="na">dy=</code><code class="s">"1.5em"</code><code class="nt">&gt;</code><code>Two</code><code class="nt">&lt;/tspan&gt;</code><code>
+        </code><code class="nt">&lt;tspan</code><code> </code><code class="na">class=</code><code class="s">"highlight"</code><code> </code><code class="na">x=</code><code class="s">"210"</code><code> </code><code class="na">dy=</code><code class="s">"1.5em"</code><code class="nt">&gt;</code><code>Three!</code><code class="nt">&lt;/tspan&gt;</code><code>
+    </code><code class="nt">&lt;/text&gt;</code><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO17-1" href="#co_online_extras_CO17-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>As with the radial gradients, <code>&lt;linearGradient&gt;</code> elements default to <code>objectBoundingBox</code> sizing.  They are also by default horizontal.  The <code>x2</code> and <code>y2</code> attributes convert the second gradient to vertical orientation.  The different <code>stop-color</code> values allow you to tell the two gradients apart.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO17-2" href="#co_online_extras_CO17-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>The <code>vertical</code> gradient is applied to the <code>&lt;tspan&gt;</code> elements with the <code>highlight</code> class.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO17-3" href="#co_online_extras_CO17-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>Each word in the text is positioned to a new line with a <code>&lt;tspan&gt;</code> with <code>x</code> and <code>dy</code> attributes. Only every second <code>&lt;tspan&gt;</code> element gets the <code>highlight</code> class.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO17-4" href="#co_online_extras_CO17-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>The second column of words is a separate <code>&lt;text&gt;</code> element.</p></dd>
+</dl></div>
+
+<p>The horizontal gradient starts over for the second <code>&lt;text&gt;</code> element on the right, but the vertical gradients on the three distinct <code>&lt;tspan&gt;</code> elements appear to be continuous—even though they are still <code>objectBoundingBox</code> gradients—because they are all scaled for the same three-line height of the entire <code>&lt;text&gt;</code> elements.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>Blink and WebKit browsers apply paint to rotated text characters (from the <code>rotate</code> attribute or from <code>&lt;textPath&gt;</code> positioning) <em>before</em> rotation, instead of after.  This causes gradients and patterns to be disjointed instead of continuous from one letter to the next.</p>
+</div>
+
+<p>Because text elements use different bounding boxes than paths do, converting text to paths can cause gradients to change shape.  You can reduce the impact by merging the paths for each letter into a single multi-part path (depending on the software you use, it might do this already), but it will never be exactly the same.</p>
+</section>
+
+
+<section>
+<h2 id="extras-fill-bounding-boxes-groups-section">Group Bounding Boxes<a href="#extras-fill-bounding-boxes-groups-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>There’s one final confusion to warn about when talking bounding boxes: the bounding boxes of grouping elements like <code>&lt;g&gt;</code> and <code>&lt;svg&gt;</code> (and <code>&lt;use&gt;</code> copies of groups or symbols).</p>
+
+<p>These bounding boxes don’t have an effect for gradients and patterns, because paint servers don’t apply to grouping elements, they inherit down to the individual shapes or text.  But for filters and masking, the effect applies to a group as a whole, and a composite bounding box is calculated from all the child elements.</p>
+
+<p>Any child elements with transformations are measured in their parent coordinate system when calculating the composite box.  Hidden overflow does <em>not</em> have an effect: the full dimensions of the shapes are still used, even if they are hidden.</p>
+
+<p>We discuss bounding boxes on grouping elements briefly in later chapters, when it changes the outcome of the effects we use.</p>
+</section>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

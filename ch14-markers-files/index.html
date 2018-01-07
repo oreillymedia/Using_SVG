@@ -1,46 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><meta charset="utf-8" />
-    <title>ch14-markers-files/</title>
-    <link rel="stylesheet" href="../styles/main.css" />
-  </head>
-  <body>
-    <div id="wrapper">
-      <h2>All files in ch14-markers-files</h2>
-      <ul class="columns narrow directory"><li><a href=".." title="Parent folder">..</a></li>
-<li><a href="basic-marker.png" title="basic-marker.png">basic-marker.png</a></li>
-<li><a href="basic-marker.svg" title="basic-marker.svg">basic-marker.svg</a></li>
-<li><a href="dataline-marker-no-line.png" title="dataline-marker-no-line.png">dataline-marker-no-line.png</a></li>
-<li><a href="dataline-marker-no-line.svg" title="dataline-marker-no-line.svg">dataline-marker-no-line.svg</a></li>
-<li><a href="dataline-marker-paint-order.png" title="dataline-marker-paint-order.png">dataline-marker-paint-order.png</a></li>
-<li><a href="dataline-marker-paint-order.svg" title="dataline-marker-paint-order.svg">dataline-marker-paint-order.svg</a></li>
-<li><a href="dataline-marker-start-end-oops.png" title="dataline-marker-start-end-oops.png">dataline-marker-start-end-oops.png</a></li>
-<li><a href="dataline-marker-start-end-oops.svg" title="dataline-marker-start-end-oops.svg">dataline-marker-start-end-oops.svg</a></li>
-<li><a href="dataline-marker-start-end.png" title="dataline-marker-start-end.png">dataline-marker-start-end.png</a></li>
-<li><a href="dataline-marker-start-end.svg" title="dataline-marker-start-end.svg">dataline-marker-start-end.svg</a></li>
-<li><a href="dataline-marker-thick-line-same-markers.png" title="dataline-marker-thick-line-same-markers.png">dataline-marker-thick-line-same-markers.png</a></li>
-<li><a href="dataline-marker-thick-line-same-markers.svg" title="dataline-marker-thick-line-same-markers.svg">dataline-marker-thick-line-same-markers.svg</a></li>
-<li><a href="dataline-marker-thick-line.png" title="dataline-marker-thick-line.png">dataline-marker-thick-line.png</a></li>
-<li><a href="dataline-marker-thick-line.svg" title="dataline-marker-thick-line.svg">dataline-marker-thick-line.svg</a></li>
-<li><a href="dataline-marker.png" title="dataline-marker.png">dataline-marker.png</a></li>
-<li><a href="dataline-marker.svg" title="dataline-marker.svg">dataline-marker.svg</a></li>
-<li><a href="heart-markers-MS-friendly.MSEdge.png" title="heart-markers-MS-friendly.MSEdge.png">heart-markers-MS-friendly.MSEdge.png</a></li>
-<li><a href="heart-markers-MS-friendly.svg" title="heart-markers-MS-friendly.svg">heart-markers-MS-friendly.svg</a></li>
-<li><a href="heart-markers-defs.svg" title="heart-markers-defs.svg">heart-markers-defs.svg</a></li>
-<li><a href="heart-markers.png" title="heart-markers.png">heart-markers.png</a></li>
-<li><a href="heart-markers.svg" title="heart-markers.svg">heart-markers.svg</a></li>
-<li><a href="marker-arrows-auto-start-reverse.svg" title="marker-arrows-auto-start-reverse.svg">marker-arrows-auto-start-reverse.svg</a></li>
-<li><a href="marker-arrows-gradient.png" title="marker-arrows-gradient.png">marker-arrows-gradient.png</a></li>
-<li><a href="marker-arrows-gradient.svg" title="marker-arrows-gradient.svg">marker-arrows-gradient.svg</a></li>
-<li><a href="marker-arrows-inside.png" title="marker-arrows-inside.png">marker-arrows-inside.png</a></li>
-<li><a href="marker-arrows-inside.svg" title="marker-arrows-inside.svg">marker-arrows-inside.svg</a></li>
-<li><a href="marker-arrows-viewBox.svg" title="marker-arrows-viewBox.svg">marker-arrows-viewBox.svg</a></li>
-<li><a href="marker-arrows.png" title="marker-arrows.png">marker-arrows.png</a></li>
-<li><a href="marker-arrows.svg" title="marker-arrows.svg">marker-arrows.svg</a></li>
-<li><a href="marker-test.Firefox.png" title="marker-test.Firefox.png">marker-test.Firefox.png</a></li>
-<li><a href="marker-test.Inkscape.png" title="marker-test.Inkscape.png">marker-test.Inkscape.png</a></li>
-<li><a href="marker-test.MSEdge.png" title="marker-test.MSEdge.png">marker-test.MSEdge.png</a></li>
-<li><a href="marker-test.svg" title="marker-test.svg">marker-test.svg</a></li></ul>
-    </div>
+<head>
+  <meta charset="utf-8" />
+  <title>Chapter 14, Marking the Way: 
+    Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <link rel="stylesheet" href="../styles/main.css" />
   
-</body></html>
+  <meta name="twitter:title" property="og:title" 
+        content="Marking the Way — Ch14, Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Line Markers. Online extras and example code for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
+</head>
+
+<body>
+  <header>
+    <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
+    <p>Example code and online extras for the <a href="http://shop.oreilly.com/product/0636920037972.do">O'Reilly Media book</a> by Amelia Bellamy-Royds, Kurt Cagle, and Dudley Storey.</p>
+    <nav>
+      <a class="home" href="../index.html#chapters">Chapter List</a>
+      <a href="../ch13-strokes-files/">Previous Chapter</a>
+      <a href="../ch15-masking-files/">Next Chapter</a>
+    </nav>
+  </header>
+  <main>
+    <h1><div>Chapter 14</div> Marking the Way: <i>Line Markers</i></h1>
+    <nav class="toc" aria-label="Page Contents">On this page:
+      <ul class="columns narrow">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#examples">Figures and Examples</a></li>
+        <li><a href="#extras">Online Extras</a></li>
+      </ul>
+    </nav>
+    <div id="intro" class="columns">
+<p>This chapter examines <strong role="term">line markers</strong>, symbols that can be used to accent the points of a custom shape.</p>
+
+<p>Markers can be added to the start and end of every segment in a path (or line, polyline, or polygon), or only to the very beginning or end.</p>
+
+<p>Markers have some similarity to line joins and line caps (which we discussed in <a data-type="xref" href="../ch13-strokes-files/">Chapter 13</a>).
+Line joins and line caps can change the appearance of the ends and corners of paths, but maybe not as much as you want.  They can’t draw line-cap shapes other than circles or squares, and they can’t draw anything wider than the stroke itself.  That means they can’t draw an arrowhead.</p>
+
+<p>Arrowheads are the quintessential use of the <code>&lt;marker&gt;</code> element, but there are many other possibilities. Markers can be used to create custom line-join shapes, or to draw symbols on all the points in a line chart.</p>
+
+<p>Markers offer a number of conveniences, compared to line joins, or compared to drawing each marker symbol individually as a <code>&lt;use&gt;</code> copy of a <code>&lt;symbol&gt;</code>.  However, as defined in SVG 1.1, markers are still rather limited.  Many things that you might expect to be able to do aren’t supported.  There are also a number of bugs and inconsistencies that limit the use of markers to the simpler cases.</p>
+
+<p>A few additional marker options are included in SVG 2, but many other advanced features were deferred to a separate SVG Markers module.  At the time of writing, it’s not clear when further work might happen on those proposals.</p>
+
+    </div>
+    <h2 id="examples">Figures and Examples<a href="#examples" class="hash-link" aria-label="Permalink">#</a></h2>
+    <p>The file names link to the code view on GitHub. <em>Beware: the linked screenshots are hi-resolution; some have very large file sizes.</em></p>
+    <p><a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/">View all files for this chapter on GitHub</a>.</p>
+    <dl class="columns directory">
+      <dt><span class="label">Figure 14-1. </span>A path with a marker on it</dt>
+      <dd>
+        <ul>
+          <li><a href="basic-marker.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/basic-marker.svg">basic-marker.svg</a></li>
+          <li><a href="basic-marker.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/basic-marker.png">basic-marker.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 14-2. </span>A line chart with markers at every data point</dt>
+      <dt><span class="label">Example 14-1. </span>Using markers to annotate a line chart</dt>
+      <dd>
+        <ul>
+          <li><a href="dataline-marker.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/dataline-marker.svg">dataline-marker.svg</a></li>
+          <li><a href="dataline-marker.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/dataline-marker.png">dataline-marker.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 14-3. </span>A line chart with markers, where the lines are drawn twice as thick</dt>
+      <dd>
+        <ul>
+          <li><a href="dataline-marker-thick-line.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/dataline-marker-thick-line.svg">dataline-marker-thick-line.svg</a></li>
+          <li><a href="dataline-marker-thick-line.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/dataline-marker-thick-line.png">dataline-marker-thick-line.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 14-4. </span>A line chart with markers, where the lines are drawn twice as thick, but the markers have a fixed size</dt>
+      <dd>
+        <ul>
+          <li><a href="dataline-marker-thick-line-same-markers.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/dataline-marker-thick-line-same-markers.svg">dataline-marker-thick-line-same-markers.svg</a></li>
+          <li><a href="dataline-marker-thick-line-same-markers.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/dataline-marker-thick-line-same-markers.png">dataline-marker-thick-line-same-markers.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 14-5. </span>A line chart with markers drawn under the line</dt>
+      <dd>
+        <ul>
+          <li><a href="dataline-marker-paint-order.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/dataline-marker-paint-order.svg">dataline-marker-paint-order.svg</a></li>
+          <li><a href="dataline-marker-paint-order.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/dataline-marker-paint-order.png">dataline-marker-paint-order.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 14-6. </span>A scatterplot chart drawn as markers on unstroked polylines</dt>
+      <dd>
+        <ul>
+          <li><a href="dataline-marker-no-line.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/dataline-marker-no-line.svg">dataline-marker-no-line.svg</a></li>
+          <li><a href="dataline-marker-no-line.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/dataline-marker-no-line.png">dataline-marker-no-line.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 14-7. </span>Arrows created with line markers on paths</dt>
+      <dt><span class="label">Example 14-2. </span>Drawing arrowheads that rotate with a line—and starting markers that don’t—with the orient attribute</dt>
+      <dd>
+        <ul>
+          <li><a href="marker-arrows.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/marker-arrows.svg">marker-arrows.svg</a></li>
+          <li><a href="marker-arrows.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/marker-arrows.png">marker-arrows.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 14-8. </span>Line-marker arrows, where the line and the markers are painted with the same gradient</dt>
+      <dd>
+        <ul>
+          <li><a href="marker-arrows-gradient.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/marker-arrows-gradient.svg">marker-arrows-gradient.svg</a></li>
+          <li><a href="marker-arrows-gradient.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/marker-arrows-gradient.png">marker-arrows-gradient.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Example 14-3. </span>Positioning and scaling a marker, without needing visible overflow</dt>
+      <dd>
+        <ul>
+          <li><a href="marker-arrows-viewBox.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/marker-arrows-viewBox.svg">marker-arrows-viewBox.svg</a></li>
+          <li><a href="marker-arrows-viewBox.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/marker-arrows-viewBox.png">marker-arrows-viewBox.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 14-X1. </span>A heart-marked valentine heart</dt>
+      <dt><span class="label">Example 14-X1. </span>Using icons as markers</dt>
+      <dd>
+        <ul>
+          <li><a href="heart-markers.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/heart-markers.svg">heart-markers.svg</a></li>
+          <li><a href="heart-markers.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/heart-markers.png">heart-markers.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Figure 14-X2. </span>A heart-marked valentine heart, in MS Edge, after adjusting the code to satisfy Microsoft browsers</dt>
+      <dd>
+        <ul>
+          <li><a href="heart-markers-MS-friendly.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/heart-markers-MS-friendly.svg">heart-markers-MS-friendly.svg</a></li>
+          <li><a href="heart-markers-MS-friendly.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch14-markers-files/heart-markers-MS-friendly.png">heart-markers-MS-friendly.MSEdge.png</a></li>
+        </ul>
+      </dd>
+    </dl>
+    <h2 id="extras">Online Extras<a href="#extras" class="hash-link" aria-label="Permalink">#</a></h2>
+    <ul class="columns directory">
+      <li><a>“Re-purposing Icons as Markers”</a>: Turning an existing symbol into a marker is a matter of copy and paste, plus a few attributes. Just watch out for the browser quirks.</li>
+      <li>Reference: <a href="../guide/markup.html">SVG Elements and Attributes</a></li>
+    </ul>
+  </main>
+  <footer>
+    <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
+    </p>
+    <p>
+      View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files, suggest a correction, or see when a page was last updated.</p>
+  </footer>
+</body>
+</html>

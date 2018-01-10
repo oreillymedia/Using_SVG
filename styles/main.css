@@ -177,6 +177,9 @@ dt {
   -webkit-column-break-after: avoid;
   break-after: avoid;
 }
+dd + dt {
+  clear: both;
+}
 dl dl {
   padding-left: 1em;
   border-left: thin solid;
@@ -205,6 +208,17 @@ ol.directory > li {
   .directory dd ol, .directory dd ul {
     margin-left: -0.5em;
   }
+}
+.thumb {
+  float: right; clear: right;
+  background: white;
+  margin: -0.2em 0 0.5em 0.5em; /* cancel out padding on parent dt */
+  
+  box-shadow: 2px 3px 1.5px rgba(50%, 75%, 100%, 0.3);
+  
+  width: auto;
+  max-width: 80px;
+  max-height: 80px;
 }
 
 /* Section/definition permalinks */

@@ -5,6 +5,18 @@
   <title>Making the Wave
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Making the Wave — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="SVG feTurbulence and feDisplacementMap create wave-like distortion effects from mathematical parameters. What do the numbers mean? An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,63 @@
   </header>
   <main>
     <h1>Making the Wave</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<p>In <a data-type="xref" href="../ch16-filters-files/">Example 16-8</a> in the book, we used the <code>&lt;feTurbulence&gt;</code> and <code>&lt;feDisplacement&gt;</code> to create a distortion effect, similar to looking at a graphic through wavy water.  But we skipped over how it actually worked.</p>
+
+<p>The initial wave pattern is produced using the <code>feTurbulence</code> filter.</p>
+
+<p>The turbulence filter uses the Perlin noise filter, a well-established algorithm commonly used in computer graphics to generate clouds, the surface patterns in marble, and other things that should have a “random” appearance.  It isn’t truly random, or even randomized: you will get the same result every time you run the filter (and <em>approximately</em> the same result from one browser to the next).  However, you can change the result by changing the <code>seed</code> attribute.</p>
+
+<p>There are actually two algorithms available, selected with the <code>type</code> attribute: <code>fractalNoise</code> or <code>turbulence</code>.  The two aren’t interchangeable: fractal noise generates variations from 50% gray, 50% alpha, while turbulence starts with transparent black and adds color to it.  With the turbulence algorithm, the variations build upon one another to create more continuous patterns.  That’s what we used in <a data-type="xref" href="ch16.html#hawaii-water-example">Example 16-8</a>:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;feTurbulence</code> <code class="na">y=</code><code class="s">"30px"</code> <code class="na">height=</code><code class="s">"40px"</code> <code class="na">result=</code><code class="s">"waves"</code>
+              <code class="na">type=</code><code class="s">"turbulence"</code> <code class="na">baseFrequency=</code><code class="s">"0.01 0.1"</code>
+              <code class="na">numOctaves=</code><code class="s">"1"</code> <code class="na">seed=</code><code class="s">"53"</code> <code class="nt">/&gt;</code></pre>
+
+<p><a data-type="xref" href="#water-figure">Figure 16-X1</a> shows what the turbulence result looks like on its own, and then after some color modifications.</p>
+
+<figure class="page-float"><div id="water-figure" class="figure">
+<img src="../ch16-filters-files/water.svg" alt="A rectangle filled with a wavy blue-green-clear pattern.  The clear sections are thin ribbons which mostly flow left to right, but wave up and down, merging and separating.  The appearance is somewhat like bright sunlight reflecting off rippling water under a bright blue sky."/>
+<figcaption><span class="label">Figure 16-X1. </span>A turbulent Perlin noise wave pattern, and the same noise converted to blue-green colors</figcaption>
+</div></figure>
+
+<p>In the basic <code>&lt;feTurbulence&gt;</code> output, all the colors and the alpha channel are evenly distributed between 0 and 100%.  To make the final waves actually look like water waves—and not just whispy multi-colored fog—the result is passed through a set of <code>&lt;feComponentTransfer&gt;</code> commands, to reduce the red channel, increase the alpha channel, and modulate the blue and green channels, and then composited on a solid <code>&lt;feFlood&gt;</code> layer.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>In both versions of the filter used in <a data-type="xref" href="#water-figure">Figure 16-X1</a>, a final <code>&lt;feComposite&gt;</code> step, with <code>operator="in"</code>, clips the generated pattern layer to the original shape outline (here, a rounded <code>&lt;rect&gt;</code>).</p>
+</div>
+
+<p>The Perlin patterns are described in terms of two-dimensional waves.  Like sound waves, the structure is characterized by a frequency and by patterns of increasing “octaves”.</p>
+
+<p>The <code>baseFrequency</code> attribute sets the number of waves per px, where a “wave” is the average distance between two maximum color values, after shifting to a minimum and back.  Since you usually want your colors to change on scales much greater than 1px, the frequency numbers are usually small decimals.  They can even be zero (no color change in that direction), but they can’t be negative.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>The <code>baseFrequency</code> is <em>not</em> affected by object bounding-box <code>primitiveUnits</code>.  It <em>is</em> affected by any <code>viewBox</code> or other scaling in the user-space coordinate system.</p>
+</div>
+
+<p>The two values given to <code>baseFrequency</code> are for the <em>x</em>- and <em>y</em>-directions.  If you only give one number, it will be used for both directions.  Here, we have a very low <em>x</em>-frequency of 0.01 (1 in 100), meaning waves will average 100px long in the horizontal direction.  In contrast, the <em>y</em> frequency is 0.1, meaning the colors will oscilate back and forth every 10px (or so) in the vertical direction.</p>
+
+<p>Finally, the <code>numOctaves</code> attribute allows you to specify additional variation on top of the main waves.  Each subsequent octave wave will have double the frequency (half the wavelength) of the previous one.</p>
+
+<p>The number of octaves therefore determines the fine detail in the resulting texture: the more octaves, the more detail.  But beware: the more octaves, the more computation required.  Here, we use a single octave to get smooth wave patterns.</p>
+
+<p>While <code>type</code>, <code>numOctaves</code>, and <code>baseFrequency</code> describe the structure of the pattern, the <code>seed</code> determines which exact pattern you get.  It’s value can be any number, although any decimal part of the number will be ignored.</p>
+
+<p>The <code>&lt;feTurbulence&gt;</code> filter can be used to create all sorts of textures and color patterns within SVG.  But in <a data-type="xref" href="ch16.html#hawaii-water-example">Example 16-8</a>, we didn’t use the <code>&lt;feTurbulence&gt;</code> output to create <em>visible</em> wave patterns.  Instead, we used it to create <em>distortion</em> patterns in our text, by passing it as the second input to the <code>&lt;feDisplacementMap&gt;</code> filter:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;feDisplacementMap</code> <code class="na">in=</code><code class="s">"SourceGraphic"</code> <code class="na">in2=</code><code class="s">"waves"</code>
+                   <code class="na">y=</code><code class="s">"36px"</code> <code class="na">height=</code><code class="s">"30px"</code>
+                   <code class="na">scale=</code><code class="s">"4"</code>
+                   <code class="na">xChannelSelector=</code><code class="s">"G"</code>
+                   <code class="na">yChannelSelector=</code><code class="s">"B"</code> <code class="nt">/&gt;</code></pre>
+
+<p>The <code>&lt;feDisplacementMap&gt;</code> element <em>displaces</em> (moves) the pixels from its primary input (the <code>SourceGraphic</code> in this case) according to color values extracted from the second input (the turbulent waves), which is known as the <em>map</em>.</p>
+
+<p>The horizontal and vertical displacements are each scaled according to a different color value from the input.  The <code>xChannelSelector</code> attribute tells the browser to use the <em>green</em> (<code>G</code>) channel of our turbulence to determine horizontal displacement.  If the pixel in the map has 0% green, the pixel being displaced will go the maximum distance left.  If it is 100% green (in <code>rgb()</code> notation), it will be moved the maximum distance right.  And if it is 50% green, it won’t move horizontally at all.  The <code>yChannelSelector</code> does the same, but for vertical offsets—in this case, using the blue (<code>B</code>) channel.</p>
+
+<p>Because the input <code>waves</code> had all colors evenly distributed, the channel selections don’t really matter, except that they are different.  The important part is the <code>scale</code>, which sets the maximum displacement, in scaled px units.  A larger scale would equal more distortion.</p>
+
+<p>If you wanted more-controlled distortion effects, you could use smoothly-blurred shapes or a gradient (imported via <code>&lt;feImage&gt;</code> as a separate image file or data URI) as the <code>in2</code> map for <code>&lt;feDisplacementMap&gt;</code>.</p>
+
+<p>If more web browsers supported the <code>BackgroundImage</code> filter input, you could also distort a shape relative to its backdrop, or distort the backdrop as a shape passes over it.  But (so far) that is only supported in Internet Explorer and MS Edge.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

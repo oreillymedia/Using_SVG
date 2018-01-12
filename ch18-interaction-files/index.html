@@ -1,43 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><meta charset="utf-8" />
-    <title>ch18-interaction-files/</title>
-    <link rel="stylesheet" href="../styles/main.css" />
-  </head>
-  <body>
-    <div id="wrapper">
-      <h2>All files in ch18-interaction-files</h2>
-      <ul class="columns narrow directory"><li><a href=".." title="Parent folder">..</a></li>
-<li><a href="canada-imagemap.html" title="canada-imagemap.html">canada-imagemap.html</a></li>
-<li><a href="checkbox.html" title="checkbox.html">checkbox.html</a></li>
-<li><a href="checkbox.png" title="checkbox.png">checkbox.png</a></li>
-<li><a href="circle-click-game.during.png" title="circle-click-game.during.png">circle-click-game.during.png</a></li>
-<li><a href="circle-click-game.js" title="circle-click-game.js">circle-click-game.js</a></li>
-<li><a href="circle-click-game.over.png" title="circle-click-game.over.png">circle-click-game.over.png</a></li>
-<li><a href="circle-click-game.svg" title="circle-click-game.svg">circle-click-game.svg</a></li>
-<li><a href="gem-click-game-misses.css" title="gem-click-game-misses.css">gem-click-game-misses.css</a></li>
-<li><a href="gem-click-game-misses.js" title="gem-click-game-misses.js">gem-click-game-misses.js</a></li>
-<li><a href="gem-click-game-misses.png" title="gem-click-game-misses.png">gem-click-game-misses.png</a></li>
-<li><a href="gem-click-game-misses.svg" title="gem-click-game-misses.svg">gem-click-game-misses.svg</a></li>
-<li><a href="gem-click-game.js" title="gem-click-game.js">gem-click-game.js</a></li>
-<li><a href="gem-click-game.png" title="gem-click-game.png">gem-click-game.png</a></li>
-<li><a href="gem-click-game.svg" title="gem-click-game.svg">gem-click-game.svg</a></li>
-<li><a href="link-text.png" title="link-text.png">link-text.png</a></li>
-<li><a href="link-text.svg" title="link-text.svg">link-text.svg</a></li>
-<li><a href="pointer-events.png" title="pointer-events.png">pointer-events.png</a></li>
-<li><a href="pointer-events.svg" title="pointer-events.svg">pointer-events.svg</a></li>
-<li><a href="skaters-bw.jpg" title="skaters-bw.jpg">skaters-bw.jpg</a></li>
-<li><a href="skaters-color.jpg" title="skaters-color.jpg">skaters-color.jpg</a></li>
-<li><a href="skaters-imagemap-single-clip-layer.svg" title="skaters-imagemap-single-clip-layer.svg">skaters-imagemap-single-clip-layer.svg</a></li>
-<li><a href="skaters-imagemap.jpg" title="skaters-imagemap.jpg">skaters-imagemap.jpg</a></li>
-<li><a href="skaters-imagemap.png" title="skaters-imagemap.png">skaters-imagemap.png</a></li>
-<li><a href="skaters-imagemap.svg" title="skaters-imagemap.svg">skaters-imagemap.svg</a></li>
-<li><a href="stroke-linejoin-interactive-button.svg" title="stroke-linejoin-interactive-button.svg">stroke-linejoin-interactive-button.svg</a></li>
-<li><a href="stroke-linejoin-interactive-radio-button.html" title="stroke-linejoin-interactive-radio-button.html">stroke-linejoin-interactive-radio-button.html</a></li>
-<li><a href="stroke-linejoin-interactive-radio-button.png" title="stroke-linejoin-interactive-radio-button.png">stroke-linejoin-interactive-radio-button.png</a></li>
-<li><a href="stroke-linejoin-interactive.png" title="stroke-linejoin-interactive.png">stroke-linejoin-interactive.png</a></li>
-<li><a href="stroke-linejoin-interactive.svg" title="stroke-linejoin-interactive.svg">stroke-linejoin-interactive.svg</a></li>
-<li><a href="team-photo.jpg" title="team-photo.jpg">team-photo.jpg</a></li></ul>
-    </div>
+<head>
+  <meta charset="utf-8" />
+  <title>Chapter 18, Drawing on Demand: 
+    Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <link rel="stylesheet" href="../styles/main.css" />
   
-</body></html>
+  <meta name="twitter:title" property="og:title" 
+        content="Drawing on Demand — Ch18, Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Interactive SVG. Online extras and example code for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
+</head>
+
+<body>
+  <header>
+    <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
+    <p>Example code and online extras for the <a href="http://shop.oreilly.com/product/0636920037972.do">O'Reilly Media book</a> by Amelia Bellamy-Royds, Kurt Cagle, and Dudley Storey.</p>
+    <nav>
+      <a class="home" href="../index.html#chapters">Chapter List</a>
+      <a href="../ch19-animation-files/">Previous Chapter</a>
+      <a href="../ch17-metadata-files/">Next Chapter</a>
+    </nav>
+  </header>
+  <main>
+    <h1><div>Chapter 18</div> Drawing on Demand: <i>Interactive SVG</i></h1>
+    <nav class="toc" aria-label="Page Contents">On this page:
+      <ul class="columns narrow">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#examples">Figures and Examples</a></li>
+        <li><a href="#extras">Online Extras</a></li>
+      </ul>
+    </nav>
+    <div id="intro" class="columns">
+<p>This chapter explores the potential for using SVG in interactive web content.  It is not in any way a comprehensive discussion of the topic: interactive SVG is as complex a topic as interactive HTML.  We cover the main ways in which you can enable and react to user actions—what you do with that is up to you.  Interactive SVG can be used in web application interfaces, games, and explorable data visualizations, among many other possibilities.</p>
+
+<p>As we’ve mentioned various times throughout the book, the capabilities of SVG differ depending on how you add that SVG to your HTML.  <a data-type="indexterm" data-primary="images, SVG embedded as" id="idm139798014209328"/>If you use an SVG file as an image, in an <code>&lt;img&gt;</code> tag or as a CSS image type, it will behave as an image.  None of the components will be interactive.</p>
+
+<p>To add interactive SVG to a web page, you need to either use inline SVG markup or embedded SVG objects (with <code>&lt;object&gt;</code> or <code>&lt;iframe&gt;</code>).  Alternatively (and especially for testing), you can open the SVG files directly as the main web page—which becomes much more practical once you include links from that SVG web page to other pages on the web.</p>
+
+    </div>
+    <h2 id="examples">Figures and Examples<a href="#examples" class="hash-link" aria-label="Permalink">#</a></h2>
+    <p>The file names link to the code view on GitHub. <em>Beware: the linked screenshots are hi-resolution; some have very large file sizes.</em></p>
+    <p><a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/">View all files for this chapter on GitHub</a>.</p>
+    <dl class="columns directory">
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/link-text.png" 
+         /><span class="label">Figure 18-1. </span>Links in SVG text used as website navigation</dt>
+      <dt><span class="label">Example 18-1. </span>Adding hyperlinks to SVG text layouts</dt>
+      <dd>
+        <ul>
+          <li><a href="link-text.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/link-text.svg">link-text.svg</a></li>
+          <li><a href="link-text.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/link-text.png">link-text.png</a></li>
+        </ul>
+      </dd>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/team-photo.jpg" 
+         /><span class="label">Figure 18-2. </span>The photograph to use in the image map</dt>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/skaters-imagemap.jpg" 
+         /><span class="label">Figure 18-3. </span>The final result, when one link is focused</dt>
+      <dt><span class="label">Example 18-2. </span>Creating an interactive image map with SVG links and clipping paths</dt>
+      <dd>
+        <ul>
+          <li><a href="skaters-imagemap.svg">Live SVG file (with embedded CSS)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/skaters-imagemap.svg">skaters-imagemap.svg</a></li>
+          <li><a href="skaters-imagemap.jpg">JPEG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/skaters-imagemap.jpg">skaters-imagemap.jpg</a></li>
+        </ul>
+      </dd>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/pointer-events.png" 
+         /><span class="label">Figure 18-4. </span>The hoverable shapes, with the second circle hovered</dt>
+      <dt><span class="label">Example 18-3. </span>Maintaining predictable hover regions despite changing strokes</dt>
+      <dd>
+        <ul>
+          <li><a href="pointer-events.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/pointer-events.svg">pointer-events.svg</a></li>
+          <li><a href="pointer-events.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/pointer-events.png">pointer-events.png</a></li>
+        </ul>
+      </dd>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/stroke-linejoin-interactive.png" 
+         /><span class="label">Figure 18-5. </span>An interactive SVG style sample, after the first link has been activated (but the second link is focused)</dt>
+      <dt><span class="label">Example 18-4. </span>Using same-page links and <code>:target</code> to create a style switch</dt>
+      <dd>
+        <ul>
+          <li><a href="stroke-linejoin-interactive.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/stroke-linejoin-interactive.svg">stroke-linejoin-interactive.svg</a></li>
+          <li><a href="stroke-linejoin-interactive.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/stroke-linejoin-interactive.png">stroke-linejoin-interactive.png</a></li>
+        </ul>
+      </dd>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/circle-click-game.during.png" 
+         /><span class="label">Figure 18-6. </span>An SVG game using click events on colored circles</dt>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/circle-click-game.over.png" 
+         /><span class="label">Figure 18-7. </span>A completed version of the confetti game</dt>
+      <dt><span class="label">Example 18-5. </span>Using click events to create an SVG game with JavaScript</dt>
+      <dd>
+        <ul>
+          <li><a href="circle-click-game.svg">Live SVG file (with embedded CSS and linked JS)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/circle-click-game.svg">circle-click-game.svg</a></li>
+          <li><a href="circle-click-game.js">Raw JavaScript file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/circle-click-game.js">circle-click-game.js</a></li>
+          <li><a href="circle-click-game.during.png">PNG screenshot (during the game)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/circle-click-game.during.png">circle-click-game.during.png</a></li>
+          <li><a href="circle-click-game.over.png">PNG screenshot (game over)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/circle-click-game.over.png">circle-click-game.over.png</a></li>
+        </ul>
+      </dd>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/gem-click-game.png" 
+         /><span class="label">Figure 18-8. </span>An SVG game using click events on colored gems made from <code>&lt;use&gt;</code> elements</dt>
+      <dd>
+        <p>The JavaScript and CSS code incorporate all the updates from unlabelled code snippets in this and the previous section.</p>
+        <ul>
+          <li><a href="gem-click-game.svg">Live SVG file (with embedded CSS and linked JS)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/gem-click-game.svg">gem-click-game.svg</a></li>
+          <li><a href="gem-click-game.js">Raw JavaScript file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/gem-click-game.js">gem-click-game.js</a></li>
+          <li><a href="gem-click-game.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/gem-click-game.png">gem-click-game.png</a></li>
+        </ul>
+      </dd>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/gem-click-game-misses.png" 
+         /><span class="label">Figure 18-9. </span>A game with additional elements added based on mouse-click positions</dt>
+      <dt><span class="label">Example 18-6. </span>Creating new elements when click events do not hit a target</dt>
+      <dd>
+        <ul>
+          <li><a href="gem-click-game-misses.svg">Live SVG file (with linked CSS and JS)</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/gem-click-game-misses.svg">gem-click-game-misses.svg</a></li>
+          <li><a href="gem-click-game-misses.css">Raw CSS file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/gem-click-game-misses.css">gem-click-game-misses.css</a></li>
+          <li><a href="gem-click-game-misses.js">Raw JavaScript file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/gem-click-game-misses.js">gem-click-game-misses.js</a></li>
+          <li><a href="gem-click-game-misses.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/gem-click-game-misses.png">gem-click-game-misses.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Example 18-7. </span>Making links behave like buttons, with JavaScript event handlers</dt>
+      <dd>
+        <ul>
+          <li><a href="stroke-linejoin-interactive-button.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/stroke-linejoin-interactive-button.svg">stroke-linejoin-interactive-button.svg</a></li>
+        </ul>
+      </dd>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/checkbox.png" 
+         /><span class="label">Figure 18-X1. </span>A custom SVG checkbox in an HTML form</dt>
+      <dt><span class="label">Example 18-X1. </span>Creating a custom checkbox with hidden HTML, inline SVG, and CSS pseudoclasses</dt>
+      <dd>
+        <ul>
+          <li><a href="checkbox.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/checkbox.html">checkbox.html</a></li>
+          <li><a href="checkbox.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/checkbox.png">checkbox.png</a></li>
+        </ul>
+      </dd>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/stroke-linejoin-interactive-radio-button.png" 
+         /><span class="label">Figure 18-X2. </span>Inline SVG controlled by hidden HTML radio buttons</dt>
+      <dt><span class="label">Example 18-X2. </span>Using HTML radio buttons and <code>:checked</code> to create an SVG style switch</dt>
+      <dd>
+        <ul>
+          <li><a href="stroke-linejoin-interactive-radio-button.html">Live HTML file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/stroke-linejoin-interactive-radio-button.html">stroke-linejoin-interactive-radio-button.html</a></li>
+          <li><a href="stroke-linejoin-interactive-radio-button.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch18-interaction-files/stroke-linejoin-interactive-radio-button.png">stroke-linejoin-interactive-radio-button.png</a></li>
+        </ul>
+      </dd>
+    </dl>
+    <h2 id="extras">Online Extras<a href="#extras" class="hash-link" aria-label="Permalink">#</a></h2>
+    <ul class="columns directory">
+      <li><a>“Borrowing Ready-Made Widgets from HTML”</a>: HTML input elements provide accessible interfaces that can maintain state without scripting. All they need is a new coat of SVG.</li>
+      <li>Reference: <a href="../guide/markup.html#structure">SVG Elements and Attributes</a></li>
+      <li>Reference: <a href="../guide/DOM.html">Select SVG DOM Methods and Objects</a></li>
+    </ul>
+  </main>
+  <footer>
+    <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
+    </p>
+    <p>
+      View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files, suggest a correction, or see when a page was last updated.</p>
+  </footer>
+</body>
+</html>

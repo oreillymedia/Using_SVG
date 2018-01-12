@@ -1,22 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><meta charset="utf-8" />
-    <title>ch17-metadata-files/</title>
-    <link rel="stylesheet" href="../styles/main.css" />
-  </head>
-  <body>
-    <div id="wrapper">
-      <h2>All files in ch17-metadata-files</h2>
-      <ul class="columns narrow directory"><li><a href=".." title="Parent folder">..</a></li>
-<li><a href="color-keywords-interactive.html" title="color-keywords-interactive.html">color-keywords-interactive.html</a></li>
-<li><a href="color-keywords.html" title="color-keywords.html">color-keywords.html</a></li>
-<li><a href="display-desc.png" title="display-desc.png">display-desc.png</a></li>
-<li><a href="display-desc.svg" title="display-desc.svg">display-desc.svg</a></li>
-<li><a href="grouped-bar-chart-labels.png" title="grouped-bar-chart-labels.png">grouped-bar-chart-labels.png</a></li>
-<li><a href="grouped-bar-chart-labels.svg" title="grouped-bar-chart-labels.svg">grouped-bar-chart-labels.svg</a></li>
-<li><a href="stoplight-titles-compatibility.svg" title="stoplight-titles-compatibility.svg">stoplight-titles-compatibility.svg</a></li>
-<li><a href="stoplight-titles.svg" title="stoplight-titles.svg">stoplight-titles.svg</a></li>
-<li><a href="stroke-linejoin-aria-labelledby.svg" title="stroke-linejoin-aria-labelledby.svg">stroke-linejoin-aria-labelledby.svg</a></li></ul>
-    </div>
+<head>
+  <meta charset="utf-8" />
+  <title>Chapter 17, Beyond the Visible: 
+    Using SVG with CSS3 and HTML5 — Supplementary Material</title>
+  <link rel="stylesheet" href="../styles/main.css" />
   
-</body></html>
+  <meta name="twitter:title" property="og:title" 
+        content="Beyond the Visible — Ch17, Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Metadata for Accessibility and Added Functionality. Online extras and example code for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
+</head>
+
+<body>
+  <header>
+    <a class="title" href="../index.html">Using SVG with CSS3 and HTML5 — Supplementary Material</a>
+    <p>Example code and online extras for the <a href="http://shop.oreilly.com/product/0636920037972.do">O'Reilly Media book</a> by Amelia Bellamy-Royds, Kurt Cagle, and Dudley Storey.</p>
+    <nav>
+      <a class="home" href="../index.html#chapters">Chapter List</a>
+      <a href="../ch16-filters-files/">Previous Chapter</a>
+      <a href="../ch18-interaction-files/">Next Chapter</a>
+    </nav>
+  </header>
+  <main>
+    <h1><div>Chapter 17</div> Beyond the Visible: <i>Metadata for Accessibility and Added Functionality</i></h1>
+    <nav class="toc" aria-label="Page Contents">On this page:
+      <ul class="columns narrow">
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#examples">Figures and Examples</a></li>
+        <li><a href="#extras">Online Extras</a></li>
+      </ul>
+    </nav>
+    <div id="intro" class="columns">
+<p>SVG on the web is more than just a picture.  It’s a structured document that can contain structured information about what the graphic represents.</p>
+
+<p>This chapter looks at the metadata elements and attributes available in SVG to make your graphic more accessible, or to annotate it with information that will be used by your own scripts or by other software.</p>
+    </div>
+    <h2 id="examples">Figures and Examples<a href="#examples" class="hash-link" aria-label="Permalink">#</a></h2>
+    <p>The file names link to the code view on GitHub. <em>Beware: the linked screenshots are hi-resolution; some have very large file sizes.</em></p>
+    <p><a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch17-metadata-files/">View all files for this chapter on GitHub</a>.</p>
+    <dl class="columns directory">
+      <dt><span class="label">Example 17-1. </span>Labeling parts of a graphic with <code>&lt;title&gt;</code> elements</dt>
+      <dd>
+        <ul>
+          <li><a href="stoplight-titles.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch17-metadata-files/stoplight-titles.svg">stoplight-titles.svg</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Example 17-2. </span>Improving accessibility of SVG titles with ARIA attributes</dt>
+      <dd>
+        <ul>
+          <li><a href="stoplight-titles-compatibility.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch17-metadata-files/stoplight-titles-compatibility.svg">stoplight-titles-compatibility.svg</a></li>
+        </ul>
+      </dd>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/grouped-bar-chart-labels.png" 
+         /><span class="label">Figure 17-1. </span>An SVG bar chart, where the full meaning of each bar is generated from three different labels</dt>
+      <dd>
+        <ul>
+          <li><a href="grouped-bar-chart-labels.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch17-metadata-files/grouped-bar-chart-labels.svg">grouped-bar-chart-labels.svg</a></li>
+          <li><a href="grouped-bar-chart-labels.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch17-metadata-files/grouped-bar-chart-labels.png">grouped-bar-chart-labels.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Example 17-3. </span>Associating visible labels with graphics</dt>
+      <dd>
+        <ul>
+          <li><a href="stroke-linejoin-aria-labelledby.svg">Live SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch17-metadata-files/stroke-linejoin-aria-labelledby.svg">stroke-linejoin-aria-labelledby.svg</a></li>
+        </ul>
+      </dd>
+      <dt><img class="thumb" alt="" width="80" src="thumbnails/display-desc.png" 
+         /><span class="label">Figure 17-2. </span>SVG title and description, displayed by cloning content into HTML elements</dt>
+      <dt><span class="label">Example 17-4. </span>Associating visible labels with graphics</dt>
+      <dd>
+        <ul>
+          <li><a href="display-desc.svg">Live (scripted) SVG file</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch17-metadata-files/display-desc.svg">display-desc.svg</a></li>
+          <li><a href="display-desc.png">PNG screenshot</a>,
+            <a class="filename" title="view source on GitHub" href="https://github.com/oreillymedia/Using_SVG/tree/master/ch17-metadata-files/display-desc.png">display-desc.png</a></li>
+        </ul>
+      </dd>
+      <dt><span class="label">Example 17-5. </span>A sample SVG license and other metadata</dt>
+      <dd>
+        <p>The code in the book is a generic, anonymized example. For similar code in real graphic files, see the <a href="https://github.com/oreillymedia/Using_SVG/tree/master/ch04-tools-files/OCAL">Open Clip Art Library samples</a> from <a href="../ch04-tools-files/">Chapter 4</a>.</p>
+      </dd>
+    </dl>
+    <h2 id="extras">Online Extras<a href="#extras" class="hash-link" aria-label="Permalink">#</a></h2>
+    <ul class="columns directory">
+      <li>Reference: <a href="../guide/markup.html#metadata">SVG Elements and Attributes</a></li>
+    </ul>
+  </main>
+  <footer>
+    <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.
+    </p>
+    <p>
+      View the <a href="https://github.com/oreillymedia/Using_SVG/">GitHub repository</a> to download the files, suggest a correction, or see when a page was last updated.</p>
+  </footer>
+</body>
+</html>

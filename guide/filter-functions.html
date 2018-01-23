@@ -5,6 +5,17 @@
   <title>Shorthand Filter Functions Reference
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  
+  <meta name="twitter:title" property="og:title" 
+        content="Shorthand Filter Functions Reference — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="A guide to the filter effects you can define directly in your CSS, without SVG markup. Part of the supplementary material for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -17,15 +28,227 @@
   </header>
   <main>
     <h1>Shorthand Filter Functions</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
     <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+<p>There are 10 shorthand filter functions defined in the Filter Effects Module.</p>
+
+<p>These functions are used in the <code>filter</code> property, as a list of operations to be applied in a chain, in order from the original element rendering to the final output.  They can be combined with <code>url()</code> references to SVG markup filter definitions.  They are also intended for the <code>filter()</code> image-modification function (which isn’t yet supported).</p>
+
+<p>As mentioned in the text, browser support is currently different depending on whether you are filtering an SVG graphical element or a CSS layout box.</p>
+
+<p>All of the shorthand filter functions have SVG markup equivalents; see the <a href="https://drafts.fxtf.org/filters/">Filter Effects spec</a> for the exact details.  The shorthands always use sRGB color interpolation, and always automatically calculate the filter effects region to avoid clipping.</p>
+
+<p>Most of the functions take a single parameter that defines the extent of the effect.  Each function has a “no-operation” parameter value that is used to represent <code>filter: none</code> when caclulating animations or transitions.</p>
     </div>
+
+<p>The functions are listed in alphabetical order:</p>
+<dl class="columns-children">
+<dt id="blur"><code>blur(<em>stdDeviation</em>)</code><a href="#blur" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Applies a Gaussian blur effect.</p>
+
+<p>Equivalent to <code>&lt;feGaussianBlur&gt;</code>.</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code><em>stdDeviation</em></code> is a non-negative length with units.</p>
+</li>
+<li>
+<p>A <code><em>stdDeviation</em></code> of 0 is equivalent to <code>filter: none</code> in transitions.</p>
+</li>
+</ul>
+</div>
+
+</dd>
+<dt id="brightness"><code>brightness(<em>relative-amount</em>)</code><a href="#brightness" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Increases or decreases the R, G, and B channels by the same multiplicative factor.</p>
+
+<p>Equivalent to <code>&lt;feComponentTransfer&gt;</code> with <code>linear</code> functions for <code>&lt;feFuncR&gt;</code>, <code>&lt;feFuncG&gt;</code>, and <code>&lt;feFuncB&gt;</code>.</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code><em>relative-amount</em></code> is either a number or a percentage, and cannot be negative.</p>
+</li>
+<li>
+<p>A <code><em>relative-amount</em></code> of 1 or 100% is equivalent to <code>filter: none</code> in transitions.</p>
+</li>
+<li>
+<p>Values less than 1 or 100% make the image <em>darker</em> (0% will be solid black), while greater values make it <em>brighter</em>.</p>
+</li>
+</ul>
+</div>
+
+</dd>
+<dt id="contrast"><code>contrast(<em>relative-amount</em>)</code><a href="#contrast" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Expands or contracts the range of values (that is, the difference between the maximium and minimum values) in the R, G, and B channels by the same multiplicative factor.  This means that it increases/decreases color contrast (and therefore saturation), not just overall luminance contrast.</p>
+
+<p>Equivalent to <code>&lt;feComponentTransfer&gt;</code> with (slightly more complicated) <code>linear</code> functions for <code>&lt;feFuncR&gt;</code>, <code>&lt;feFuncG&gt;</code>, and <code>&lt;feFuncB&gt;</code>.</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code><em>relative-amount</em></code> is either a number or a percentage, and cannot be negative (use <code>invert()</code> to reverse light and dark).</p>
+</li>
+<li>
+<p>A <code><em>relative-amount</em></code> of 1 or 100% is equivalent to <code>filter: none</code> in transitions.</p>
+</li>
+<li>
+<p>Values less than 1 or 100% <em>reduce</em> contrast (0% will be solid gray), while greater values <em>increase</em> contrast.</p>
+</li>
+</ul>
+</div>
+
+</dd>
+<dt id="drop-shadow"><code>drop-shadow(<em>dx</em> <em>dy</em> <em>blur</em> <em>color</em>)</code><a href="#drop-shadow" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Adds a drop-shadow effect to the image, using the alpha-transparency outline of the input to determine the shape of the shadow.</p>
+
+<p>Equivalent to <code>&lt;feDropShadow&gt;</code>.</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code><em>dx</em></code> and <code><em>dy</em></code> are offset distances, as lengths with units.</p>
+</li>
+<li>
+<p><code><em>blur</em></code> is a non-negative length with units, which defines the standard deviation of the blur; beware, this is half the amount of blur as the equivalent parameter to <code>text-shadow</code> or <code>box-shadow</code>.</p>
+</li>
+<li>
+<p><code><em>color</em></code> is any valid CSS color; it’s supposed to be optional and default to <code>currentColor</code>, but initial browser implementations were inconsistent.</p>
+</li>
+<li>
+<p>0 blur, 0 offset, and a <code>transparent</code> color is equivalent to <code>filter: none</code> in transitions.</p>
+</li>
+</ul>
+</div>
+
+</dd>
+<dt id="grayscale"><code>grayscale(<em>extent</em>)</code><a href="#grayscale" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Reduces the saturation of the image, while preserving luminance.</p>
+
+<p>Equivalent to an <code>&lt;feColorMatrix&gt;</code> with <code>saturate</code> type.  Also equivalent to the <code>saturate()</code> shorthand filter with the reverse numbers: 0% saturation is 100% grayscale. Use whichever one makes sense to you.</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code><em>extent</em></code> is either a number or a percentage, and cannot be negative.</p>
+</li>
+<li>
+<p>An <code><em>extent</em></code> of 1 or 100% (or any value greater than 1 or 100%) converts the image to pure grayscale.</p>
+</li>
+<li>
+<p>An <code><em>extent</em></code> of 0 is equivalent to <code>filter: none</code> in transitions.</p>
+</li>
+</ul>
+</div>
+
+</dd>
+<dt id="hue-rotate"><code>hue-rotate(<em>change-in-angle</em>)</code><a href="#hue-rotate" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Modifies the hues of colors in the image by rotating them around the color wheel, while preserving luminance.  Because of the luminance correction, this is <em>not</em> the same as simply changing the <em>h</em> factor in <code>hsl()</code> color notation.</p>
+
+<p>Equivalent to an <code>&lt;feColorMatrix&gt;</code> with <code>hueRotate</code> type.</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code><em>change-in-angle</em></code> is an angle with units (<code>deg</code>, <code>rad</code>, <code>turn</code>).</p>
+</li>
+<li>
+<p>A <code><em>change-in-angle</em></code> of 0 is equivalent to <code>filter: none</code> in transitions.</p>
+</li>
+</ul>
+</div>
+
+</dd>
+<dt id="invert"><code>invert(<em>extent</em>)</code><a href="#invert" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Inverts the R, G, and B channels separately, creating a photo-negative effect and/or a contrast reduction and desaturation.</p>
+
+<p>Equivalent to <code>&lt;feComponentTransfer&gt;</code> with a <code>linear</code> or two-value <code>table</code> function for <code>&lt;feFuncR&gt;</code>, <code>&lt;feFuncG&gt;</code>, and <code>&lt;feFuncB&gt;</code>.</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code><em>extent</em></code> is either a number or a percentage, and cannot be negative.</p>
+</li>
+<li>
+<p>An <code><em>extent</em></code> of 1 or 100% (or any value greater than 1 or 100%) completely inverts the colors.</p>
+</li>
+<li>
+<p>An <code><em>extent</em></code> of 0 is equivalent to <code>filter: none</code> in transitions.</p>
+</li>
+<li>
+<p>An <code><em>extent</em></code> between 0 and 1 creates a linear interpolation between the original color and the inverted color; this means an <code><em>extent</em></code> of 0.5 (50%) results in a solid gray color.</p>
+</li>
+<li>
+<p>Values between 0 and 0.5 create grayed-out (reduced-contrast, reduced-saturation) versions of the original colors; values between 0.5 and 1 create grayed-out (reduced-contrast, reduced-saturation) versions of the inverted colors.</p>
+</li>
+</ul>
+</div>
+
+</dd>
+<dt id="opacity"><code>opacity(<em>relative-amount</em>)</code><a href="#opacity" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Reduces the opacity (alpha values) by a multiplicative factor. This function may be useful to clean up semi-transparent edges before a <code>drop-shadow()</code>, but it is mostly intended for the image-modifying <code>filter()</code> function.</p>
+
+<p>The <code>opacity()</code> function can also be used as a support-switch: if you need to add a backdrop element for cases when filters aren’t supported (and therefore you can’t rely on desaturation or drop-shadow or blurring to guarantee good contrast), you can make that extra backdrop invisible with <code>opacity(0)</code> when filters <em>are</em> supported.  For example, see Taylor Hunt’s post <a href="https://codepen.io/tigt/post/blurred-background-image-with-fallback">“Filtered background with fallback for legibility”</a>.</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code><em>relative-amount</em></code> is either a number or a percentage, and cannot be negative.</p>
+</li>
+<li>
+<p>A <code><em>relative-amount</em></code> of 1 or 100% is equivalent to <code>filter: none</code> in transitions.</p>
+</li>
+<li>
+<p>As currently defined in the specs, values greater than 1 or 100% don’t have an effect, so it can only be used to <em>reduce</em> opacity, not increase it (<a href="https://github.com/w3c/fxtf-drafts/issues/178">which is a shame</a>).</p>
+</li>
+</ul>
+</div>
+
+</dd>
+<dt id="saturate"><code>saturate(<em>relative-amount</em>)</code><a href="#saturate" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Reduces or increases the saturation of colors, while preserving luminance.</p>
+
+<p>Equivalent to an <code>&lt;feColorMatrix&gt;</code> with <code>saturate</code> type.</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code><em>relative-amount</em></code> is either a number or a percentage, and cannot be negative.</p>
+</li>
+<li>
+<p>A <code><em>relative-amount</em></code> of 1 or 100% is equivalent to <code>filter: none</code> in transitions.</p>
+</li>
+<li>
+<p>Values less than 1 or 100% <em>reduce</em> saturation (0% will be complete grayscale), while greater values <em>increase</em> saturation.</p>
+</li>
+</ul>
+</div>
+
+</dd>
+<dt id="sepia"><code>sepia(<em>extent</em>)</code><a href="#sepia" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Converts an image to grayscale, then applies a brownish-yellow tint.  Values with equal luminance in the original end up with the same final color.</p>
+
+<p>Equivalent to an <code>&lt;feColorMatrix&gt;</code> with a specific <code>matrix</code>.</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code><em>extent</em></code> is either a number or a percentage, and cannot be negative.</p>
+</li>
+<li>
+<p>An <code><em>extent</em></code> of 1 or 100% (or any value greater than 1 or 100%) converts the image to a pure duotone sepia image.</p>
+</li>
+<li>
+<p>An <code><em>extent</em></code> of 0 is equivalent to <code>filter: none</code> in transitions.</p>
+</li>
+<li>
+<p>An <code><em>extent</em></code> between 0 and 1 creates a linear interpolation between the original color and the sepia-toned result color for that luminance level.</p>
+</li>
+</ul>
+</div>
+
+</dd>
+</dl>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

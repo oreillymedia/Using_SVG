@@ -62,7 +62,15 @@
     </div>
     <h2 id="list">Extras, by Chapter<a href="#list" class="hash-link" aria-label="Permalink">#</a></h2>
     <p><i>(Links will be added once content is posted)</i>:</p>
-    <ol class="columns directory">
+    <style>
+      .nested-list-headings li {
+        font-weight: bold;
+      }
+      .nested-list-headings li li {
+        font-weight: normal;
+      }
+    </style>
+    <ol class="columns directory nested-list-headings">
       <li>Graphics from Vectors: <i>An Overview of SVG</i>
         <ul>
           <li><a href="ch01-HTML-syntax.html">“HTML Syntax, Lazy or Long”</a>: Explaining the elements, attributes, and syntax details of our boilerplate inline SVG example.</li>
@@ -152,7 +160,7 @@
       </li>
       <li>Playing with Pixels: <i> Filters and Blend Modes</i>
         <ul>
-          <li><a>“Making the Wave”</a></li>
+          <li><a href="ch16-feTurbulence.html">“Making the Wave”</a>: SVG <code>&lt;feTurbulence&gt;</code> and <code>&lt;feDisplacementMap&gt;</code> create wave-like distortion effects from mathematical parameters. What do the numbers mean?</li>
         </ul>
       </li>
       <li>Beyond the Visible: <i>Metadata for Accessibility and Added Functionality</i>

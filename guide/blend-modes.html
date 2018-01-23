@@ -5,6 +5,17 @@
   <title>Blend Modes Reference
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  
+  <meta name="twitter:title" property="og:title" 
+        content="Blend Modes Reference — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="A guide to the blending effects you can use in CSS properties and SVG filters. Part of the supplementary material for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -17,15 +28,110 @@
   </header>
   <main>
     <h1>Blend Modes</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
     <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+      
+<p>The blend modes are keywords that define formulas for combining two colors.  They are calculated pixel-by-pixel for two overlapping graphic layers.</p>
+
+<p>Blending is defined as a combination of a top layer (source) and a backdrop.  The backdrop may have been generated from multiple lower layers, after blending them together as required.</p>
+
+<p>Blend modes are used in the <code>&lt;feBlend&gt;</code> filter operation, and in the <code>mix-blend-mode</code> and <code>background-blend-mode</code> CSS properties.</p>
+<ul>
+<li>
+<p>For <code>&lt;feBlend&gt;</code>, <code>in</code> is the source and <code>in2</code> is the backdrop.</p>
+</li>
+<li>
+<p>For <code>mix-blend-mode</code>, the backdrop is the accumulation of all lower layers of elements in the branch of the layout tree defined by the nearest ancestor that is isolated (according to the <code>isolation</code> CSS property).</p>
+</li>
+<li>
+<p>For <code>background-blend-mode</code>, the backdrop is the accumulation of all lower layers of background images and the solid background color.</p>
+</li>
+</ul>
+
+<p>The blending calculation has two steps:</p>
+
+<ul>
+<li>
+<p>First, the two color values (RGB channels) for each pixel are combined using the formula defined by the chosen mode.</p>
+</li>
+<li>
+<p>Second, that result is scaled by the alpha level (opacity) of the layers, and recombined with the original colors.  Transparency in the backdrop reduces the impact of the blended color, replacing it with the original color from the top layer.  Transparency in the top layer lets the back layer show through.  If both layers are opaque, there is no scaling, and the final result is the result from the first step.</p>
+</li>
+</ul>
+      
+<p>This means that if one layer is completely transparent at any point, the final result for that pixel will be the color of the other layer.</p>
+      
+<p>For <code>&lt;feBlend&gt;</code>, the results of the color calculations depend on the <code>color-interpolation-filters</code> property.  For the CSS properties, color interpolation uses the video card’s working color space, which is usually <code>sRGB</code> but could be a more extensive color space (on newer monitors).</p>
+
+<p>The following alphabetical list describes how to compute the blended color for each mode, in qualitative terms, assuming both layers are opaque.  The exact formulas can be found in the <a href="https://drafts.fxtf.org/compositing-1/">Compositing and Blendling specification</a>.</p>
     </div>
+    
+<dl class="columns">
+<dt id="color"><code>color</code><a href="#color" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Constructs a new color that has the hue and saturation of the top layer but the “luminosity” (which is like luminance, but uses a different formula) of the backdrop.</p>
+</dd>
+<dt id="color-burn"><code>color-burn</code><a href="#color-burn" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>“Under-exposes” the backdrop according to the darkness of the top layer (like a photograph that didn’t get enough light). The blended color is the result of scaling down the color from the backdrop, in each channel (R, G, and B), such that it will never be greater than that channel’s value from the top layer.  (It’s called <em>burn</em>, even though it makes things darker, because in film photography, you create this effect by focusing extra light on the final print.)</p>
+</dd>
+<dt id="color-dodge"><code>color-dodge</code><a href="#color-dodge" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>“Over-exposes” the backdrop according to the lightness of the top layer (like a photograph that had too much light for the film). The color from the backdrop is scaled up in each channel (R, G, and B) such that it will never be less than that channel’s value from the top layer.</p>
+</dd>
+<dt id="darken"><code>darken</code><a href="#darken" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Constructs a new color that uses the minimum value for each channel (R, G, and B) from the top layer and the backdrop.</p>
+</dd>
+<dt id="difference"><code>difference</code><a href="#difference" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Constructs a new color where the value for each channel (R, G, and B) is the absolute difference between the values for that channel in top layer versus the backdrop.</p>
+</dd>
+<dt id="exclusion"><code>exclusion</code><a href="#exclusion" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Creates an effect similar to difference but not as extreme. For each channel (R, G, and B), the new value is the sum of the values from the two layers minus twice their product (after converting percentages to values from 0 to 1).</p>
+</dd>
+<dt id="hard-light"><code>hard-light</code><a href="#hard-light" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Creates the effect of shining a bright light in the pattern of the top layer onto the backdrop, where this is the <em>only</em> light shining on the backdrop (if the top layer is opaque) and the backdrop reflects bright light. For each channel (R, G, and B) in the top layer, it is equivalent to either <code>multiply</code> or <code>screen</code>, depending on whether that channel is less than or greater than 50%.</p>
+</dd>
+<dt id="hue"><code>hue</code><a href="#hue" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Adjusts the color of the backdrop to match the hue of the top layer, preserving its saturation and “luminosity”.  However, the formulas are different from both HSL colors and hue-rotate filters. Also, if the top layer has zero saturation (pure white/gray/black) then the blended color is desaturated, too.</p>
+</dd>
+<dt id="lighten"><code>lighten</code><a href="#lighten" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Constructs a new color that uses the maximum value for each channel (R, G, and B) from the top layer and the backdrop.</p>
+</dd>
+<dt id="luminosity"><code>luminosity</code><a href="#luminosity" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Adjusts the color of the backdrop to match the “luminosity” (which is like luminance, but the formulas are different) of the top layer.</p>
+</dd>
+<dt id="multiply"><code>multiply</code><a href="#multiply" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Creates the effect of light passing through two colored slides stacked together. For each channel (R, G, and B), the blended color is the values from the two layers multiplied together, after converting percentages to values from 0 to 1. The final blended value (the difference from black) is always equal or less than the starting values.</p>
+</dd>
+<dt id="normal"><code>normal</code><a href="#normal" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>uses the color of the top layer as the blended color (when is then scaled according to the top-layer’s transparency).</p>
+</dd>
+<dt id="overlay"><code>overlay</code><a href="#overlay" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Creates an effect equivalent to <code>hard-light</code>, but with the layers swapped.  This means <code>multiply</code> if the <em>bottom</em> layer is dark (for each channel independently) and <code>screen</code> if it is bright.</p>
+</dd>
+<dt id="saturation"><code>saturation</code><a href="#saturation" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Adjusts the color of the backdrop to match the saturation of the top layer; however, the saturation formulas are different from HSL colors and filters.</p>
+</dd>
+<dt id="screen"><code>screen</code><a href="#screen" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Creates the effect of shining two different image projections onto the same screen.  For each channel (R, G, and B), the difference between the layer values and 100% are multiplied together.  The final values are always the same or <em>increased</em> from the originals (the difference from <em>white</em> is the same or reduced).</p>
+</dd>
+<dt id="soft-light"><code>soft-light</code><a href="#soft-light" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Creates the effect of shining light in the pattern of the top layer on to an already reasonably-well lit version of the backdrop. The colors of the bottom layer are shifted towards the colors from the top layer, with the exact formulas changing according to the brightness of both layers.</p>
+</dd>
+</dl>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

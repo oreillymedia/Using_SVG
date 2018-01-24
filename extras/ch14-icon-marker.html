@@ -5,6 +5,18 @@
   <title>Re-purposing Icons as Markers
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Re-purposing Icons as Markers — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Turning an existing symbol into a marker is a matter of copy and paste, plus a few attributes. Just watch out for the browser quirks. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,96 @@
   </header>
   <main>
     <h1>Re-purposing Icons as Markers</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+
+<p>In the book, we discuss how the <code>viewBox</code> attribute on the <code>&lt;marker&gt;</code> element can be used to change the position of the marker’s origin, and therefore of the point that gets aligned with the exact vertex (corner-point) of the marked shape.</p>
+
+<p>A marker’s <code>viewBox</code> can also be used in the same way as any other SVG <code>viewBox</code>, to create a local scaled coordinate system.  This is particularly useful when reusing icons that you already have, such as in a <code>&lt;symbol&gt;</code> definition.</p>
+
+<p>However, pre-defined symbol icons aren’t likely to have been defined in such a way that the origin is at meaningful point for creating a marker.  You can change the reference point of the <code>&lt;marker&gt;</code> element, separately from the <code>viewBox</code> origin, using <code>refX</code> and <code>refY</code>.</p>
+
+<p>In sum, to convert a <code>&lt;symbol&gt;</code> to a marker:</p>
+
+<ul>
+<li>
+<p>The <code>viewBox</code> on your <code>&lt;marker&gt;</code> should match the <code>viewBox</code> from the original <code>&lt;symbol&gt;</code>.</p>
+</li>
+<li>
+<p>The <code>refX</code> and <code>refY</code> values should match the “pin point” of your icon—the point that you want to align with the corner or cap of the path.  The values are measured in the <em>scaled</em> <code>viewBox</code> coordinate system.</p>
+</li>
+</ul>
+
+<p><a data-type="xref" href="#heart-markers-figure">Figure 14-X1</a> shows the result of adapting our card-suit heart icon to create a Valentine worthy of a besotted 11-year-old.  Heart-shaped markers are positioned around a heart shape.</p>
+
+<figure class="page-float"><div id="heart-markers-figure" class="figure">
+<img src="../ch14-markers-files/heart-markers.png" alt="A copy of the heart icon in dark pink with a thick stroke in light pink.  Positioned mostly inside that stroke are additional hearts in red, at the top and sides of the lobes, and at the points where the two sides of the heart join together." width="250"/>
+<figcaption><span class="label">Figure 14-X1. </span>A heart-marked valentine heart</figcaption>
+</div></figure>
+
+<p>For reference, this is the <code>&lt;symbol&gt;</code> version of the icon, from <a data-type="xref" href="ch10.html#reuse-chapter">Chapter 10</a>:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;symbol</code> <code class="na">viewBox=</code><code class="s">"0 0 20 20"</code> <code class="na">id=</code><code class="s">"heart"</code>
+     <code class="na">style=</code><code class="s">"overflow: visible"</code><code class="nt">&gt;</code>
+    <code class="nt">&lt;title&gt;</code>Heart<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;path</code> <code class="na">d=</code><code class="s">"M10,6 Q10,0 15,0T20,6Q20,10 15,14</code>
+<code class="s">             T10,20Q10,18 5,14T0,6Q0,0 5,0T10,6Z"</code> <code class="nt">/&gt;</code>
+<code class="nt">&lt;/symbol&gt;</code></pre>
+
+<p>The <code>viewBox</code> of the marker will be set to the same 20×20 scale, with a top-left origin, that we used for the original icon.  But the top-left corner isn’t a good reference point for the marker, since it is outside of the heart shape.  Instead, we’ll use <code>refX</code> and <code>refY</code> to set the reference point to the center of the icon.</p>
+
+<p>You’ll usually also want to define the marker’s dimensions, using <code>markerWidth</code> and <code>markerHeight</code>; by default, your <code>viewBox</code> will scale to fit a square three times as wide as the stroke on the shape you’re marking.</p>
+
+<p>In <a data-type="xref" href="#heart-markers-figure">Figure 14-X1</a>, the markers are scaled to fit <em>within</em> a thick stroke on the shape.  With the default <code>strokeWidth</code> value for <code>markerUnits</code>, that means that <code>markerWidth</code> and <code>markerHeight</code> are slightly less than 1.</p>
+
+<p><a data-type="xref" href="#heart-markers-example">Example 14-X1</a> gives the code.</p>
+<div id="heart-markers-example" data-type="example">
+<h5><span class="label">Example 14-X1. </span>Using icons as markers</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code> <code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code> <code class="na">xml:lang=</code><code class="s">"en"</code>
+     <code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code>
+     <code class="na">width=</code><code class="s">"250px"</code> <code class="na">height=</code><code class="s">"250px"</code> <code class="na">viewBox=</code><code class="s">"-2 -2 24 24"</code><code class="nt">&gt;</code>
+    <code class="nt">&lt;title&gt;</code>Heart-shaped Markers on a Heart Shape<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;marker</code> <code class="na">id=</code><code class="s">"heart-marker"</code> <code class="na">viewBox=</code><code class="s">"0 0 20 20"</code>
+            <code class="na">markerHeight=</code><code class="s">"0.9"</code> <code class="na">markerWidth=</code><code class="s">"0.9"</code> <code class="na">orient=</code><code class="s">"auto"</code>
+            <code class="na">refX=</code><code class="s">"10"</code> <code class="na">refY=</code><code class="s">"10"</code>
+            <code class="na">fill=</code><code class="s">"darkRed"</code> <code class="na">stroke=</code><code class="s">"none"</code><code class="nt">&gt;</code>
+        <code class="nt">&lt;path</code> <code class="na">id=</code><code class="s">"heart"</code>
+              <code class="na">d=</code><code class="s">"M10,6 Q10,0 15,0T20,6Q20,10 15,14</code>
+<code class="s">                 T10,20Q10,18 5,14T0,6Q0,0 5,0T10,6Z"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;/marker&gt;</code>
+
+    <code class="nt">&lt;use</code> <code class="na">xlink:href=</code><code class="s">"#heart"</code> <code class="na">stroke-width=</code><code class="s">"4"</code>
+         <code class="na">fill=</code><code class="s">"indianRed"</code> <code class="na">stroke=</code><code class="s">"lightCoral"</code>
+         <code class="na">marker-mid=</code><code class="s">"url(#heart-marker)"</code> <code class="nt">/&gt;</code>
+
+<code class="nt">&lt;/svg&gt;</code></pre></div>
+
+<p>When reusing shapes like this, be careful not to create infinite loops: if the <code>&lt;marker&gt;</code> contains any content that is styled to use the same marker, it won’t be drawn at all.  This is why <a data-type="xref" href="#heart-markers-example">Example 14-X1</a> defined the shape within the <code>&lt;marker&gt;</code> and reused it in the main drawing, instead of the reverse.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>Microsoft Edge and Internet Explorer’s loop error handling is overly strict.  Neither browser will draw the markers in <a data-type="xref" href="#heart-markers-example">Example 14-X1</a> as it is written, or even if the heart path is defined separately (in a <code>&lt;defs&gt;</code>) and then reused in both the marker and the main figure.</p>
+</div>
+
+<p>In order to get the markers to be drawn in Microsoft browsers, the marker and the shape it is marking need to be completely independent.  In other words, for <a data-type="xref" href="#heart-markers-example">Example 14-X1</a>, you need to copy &amp; past the <code>&lt;path&gt;</code> element in the <code>&lt;marker&gt;</code> separate from the one that is used (or reused) to draw the main shape.  The result would be the same as <a data-type="xref" href="#heart-markers-figure">Figure 14-X1</a> in other browsers; <a data-type="xref" href="#heart-markers-MS-friendly-figure">Figure 14-X2</a> shows the result in MS Edge.</p>
+
+<figure class="page-float"><div id="heart-markers-MS-friendly-figure" class="figure">
+<img src="../ch14-markers-files/heart-markers-MS-friendly.MSEdge.png" alt="Another version of the heart-marked heart, identical to the last except that the marker on the dimple is sideways instead of angled and the marker on the bottom point is upside-down." width="250"/>
+<figcaption><span class="label">Figure 14-X2. </span>A heart-marked valentine heart, in MS Edge, after adjusting the code to satisfy Microsoft browsers</figcaption>
+</div></figure>
+
+<p><a data-type="xref" href="#heart-markers-figure">Figure 14-X1</a> (from Firefox) and <a data-type="xref" href="#heart-markers-MS-friendly-figure">Figure 14-X2</a> (from MS Edge) should serve as one final warning about the complexity of stroke and marker styling: some of the markers end up with different orientations.</p>
+
+<p>The stroke line joins at the inside and outside points of the shape are both 180° U-turns.  As a result, the strokes at both points are both cropped flat against the point of the shape.  The markers centered over those points protrude outside the stroke.  And the two browser renderings don’t agree on their orientations.</p>
+
+<p>The fact there is a marker at all on the inner point—which is where the start and end of the <code>&lt;path&gt;</code> meet—is somewhat unexpected, because the markers were assigned with the <code>marker-mid</code> presentation attribute.  The start and end points should therefore not be marked.</p>
+
+<p>The marker that is drawn at that point is for the line join between the final curve and the zero-length line created by the <code>Z</code> close path command.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>This unexpected marker is one of the main reasons that SVG 2 introduces a new <code>Z</code> syntax to define a curve that automatically closes the path.  Unfortunately, that new syntax is not yet supported in browsers.</p>
+</div>
+
+<p>The different browsers orient this final marker differently.  A zero-length line does not have a defined angle, and the browsers differ in how they determine the orientation in that case.  SVG 2 clarifies that the browser should skip over zero-length lines until it reaches a line with a valid stroke angle, but the browsers have not yet all caught up.</p>
+
+<p>The bottom point doesn’t have a zero-length line. But it does have two vertical tangent angles, for the incoming and outgoing curves.  Half-way between those two vertical lines is going to be a horizontal line, but the browsers can’t decide whether it is facing up or facing down.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

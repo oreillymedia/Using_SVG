@@ -235,12 +235,18 @@ ol.directory > li {
 }
 
 /* Latex equations & fallback */
-.latex-code:not(.rendered) { display: none; }
-.latex-code.rendered + .latex-fallback { display: none; }
 figure[data-type="equation"] {
   border-style: none;
   background-color: rgba(50%, 75%, 100%, 0.3);
   padding-top: 1rem;
   padding-bottom: 1rem;
+  margin: 0;
   overflow-x: auto;
+}
+.columns figure[data-type="equation"] {
+  padding: 1rem 0.5rem;
+}
+.latex-fallback { 
+  display: block;
+  max-width: 100%;
 }

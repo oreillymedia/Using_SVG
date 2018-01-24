@@ -5,6 +5,18 @@
   <title>Borrowing Ready-Made Widgets from HTML
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Borrowing Ready-Made Widgets from HTML — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="HTML input elements provide accessible interfaces that can maintain state without scripting. All they need is a new coat of SVG. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,292 @@
   </header>
   <main>
     <h1>Borrowing Ready-Made Widgets from HTML</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+
+<p>Doing interactivity <em>right</em> isn’t easy on the web.  You need to consider every possible way a user could interact with your website: keyboard, mouse, touch, voice control, screen reader, and more.  Wherever possible, the easiest approach is to use native HTML input elements, and let the browser developers handle the accessibility.</p>
+
+<p>But SVG doesn’t have native input elements (other than simple links). Does that mean you need to build everything yourself with ARIA attributes and multiple event listeners for different input types?</p>
+
+<p>Not necessarily.</p>
+
+<p>With inline SVG (or even with <code>&lt;foreignObject&gt;</code> in standalone SVG), you can include hidden HTML input elements in the same document as your graphic, and use them to control your SVG.  The custom SVG graphics <em>appear</em> to be the interactive widgets, but the hidden HTML elements are controlling the state, managing the keyboard inputs from the user, and presenting the correct values to assistive technology like screen readers and voice control interfaces.</p>
+
+<p>The simplest version of this is the “checkbox hack”, where you create a custom-designed checkbox (or radio button) whose appearance is controlled by the <code>:checked</code> pseudoclass on a clipped sibling HTML input.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>Some older Android browsers (and even recent ones on BlackBerry) do not support dynamic styling with <code>:checked</code>.  Other very old browsers do not automatically treat a click on a <code>&lt;label&gt;</code> as a click on its associated element.  Depending on your browser support requirements, you may need some browser-sniffing hacks to make sure that the basic HTML input remains visible on these browsers—or on any browsers that don’t support inline SVG.</p>
+
+<p>This code works on at least Android 4.0 and beyond, and Internet Explorer 9+.</p>
+</div>
+
+<p>In its purest form, the checkbox hack is used to make prettier checkboxes and radio buttons.  You hide the default input, and add your own (inline SVG) checkbox to the input’s <code>&lt;label&gt;</code>.</p>
+
+<p>The basic markup might look something like this:</p>
+
+<pre data-type="programlisting" data-code-language="html"><code class="nt">&lt;input</code> <code class="na">type=</code><code class="s">"checkbox"</code>
+       <code class="na">class=</code><code class="s">"hidden-check"</code> <code class="na">id=</code><code class="s">"confirmation"</code> <code class="nt">/&gt;</code>
+<code class="nt">&lt;label</code> <code class="na">for=</code><code class="s">"confirmation"</code><code class="nt">&gt;</code>
+    <code class="nt">&lt;svg</code> <code class="na">aria-hidden=</code><code class="s">"true"</code><code class="nt">&gt;</code>
+        <code class="nt">&lt;use</code> <code class="na">xlink:href=</code><code class="s">"#checkbox-outline"</code> <code class="nt">/&gt;</code>
+        <code class="nt">&lt;use</code> <code class="na">class=</code><code class="s">"visible-check"</code>
+             <code class="na">xlink:href=</code><code class="s">"#checkbox-checkmark"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;/svg&gt;</code>
+    <code class="nt">&lt;span</code> <code class="na">class=</code><code class="s">"label-text"</code><code class="nt">&gt;</code>
+        <code class="nt">&lt;strong&gt;</code>Yes,<code class="nt">&lt;/strong&gt;</code> I agree
+        to the Terms <code class="ni">&amp;amp;</code> Conditions
+    <code class="nt">&lt;/span&gt;</code>
+<code class="nt">&lt;/label&gt;</code></pre>
+
+<p>The SVG is <code>aria-hidden</code> because it has no meaning of its own: it only duplicates the meaning of the hidden checkbox.</p>
+
+<p>The relevant CSS hides the real checkbox, and then styles the SVG checkbox according to the <code>:checked</code> state:</p>
+
+<pre data-type="programlisting" data-code-language="css"><code class="nc">.hidden-check</code> <code class="p">{</code>
+    <code class="k">position</code><code class="o">:</code> <code class="nb">absolute</code><code class="p">;</code>
+    <code class="k">clip</code><code class="o">:</code> <code class="n">rect</code><code class="p">(</code><code class="m">0</code><code class="o">,</code><code class="m">0</code><code class="o">,</code> <code class="m">1px</code><code class="o">,</code><code class="m">1px</code><code class="p">);</code>
+<code class="p">}</code>
+<code class="nc">.hidden-check</code> <code class="o">+</code> <code class="nt">label</code> <code class="nc">.visible-check</code> <code class="p">{</code>
+    <code class="k">opacity</code><code class="o">:</code> <code class="m">0</code><code class="p">;</code>
+    <code class="k">transition</code><code class="o">:</code> <code class="n">opacity</code> <code class="m">0.3s</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nc">.hidden-check</code><code class="nd">:checked</code> <code class="o">+</code> <code class="nt">label</code> <code class="nc">.visible-check</code> <code class="p">{</code>
+    <code class="k">opacity</code><code class="o">:</code> <code class="m">1</code><code class="p">;</code>
+<code class="p">}</code></pre>
+
+<p>When the checkbox is selected—by keyboard activation or by clicking or tapping on the label—the SVG checkmark will fade into view.  Since the SVG itself is <em>part</em> of the <code>&lt;label&gt;</code>, clicking or tapping on the visible checkbox will have the same effect, toggling the checkmark on and off.</p>
+
+<p>The <code>&lt;input&gt;</code> checkbox itself is hidden—while still being interactive—using absolute positioning and the <code>clip</code> property.  Visually hiding an interactive element is the only recommended use for this otherwise deprecated property.  (Alternatively, you can use <code>opacity: 0.01</code>.  For <em>maximum</em> screen-reader compatibility, don’t make it completely transparent or offscreen.)</p>
+
+    <p><a data-type="xref" href="#checkbox-example">Example 18-X1</a> gives a complete set of styles and SVG markup, including <code>:focus</code> styles. <a data-type="xref" href="#checkbox-figure">Figure 18-X1</a> shows what our checkbox looks like when it is both focused and checked—or more precisely, it shows what the custom label looks like when the hidden real checkbox is both focused and checked.  <a href="../ch18-interaction-files/checkbox.html" target="_blank">View the live example in your browser.</a> </p>
+
+<figure class="page-float"><div id="checkbox-figure" class="figure">
+<img src="../ch18-interaction-files/checkbox.png" alt="The words 'Yes, I agree to the Terms and Conditions' beside a checkbox drawn as a square with inwardly-curved sides, and a large green checkmark overtop and extending from the outline.  The checkbox is surrounded by a dotted blue focus outline."/>
+<figcaption><span class="label">Figure 18-X1. </span>A custom SVG checkbox in an HTML form</figcaption>
+</div></figure>
+<div id="checkbox-example" data-type="example">
+<h5><span class="label">Example 18-X1. </span>Creating a custom checkbox with hidden HTML, inline SVG, and CSS pseudoclasses</h5>
+
+<pre data-type="programlisting" data-code-language="html"><code class="cp">&lt;!DOCTYPE html&gt;</code>
+<code class="nt">&lt;html</code> <code class="na">lang=</code><code class="s">"en"</code><code class="nt">&gt;</code>
+<code class="nt">&lt;head&gt;</code>
+    <code class="nt">&lt;meta</code> <code class="na">charset=</code><code class="s">"utf-8"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;title&gt;</code>Custom Accessible SVG Checkbox<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;style&gt;</code>
+<code class="nt">body</code> <code class="p">{</code>
+    <code class="k">font-size</code><code class="o">:</code> <code class="m">250%</code><code class="p">;</code>
+    <code class="k">font-family</code><code class="o">:</code> <code class="nb">sans-serif</code><code class="p">;</code>
+    <code class="k">color</code><code class="o">:</code> <code class="n">darkOrchid</code><code class="p">;</code>
+<code class="p">}</code>
+
+<code class="nc">.hidden-check</code> <code class="p">{</code>
+    <code class="k">position</code><code class="o">:</code> <code class="nb">absolute</code><code class="p">;</code>
+    <code class="k">clip</code><code class="o">:</code> <code class="n">rect</code><code class="p">(</code><code class="m">0</code><code class="o">,</code><code class="m">0</code><code class="o">,</code> <code class="m">1px</code><code class="o">,</code><code class="m">1px</code><code class="p">);</code>
+<code class="p">}</code>
+<code class="nt">label</code> <code class="o">&gt;</code> <code class="nt">svg</code><code class="o">,</code> <code class="nt">label</code> <code class="o">&gt;</code> <code class="nc">.label-text</code> <code class="p">{</code>
+    <code class="k">display</code><code class="o">:</code> <code class="nb">inline-block</code><code class="p">;</code>
+    <code class="k">vertical-align</code><code class="o">:</code> <code class="nb">middle</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nt">label</code> <code class="o">&gt;</code> <code class="nt">svg</code> <code class="p">{</code>
+    <code class="k">width</code><code class="o">:</code> <code class="m">1em</code><code class="p">;</code>
+    <code class="k">height</code><code class="o">:</code> <code class="m">1em</code><code class="p">;</code>
+    <code class="k">margin</code><code class="o">:</code> <code class="m">0</code> <code class="m">0.5em</code><code class="p">;</code>
+    <code class="k">overflow</code><code class="o">:</code> <code class="nb">visible</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nt">label</code> <code class="o">&gt;</code> <code class="nc">.label-text</code> <code class="p">{</code>
+    <code class="k">max-width</code><code class="o">:</code> <code class="n">calc</code><code class="p">(</code><code class="m">100%</code> <code class="o">-</code> <code class="m">3em</code><code class="p">);</code>
+<code class="p">}</code>
+<code class="nc">.hidden-check</code> <code class="o">+</code> <code class="nt">label</code> <code class="nc">.visible-check</code> <code class="p">{</code>
+    <code class="k">opacity</code><code class="o">:</code> <code class="m">0</code><code class="p">;</code>
+    <code class="k">transition</code><code class="o">:</code> <code class="n">opacity</code> <code class="m">0.3s</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nc">.hidden-check</code><code class="nd">:checked</code> <code class="o">+</code> <code class="nt">label</code> <code class="nc">.visible-check</code> <code class="p">{</code>
+    <code class="k">opacity</code><code class="o">:</code> <code class="m">1</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nc">.hidden-check</code><code class="nd">:focus</code> <code class="p">{</code>
+    <code class="k">outline</code><code class="o">:</code> <code class="nb">none</code><code class="p">;</code>
+<code class="p">}</code>
+<code class="nc">.hidden-check</code><code class="nd">:focus</code> <code class="o">+</code> <code class="nt">label</code> <code class="o">&gt;</code> <code class="nt">svg</code> <code class="p">{</code>
+    <code class="k">outline</code><code class="o">:</code> <code class="nb">dotted</code> <code class="n">deepSkyBlue</code><code class="p">;</code>
+    <code class="k">outline-offset</code><code class="o">:</code> <code class="m">0.1em</code><code class="p">;</code>
+<code class="p">}</code>
+    <code class="nt">&lt;/style&gt;</code>
+<code class="nt">&lt;/head&gt;</code>
+<code class="nt">&lt;body&gt;</code>
+    <code class="nt">&lt;svg</code> <code class="na">class=</code><code class="s">"defs-only"</code> <code class="na">width=</code><code class="s">"0"</code> <code class="na">height=</code><code class="s">"0"</code>
+         <code class="na">aria-hidden=</code><code class="s">"true"</code> <code class="na">focusable=</code><code class="s">"false"</code><code class="nt">&gt;</code>
+        <code class="nt">&lt;symbol</code> <code class="na">id=</code><code class="s">"checkbox-outline"</code> <code class="na">viewBox=</code><code class="s">"0 0 10 10"</code>
+                <code class="na">overflow=</code><code class="s">"visible"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;path</code> <code class="na">stroke=</code><code class="s">"currentColor"</code> <code class="na">fill=</code><code class="s">"none"</code>
+                  <code class="na">d=</code><code class="s">"M1,1 Q5,2 9,1 Q8,5 9,9</code>
+<code class="s">                          Q5,8 1,9 Q2,5 1,1Z"</code> <code class="nt">/&gt;</code>
+        <code class="nt">&lt;/symbol&gt;</code>
+        <code class="nt">&lt;symbol</code> <code class="na">id=</code><code class="s">"checkbox-checkmark"</code> <code class="na">viewBox=</code><code class="s">"0 0 10 10"</code>
+                <code class="na">overflow=</code><code class="s">"visible"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;path</code> <code class="na">stroke=</code><code class="s">"seaGreen"</code> <code class="na">fill=</code><code class="s">"none"</code>
+                  <code class="na">stroke-width=</code><code class="s">"2px"</code> <code class="na">stroke-linecap=</code><code class="s">"round"</code>
+                  <code class="na">filter=</code><code class="s">"drop-shadow(0.5px 0.5px 0.3px</code>
+<code class="s">                            rgba(0,0,0,0.5))"</code>
+                  <code class="na">d=</code><code class="s">"M2,5 L5,8 Q6,4 9,2"</code> <code class="nt">/&gt;</code>
+        <code class="nt">&lt;/symbol&gt;</code>
+    <code class="nt">&lt;/svg&gt;</code>
+    <code class="nt">&lt;form&gt;</code>
+        <code class="c">&lt;!-- The rest of the form goes here --&gt;</code>
+        <code class="nt">&lt;input</code> <code class="na">class=</code><code class="s">"hidden-check"</code> <code class="na">type=</code><code class="s">"checkbox"</code>
+               <code class="na">id=</code><code class="s">"confirmation"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;label</code> <code class="na">for=</code><code class="s">"confirmation"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;svg</code> <code class="na">aria-hidden=</code><code class="s">"true"</code><code class="nt">&gt;</code>
+                <code class="nt">&lt;use</code> <code class="na">xlink:href=</code><code class="s">"#checkbox-outline"</code> <code class="nt">/&gt;</code>
+                <code class="nt">&lt;use</code> <code class="na">class=</code><code class="s">"visible-check"</code>
+                     <code class="na">xlink:href=</code><code class="s">"#checkbox-checkmark"</code> <code class="nt">/&gt;</code>
+            <code class="nt">&lt;/svg&gt;</code>
+            <code class="nt">&lt;span</code> <code class="na">class=</code><code class="s">"label-text"</code><code class="nt">&gt;</code>
+                <code class="nt">&lt;strong&gt;</code>Yes,<code class="nt">&lt;/strong&gt;</code> I agree
+                to the Terms <code class="ni">&amp;amp;</code> Conditions
+            <code class="nt">&lt;/span&gt;</code>
+        <code class="nt">&lt;/label&gt;</code>
+        <code class="c">&lt;!-- Submit button goes here --&gt;</code>
+    <code class="nt">&lt;/form&gt;</code>
+<code class="nt">&lt;/body&gt;</code>
+<code class="nt">&lt;/html&gt;</code></pre></div>
+
+<p>The same approach can be used to create larger interface switches, separate from a form input.  For example, we could use HTML radio buttons to finally create the optimal interactive semantics for our <code>stroke-linejoin</code> demo (which was last updated in <a data-type="xref" href="../ch18-interaction-files/">Example 18-7</a>).</p>
+
+<p>To recap:</p>
+
+<ul>
+<li>
+<p>We have a demo SVG graphic, and three options for how to style it (round, bevel, or miter line joins).</p>
+</li>
+<li>
+<p>Since the three options are mutually exclusive (only one can be active at a time), this is logically a radio button control.</p>
+</li>
+<li>
+<p>The normal keyboard behavior of radio buttons is that you use Tab to focus or un-focus the group as a whole, and use arrow keys to cycle between the options.</p>
+</li>
+<li>
+<p>However, our previous demos used SVG links and <code>:target</code> styles to apply the interaction; each link was a separate tab stop.</p>
+</li>
+<li>
+<p>We couldn’t reliably use the <code>focus()</code> method to listen for arrow keys and control focus ourself, because <code>focus()</code> doesn’t have cross-browser support on SVG elements.</p>
+</li>
+</ul>
+
+<p><a data-type="xref" href="#stroke-linejoin-interactive-radio-button-example">Example 18-X2</a> converts our all-SVG demo into an HTML web page with inline SVG, controlled by HTML radio-button <code>&lt;input&gt;</code> elements.</p>
+
+<p>The SVG <code>&lt;text&gt;</code> labels have been replaced by HTML <code>&lt;label&gt;</code> elements below the inline SVG.  Each label element is matched to the corresponding <code>&lt;input&gt;</code> with the <code>for</code> attribute, which references the input’s <code>id</code> (<em>without</em> a <code>#</code> URL hash).</p>
+
+<p><a data-type="xref" href="#stroke-linejoin-interactive-radio-button-figure">Figure 18-X2</a> shows the web page in action.  <a href="../ch18-interaction-files/stroke-linejoin-interactive-radio-button.html" target="_blank">View the live example in your browser.</a> </p>
+
+<figure class="page-float"><div id="stroke-linejoin-interactive-radio-button-figure" class="figure">
+<img src="../ch18-interaction-files/stroke-linejoin-interactive-radio-button.png" alt="In the middle of the figure, the same blue-and-purple cross shape as the previous demos. The corners of the strokes are trimmed with a bevel snipped-corner effect.  Above, the text instruction (Selecting one of the stroke-linejoin options will apply that effect to the sample shape).  Below, the words round, bevel, and miter. Bevel is written in a darker color and has an underline.  There is a dark outline rectangle around all three text labels."/>
+<figcaption><span class="label">Figure 18-X2. </span>Inline SVG controlled by hidden HTML radio buttons</figcaption>
+</div></figure>
+<div id="stroke-linejoin-interactive-radio-button-example" data-type="example">
+<h5><span class="label">Example 18-X2. </span>Using HTML radio buttons and :checked to switch SVG style options</h5>
+
+<pre data-type="programlisting" data-code-language="html"><code class="cp">&lt;!DOCTYPE html&gt;</code>
+<code class="nt">&lt;html</code> <code class="na">lang=</code><code class="s">"en"</code><code class="nt">&gt;</code>
+<code class="nt">&lt;head&gt;</code>
+    <code class="nt">&lt;meta</code> <code class="na">charset=</code><code class="s">"utf-8"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;title&gt;</code>HTML radio-buttons to control SVG styles<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;style&gt;</code>
+        <code class="nt">figure</code> <code class="p">{</code>
+            <code class="k">max-width</code><code class="o">:</code> <code class="m">100vh</code><code class="p">;</code>
+            <code class="k">padding</code><code class="o">:</code> <code class="m">0</code><code class="p">;</code>
+            <code class="k">margin</code><code class="o">:</code> <code class="m">1em</code> <code class="nb">auto</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nt">figcaption</code> <code class="p">{</code>
+            <code class="k">text-align</code><code class="o">:</code> <code class="nb">center</code><code class="p">;</code>
+            <code class="k">font-style</code><code class="o">:</code> <code class="nb">italic</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nt">svg</code> <code class="p">{</code>
+            <code class="k">display</code><code class="o">:</code> <code class="nb">block</code><code class="p">;</code>
+            <code class="k">margin</code><code class="o">:</code> <code class="m">1em</code> <code class="m">0</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nc">.shape</code> <code class="p">{</code>
+            <code class="k">fill</code><code class="o">:</code> <code class="n">deepSkyBlue</code><code class="p">;</code>
+            <code class="k">stroke</code><code class="o">:</code> <code class="n">blueViolet</code><code class="p">;</code>
+            <code class="k">stroke-width</code><code class="o">:</code> <code class="m">4px</code><code class="p">;</code>
+            <code class="k">stroke-opacity</code><code class="o">:</code> <code class="m">0</code><code class="o">.</code><code class="m">8</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nc">.option</code> <code class="p">{</code>
+            <code class="k">position</code><code class="o">:</code> <code class="nb">absolute</code><code class="p">;</code>
+            <code class="k">clip</code><code class="o">:</code> <code class="n">rect</code><code class="p">(</code><code class="m">0</code><code class="o">,</code><code class="m">0</code><code class="o">,</code> <code class="m">1px</code><code class="o">,</code><code class="m">1px</code><code class="p">);</code>
+        <code class="p">}</code>
+        <code class="nc">.option-set</code> <code class="p">{</code>
+            <code class="k">display</code><code class="o">:</code> <code class="nb">flex</code><code class="p">;</code>
+            <code class="k">text-align</code><code class="o">:</code> <code class="nb">center</code><code class="p">;</code>
+            <code class="k">justify-content</code><code class="o">:</code> <code class="n">space</code><code class="o">-</code><code class="n">around</code><code class="p">;</code>
+            <code class="k">padding</code><code class="o">:</code> <code class="m">1em</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nc">.option-label</code> <code class="p">{</code>
+            <code class="k">display</code><code class="o">:</code> <code class="nb">inline-block</code><code class="p">;</code> <code class="c">/* fallback for no flexbox */</code>
+            <code class="nb">flex</code><code class="o">-</code><code class="n">basis</code><code class="o">:</code> <code class="m">8em</code><code class="p">;</code>
+            <code class="k">color</code><code class="o">:</code> <code class="n">blueViolet</code><code class="p">;</code>
+            <code class="k">font</code><code class="o">:</code> <code class="m">20px</code> <code class="n">Consolas</code><code class="o">,</code> <code class="nb">monospace</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nf">#round</code><code class="nd">:checked</code> <code class="o">~</code> <code class="nt">svg</code> <code class="nc">.shape</code> <code class="p">{</code> <code class="k">stroke-linejoin</code><code class="o">:</code> <code class="n">round</code><code class="p">;</code> <code class="p">}</code>
+        <code class="nf">#bevel</code><code class="nd">:checked</code> <code class="o">~</code> <code class="nt">svg</code> <code class="nc">.shape</code> <code class="p">{</code> <code class="k">stroke-linejoin</code><code class="o">:</code> <code class="n">bevel</code><code class="p">;</code> <code class="p">}</code>
+        <code class="nf">#miter</code><code class="nd">:checked</code> <code class="o">~</code> <code class="nt">svg</code> <code class="nc">.shape</code> <code class="p">{</code> <code class="k">stroke-linejoin</code><code class="o">:</code> <code class="n">miter</code><code class="p">;</code> <code class="p">}</code>
+
+        <code class="nf">#round</code><code class="nd">:checked</code> <code class="o">~</code> <code class="nc">.option-set</code> <code class="nc">.option-label</code><code class="o">[</code><code class="nt">for</code><code class="o">=</code><code class="s2">"round"</code><code class="o">],</code>
+        <code class="nf">#bevel</code><code class="nd">:checked</code> <code class="o">~</code> <code class="nc">.option-set</code> <code class="nc">.option-label</code><code class="o">[</code><code class="nt">for</code><code class="o">=</code><code class="s2">"bevel"</code><code class="o">],</code>
+        <code class="nf">#miter</code><code class="nd">:checked</code> <code class="o">~</code> <code class="nc">.option-set</code> <code class="nc">.option-label</code><code class="o">[</code><code class="nt">for</code><code class="o">=</code><code class="s2">"miter"</code><code class="o">]</code> <code class="p">{</code>
+            <code class="k">color</code><code class="o">:</code> <code class="nb">indigo</code><code class="p">;</code>
+            <code class="k">text-decoration</code><code class="o">:</code> <code class="nb">underline</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nf">#round</code><code class="nd">:focus</code> <code class="o">~</code> <code class="nc">.option-set</code> <code class="nc">.option-label</code><code class="o">[</code><code class="nt">for</code><code class="o">=</code><code class="s2">"round"</code><code class="o">],</code>
+        <code class="nf">#bevel</code><code class="nd">:focus</code> <code class="o">~</code> <code class="nc">.option-set</code> <code class="nc">.option-label</code><code class="o">[</code><code class="nt">for</code><code class="o">=</code><code class="s2">"bevel"</code><code class="o">],</code>
+        <code class="nf">#miter</code><code class="nd">:focus</code> <code class="o">~</code> <code class="nc">.option-set</code> <code class="nc">.option-label</code><code class="o">[</code><code class="nt">for</code><code class="o">=</code><code class="s2">"miter"</code><code class="o">],</code>
+        <code class="nc">.option-label</code><code class="nd">:hover</code> <code class="p">{</code>
+            <code class="k">outline</code><code class="o">:</code> <code class="nb">none</code><code class="p">;</code>
+            <code class="k">text-decoration</code><code class="o">:</code> <code class="nb">underline</code><code class="p">;</code>
+            <code class="k">text-decoration-color</code><code class="o">:</code> <code class="nb">indigo</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nc">.option</code><code class="nd">:focus</code> <code class="p">{</code> <code class="k">outline</code><code class="o">:</code> <code class="nb">none</code><code class="p">;</code> <code class="p">}</code>
+        <code class="nc">.option</code><code class="nd">:focus</code> <code class="o">~</code> <code class="nc">.option-set</code> <code class="p">{</code> <code class="k">outline</code><code class="o">:</code> <code class="nb">solid</code> <code class="nb">indigo</code> <code class="m">2px</code><code class="p">;</code> <code class="p">}</code>
+    <code class="nt">&lt;/style&gt;</code>
+<code class="nt">&lt;/head&gt;</code>
+<code class="nt">&lt;body&gt;</code>
+<code class="nt">&lt;figure&gt;</code>
+    <code class="nt">&lt;figcaption&gt;</code>
+        Selecting one of the stroke-linejoin options
+        will apply that effect to the sample shape.
+    <code class="nt">&lt;/figcaption&gt;</code>
+    <code class="nt">&lt;input</code> <code class="na">id=</code><code class="s">"round"</code> <code class="na">class=</code><code class="s">"option"</code> <code class="na">type=</code><code class="s">"radio"</code> <code class="na">name=</code><code class="s">"linejoin"</code><code class="nt">/&gt;</code>
+    <code class="nt">&lt;input</code> <code class="na">id=</code><code class="s">"bevel"</code> <code class="na">class=</code><code class="s">"option"</code> <code class="na">type=</code><code class="s">"radio"</code> <code class="na">name=</code><code class="s">"linejoin"</code><code class="nt">/&gt;</code>
+    <code class="nt">&lt;input</code> <code class="na">id=</code><code class="s">"miter"</code> <code class="na">class=</code><code class="s">"option"</code> <code class="na">type=</code><code class="s">"radio"</code> <code class="na">name=</code><code class="s">"linejoin"</code><code class="nt">/&gt;</code>
+    <code class="nt">&lt;svg</code> <code class="na">viewBox=</code><code class="s">"-18 -12 36 24"</code><code class="nt">&gt;</code>
+        <code class="nt">&lt;path</code> <code class="na">class=</code><code class="s">"shape"</code>
+              <code class="na">d=</code><code class="s">"M-5,-10 H5  V-5 H10  L15,0  L10,5   H5  V10</code>
+<code class="s">                         H-5 V5  H-10 L-15,0 L-10,-5 H-5 V-10 Z"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;/svg&gt;</code>
+    <code class="nt">&lt;div</code> <code class="na">class=</code><code class="s">"option-set"</code><code class="nt">&gt;</code>
+        <code class="nt">&lt;label</code> <code class="na">for=</code><code class="s">"round"</code> <code class="na">class=</code><code class="s">"option-label"</code><code class="nt">&gt;</code>round<code class="nt">&lt;/label&gt;</code>
+        <code class="nt">&lt;label</code> <code class="na">for=</code><code class="s">"bevel"</code> <code class="na">class=</code><code class="s">"option-label"</code><code class="nt">&gt;</code>bevel<code class="nt">&lt;/label&gt;</code>
+        <code class="nt">&lt;label</code> <code class="na">for=</code><code class="s">"miter"</code> <code class="na">class=</code><code class="s">"option-label"</code><code class="nt">&gt;</code>miter<code class="nt">&lt;/label&gt;</code>
+    <code class="nt">&lt;/div&gt;</code>
+<code class="nt">&lt;/figure&gt;</code>
+<code class="nt">&lt;/body&gt;</code>
+<code class="nt">&lt;/html&gt;</code></pre></div>
+<div data-type="tip"><h6>Tip</h6>
+<p>Although we’ve added distinct <code>:focus</code> versus <code>:checked</code> styles for the labels, most browsers automatically switch a radio button selection when you arrow through the choices.  But they are conceptually different states, so it’s good to keep them separate.</p>
+</div>
+
+<p>Because the current selection is now maintained by the HTML radio button group, not by the target fragment in the URL, you could add a second radio group controlling a separate property (<code>stroke-linecap</code>, maybe?) and an independent set of labels.</p>
+
+<p>It’s a lot of CSS code, and it’s undeniably a hack of the <code>&lt;input&gt;</code> element’s intended purpose, but it works.</p>
+
+<p>The HTML <code>&lt;label&gt;</code> elements automatically transfer mouse clicks to the hidden radio buttons, so the demo works for mouse and touch users as well as keyboard users.</p>
+
+<p>If we wanted to keep the visible labels as SVG text, we would have needed JavaScript to respond to clicks and update the HTML inputs accordingly.  We would have also needed <code>aria-labelledby</code> to connect the <code>&lt;input&gt;</code> elements to their SVG labels, since the <code>for</code> attribute only works on <code>&lt;label&gt;</code>.</p>
+
+<p>JavaScript is also required for more complex inputs (like range sliders), whose current values aren’t accessible through CSS pseudoclasses.  But instead of having to code all the keyboard listeners and accessibility behaviors for a fully-functioning slider, you can just listen for <code>change</code> events on the hidden HTML <code>&lt;input type="range"&gt;</code> and update your SVG accordingly.  Just remember to also update the input’s value to match whatever click-and-drag behavior you’re using for mouse and touch users.</p>
+
+<p>The same concept could even be extended to text boxes.  You’ll need to listen for focus changes and keypress events on the hidden text box, and then retrieve the current text content and selection range, and use that to update your SVG text representation of the input.  You’ll also need to listen for selection events on the SVG text itself—so that mouse users can select the text they want to change—and transfer those selections and the keyboard focus to the hidden input.</p>
+
+<p>Which is a lot of code, but still less than coding a fully-functional text input from scratch.</p>
+
+<p>As we mentioned in <a data-type="xref" href="../ch15-masking-files/">Chapter 15</a>, the HTML <code>contenteditable</code> attribute can also sort-of apply to inline SVG, by applying it to a parent HTML element.  But you’ll still need to add a bit of JavaScript, to prevent the focus from dropping out of your SVG text elements if the user deletes the text completely.  There is currently no support (in the spec or in <em>most</em> browsers) for <code>contenteditable</code> on individual SVG elements.  Hopefully, it will be added in the future.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

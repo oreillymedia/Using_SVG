@@ -5,6 +5,18 @@
   <title>Clipped Clicks
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Clipped Clicks — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Clipping paths were designed to work with interactive effects. Just watch out for the browser support. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,108 @@
   </header>
   <main>
     <h1>Clipped Clicks</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+
+<p>Because clipping paths—unlike masks—are an all-or-nothing effects, they have an important usability feature that isn’t shared by masks and filters: they affect the interactive region of a shape.</p>
+
+<p>Mouse and touch events will not fire on sections of a shape that have been clipped away.  That means that as far as event handling, links, or <code>:hover</code> effects are concerned, the visible shape <em>is</em> the shape.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>This is consistent with the behavior of hidden <code>overflow</code>, and the old CSS <code>clip</code> property: areas outside of the clipping rectangle are not sensitive to pointer events.</p>
+
+<p>The difference is that the <code>clip-path</code> clipping shape isn’t always a rectangle!</p>
+</div>
+
+<p>That might not seem very exciting or surprising—it’s how you want it to work—so it is important to emphasize that it <em>doesn’t</em> work this way for masks, filters, or even the <code>opacity</code> property.  Unlike clipping, those styles only affect the appearance of a shape, not its interactive region.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>Internet Explorer and Microsoft Edge do <em>not</em> currently adjust the event-sensitive region to match the clipping path.</p>
+
+<p>Be sure that your websites are still functional even if the invisible clipped parts are clickable.  In particular, pay attention to how your elements overlap when they are unclipped, so that one element doesn’t block clicks on another.</p>
+</div>
+
+<p><a data-type="xref" href="#canada-imagemap-example">Example 15-X1</a> is part of the code for a map of Canada, in which the shape of each province is defined (as a <code>&lt;path&gt;</code>) in a separate <code>&lt;clipPath&gt;</code>.  The visible map is constructed from <code>&lt;image&gt;</code> elements—photographs of natural scenes from each province—which are then clipped into shape.  Each image is a link, and opacity changes provide interactive feedback.  <a data-type="xref" href="#canada-imagemap-figure">Figure 15-X1</a> shows (a slightly more extensive) part of the map, with one province (Alberta) highlighted as a hover/focus effect.</p>
+
+<figure class="page-float"><div id="canada-imagemap-figure" class="figure">
+<img src="../ch15-masking-files/canada-imagemap.jpg" alt="Three photographs: sunlight forest, a mountain lake, and a prairie farm field, each clipped to fit an artistic approximation of the map-shapes of Canada's three western-most provinces (British Columbia, Alberta, and Saskatchewan).  The forest and the field are faded out; the mountain scene is drawn in full color.  The shapes are such that if the photographs were full rectangles, they would overlap.  Diagonal lines in the photographs are aligned to provide visual continuity between the very different scenes."/>
+<figcaption><span class="label">Figure 15-X1. </span>Part of a map of Canada made from clipped images, with hover effects.  Photographs by Flickr users laszlo-photo, hern42, and mybulldog; used under a Creative Commons licence.</figcaption>
+</div></figure>
+<div id="canada-imagemap-example" data-type="example">
+<h5><span class="label">Example 15-X1. </span>Using a clipped image to create an image-filled shape</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">viewBox=</code><code class="s">"0 0 1500 850"</code><code> </code><code class="na">preserveAspectRatio=</code><code class="s">"xMidYMin meet"</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Image Map of Canada</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">image</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">opacity</code><code class="o">:</code><code> </code><code class="m">0</code><code class="o">.</code><code class="m">5</code><code class="p">;</code><code>
+            </code><code class="k">transition</code><code class="o">:</code><code> </code><code class="m">1s</code><code> </code><code class="n">opacity</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+        </code><code class="nt">image</code><code class="nd">:hover</code><code class="o">,</code><code> </code><code class="nt">a</code><code class="nd">:focus</code><code> </code><code class="nt">image</code><code> </code><code class="p">{</code><code>
+            </code><code class="k">opacity</code><code class="o">:</code><code> </code><code class="m">1</code><code class="p">;</code><code>
+        </code><code class="p">}</code><code>
+    </code><code class="nt">&lt;/style&gt;</code><code>
+  </code><code class="nt">&lt;g</code><code> </code><code class="na">id=</code><code class="s">"Canada"</code><code> </code><code class="na">transform=</code><code class="s">"translate(-1000,-100)"</code><code class="nt">&gt;</code><code>    </code><a class="co" id="co_online_extras_CO20-1" href="#callout_online_extras_CO20-1"><img src="callouts/1.svg" alt="1"/></a><code>
+    </code><code class="nt">&lt;a</code><code> </code><code class="na">xlink:href=</code><code class="s">"http://www.hellobc.com/"</code><code class="nt">&gt;</code><code>           </code><a class="co" id="co_online_extras_CO20-2" href="#callout_online_extras_CO20-2"><img src="callouts/2.svg" alt="2"/></a><code>
+        </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>British Columbia</code><code class="nt">&lt;/title&gt;</code><code>      </code><a class="co" id="co_online_extras_CO20-3" href="#callout_online_extras_CO20-3"><img src="callouts/3.svg" alt="3"/></a><code>
+        </code><code class="nt">&lt;clipPath</code><code> </code><code class="na">id=</code><code class="s">"bc-clipper"</code><code class="nt">&gt;</code><code>
+             </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"CA-BC"</code><code> </code><code class="na">d=</code><code class="s">"M1010.3 33.1c..."</code><code class="nt">/&gt;</code><code>   </code><a class="co" id="co_online_extras_CO20-4" href="#callout_online_extras_CO20-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="nt">&lt;/clipPath&gt;</code><code>
+        </code><code class="nt">&lt;image</code><code> </code><code class="na">xlink:href=</code><code class="s">"lynn-valley.jpg"</code><code>
+               </code><code class="na">clip-path=</code><code class="s">"url(#bc-clipper)"</code><code>
+               </code><code class="na">aria-labelledby=</code><code class="s">"bc-desc"</code><code>
+               </code><code class="na">width=</code><code class="s">"1200"</code><code> </code><code class="na">height=</code><code class="s">"800"</code><code> </code><code class="na">x=</code><code class="s">"800"</code><code> </code><code class="na">y=</code><code class="s">"125"</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;desc</code><code> </code><code class="na">id=</code><code class="s">"bc-desc"</code><code class="nt">&gt;</code><code>                        </code><a class="co" id="co_online_extras_CO20-5" href="#callout_online_extras_CO20-5"><img src="callouts/5.svg" alt="5"/></a><code>
+                Sunbeams filter between the branches of tall trees,
+                to light up the ferns and moss on the ground of
+                Lynn Valley park.
+            </code><code class="nt">&lt;/desc&gt;</code><code>
+        </code><code class="nt">&lt;/image&gt;</code><code>
+    </code><code class="nt">&lt;/a&gt;</code><code>
+    </code><code class="nt">&lt;a</code><code> </code><code class="na">xlink:href=</code><code class="s">"http://travelalberta.com/"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Alberta</code><code class="nt">&lt;/title&gt;</code><code>
+        </code><code class="nt">&lt;clipPath</code><code> </code><code class="na">id=</code><code class="s">"ab-clipper"</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"CA-AB"</code><code> </code><code class="na">d=</code><code class="s">"M1932.54 926.55c ..."</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;/clipPath&gt;</code><code>
+        </code><code class="nt">&lt;image</code><code> </code><code class="na">xlink:href=</code><code class="s">"lake-louise.jpg"</code><code>
+               </code><code class="na">clip-path=</code><code class="s">"url(#ab-clipper)"</code><code>
+               </code><code class="na">aria-labelledby=</code><code class="s">"ab-desc"</code><code>
+               </code><code class="na">width=</code><code class="s">"1024"</code><code> </code><code class="na">height=</code><code class="s">"768"</code><code> </code><code class="na">x=</code><code class="s">"1300"</code><code> </code><code class="na">y=</code><code class="s">"150"</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;desc</code><code> </code><code class="na">id=</code><code class="s">"ab-desc"</code><code class="nt">&gt;</code><code>
+                Canoeists on Lake Louise are dwarfed
+                by the Rocky Mountains rising up beside them.
+            </code><code class="nt">&lt;/desc&gt;</code><code>
+        </code><code class="nt">&lt;/image&gt;</code><code>
+    </code><code class="nt">&lt;/a&gt;</code><code>
+    </code><code class="c">&lt;!--</code><code class="c"> and more clipped images for other provinces </code><code class="c">--&gt;</code><code>
+  </code><code class="nt">&lt;/g&gt;</code><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO20-1" href="#co_online_extras_CO20-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>The paths, created in a visual editor, were defined for a larger <code>viewBox</code>, but no trouble: a simple translation transform shifts both the <code>&lt;image&gt;</code> elements and the user-space <code>&lt;clipPath&gt;</code> elements that apply to them.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO20-2" href="#co_online_extras_CO20-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>We’ll talk more about the SVG <code>&lt;a&gt;</code> link in <a data-type="xref" href="ch18.html#interaction-chapter">Chapter 18</a>, but it’s much the same as an HTML link—except for that nasty little <code>xlink</code> prefix on the <code>href</code> attribute.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO20-3" href="#co_online_extras_CO20-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>The <code>&lt;title&gt;</code> elements provide the main accessible name for the links, and also create tooltips in most desktop browsers (like the <code>title</code> attribute on an <code>&lt;a&gt;</code> in HTML).</p></dd>
+<dt><a class="co" id="callout_online_extras_CO20-4" href="#co_online_extras_CO20-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>To keep the code organized, each <code>&lt;clipPath&gt;</code> is included right next to the <code>&lt;image&gt;</code> it modifies.  To keep the book readable, we have omitted the actual <code>d</code> path data for the shapes.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO20-5" href="#co_online_extras_CO20-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+<dd><p>The <code>&lt;desc&gt;</code> elements provide longer alternative-text descriptions for the actual images.  However, since many browser and screen-reader combinations do not support <code>&lt;desc&gt;</code>, an <code>id</code> and an <code>aria-labelledby</code> attribute re-inforce the relationship.  We’ll discuss all these features in <a data-type="xref" href="ch17.html#metadata-chapter">Chapter 17</a>.</p></dd>
+</dl></div>
+
+<p>The <code>&lt;path&gt;</code> elements in <a data-type="xref" href="#canada-imagemap-example">Example 15-X1</a> were created in Adobe Illustrator, tracing the shapes from a map and then smoothing them for artistic effect—and shorter path data strings.  The code was then converted to the <code>&lt;clipPath&gt;</code> and <code>&lt;image&gt;</code> structure.</p>
+
+<p>From there, the exact position and scale of the <code>&lt;image&gt;</code> elements could be tweaked (by adjusting their <code>x</code>, <code>y</code>, <code>width</code>, and <code>height</code> attributes) to ensure the most artistic arrangement.  This is much easier than tweaking the position of an <code>&lt;image&gt;</code> inside a <code>&lt;pattern&gt;</code> that is used to fill a <code>&lt;path&gt;</code>.</p>
+
+<p><a data-type="xref" href="#canada-imagemap-unclipped-figure">Figure 15-X2</a> shows what the half-transparent images would look like if the clipping paths were removed (with <code>clip-path: none</code>).</p>
+
+<figure class="page-float"><div id="canada-imagemap-unclipped-figure" class="figure">
+<img src="../ch15-masking-files/canada-imagemap-unclipped.jpg" alt="The same three photographs, but now as complete, overlapping rectangles.  They are all drawn semi-transparently, so that you can see that the original photographs are much larger than the parts that were displayed."/>
+<figcaption><span class="label">Figure 15-X2. </span>The image arrangement from the map of Canada, with clipping paths removed.</figcaption>
+</div></figure>
+
+<p>Because the <code>&lt;image&gt;</code> is the visible, interactive shape, it’s fairly straightforward to add a little visual interactivity to it; in this case, by using <code>opacity</code> and a CSS transition.
+In contrast, if the <code>&lt;path&gt;</code> was the interactive shape, and the <code>&lt;image&gt;</code> was inside a <code>&lt;pattern&gt;</code>, the effect would become highly dependent on the DOM structures, since we’d neeed a CSS selector that could modify the pattern contents when the <code>&lt;path&gt;</code> (or its containing <code>&lt;a&gt;</code> element) was hovered.</p>
+
+<p>This is one example of how interactive SVG can provide a replacement for the old image-map approaches you might be familiar with from the early days of the web.  We look at the image-map concept in more detail—and linking in general—in <a data-type="xref" href="../ch18-interaction-files/">Chapter 18</a>.</p>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

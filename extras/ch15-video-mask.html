@@ -5,6 +5,18 @@
   <title>Clipping on the Outside, with a Mask
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title" 
+        content="Clipping on the Outside, with a Mask — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="Sometimes a clipping path is the opposite of what you need. And sometimes a mask is the secret to effects you didn't think possible. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +30,192 @@
   </header>
   <main>
     <h1>Clipping on the Outside, with a Mask</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+
+<p>For the most part, mask effects should be used when you need subtle variations or gradiations in the opacity changes.  As we mentioned a few times in the book, clipping paths are much more efficient for trimming an element to crisp edges.</p>
+
+<p>But there are some things a clipping-path—as they are defined in SVG or CSS—cannot do.  One of the most irritating: they cannot clip away parts of a shape that are <em>inside</em> the clipping path while leaving the <em>outside</em> areas opaque.</p>
+
+<p>If you want to create a transparent <em>window</em> in a graphic, you either need to create a donut-shaped clipping path, or you need to use a mask.</p>
+
+<p>Window effects are fairly easy with (luminance) masks: just draw a white rectangle that is larger than the element you are masking, and then draw your “windows” on it in black.</p>
+
+<p>The next example uses a window-mask to create the appearance of text that is filled with a video.  The letters in the “text” will actually be see-through windows in a solid SVG rectangle, created by a mask.  The video will be an HTML <code>&lt;video&gt;</code> element positioned behind the SVG.</p>
+
+<p>This approach works in any browser that supports SVG masks and HTML video.  It therefore has much better support than applying an SVG <code>&lt;clipPath&gt;</code> directly to an HTML <code>&lt;video&gt;</code> element.  (And is much, much more reliable than trying to use a <code>&lt;video&gt;</code> inside a <code>&lt;foreignObject&gt;</code> inside a <code>&lt;pattern&gt;</code> that you apply to text.)</p>
+
+<p>Since the text that is drawn in the mask isn’t accessible, we’ll draw a transparent-but-accessible layer of real text over top.  This is the similar to the effect created when hacking image-filled text with <code>-webkit-background-clip: text</code> and transparent text fill, except that we need to manually coordinate the text and clip layers.</p>
+
+<p><a data-type="xref" href="#ocean-example">Example 15-X2</a> provides the code.  <a data-type="xref" href="#ocean-figure">Figure 15-X3</a> shows a screenshot—although the full effect requires <a href="../ch15-masking-files/ocean.html" target="_blank">watching the live example</a>!</p>
+
+<figure class="page-float"><div id="ocean-figure" class="figure">
+<img src="../ch15-masking-files/ocean.jpg" alt="A dark blue rectangle covering most of the window, with the word Ocean in all-capital letters across it.  The text is filled with a photgraphic image of a sea floor with a scuba-diver passing through it.  The letters have a bright cyan-blue outline which, in this frame, closely matches the color of the water."/>
+<figcaption><span class="label">Figure 15-X3. </span>Video-filled text, or something that looks like it, anyway</figcaption>
+</div></figure>
+<div id="ocean-example" data-type="example">
+<h5><span class="label">Example 15-X2. </span>Using a mask to create a text window to an HTML video</h5>
+
+<p><strong>HTML markup:</strong></p>
+
+<pre data-type="programlisting" data-code-language="html"><code class="cp">&lt;!DOCTYPE html&gt;</code><code>
+</code><code class="nt">&lt;html</code><code class="nt">&gt;</code><code>
+</code><code class="nt">&lt;head</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;meta</code><code> </code><code class="na">charset=</code><code class="s">'UTF-8'</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Video-filled Text with a Knockout Mask</code><code class="nt">&lt;/title&gt;</code><code>
+</code><code class="nt">&lt;style</code><code class="nt">&gt;</code><code>
+    </code><code class="c">/* styles could be included in the same page
+       or as a linked stylesheet */</code><code>
+</code><code class="nt">&lt;/style&gt;</code><code class="nt">&lt;/head&gt;</code><code>
+</code><code class="nt">&lt;body</code><code class="nt">&gt;</code><code>
+</code><code class="nt">&lt;header</code><code class="nt">&gt;</code><code>
+  </code><code class="nt">&lt;div</code><code> </code><code class="na">class=</code><code class="s">"header-wrap"</code><code> </code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;video</code><code> </code><code class="na">autoplay</code><code> </code><code class="na">playsinline</code><code> </code><code class="na">muted</code><code> </code><code class="na">loop</code><code> </code><code class="na">preload</code><code>
+           </code><code class="na">poster=</code><code class="s">"assets/oceanshot.jpg"</code><code class="nt">&gt;</code><code>           </code><a class="co" id="co_online_extras_CO21-1" href="#callout_online_extras_CO21-1"><img src="callouts/1.svg" alt="1"/></a><code>
+        </code><code class="nt">&lt;source</code><code> </code><code class="na">type=</code><code class="s">"video/webm"</code><code> </code><code class="na">src=</code><code class="s">"assets/ocean-small.webm"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;source</code><code> </code><code class="na">type=</code><code class="s">"video/mp4"</code><code> </code><code class="na">src=</code><code class="s">"assets/ocean-small.mp4"</code><code> </code><code class="nt">/&gt;</code><code> </code><a class="co" id="co_online_extras_CO21-2" href="#callout_online_extras_CO21-2"><img src="callouts/2.svg" alt="2"/></a><code>
+    </code><code class="nt">&lt;/video&gt;</code><code>
+    </code><code class="nt">&lt;svg</code><code> </code><code class="na">viewBox=</code><code class="s">"0 0 160 90"</code><code class="nt">&gt;</code><code>                                   </code><a class="co" id="co_online_extras_CO21-3" href="#callout_online_extras_CO21-3"><img src="callouts/3.svg" alt="3"/></a><code>
+        </code><code class="nt">&lt;g</code><code> </code><code class="na">class=</code><code class="s">"header-backdrop"</code><code> </code><code class="na">mask=</code><code class="s">"url(#header-mask)"</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;rect</code><code> </code><code class="na">id=</code><code class="s">"cover"</code><code>
+                  </code><code class="na">x=</code><code class="s">"-5%"</code><code> </code><code class="na">y=</code><code class="s">"-5%"</code><code> </code><code class="na">width=</code><code class="s">"110%"</code><code> </code><code class="na">height=</code><code class="s">"110%"</code><code> </code><code class="nt">/&gt;</code><code>  </code><a class="co" id="co_online_extras_CO21-4" href="#callout_online_extras_CO21-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="nt">&lt;/g&gt;</code><code>
+        </code><code class="nt">&lt;g</code><code> </code><code class="na">class=</code><code class="s">"transparent-text"</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;text</code><code> </code><code class="na">id=</code><code class="s">"heading"</code><code> </code><code class="na">class=</code><code class="s">"heading-text"</code><code>
+                  </code><code class="na">text-anchor=</code><code class="s">"middle"</code><code>
+                  </code><code class="na">x=</code><code class="s">"50%"</code><code>  </code><code class="na">y=</code><code class="s">"50%"</code><code> </code><code class="na">dy=</code><code class="s">"0.3em"</code><code class="nt">&gt;</code><code>OCEAN</code><code class="nt">&lt;/text&gt;</code><code>       </code><a class="co" id="co_online_extras_CO21-5" href="#callout_online_extras_CO21-5"><img src="callouts/5.svg" alt="5"/></a><code>
+        </code><code class="nt">&lt;/g&gt;</code><code>
+        </code><code class="nt">&lt;mask</code><code> </code><code class="na">id=</code><code class="s">"header-mask"</code><code class="nt">&gt;</code><code>
+            </code><code class="nt">&lt;use</code><code> </code><code class="na">xlink:href=</code><code class="s">"#cover"</code><code> </code><code class="na">style=</code><code class="s">"fill: white;"</code><code> </code><code class="nt">/&gt;</code><code>     </code><a class="co" id="co_online_extras_CO21-6" href="#callout_online_extras_CO21-6"><img src="callouts/6.svg" alt="6"/></a><code>
+            </code><code class="nt">&lt;use</code><code> </code><code class="na">xlink:href=</code><code class="s">"#heading"</code><code> </code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;/mask&gt;</code><code>
+    </code><code class="nt">&lt;/svg&gt;</code><code>
+  </code><code class="nt">&lt;/div&gt;</code><code>
+</code><code class="nt">&lt;/header&gt;</code><code>
+</code><code class="nt">&lt;/body&gt;</code><code class="nt">&lt;/html&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO21-1" href="#co_online_extras_CO21-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>Attributes on the <code>&lt;video&gt;</code> set it to start playing automatically (<code>autoplay</code>), preloaded for fast startup (<code>preload</code>), with any sound muted, so as not to startle or embarrass any viewers (<code>muted</code>). When it gets to the end, the video automatically restarts from the beginning (<code>loop</code>); <code>playsinline</code> prevents it from switching to full-screen view.  The video also has a <code>poster</code> attribute, pointing to a screenshot of a single frame from the video. This will be used as a fallback if the video does not load or play successfully.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO21-2" href="#co_online_extras_CO21-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>The <code>&lt;video&gt;</code> element has two possible sources, specified with the <code>&lt;source&gt;</code> elements: a WebM video file, and an MP4. Both videos have the same content, but the WebM file is many times smaller.  The (required) <code>type</code> attribute tells the browser the format of each file.  Since the WebM source is listed first, modern browsers that support it will use it; the MP4 functions as a fallback, since it is a widely supported format.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO21-3" href="#co_online_extras_CO21-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>The <code>&lt;svg&gt;</code> element will be positioned over top.  Its <code>viewBox</code> matches the 16:9 aspect ratio of the video file.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO21-4" href="#co_online_extras_CO21-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>The SVG contains two graphical elements: a backdrop rectangle (which will be masked to create windows for the letters) and the accessible version of the text (which will be made transparent).  Neither element will have fill or stroke styles set directly, because we are going to re-use them with different styles inside our mask.  Instead, each element is positioned inside its own <code>&lt;g&gt;</code>, which is given a class name that is referenced from our stylesheet.  The mask, however, is applied with a presentation attribute, since the <code>url(#header-mask)</code> reference needs to be set in the same file as the <code>&lt;mask&gt;</code> element.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO21-5" href="#co_online_extras_CO21-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+<dd><p>The markup defines the position and layout of the <code>&lt;text&gt;</code> to center it in the SVG, but the exact font choices will be controllable by CSS.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO21-6" href="#co_online_extras_CO21-6"><img src="callouts/6.svg" alt="6"/></a></dt>
+<dd><p>The mask includes a copy of the rectangle, filled in white to make most of the mask opaque, and then a copy of the <code>&lt;text&gt;</code>, drawn in the default black fill to create the windows.  Both copies of the rectangle (the one that is visible and the one in the mask) are slightly larger than the <code>&lt;svg&gt;</code> itself, to avoid rounding errors that were causing a 1-pixel edge of the video to be visible in some browsers.</p></dd>
+</dl>
+
+<p><strong>CSS styles:</strong></p>
+
+<pre data-type="programlisting" data-code-language="css"><code class="k">@font-face</code><code> </code><code class="p">{</code><code>
+  </code><code class="nt">font-family</code><code class="o">:</code><code> </code><code class="nt">Biko</code><code class="o">;</code><code>
+  </code><code class="nt">font-weight</code><code class="o">:</code><code> </code><code class="nt">700</code><code class="o">;</code><code>
+  </code><code class="nt">src</code><code class="o">:</code><code> </code><code class="nt">url</code><code class="o">(</code><code class="s2">"assets/biko-black.woff"</code><code class="o">)</code><code class="o">;</code><code>  </code><a class="co" id="co_online_extras_CO22-1" href="#callout_online_extras_CO22-1"><img src="callouts/1.svg" alt="1"/></a><code>
+</code><code class="p">}</code><code>
+</code><code class="nc">.heading-text</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">font-family</code><code class="o">:</code><code> </code><code class="n">Biko</code><code class="o">,</code><code> </code><code class="nb">sans-serif</code><code class="p">;</code><code>
+    </code><code class="k">font-weight</code><code class="o">:</code><code> </code><code class="m">700</code><code class="p">;</code><code>
+    </code><code class="k">text-transform</code><code class="o">:</code><code> </code><code class="nb">uppercase</code><code class="p">;</code><code>
+    </code><code class="k">font-size</code><code class="o">:</code><code> </code><code class="m">38px</code><code class="p">;</code><code>                   </code><a class="co" id="co_online_extras_CO22-2" href="#callout_online_extras_CO22-2"><img src="callouts/2.svg" alt="2"/></a><code>
+</code><code class="p">}</code><code>
+</code><code class="nc">.transparent-text</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">fill-opacity</code><code class="o">:</code><code> </code><code class="m">0</code><code class="p">;</code><code>
+    </code><code class="k">stroke</code><code class="o">:</code><code> </code><code class="nb">cyan</code><code class="p">;</code><code>
+    </code><code class="k">stroke-opacity</code><code class="o">:</code><code> </code><code class="m">0</code><code class="o">.</code><code class="m">5</code><code class="p">;</code><code>               </code><a class="co" id="co_online_extras_CO22-3" href="#callout_online_extras_CO22-3"><img src="callouts/3.svg" alt="3"/></a><code>
+</code><code class="p">}</code><code>
+</code><code class="nc">.header-backdrop</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">fill</code><code class="o">:</code><code> </code><code class="m">#223</code><code class="p">;</code><code> </code><code class="c">/* matches the header background color */</code><code>
+</code><code class="p">}</code><code>                                      </code><a class="co" id="co_online_extras_CO22-4" href="#callout_online_extras_CO22-4"><img src="callouts/4.svg" alt="4"/></a><code>
+
+</code><code class="nt">body</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">background</code><code class="o">:</code><code> </code><code class="nb">lightcyan</code><code class="p">;</code><code>
+    </code><code class="k">margin</code><code class="o">:</code><code> </code><code class="m">0</code><code class="p">;</code><code>                         </code><a class="co" id="co_online_extras_CO22-5" href="#callout_online_extras_CO22-5"><img src="callouts/5.svg" alt="5"/></a><code>
+</code><code class="p">}</code><code>
+</code><code class="nt">header</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">width</code><code class="o">:</code><code> </code><code class="m">100%</code><code class="p">;</code><code>
+    </code><code class="k">margin</code><code class="o">:</code><code> </code><code class="m">0</code><code> </code><code class="nb">auto</code><code class="p">;</code><code>
+    </code><code class="k">max-width</code><code class="o">:</code><code> </code><code class="m">1200px</code><code class="p">;</code><code>
+    </code><code class="k">overflow</code><code class="o">:</code><code> </code><code class="nb">hidden</code><code class="p">;</code><code>
+    </code><code class="k">background</code><code class="o">:</code><code> </code><code class="m">#223</code><code class="p">;</code><code> </code><code class="c">/* same color as SVG overlay */</code><code>
+</code><code class="p">}</code><code>
+</code><code class="k">@media</code><code> </code><code class="p">(</code><code class="k">min-width</code><code class="o">:</code><code> </code><code class="m">1200px</code><code class="p">)</code><code> </code><code class="p">{</code><code>
+    </code><code class="nt">header</code><code> </code><code class="p">{</code><code>
+        </code><code class="k">padding</code><code class="o">:</code><code> </code><code class="m">0</code><code> </code><code class="n">calc</code><code class="p">(</code><code class="m">50%</code><code> </code><code class="o">-</code><code> </code><code class="m">600px</code><code class="p">);</code><code>
+    </code><code class="c">/* add side-padding if available width is more than 1200px */</code><code>
+    </code><code class="p">}</code><code>
+</code><code class="p">}</code><code>
+</code><code class="nc">.header-wrap</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">position</code><code class="o">:</code><code> </code><code class="nb">relative</code><code class="p">;</code><code>
+    </code><code class="k">margin</code><code class="o">:</code><code> </code><code class="m">0</code><code> </code><code class="nb">auto</code><code class="p">;</code><code>
+    </code><code class="k">box-sizing</code><code class="o">:</code><code> </code><code class="nb">border-box</code><code class="p">;</code><code>
+    </code><code class="k">padding-bottom</code><code class="o">:</code><code> </code><code class="m">56.25%</code><code class="p">;</code><code> </code><code class="c">/* = 100% * 9/16 */</code><code>
+    </code><code class="k">max-width</code><code class="o">:</code><code> </code><code class="n">calc</code><code class="p">(</code><code> </code><code class="p">(</code><code class="m">100vh</code><code> </code><code class="o">-</code><code> </code><code class="m">2em</code><code class="p">)</code><code> </code><code class="o">*</code><code> </code><code class="m">16</code><code> </code><code class="o">/</code><code class="m">9</code><code class="p">);</code><code>
+</code><code class="p">}</code><code>
+</code><code class="nt">header</code><code class="o">,</code><code> </code><code class="nt">header</code><code> </code><code class="nt">video</code><code class="o">,</code><code> </code><code class="nt">header</code><code> </code><code class="nt">svg</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">max-height</code><code class="o">:</code><code> </code><code class="n">calc</code><code class="p">(</code><code class="m">100vh</code><code> </code><code class="o">-</code><code> </code><code class="m">2em</code><code class="p">);</code><code>
+</code><code class="p">}</code><code>
+</code><code class="nt">header</code><code> </code><code class="nt">video</code><code class="o">,</code><code> </code><code class="nt">header</code><code> </code><code class="nt">svg</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">display</code><code class="o">:</code><code> </code><code class="nb">block</code><code class="p">;</code><code>
+    </code><code class="k">width</code><code class="o">:</code><code> </code><code class="m">100%</code><code class="p">;</code><code>
+    </code><code class="k">height</code><code class="o">:</code><code> </code><code class="m">100%</code><code class="p">;</code><code>
+    </code><code class="k">position</code><code class="o">:</code><code class="nb">absolute</code><code class="p">;</code><code>
+    </code><code class="k">top</code><code class="o">:</code><code> </code><code class="m">0</code><code class="p">;</code><code>
+    </code><code class="k">left</code><code class="o">:</code><code> </code><code class="m">0</code><code class="p">;</code><code>
+</code><code class="p">}</code><code>
+</code><code class="nt">header</code><code> </code><code class="nt">svg</code><code> </code><code class="p">{</code><code>
+    </code><code class="k">box-sizing</code><code class="o">:</code><code> </code><code class="nb">content-box</code><code class="p">;</code><code>
+    </code><code class="k">padding</code><code class="o">:</code><code> </code><code class="m">5px</code><code class="p">;</code><code> </code><code class="c">/* cover up edges of video completely */</code><code>
+    </code><code class="k">top</code><code class="o">:</code><code> </code><code class="m">-5px</code><code class="p">;</code><code> </code><code class="k">left</code><code class="o">:</code><code> </code><code class="m">-5px</code><code class="p">;</code><code>
+    </code><code class="k">overflow</code><code class="o">:</code><code> </code><code class="nb">visible</code><code class="p">;</code><code>                 </code><a class="co" id="co_online_extras_CO22-6" href="#callout_online_extras_CO22-6"><img src="callouts/6.svg" alt="6"/></a><code>
+</code><code class="p">}</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO22-1" href="#co_online_extras_CO22-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>A custom web font, in a heavy weight, is used for the headings.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO22-2" href="#co_online_extras_CO22-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>The core font and text layout styles are set directly on the <code>&lt;text&gt;</code> element using the <code>heading-text</code> class.  These styles will be shared by the copy of the text used in the mask.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO22-3" href="#co_online_extras_CO22-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>The accessible text layer is then made transparent with <code>fill-opacity</code>, and given a bright stroke to ensure that the video-filled letters will always have sufficient contrast against the dark backdrop.  These styles are set on the <code>&lt;g&gt;</code> element, so they will not be used by the text in the mask (which needs plain black fill to work).</p></dd>
+<dt><a class="co" id="callout_online_extras_CO22-4" href="#co_online_extras_CO22-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>The <code>header-backdrop</code> class is used to style the overlay rectangle in the SVG to match the header background color.  You could of course use CSS preprocessor variables to coordinate the values in a DRY manner.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO22-5" href="#co_online_extras_CO22-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+<dd><p>The remaining styles are not directly related to the masking effect: instead, it’s all about making the <code>&lt;svg&gt;</code> and <code>&lt;video&gt;</code> elements responsive, while still preserving their aspect ratios and alignment—including in older browsers that don’t maintain aspect ratio by default—all the while making sure the size never gets larger than the screen, or so large that the resolution of the video files is visibly degraded.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO22-6" href="#co_online_extras_CO22-6"><img src="callouts/6.svg" alt="6"/></a></dt>
+<dd><p>Visible overflow and padding are used to allow the oversized cover rectangle in the carefully-sized SVG to extend a few pixels beyond the edges of the <code>&lt;video&gt;</code> on all sides.  The <code>&lt;header&gt;</code> itself has hidden overflow, so that extra SVG padding won’t throw off the layout.</p></dd>
+</dl></div>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>When building an earlier version of this demo, a lot of time was spent debugging what turned out to <em>not</em> be a masking issue, but instead a cross-browser inconsistency in CSS absolute positioning.  In Chrome, setting <code>position: absolute</code> on an <code>&lt;svg&gt;</code> is enough to force it to be treated as a block element, meaning that the <code>top:0</code> property is enough to shift it over an inline <code>&lt;video&gt;</code> element.  Other browsers, however, were positioning the <code>&lt;svg&gt;</code> beside the <code>&lt;video&gt;</code>.</p>
+
+<p>(This version avoids the issue by absolutely-positioning both elements, as part of the <code>padding-bottom</code> hack to fix scaling on older browsers.)</p>
+
+<p>So take that as a reminder that, even when working with fancy new technology on the web, sometimes it’s the old CSS basics that can trip you up.</p>
+</div>
+
+<p>The effect is stunning, but it does require an auto-playing <code>&lt;video&gt;</code> element, which is not something we usually encourage.  In this particular case, the effect is subtle, and it is part of the main content—not a distracting sidebar item—so we think it is worth it.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>Some mobile browsers, including iOS Safari, do not support auto-playing video.  Other browsers (including desktop browsers) have settings that allow a user to turn off auto-play.</p>
+
+<p>Users may see a “play” icon button through the masked text, but won’t be able to click it, because of the transparent text on top. You could use JavaScript to listen for a click on the SVG (or header as a whole) and start the video in response.</p>
+</div>
+
+<p>However, for some people even subtle movement on the page can be problematic.</p>
+
+<p>Unexpected or random movement on web pages—sudden scroll events, flashing or other effects—can have unwelcome sensory effects on visitors to web sites, up to and including headaches, migranes and seizures. Such vestibular disorders were impossible to detect or filter for in browser visits: the safest approach was to pause all videos by default, and allow visitors to decide whether to play videos with a click.</p>
+
+<p>iOS, in contrast, has for a few years had a “prefers reduced motion” operating system setting, which turns off many animated effects.  In mobile Safari (and hopefully, soon in other browsers), this setting can now be detected in CSS and JavaScript through the <code>prefers-reduced-motion</code> media query.  In CSS, you could use it to turn off animations in transitions in an <code>@media</code> rule.  To pause a video, however, we use the JavaScript media query API:</p>
+
+<pre data-type="programlisting" data-code-language="javascript"><code class="kr">const</code> <code class="nx">video</code> <code class="o">=</code> <code class="nb">document</code><code class="p">.</code><code class="nx">querySelector</code><code class="p">(</code><code class="s2">"video"</code><code class="p">);</code>
+<code class="k">if</code> <code class="p">(</code><code class="nb">window</code><code class="p">.</code><code class="nx">matchMedia</code><code class="p">(</code><code class="s1">'(prefers-reduced-motion)'</code><code class="p">).</code><code class="nx">matches</code><code class="p">)</code> <code class="p">{</code>
+  <code class="nx">video</code><code class="p">.</code><code class="nx">removeAttribute</code><code class="p">(</code><code class="s2">"autoplay"</code><code class="p">);</code>
+  <code class="nx">video</code><code class="p">.</code><code class="nx">pause</code><code class="p">();</code>
+<code class="p">}</code></pre>
+
+<p>You could then add play/pause buttons that the user could control.</p>
+
+<p>The masking effect works in exactly the same when the video is paused, or when the <code>poster</code> image is displayed if the browser does not autoplay videos at all.</p>
+
+<p>We talk more about accessibility concerns, and about animation and interaction, in Part V (which begins with <a href="../ch17-metadata-files/">Chapter 17</a>).</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

@@ -5,6 +5,25 @@
   <title>Faking Repeating Gradients
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+  <style id="katex-fallback">
+    .latex-code { display: none; }
+    .latex-fallback { display: block !important; }
+  </style>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0-alpha1/katex.min.css" integrity="sha384-8QOKbPtTFvh/lMY0qPVbXj9hDh+v8US0pD//FcoYFst2lCIf0BmT58+Heqj0IGyx" crossorigin="anonymous"
+        onload="document.getElementById('katex-fallback').remove()">
+
+  <meta name="twitter:title" property="og:title" 
+        content="Faking Repeating Gradients — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:description" property="og:description" 
+        content="SVG repeating gradients are wonderful. But someone forgot to tell WebKit developers that. What's a dev to do? An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt" 
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -18,15 +37,175 @@
   </header>
   <main>
     <h1>Faking Repeating Gradients</h1>
-    <nav class="toc" aria-label="Page Contents">On this page:
-      <ul class="columns narrow">
-        <li><a href="#intro">Introduction</a></li>
-      </ul>
-    </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+
+<p>In the book we had multiple examples of using the <code>spreadMethod</code> attribute to create repeating and reflecting gradients, but with a warning: WebKit does not (yet) support them.  All SVG gradients get the <code>pad</code> behavior in Safari and iOS browsers.  So if you’re building SVG for the web, you’ll often need another approach.</p>
+
+<p>But what happens if your already have an SVG that works in other browsers?  How do you create the same effect in a cross-browser way?</p>
+
+<p>For radial gradients, the only solution is to repeat the <code>&lt;stop&gt;</code> elements in your gradient as many times as are necessary to fill up the shape. As we warned in the book, for off-center radial gradients (which use the <code>fx</code> and <code>fy</code> to distort the radial pattern), you’ll never <em>exactly</em> recreate the original effect.</p>
+
+<p>For linear gradients, however, there is another option: the <code>&lt;pattern&gt;</code> element.</p>
+
+<p>The contents in a <code>&lt;pattern&gt;</code> can include shapes filled with gradients.  Which means that the repeating columns (or rows) of pattern tiles can be used to replicate the repeats in a repeating linear gradient.  Unlike <em>real</em> repeating SVG gradients, this version works on WebKit.</p>
+
+<p>Turning a repeating gradient into a repeating pattern is fairly straightforward if the gradient is exactly horizontal or vertical.  However, it gets a little more complicated if the gradient was on an angle. You’ll need to use some trigonometry to figure out the dimensions of your repeated sections, and then the <code>patternTransform</code> attribute to recreate the angle.</p>
+
+<p>The process of converting a repeating linear gradient to a pattern is as follows:</p>
+<ol>
+<li>
+<p>Create a <code>&lt;pattern&gt;</code> that uses the same type of scaling units as the gradient, for both the pattern tile and the pattern contents.  If the gradient had <code>gradientUnits="userSpaceOnUse"</code>, then set <code>patternUnits</code> to match.  If the gradient used <code>objectBoundingBox</code> (either explicitly or by default), then set <code>patternContentUnits</code> to match.</p>
+</li>
+<li>
+<p>Give the <code>&lt;pattern&gt;</code> the <code>id</code> that you were using for the repeating linear gradient—that way, you don’t have to change any of your styles.  Give the <code>&lt;linearGradient&gt;</code> a new <code>id</code> that helps remind you of its relationship to the <code>&lt;pattern&gt;</code>.  For example:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;linearGradient</code> <code class="na">id=</code><code class="s">"green-repeating-gradient-unit"</code><code class="nt">&gt;</code>
+...<code class="nt">&lt;/linearGradient&gt;</code>
+<code class="nt">&lt;pattern</code> <code class="na">id=</code><code class="s">"green-repeating-gradient"</code><code class="nt">&gt;</code>...<code class="nt">&lt;/pattern&gt;</code></pre>
+</li>
+<li>
+<p>Set the <code>x</code> and <code>y</code> attributes on the <code>&lt;pattern&gt;</code> to the values of <code>x1</code> and <code>y1</code> from the <code>&lt;linearGradient&gt;</code>.  (If there aren’t <code>x1</code> and <code>y1</code> attributes, then you don’t need <code>x</code> and <code>y</code> attributes: the defaults are the same.)</p>
+</li>
+<li>
+<p>Convert all geometric attributes (<code>x1</code>, <code>y1</code>, <code>x2</code>, and <code>y2</code>) on the gradient to the same units.  If it’s a <code>userSpaceOnUse</code> gradient, convert percentages to absolute values based on the size of the SVG.</p>
+
+<p>Remember that the default value for <code>x2</code> is 100%; the defaults for the others are 0.</p>
+</li>
+<li>
+<p>Figure out the length of the gradient vector from the <code>x1</code>, <code>y1</code>, <code>x2</code>, and <code>y2</code> attributes, and use this for the <code>width</code> of the <code>&lt;pattern&gt;</code>.  If it’s a pure horizontal or vertical gradient, this calculation is straightforward.  Otherwise, use a formula based on Pythagoras’ theorem:</p>
+<figure data-type="equation">
+  <img class="latex-fallback" style="display: none;"
+       src="../equations/pythagoras-xy.png"
+       alt="First line: length squared equals left parenthesis x 2 minus x 1 right parenthesis squared plus left parenthesis y 2 minus y 1 right parenthesis squared. Second line: length equals the square root of left parenthesis x 2 minus x 1 right parenthesis squared plus left parenthesis y 2 minus y 1 right parenthesis squared."/>
+  <div class="latex-code">
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtable><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>(</mo><mtext>length</mtext><msup><mo>)</mo><mn>2</mn></msup></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>=</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>(</mo><mi>x</mi><mn>2</mn><mo>−</mo><mi>x</mi><mn>1</mn><msup><mo>)</mo><mn>2</mn></msup><mo>+</mo><mo>(</mo><mi>y</mi><mn>2</mn><mo>−</mo><mi>y</mi><mn>1</mn><msup><mo>)</mo><mn>2</mn></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>(</mo><mtext>length</mtext><mo>)</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>=</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mrow><msqrt><mrow><mo>(</mo><mi>x</mi><mn>2</mn><mo>−</mo><mi>x</mi><mn>1</mn><msup><mo>)</mo><mn>2</mn></msup><mo>+</mo><mo>(</mo><mi>y</mi><mn>2</mn><mo>−</mo><mi>y</mi><mn>1</mn><msup><mo>)</mo><mn>2</mn></msup></mrow></msqrt></mrow></mrow></mstyle></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">
+\begin{array}{l c r}
+(\text{length})^2 &amp;=&amp; (x2 - x1)^2 + (y2 - y1)^2
+\\
+\\
+(\text{length}) &amp;=&amp; {\sqrt{(x2 - x1)^2 + (y2 - y1)^2}}
+\end{array}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 2.0975em;"></span><span class="strut bottom" style="height: 3.695em; vertical-align: -1.5975em;"></span><span class="base"><span class="mord"><span class="mtable"><span class="arraycolsep" style="width: 0.5em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 2.0975em;"><span class="" style="top: -4.2575em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord text"><span class="mord mathrm">length</span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathrm mtight">2</span></span></span></span></span></span></span></span></span></span><span class="" style="top: -3.0575em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"></span></span><span class="" style="top: -1.7625em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord text"><span class="mord mathrm">length</span></span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 1.5975em;"></span></span></span></span><span class="arraycolsep" style="width: 0.5em;"></span><span class="arraycolsep" style="width: 0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 2.0975em;"><span class="" style="top: -4.2575em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mrel">=</span></span></span><span class="" style="top: -1.7625em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mrel">=</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 1.5975em;"></span></span></span></span><span class="arraycolsep" style="width: 0.5em;"></span><span class="arraycolsep" style="width: 0.5em;"></span><span class="col-align-r"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 2.0975em;"><span class="" style="top: -4.2575em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathit">x</span><span class="mord mathrm">2</span><span class="mbin">−</span><span class="mord mathit">x</span><span class="mord mathrm">1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathrm mtight">2</span></span></span></span></span></span></span></span><span class="mbin">+</span><span class="mopen">(</span><span class="mord mathit" style="margin-right: 0.03588em;">y</span><span class="mord mathrm">2</span><span class="mbin">−</span><span class="mord mathit" style="margin-right: 0.03588em;">y</span><span class="mord mathrm">1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.814108em;"><span class="" style="top: -3.063em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathrm mtight">2</span></span></span></span></span></span></span></span></span></span><span class="" style="top: -1.7625em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist svg-align" style="height: 0.935em;"><span class="" style="top: -3.2em;"><span class="pstrut" style="height: 3.2em;"></span><span class="mord" style="padding-left: 1em;"><span class="mopen">(</span><span class="mord mathit">x</span><span class="mord mathrm">2</span><span class="mbin">−</span><span class="mord mathit">x</span><span class="mord mathrm">1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.740108em;"><span class="" style="top: -2.989em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathrm mtight">2</span></span></span></span></span></span></span></span><span class="mbin">+</span><span class="mopen">(</span><span class="mord mathit" style="margin-right: 0.03588em;">y</span><span class="mord mathrm">2</span><span class="mbin">−</span><span class="mord mathit" style="margin-right: 0.03588em;">y</span><span class="mord mathrm">1</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.740108em;"><span class="" style="top: -2.989em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathrm mtight">2</span></span></span></span></span></span></span></span></span></span><span class="" style="top: -2.895em;"><span class="pstrut" style="height: 3.2em;"></span><span class="hide-tail" style="min-width: 1.02em; height: 1.2em;"><svg width="400em" height="1.2em" viewBox="0 0 400000 1200" preserveAspectRatio="xMinYMin slice"><path d="M263 601c.667 0 18 39.667 52 119s68.167
+ 158.667 102.5 238 51.833 119.333 52.5 120C810 373.333 980.667 17.667 982 11
+c4.667-7.333 11-11 19-11h398999v40H1012.333L741 607c-38.667 80.667-84 175-136
+ 283s-89.167 185.333-111.5 232-33.833 70.333-34.5 71c-4.667 4.667-12.333 7-23
+ 7l-12-1-109-253c-72.667-168-109.333-252-110-252-10.667 8-22 16.667-34 26-22
+ 17.333-33.333 26-34 26l-26-26 76-59 76-60zM1001 0h398999v40H1012z"></path></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.305em;"></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 1.5975em;"></span></span></span></span><span class="arraycolsep" style="width: 0.5em;"></span></span></span></span></span></span>
+  </div>
+</figure>
+
+</li>
+<li>
+<p>Copy any values from a <code>gradientTransform</code> attribute on the gradient into a <code>patternTransform</code> attribute on the <code>&lt;pattern&gt;</code>.</p>
+</li>
+<li>
+<p>Figure out the angle of the gradient vector, in degrees.  If it’s horizontal left-to-right gradient, that’s 0, and you can skip this step.  Otherwise, use trigonometry on your calculator:</p>
+<figure data-type="equation">
+<img class="latex-fallback" style="display: none;"
+     src="../equations/arctan.png" alt="angle equals arc tangent of left-parenthesis y 2 minus y 1 right-parenthesis divided by left-parenthesis x 2 minus x 1 right-parenthesis"/>
+<div class="latex-code"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>angle</mtext><mo>=</mo><mi>arctan</mi><mo>⁡</mo><mrow><mo>(</mo><msub><mi>y</mi><mn>2</mn></msub><mo>−</mo><msub><mi>y</mi><mn>1</mn></msub><mo>)</mo><mi mathvariant="normal">/</mi><mo>(</mo><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>1</mn></msub><mo>)</mo></mrow></mrow><annotation encoding="application/x-tex">\textit{angle} = \arctan{(y_{2} - y_{1})/(x_{2} - x_{1})}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="strut" style="height: 0.75em;"></span><span class="strut bottom" style="height: 1em; vertical-align: -0.25em;"></span><span class="base"><span class="mord text"><span class="mord textit">angle</span></span><span class="mrel">=</span><span class="mop">arctan</span><span class="mord"><span class="mopen">(</span><span class="mord"><span class="mord mathit" style="margin-right: 0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.301108em;"><span class="" style="top: -2.55em; margin-left: -0.03588em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"></span></span></span></span></span><span class="mbin">−</span><span class="mord"><span class="mord mathit" style="margin-right: 0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.301108em;"><span class="" style="top: -2.55em; margin-left: -0.03588em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"></span></span></span></span></span><span class="mclose">)</span><span class="mord mathrm">/</span><span class="mopen">(</span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.301108em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"></span></span></span></span></span><span class="mbin">−</span><span class="mord"><span class="mord mathit">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.301108em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathrm mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"></span></span></span></span></span><span class="mclose">)</span></span></span></span></span>
+</div>
+</figure>
+
+
+<p>Or use JavaScript in your browser’s console:</p>
+
+<pre data-type="programlisting" data-code-language="javascript"><code class="nx">angle</code> <code class="o">=</code> <code class="nb">Math</code><code class="p">.</code><code class="nx">atan2</code><code class="p">((</code><code class="nx">y2</code><code class="o">-</code><code class="nx">y1</code><code class="p">),(</code><code class="nx">x2</code><code class="o">-</code><code class="nx">x1</code><code class="p">))</code><code class="o">*</code><code class="p">(</code><code class="mi">180</code><code class="o">/</code><code class="nb">Math</code><code class="p">.</code><code class="nx">PI</code><code class="p">)</code></pre>
+
+<p>Use the result to add a <code>rotate(<em>angle</em>)</code> transform at the end of the <code>patternTransform</code> attribute.</p>
+</li>
+<li>
+<p>Remove all attributes except <code>id</code> from the <code>&lt;linearGradient&gt;</code> element, so it becomes a simple left-to-right, non-repeating, bounding-box gradient.  All the angles and sizing and repeats and <code>userSpaceOnUse</code> scaling (if required) will be handled by the <code>&lt;pattern&gt;</code>.</p>
+</li>
+<li>
+<p>Set the <code>height</code> of the <code>&lt;pattern&gt;</code> to any positive value (100% works).  The pattern tiles will be repeated infinitely in the vertical direction anyway, so it doesn’t really matter.  Larger values reduce the likelihood that rounding errors will cause visible edges between pattern tiles.  But smaller values may be slightly better for performance.</p>
+</li>
+<li>
+<p>Add a <code>&lt;rect&gt;</code> element inside the <code>&lt;pattern&gt;</code>, and give it the exact same <code>width</code> and <code>height</code> values as the <code>&lt;pattern&gt;</code>.</p>
+</li>
+<li>
+<p>Set the <code>fill</code> on the <code>&lt;rect&gt;</code> to be the modified <code>&lt;linearGradient&gt;</code>.</p>
+</li>
+
+</ol>
+
+<p>That 11-step process (with two trigonometric calculations) lets you create a paint server that does in WebKit what adding <code>spreadMethod="repeat"</code> could do in the other browsers.</p>
+
+<p>If you want a <em>reflecting</em> gradient, you need a few more steps:</p>
+<ol start="12">
+<li>
+<p>Duplicate all the <code>&lt;stop&gt;</code> elements inside the <code>&lt;linearGradient&gt;</code>, re-arranging the second set so they are in the reverse order from the original stops.</p>
+</li>
+<li>
+<p>Divide the <code>offset</code> values on the original <code>&lt;stop&gt;</code> elements by 2 (because now the total length of the gradient stop-sequence is twice as long).  For the new, reflected <code>&lt;stop&gt;</code> elements, set their <code>offset</code> to 1 minus the adjusted offset of the <code>&lt;stop&gt;</code> that they are mirroring.</p>
+</li>
+<li>
+<p>Double the <code>width</code> value on the <code>&lt;pattern&gt;</code> and the <code>&lt;rect&gt;</code> elements.</p>
+</li>
+
+</ol>
+
+<p><a data-type="xref" href="#linear-gradient-repeating-reflecting-cross-browser-example">Example 12-X3</a> gives the final adjusted markup for replacing the repeating and reflecting gradients from <a data-type="xref" href="../ch12-fill-files/">Example 12-4</a>.  Because the original gradient was left-to-right horizontal, it’s not <em>quite</em> as complicated as the full algorithm above.  We don’t need any trigonometry or <code>patternTransform</code> attributes.  But it’s still a lot more code than the original gradients.  <a data-type="xref" href="#linear-gradient-repeating-reflecting-cross-browser-figure">Figure 12-X8</a> shows the end result.</p>
+
+<figure class="page-float"><div id="linear-gradient-repeating-reflecting-cross-browser-figure" class="figure">
+<img src="../ch12-fill-files/linear-gradient-repeating-reflecting-cross-browser.svg" alt="Two circles with purple gradient stripes, one with a repeating pattern and one with an alternating pattern.  They are identical to the equivalent circles from the repeating linear gradient examples in the book."/>
+<figcaption><span class="label">Figure 12-X8. </span>Repeating (left) and reflecting (right) linear gradients, which are actually both patterns</figcaption>
+</div></figure>
+<div id="linear-gradient-repeating-reflecting-cross-browser-example" data-type="example">
+<h5><span class="label">Example 12-X3. </span>Using a <code>&lt;pattern&gt;</code> to synthesize repeating and reflecting linear gradients</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">width=</code><code class="s">"400px"</code><code> </code><code class="na">height=</code><code class="s">"200px"</code><code> </code><code class="na">viewBox=</code><code class="s">"-100 -100 400 200"</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>WebKit-friendly Repeating                 </code><a class="co" id="co_online_extras_CO18-1" href="#callout_online_extras_CO18-1"><img src="callouts/1.svg" alt="1"/></a><code>
+           and Reflecting Linear Gradients</code><code class="nt">&lt;/title&gt;</code><code>
+
+    </code><code class="nt">&lt;linearGradient</code><code> </code><code class="na">id=</code><code class="s">"single-stripe"</code><code class="nt">&gt;</code><code>              </code><a class="co" id="co_online_extras_CO18-2" href="#callout_online_extras_CO18-2"><img src="callouts/2.svg" alt="2"/></a><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"purple"</code><code> </code><code class="na">offset=</code><code class="s">"0.4"</code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"plum"</code><code> </code><code class="na">offset=</code><code class="s">"0.9"</code><code class="nt">/&gt;</code><code>       </code><a class="co" id="co_online_extras_CO18-3" href="#callout_online_extras_CO18-3"><img src="callouts/3.svg" alt="3"/></a><code>
+    </code><code class="nt">&lt;/linearGradient&gt;</code><code>
+    </code><code class="nt">&lt;pattern</code><code> </code><code class="na">id=</code><code class="s">"purple-stripes"</code><code>
+             </code><code class="na">patternUnits=</code><code class="s">"userSpaceOnUse"</code><code>
+             </code><code class="na">x=</code><code class="s">"-20"</code><code> </code><code class="na">width=</code><code class="s">"40"</code><code> </code><code class="na">height=</code><code class="s">"100%"</code><code class="nt">&gt;</code><code>       </code><a class="co" id="co_online_extras_CO18-4" href="#callout_online_extras_CO18-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">width=</code><code class="s">"40"</code><code> </code><code class="na">height=</code><code class="s">"100%"</code><code>
+              </code><code class="na">fill=</code><code class="s">"url(#single-stripe)"</code><code class="nt">/&gt;</code><code>           </code><a class="co" id="co_online_extras_CO18-5" href="#callout_online_extras_CO18-5"><img src="callouts/5.svg" alt="5"/></a><code>
+    </code><code class="nt">&lt;/pattern&gt;</code><code>
+
+    </code><code class="nt">&lt;linearGradient</code><code> </code><code class="na">id=</code><code class="s">"reflected-stripe"</code><code class="nt">&gt;</code><code>           </code><a class="co" id="co_online_extras_CO18-6" href="#callout_online_extras_CO18-6"><img src="callouts/6.svg" alt="6"/></a><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"purple"</code><code> </code><code class="na">offset=</code><code class="s">"0.2"</code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"plum"</code><code> </code><code class="na">offset=</code><code class="s">"0.45"</code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"plum"</code><code> </code><code class="na">offset=</code><code class="s">"0.55"</code><code class="nt">/&gt;</code><code>
+        </code><code class="nt">&lt;stop</code><code> </code><code class="na">stop-color=</code><code class="s">"purple"</code><code> </code><code class="na">offset=</code><code class="s">"0.8"</code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;/linearGradient&gt;</code><code>
+    </code><code class="nt">&lt;pattern</code><code> </code><code class="na">id=</code><code class="s">"purple-reflections"</code><code>
+             </code><code class="na">patternUnits=</code><code class="s">"userSpaceOnUse"</code><code>
+             </code><code class="na">x=</code><code class="s">"-20"</code><code> </code><code class="na">width=</code><code class="s">"80"</code><code> </code><code class="na">height=</code><code class="s">"100%"</code><code class="nt">&gt;</code><code>       </code><a class="co" id="co_online_extras_CO18-7" href="#callout_online_extras_CO18-7"><img src="callouts/7.svg" alt="7"/></a><code>
+        </code><code class="nt">&lt;rect</code><code> </code><code class="na">width=</code><code class="s">"80"</code><code> </code><code class="na">height=</code><code class="s">"100%"</code><code>
+              </code><code class="na">fill=</code><code class="s">"url(#reflected-stripe)"</code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;/pattern&gt;</code><code>
+
+    </code><code class="nt">&lt;circle</code><code> </code><code class="na">r=</code><code class="s">"100"</code><code> </code><code class="na">fill=</code><code class="s">"url(#purple-stripes)"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;circle</code><code> </code><code class="na">r=</code><code class="s">"100"</code><code> </code><code class="na">fill=</code><code class="s">"url(#purple-reflections)"</code><code>
+            </code><code class="na">transform=</code><code class="s">"translate(200,0)"</code><code class="nt">/&gt;</code><code>           </code><a class="co" id="co_online_extras_CO18-8" href="#callout_online_extras_CO18-8"><img src="callouts/8.svg" alt="8"/></a><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO18-1" href="#co_online_extras_CO18-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>The original gradients were defined in centered, 200×200 coordinate systems.  To make room for both samples, the width has been doubled, keeping the <em>x</em>-offset of the <code>viewBox</code> the same.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO18-2" href="#co_online_extras_CO18-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>The first pair of <code>&lt;linearGradient&gt;</code> and <code>&lt;pattern&gt;</code> elements replace the repeating gradient.  The <code>&lt;linearGradient&gt;</code> has a new <code>id</code>; all other attributes have been removed.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO18-3" href="#co_online_extras_CO18-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>For the simple repeating-gradient pattern, the <code>&lt;stop&gt;</code> elements and their offsets are unchanged.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO18-4" href="#co_online_extras_CO18-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>The <code>&lt;pattern&gt;</code> element has been given the <code>id</code> from the original gradient.  The <code>patternUnits</code> (and by default, the <code>patternContentUnits</code>) are <code>userSpaceOnUse</code> to match the <code>gradientUnits</code> from the original (in Example 12-4).  The <code>x</code> attribute matches the original gradient’s <code>x1</code>, while the width of 40 is the distance between the original gradient’s start and end points (that is, from <code>x1="-20"</code> to <code>x2="+20"</code>).</p></dd>
+<dt><a class="co" id="callout_online_extras_CO18-5" href="#co_online_extras_CO18-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+<dd><p>The <code>&lt;rect&gt;</code> exactly fills up the pattern tile, and is filled by the <code>single-stripe</code> gradient.  Note that no <code>x</code> offset is required on the <code>&lt;rect&gt;</code>: the offset from the <code>&lt;pattern&gt;</code> is already applied to the contents of each tile.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO18-6" href="#co_online_extras_CO18-6"><img src="callouts/6.svg" alt="6"/></a></dt>
+<dd><p>The second pair of paint servers replace the reflected gradient. There are now four <code>&lt;stop&gt;</code> elements, to create a complete reflected set, and the <code>offset</code> values have been adjusted.  The purple offset at 0.4 in the original is now at 0.2 and (1−0.2), or 0.8.  The plum offset (originally 0.9) is now at 0.45 and (1−0.45), or 0.55.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO18-7" href="#co_online_extras_CO18-7"><img src="callouts/7.svg" alt="7"/></a></dt>
+<dd><p>The <code>&lt;pattern&gt;</code> for the reflected gradient is the same as the last one except that the <code>width</code> value on both the <code>&lt;pattern&gt;</code> and the <code>&lt;rect&gt;</code> has been doubled, from 40 to 80, and the <code>&lt;rect&gt;</code> is filled with the <code>reflected-stripe</code> gradient.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO18-8" href="#co_online_extras_CO18-8"><img src="callouts/8.svg" alt="8"/></a></dt>
+<dd><p>The two circles displaying the gradient patterns are both drawn centered on the origin, the same as in the original demo.  The second one is then moved into place with a <code>transform</code>, bringing its user-space coordinate system along with it.</p></dd>
+</dl></div>
+
+<p>Because these are <code>userSpaceOnUse</code> patterns, if the second circle had been positioned with <code>cx</code> instead of <code>transform</code>, it would have moved <em>across</em> the striped pattern, instead of bringing the stripes along with it.  Similarly, if the circles were made larger or smaller, they would have had more or fewer stripes across each, but the stripes would have stayed the same size.  However, the exact same calculations would work with object bounding box gradients—so long as you correctly adjust the <code>patternContentUnits</code> to match.</p>
+
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

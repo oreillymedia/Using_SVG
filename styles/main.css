@@ -242,9 +242,13 @@ figure[data-type="equation"] {
   padding-bottom: 1rem;
   margin: 0;
   overflow-x: auto;
+  break-inside: avoid;
 }
 .columns figure[data-type="equation"] {
   padding: 1rem 0.5rem;
+}
+figure[data-type="equation"]:last-child {
+  margin-bottom: 1em;
 }
 .latex-fallback { 
   display: block;

@@ -5,6 +5,19 @@
   <title>Planning for Performance
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title"
+        content="Planning for Performance — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description"
+        content="Designing an effective animation is equal parts art and science. Here, we discuss the technical side of creating smooth web animations. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt"
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -21,12 +34,377 @@
     <nav class="toc" aria-label="Page Contents">On this page:
       <ul class="columns narrow">
         <li><a href="#intro">Introduction</a></li>
+        <li><a href="animation-performance-will-change-section">Warning about future changes</a></li>
+        <li><a href="animation-performance-properties-section">Picking Your Properties</a></li>
+        <li><a href="animation-performance-in-practice-section">The ghost in the animation</a></li>
       </ul>
     </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
+    <div id="intro">
+
+<p>No matter what language you use to create an animated effect—CSS properties, SVG/SMIL elements, or JavaScript code—the browser still needs to update the graphic and render it to the screen.</p>
+
+<p>The process of turning SVG code into pixels follows roughly these steps every time you change something:</p>
+<ol>
+<li>
+<p>The DOM objects (elements and attributes) are initialized or updated.  If the browser identifies new files that it needs (such as embedded images or <code>&lt;use&gt;</code> cross-references), it starts the HTTP processes to fetch them.</p>
+</li>
+<li>
+<p>Any new CSS styles are parsed, style rule selectors are matched against elements, multiple declarations are cascaded to find a specified value for each element, and then inherited styles are calculated from the DOM and relative units, percentages, variables and <code>currentColor</code> are all computed to find the final styles.</p>
+</li>
+<li>
+<p>The layout is calculated.  For SVG, that means calculating transforms and <code>viewBox</code> scaling, and using them to calculate the the fill-region and bounding box of shapes, and the stroke-region too if it is needed.</p>
+</li>
+<li>
+<p>As part of the layout, text is positioned to generate the outlines and bounding boxes of individual letters.  This is usually calculated by a dedicated program that handles all the complexities of fonts and OpenType.  But for SVG, there are a lot of <em>additional</em> layout complexities that the normal “text shaper” program may not handle.</p>
+</li>
+<li>
+<p>The individual paint layers—images, gradients, patterns—are calculated based on the relevant layout scales.  For patterns, that means running all the steps for rendering a separate SVG image.</p>
+</li>
+<li>
+<p>Paint layers are clipped to fit within the layout shapes (fill-region, stroke-region, and CSS layout boxes), and are layered together to create the final image of each element.  Markers are added as well, which again means drawing entire SVG images.</p>
+</li>
+<li>
+<p>Any filters are applied to the element, then clipping and masking (after scaling the clipping paths or masks as required).</p>
+</li>
+<li>
+<p>Elements are composited (layered) together, adjusting for opacity and blend modes to calculate a combined image layer.</p>
+</li>
+<li>
+<p>The process is repeated with more filters, clipping, and masking on groups (combined image layers) until the entire document has been composited together.</p>
+</li>
+
+</ol>
+
+<p>This description is necessarily vague, because different browsers have different details.  Even within the same browser, you’ll get different computation pathways depending on the operating system and hardware.</p>
+
+<p>Some or all of the steps will be repeated every time you animate something.  Usually, if you have to repeat something high up in the list, you have to repeat the following items too.</p>
+
+<p>But there are shortcuts.</p>
+
+<p>The next few sections look at some of the ways you can optimize your animations to minimize the amount of work the browser has to do at each frame update.  Less update work means faster framerates, smoother animations, and web sites that react more naturally to user interactions.</p>
+
+<p>We finish up with a practical example, rearranging an animation to create optimum performance.</p>
     </div>
+
+<section>
+<h2 id="animation-performance-will-change-section">Warning about future changes<a href="#animation-performance-will-change-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>For declarative animations (CSS, SVG/SMIL, and the Web Animations API), the browser doesn’t need to do any DOM and style computations for subsequent animation frames, allowing it to jump straight to the rendering steps.</p>
+
+<p>Declarative animations also allow the browser to plan ahead for future changes.  If the browser knows that you are going to be scaling up the graphic, it can calculate it at a higher-than-normal resolution ahead of time, so the scaling can use GPU-optimized image scaling instead of re-doing the rasterization at each frame.</p>
+
+<p>The CSS <code>will-change</code> property exists so that you can warn the browser about future changes, even when you will be animating with JavaScript.  So the following tells the browser to optimize as if <code>transform</code> and <code>opacity</code> are about to be animated on this element:</p>
+
+<pre data-type="programlisting" data-code-language="css"><code class="n">will</code><code class="o">-</code><code class="n">change</code><code class="o">:</code> <code class="n">transform</code><code class="o">,</code> <code class="n">opacity</code><code class="p">;</code></pre>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>MS Edge and Internet Explorer don’t recognize <code>will-change</code>. Nor do Safari versions 9 and under.</p>
+</div>
+
+<p>Even where supported, the effects of <code>will-change</code> can be unpredictable, and vary from one browser to the next.  The <code>transform</code> property is particularly problematic, because the correct browser optimizations for a <em>scaling</em> transform are different from the optimizations for a <em>translate</em> transform.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p><code>will-change</code> can also affect stacking contexts and isolation layers.  If <em>any</em> value of a property would affect stacking or isolation, declaring that it “will change” has the same effect—but only in browsers that support <code>will-change</code> in the first place.</p>
+</div>
+
+<p>Beyond their ability to warn the browser what’s coming, declarative animations can sometimes be more efficient because they aren’t affected by other JavaScript code running on your page.</p>
+
+<p>But that’s about as far as rendering performance is affected by which animation method you use.</p>
+</section>
+
+
+<section>
+<h2 id="animation-performance-properties-section">Picking Your Properties<a href="#animation-performance-properties-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>The biggest technical challenge of web animation is not selecting a syntax, it’s designing the animation for fast rendering.  The difference between a smooth, life-like animation and a janky, stuttery one is rarely as simple as CSS versus JavaScript.  Instead, it’s often determined by <em>which</em> properties or attributes you animate, on which elements.</p>
+
+<p>Regardless of whether you’re changing a style property with CSS or with SMIL or with JavaScript, the browser needs to determine which pixels on the screen need to be updated, and how.</p>
+
+<p>If the DOM and style computation steps determine that no styles or SVG rendering attributes have changed for any elements, the browser can stop right there.</p>
+
+<p>If the changed styles don’t affect layout (only painting), or if layout has changed for <em>some</em> elements but not for others, the browser has to determine which parts it needs to repaint.  This region is known as the “dirty” rectangle of the screen.  Elements elsewhere on the screen can be skipped, their pixels unchanged for this update.</p>
+
+<p>The changed element usually needs to be repainted, but also maybe others.  Did the changed element overlap another element, which is now revealed?  If so, the browser may need to redraw that background element.</p>
+
+<p>But maybe not.</p>
+
+<p>It depends on whether the browser has the original pixel data for the background saved in memory.
+The graphical processing units (GPU) in most modern computers and smartphones can keep a certain number of rendering layers in memory, not just the final version that appears on screen.  The main browser program may also save partial images in memory.</p>
+
+<p>Much of browser rendering optimization comes down to how it selects <em>which</em> parts of the rendered document to divide into separately cached (saved) layers.</p>
+
+<p>GPUs can perform certain operations on the cached rendering layers, and are highly optimized for the limited number of operations they can do.</p>
+
+<p>If browsers know that an element is going to change in a way that can be efficiently calculated by the GPU, they can save that image’s pixel data in a different GPU layer from its background (or foreground).  The animated changes can therefore be applied by sending new instructions to the GPU for how to combine the saved pixels, instead of by calculating new pixel values in the main processor.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>Most browser Dev Tools now have options to highlight the “dirty” paint rectangles whenever they are updated.  If your animation is being GPU-optimized, you won’t see any colored rectangles flashing when you run this Dev Tools mode.</p>
+</div>
+
+<p>Of course, all GPU-optimized pathways are conditional on having a compatible GPU available—and on the browser knowing how to use it, which may depend on the operating system.  So browser performance, and sometimes even browser bugs, will depend not just on the browser version but also on the OS and hardware.</p>
+
+<p>Most GPUs can adjust opacity of the saved layers, and translate them to different relative positions before combining them.  They can also perform image scaling, usually including 3D perspective scaling—but the scaling is calculated on a pixel level, not a vector level, and can cause a visible loss in resolution.  More advanced GPUs can calculate some filter operations and blend modes, and masking of one image layer with an alpha mask layer.</p>
+
+<p>Some GPUs also have optimized vector rasterization, which can calculate high-resolution vector shapes for use as clipping paths of other vector levels.  These “clipping paths” aren’t only used for <code>clip-path</code> effects, though.  Filling and stroking a shape is clipping the paint image layer to the fill-region or stroke-region vector outline.  Similarly, CSS <code>border-radius</code> effects are vector clipping paths on the content and background image layers.</p>
+
+<p>But you currently can’t rely on your end users having these optimized pathways.</p>
+
+<p>The best performance, across a wide range of browsers and hardwares, comes from animations that can be broken into layers (of elements, groups, or individual <code>&lt;svg&gt;</code> graphics) that are animated in the following ways:</p>
+
+<ul>
+<li>
+<p><code>opacity</code> changes</p>
+</li>
+<li>
+<p>translational and rotational transformations</p>
+</li>
+</ul>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>Currently, Chrome never divides an SVG graphic into different GPU layers (although they do other optimizations).</p>
+
+<p>To create a fully GPU-optimized animation in Chrome, you can sometimes position separate inline <code>&lt;svg&gt;</code> elements over top of each other, creating your own layers.</p>
+</div>
+
+<p>If you can’t define your animation entirely in translation and opacity layers, consider the following guidelines:</p>
+
+<ul>
+<li>
+<p>Minimize the size of the “dirty” rectangle at each frame.</p>
+</li>
+<li>
+<p>Solid-color objects are better than semi-transparent ones, since the browser doesn’t need to calculate pixel updates for shapes that can’t be seen behind a solid object.  (Although this may not apply if the browser is using GPU layers for optimization.)</p>
+</li>
+<li>
+<p>Moving elements around is more efficient than changing what they look like.  (Although it depends on the browser whether “moving around” only applies to <code>transform</code> movements or also to other absolute position changes.)</p>
+</li>
+<li>
+<p>Changing fill and stroke is more efficient than changing shapes and sizes.</p>
+</li>
+<li>
+<p>Scaling transformations are better than changing the underlying geometry; browsers may be able to use GPU image scaling for an animated scale effect, instead of recalculating the vector image at the correct resolution at each frame.</p>
+</li>
+<li>
+<p>Clipping is usually more efficient than masking.</p>
+</li>
+<li>
+<p>Avoid rescaling gradient and pattern layers; this could mean using user-space effects instead of bounding-box effects, if the bounding box is changing.</p>
+</li>
+<li>
+<p>Avoid any changes that require a filter to be recalculated.  That includes any change to  the filtered element or its child content.</p>
+</li>
+</ul>
+
+<p>With those guidelines in hand, we’re ready to tackle a practical example.</p>
+</section>
+
+
+<section>
+<h2 id="animation-performance-in-practice-section">The ghost in the animation<a href="#animation-performance-in-practice-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>The example started out as a variation on <a data-type="xref" href="ch19-SMIL.html#XRay-example">Example 19-X2</a> (from the <a data-type="xref" href="ch19-SMIL.html">“Using SVG/SMIL Animation Elements”</a> article).  In the original version, we used an animated clipping path to show parts of an “X-ray” skeleton photo instead of the normal photo.</p>
+
+<p>The planned variation was to use an animated gradient mask instead of the clipping path, so that the skeleton image would appear to flicker in and out.  Different parts would be visible at different times, but there would be no sharp clipping edges between the two photographs.  <a data-type="xref" href="#masked-skeleton-figure">Figure 19-X5</a> shows various frames from the animation, to demonstrate the effect.</p>
+
+<figure class="page-float"><div id="masked-skeleton-figure" class="figure">
+<img src="../ch19-animation-files/masked-skeleton.jpg" alt="Six different versions of the photograph of Kurt in a top hat.  In each frame, there is more or less of a gaping skull visible, blended in with his face.  In some frames, the skeleton is more visible on one side, in some on the other."/>
+<figcaption><span class="label">Figure 19-X5. </span>Frames from an animated mask effect</figcaption>
+</div></figure>
+
+<p>Now, we’ve already said a few times that clipping is more efficient than masking. So it may be no surprise that the first try at a mask animation created a janky, stuttering effect in nearly every browser.</p>
+
+<p><a data-type="xref" href="#masked-skeleton-animated-stops-example">Example 19-X4</a> provides the code from this first attempt.</p>
+
+<p>To create a declarative animation that works without SVG/SMIL support, it uses CSS to animate the <code>stop-color</code> and <code>stop-opacity</code> of the gradient used by the shape in the <code>&lt;mask&gt;</code>.  To create the appearance that the stops are moving across the page, each stop cycles through the colors or opacity values at slightly different delay from the previous one.  To create some pseudo-random varation, the keyframes are unevenly spaced and the cicada principle is used, with the color and opacity animations cycling at different rates.</p>
+<div id="masked-skeleton-animated-stops-example" data-type="example">
+<h5><span class="label">Example 19-X4. </span>An animated mask effect, by animating gradient stops within the mask</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code> <code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code> <code class="na">xml:lang=</code><code class="s">"en"</code>
+    <code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code>
+    <code class="na">width=</code><code class="s">"430"</code> <code class="na">height=</code><code class="s">"720"</code> <code class="na">viewBox=</code><code class="s">"0 0 860 1440"</code><code class="nt">&gt;</code>
+    <code class="nt">&lt;title&gt;</code>The Masked Man<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;style&gt;</code>
+        <code class="nt">stop</code> <code class="p">{</code>
+            <code class="k">animation-name</code><code class="o">:</code> <code class="n">luminance</code><code class="o">,</code> <code class="n">alpha</code><code class="p">;</code>
+            <code class="k">animation-duration</code><code class="o">:</code> <code class="m">7s</code><code class="o">,</code> <code class="m">3s</code><code class="p">;</code>
+            <code class="k">animation-iteration-count</code><code class="o">:</code> <code class="n">infinite</code><code class="p">;</code>
+            <code class="k">animation-direction</code><code class="o">:</code> <code class="n">alternate</code><code class="o">,</code> <code class="n">normal</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nt">stop</code><code class="nd">:nth-of-type</code><code class="o">(</code><code class="nt">1</code><code class="o">)</code> <code class="p">{</code><code class="k">animation-delay</code><code class="o">:</code> <code class="m">-0.2s</code><code class="p">;}</code>
+        <code class="nt">stop</code><code class="nd">:nth-of-type</code><code class="o">(</code><code class="nt">2</code><code class="o">)</code> <code class="p">{</code><code class="k">animation-delay</code><code class="o">:</code> <code class="m">-0.5s</code><code class="p">;}</code>
+        <code class="nt">stop</code><code class="nd">:nth-of-type</code><code class="o">(</code><code class="nt">3</code><code class="o">)</code> <code class="p">{</code><code class="k">animation-delay</code><code class="o">:</code> <code class="m">-0.7s</code><code class="p">;}</code>
+        <code class="nt">stop</code><code class="nd">:nth-of-type</code><code class="o">(</code><code class="nt">4</code><code class="o">)</code> <code class="p">{</code><code class="k">animation-delay</code><code class="o">:</code> <code class="m">-1s</code><code class="p">;}</code>
+        <code class="nt">stop</code><code class="nd">:nth-of-type</code><code class="o">(</code><code class="nt">5</code><code class="o">)</code> <code class="p">{</code><code class="k">animation-delay</code><code class="o">:</code> <code class="m">-1.2s</code><code class="p">;}</code>
+        <code class="k">@keyframes</code> <code class="nt">luminance</code> <code class="p">{</code>
+            <code class="nt">0%</code><code class="o">,</code> <code class="nt">80%</code><code class="o">,</code> <code class="nt">100%</code> <code class="p">{</code> <code class="k">stop-color</code><code class="o">:</code> <code class="nb">black</code><code class="p">;</code> <code class="p">}</code>
+            <code class="nt">40%</code> <code class="p">{</code> <code class="k">stop-color</code><code class="o">:</code> <code class="nb">white</code><code class="p">;</code> <code class="p">}</code>
+        <code class="p">}</code>
+        <code class="k">@keyframes</code> <code class="nt">alpha</code> <code class="p">{</code>
+            <code class="nt">0%</code><code class="o">,</code> <code class="nt">50%</code><code class="o">,</code> <code class="nt">100%</code> <code class="p">{</code> <code class="k">stop-opacity</code><code class="o">:</code> <code class="m">0</code><code class="o">.</code><code class="m">5</code><code class="p">;</code> <code class="p">}</code>
+            <code class="nt">20%</code><code class="o">,</code> <code class="nt">70%</code> <code class="p">{</code> <code class="k">stop-opacity</code><code class="o">:</code> <code class="m">1</code><code class="p">;</code> <code class="p">}</code>
+        <code class="p">}</code>
+    <code class="nt">&lt;/style&gt;</code>
+    <code class="nt">&lt;defs&gt;</code>
+        <code class="nt">&lt;linearGradient</code> <code class="na">id=</code><code class="s">"linear"</code> <code class="na">gradientTransform=</code><code class="s">"rotate(10)"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.2"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.4"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.6"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.8"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"1"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;/linearGradient&gt;</code>
+        <code class="nt">&lt;mask</code> <code class="na">id=</code><code class="s">"the-mask"</code> <code class="na">maskContentUnits=</code><code class="s">"objectBoundingBox"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;rect</code> <code class="na">width=</code><code class="s">"1"</code> <code class="na">height=</code><code class="s">"1"</code> <code class="na">fill=</code><code class="s">"url(#linear)"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;/mask&gt;</code>
+    <code class="nt">&lt;/defs&gt;</code>
+    <code class="nt">&lt;image</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code> <code class="na">xlink:href=</code><code class="s">"TopHatKurt.jpg"</code><code class="nt">/&gt;</code>
+    <code class="nt">&lt;image</code> <code class="na">mask=</code><code class="s">"url(#the-mask)"</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code>
+           <code class="na">xlink:href=</code><code class="s">"TopHatSkull.jpg"</code><code class="nt">/&gt;</code>
+<code class="nt">&lt;/svg&gt;</code></pre></div>
+
+<p>The result is somewhat ghastly, but not in the way intended.  Performance varied by browser.  In Firefox it was especially jerky, jumping from one image to the next—instead of smoothly and subtly transitioning, as hoped.  Other browsers looked better, but a whirring laptop fan confirmed that the computer processor was desperately trying to keep up with all the calculations being asked of it.</p>
+
+<p>What is the problem?  At every frame of the animation, we’re asking the browser to calculate a completely new gradient, and then use that gradient to apply a masking effect on the skeleton image.</p>
+
+<p>So the next iteration of the code removed one of those steps.  Instead of drawing a new gradient for each frame, why not move around a gradient we already have?</p>
+
+<p><a data-type="xref" href="#masked-skeleton-translate-example">Example 19-X5</a> shows the revised code.  The gradient stops now have a fixed pattern, and are used to fill a rectangle that is slightly larger than the 1×1 dimensions of the bounding-box mask.  A CSS animation applies transformations (translations and rotations) to the rectangle in a somewhat-erratic pattern.</p>
+<div id="masked-skeleton-translate-example" data-type="example">
+<h5><span class="label">Example 19-X5. </span>An animated mask effect, by animating the position of a gradient-filled rectangle within the mask</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code> <code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code> <code class="na">xml:lang=</code><code class="s">"en"</code>
+    <code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code>
+    <code class="na">width=</code><code class="s">"430"</code> <code class="na">height=</code><code class="s">"720"</code> <code class="na">viewBox=</code><code class="s">"0 0 860 1440"</code><code class="nt">&gt;</code>
+    <code class="nt">&lt;title&gt;</code>The Masked Man<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;style&gt;</code>
+        <code class="nt">mask</code> <code class="nt">rect</code> <code class="p">{</code>
+            <code class="k">animation</code><code class="o">:</code> <code class="n">translateX</code> <code class="m">7s</code> <code class="n">alternate</code> <code class="n">infinite</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="k">@keyframes</code> <code class="nt">translateX</code> <code class="p">{</code>
+            <code class="nt">0%</code>  <code class="p">{</code> <code class="k">transform</code><code class="o">:</code> <code class="n">translateX</code><code class="p">(</code><code class="m">-0.7px</code><code class="p">)</code> <code class="n">rotate</code><code class="p">(</code><code class="m">10deg</code><code class="p">);</code> <code class="p">}</code>
+            <code class="nt">20%</code> <code class="p">{</code> <code class="k">transform</code><code class="o">:</code> <code class="n">translateX</code><code class="p">(</code><code class="o">+</code><code class="m">0.3px</code><code class="p">)</code> <code class="n">rotate</code><code class="p">(</code> <code class="m">5deg</code><code class="p">);</code> <code class="p">}</code>
+            <code class="nt">40%</code> <code class="p">{</code> <code class="k">transform</code><code class="o">:</code> <code class="n">translateX</code><code class="p">(</code><code class="m">-0.3px</code><code class="p">)</code> <code class="n">rotate</code><code class="p">(</code><code class="m">-5deg</code><code class="p">);</code> <code class="p">}</code>
+            <code class="nt">60%</code> <code class="p">{</code> <code class="k">transform</code><code class="o">:</code> <code class="n">translateX</code><code class="p">(</code><code class="o">+</code><code class="m">0.7px</code><code class="p">)</code> <code class="n">rotate</code><code class="p">(</code><code class="m">10deg</code><code class="p">);</code> <code class="p">}</code>
+            <code class="nt">80%</code> <code class="p">{</code> <code class="k">transform</code><code class="o">:</code> <code class="n">translateX</code><code class="p">(</code><code class="o">+</code><code class="m">0.3px</code><code class="p">)</code> <code class="n">rotate</code><code class="p">(</code> <code class="m">5deg</code><code class="p">);</code> <code class="p">}</code>
+           <code class="nt">100%</code> <code class="p">{</code> <code class="k">transform</code><code class="o">:</code> <code class="n">translateX</code><code class="p">(</code><code class="o">+</code><code class="m">0.5px</code><code class="p">)</code> <code class="n">rotate</code><code class="p">(</code><code class="m">-8deg</code><code class="p">);</code> <code class="p">}</code>
+        <code class="p">}</code>
+    <code class="nt">&lt;/style&gt;</code>
+    <code class="nt">&lt;defs&gt;</code>
+        <code class="nt">&lt;linearGradient</code> <code class="na">id=</code><code class="s">"linear"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.1"</code> <code class="na">stop-color=</code><code class="s">"white"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.2"</code> <code class="na">stop-color=</code><code class="s">"#444"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.3"</code> <code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.7"</code> <code class="na">stop-color=</code><code class="s">"white"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.9"</code> <code class="na">stop-color=</code><code class="s">"#444"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"1"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;/linearGradient&gt;</code>
+        <code class="nt">&lt;mask</code> <code class="na">id=</code><code class="s">"the-mask"</code> <code class="na">maskContentUnits=</code><code class="s">"objectBoundingBox"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;rect</code> <code class="na">x=</code><code class="s">"-0.8"</code> <code class="na">y=</code><code class="s">"-0.2"</code> <code class="na">width=</code><code class="s">"3"</code> <code class="na">height=</code><code class="s">"1.4"</code>
+                  <code class="na">fill=</code><code class="s">"url(#linear)"</code> <code class="na">id=</code><code class="s">"r"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;/mask&gt;</code>
+    <code class="nt">&lt;/defs&gt;</code>
+    <code class="nt">&lt;image</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code> <code class="na">xlink:href=</code><code class="s">"TopHatKurt.jpg"</code><code class="nt">/&gt;</code>
+    <code class="nt">&lt;image</code> <code class="na">mask=</code><code class="s">"url(#the-mask)"</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code>
+           <code class="na">xlink:href=</code><code class="s">"TopHatSkull.jpg"</code><code class="nt">/&gt;</code>
+<code class="nt">&lt;/svg&gt;</code></pre></div>
+
+<p>This resulted in an acceptable appearance in Chrome, but not as nice as the original demo.  And it is completely broken in Firefox, thanks to a bug about not updating <code>&lt;mask&gt;</code> content when elements inside have CSS animations that would normally be GPU-optimized.</p>
+
+<p>And of course, it doesn’t animate at all in Internet Explorer or MS Edge, which don’t support CSS transforms of SVG elements.</p>
+
+<p>So that was a bust.</p>
+
+<p>Calculating a new mask effect every frame is just too risky for web performance.  You just can’t rely—yet—on having GPU-optimized masking in browsers.</p>
+
+<p>But most devices can optimize regular alpha compositing of semi-transparent layers—including semi-transparent layers created from masked images.</p>
+
+<p>This realization led to the counter-intuitive leap for the final version of the code.  To improve the appearance of our masked-image animation, add <em>more</em> masked images.  Each image with a <em>different</em> mask, so it reveals a different part of the skull.</p>
+
+<p><a data-type="xref" href="#masked-skeleton-opacity-layers-figure">Figure 19-X6</a> shows all the different layers, separated out side-by-side.  They are drawn on a checked background so you can easily distinguish the transparent parts of the masked layers.</p>
+
+<figure class="page-float"><div id="masked-skeleton-opacity-layers-figure" class="figure">
+<img src="../ch19-animation-files/masked-skeleton-opacity-layers.jpg" alt="The base photograph of Kurt in a top hat, and then five different versions of the black-and-white skeleton image.  Each of the skeleton images is mostly transparent (with the checked background showing through).  The visible parts of each are in a different stripe or a ring shape, with faded gradient edges."/>
+<figcaption><span class="label">Figure 19-X6. </span>The layers used to create an animated mask effect</figcaption>
+</div></figure>
+
+<p><a data-type="xref" href="#masked-skeleton-opacity-example">Example 19-X6</a> gives the code for creating those layers, and animating their opacity.  None of the skeleton layers ever reach more than 50% opacity, but some of the layers overlap, to create a cumulative impact.  Again, the cicada principle is used, now with five independent time-cycles for the opacity animations of the five masked layers.</p>
+<div id="masked-skeleton-opacity-example" data-type="example">
+<h5><span class="label">Example 19-X6. </span>An animated mask effect, by animating the opacity of multiple layers with different masks</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code> <code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code> <code class="na">xml:lang=</code><code class="s">"en"</code>
+    <code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code>
+    <code class="na">width=</code><code class="s">"430"</code> <code class="na">height=</code><code class="s">"720"</code> <code class="na">viewBox=</code><code class="s">"0 0 860 1440"</code><code class="nt">&gt;</code>
+    <code class="nt">&lt;title&gt;</code>The Masked Man<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;style&gt;</code>
+        <code class="nf">#layers</code> <code class="nt">image</code> <code class="p">{</code>
+            <code class="k">animation</code><code class="o">:</code> <code class="n">fade</code> <code class="m">7s</code> <code class="n">alternate</code> <code class="n">infinite</code><code class="p">;</code>
+        <code class="p">}</code>
+        <code class="nf">#layers</code> <code class="nt">image</code><code class="nd">:nth-of-type</code><code class="o">(</code><code class="nt">1</code><code class="o">)</code> <code class="p">{</code><code class="k">animation-duration</code><code class="o">:</code> <code class="m">3s</code><code class="p">;}</code>
+        <code class="nf">#layers</code> <code class="nt">image</code><code class="nd">:nth-of-type</code><code class="o">(</code><code class="nt">2</code><code class="o">)</code> <code class="p">{</code><code class="k">animation-duration</code><code class="o">:</code> <code class="m">4s</code><code class="p">;}</code>
+        <code class="nf">#layers</code> <code class="nt">image</code><code class="nd">:nth-of-type</code><code class="o">(</code><code class="nt">3</code><code class="o">)</code> <code class="p">{</code><code class="k">animation-duration</code><code class="o">:</code> <code class="m">5s</code><code class="p">;}</code>
+        <code class="nf">#layers</code> <code class="nt">image</code><code class="nd">:nth-of-type</code><code class="o">(</code><code class="nt">4</code><code class="o">)</code> <code class="p">{</code><code class="k">animation-duration</code><code class="o">:</code> <code class="m">6.5s</code><code class="p">;}</code>
+        <code class="nf">#layers</code> <code class="nt">image</code><code class="nd">:nth-of-type</code><code class="o">(</code><code class="nt">5</code><code class="o">)</code> <code class="p">{</code><code class="k">animation-duration</code><code class="o">:</code> <code class="m">7s</code><code class="p">;}</code>
+
+        <code class="k">@keyframes</code> <code class="nt">fade</code> <code class="p">{</code>
+            <code class="nt">0%</code><code class="o">,</code> <code class="nt">20%</code><code class="o">,</code> <code class="nt">60%</code><code class="o">,</code> <code class="nt">90%</code><code class="o">,</code> <code class="nt">100%</code> <code class="p">{</code> <code class="k">opacity</code><code class="o">:</code> <code class="m">0</code> <code class="p">}</code>
+            <code class="nt">10%</code><code class="o">,</code> <code class="nt">80%</code> <code class="p">{</code> <code class="k">opacity</code><code class="o">:</code> <code class="m">0</code><code class="o">.</code><code class="m">5</code> <code class="p">}</code>
+        <code class="p">}</code>
+    <code class="nt">&lt;/style&gt;</code>
+    <code class="nt">&lt;defs&gt;</code>
+        <code class="nt">&lt;linearGradient</code> <code class="na">id=</code><code class="s">"grad1"</code>
+                        <code class="na">gradientTransform=</code><code class="s">"scale(0.8) rotate(10)"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.3"</code> <code class="na">stop-color=</code><code class="s">"#222"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.4"</code> <code class="na">stop-color=</code><code class="s">"#444"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.6"</code> <code class="na">stop-color=</code><code class="s">"#888"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.8"</code> <code class="na">stop-color=</code><code class="s">"#444"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"0.9"</code> <code class="na">stop-color=</code><code class="s">"#222"</code><code class="nt">/&gt;</code>
+            <code class="nt">&lt;stop</code> <code class="na">offset=</code><code class="s">"1"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;/linearGradient&gt;</code>
+        <code class="nt">&lt;linearGradient</code> <code class="na">id=</code><code class="s">"grad2"</code> <code class="na">xlink:href=</code><code class="s">"#grad1"</code>
+            <code class="na">gradientTransform=</code><code class="s">"scale(0.9) rotate(-10)"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;radialGradient</code> <code class="na">id=</code><code class="s">"grad3"</code> <code class="na">xlink:href=</code><code class="s">"#grad1"</code>
+            <code class="na">gradientTransform=</code><code class="s">"translate(0.1) skewX(10)"</code> <code class="nt">/&gt;</code>
+        <code class="nt">&lt;radialGradient</code> <code class="na">id=</code><code class="s">"grad4"</code> <code class="na">xlink:href=</code><code class="s">"#grad1"</code>
+            <code class="na">gradientTransform=</code><code class="s">"translate(-0.2) rotate(-15)"</code> <code class="nt">/&gt;</code>
+        <code class="nt">&lt;radialGradient</code> <code class="na">id=</code><code class="s">"grad5"</code> <code class="na">xlink:href=</code><code class="s">"#grad1"</code>
+            <code class="na">gradientTransform=</code><code class="s">"skewY(10) rotate(30)"</code> <code class="nt">/&gt;</code>
+        <code class="nt">&lt;mask</code> <code class="na">id=</code><code class="s">"mask1"</code> <code class="na">maskContentUnits=</code><code class="s">"objectBoundingBox"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;rect</code> <code class="na">width=</code><code class="s">"1"</code> <code class="na">height=</code><code class="s">"1"</code> <code class="na">fill=</code><code class="s">"url(#grad1)"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;/mask&gt;</code>
+        <code class="nt">&lt;mask</code> <code class="na">id=</code><code class="s">"mask2"</code> <code class="na">maskContentUnits=</code><code class="s">"objectBoundingBox"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;rect</code> <code class="na">width=</code><code class="s">"1"</code> <code class="na">height=</code><code class="s">"1"</code> <code class="na">fill=</code><code class="s">"url(#grad2)"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;/mask&gt;</code>
+        <code class="nt">&lt;mask</code> <code class="na">id=</code><code class="s">"mask3"</code> <code class="na">maskContentUnits=</code><code class="s">"objectBoundingBox"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;rect</code> <code class="na">width=</code><code class="s">"1"</code> <code class="na">height=</code><code class="s">"1"</code> <code class="na">fill=</code><code class="s">"url(#grad3)"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;/mask&gt;</code>
+        <code class="nt">&lt;mask</code> <code class="na">id=</code><code class="s">"mask4"</code> <code class="na">maskContentUnits=</code><code class="s">"objectBoundingBox"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;rect</code> <code class="na">width=</code><code class="s">"1"</code> <code class="na">height=</code><code class="s">"1"</code> <code class="na">fill=</code><code class="s">"url(#grad4)"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;/mask&gt;</code>
+        <code class="nt">&lt;mask</code> <code class="na">id=</code><code class="s">"mask5"</code> <code class="na">maskContentUnits=</code><code class="s">"objectBoundingBox"</code><code class="nt">&gt;</code>
+            <code class="nt">&lt;rect</code> <code class="na">width=</code><code class="s">"1"</code> <code class="na">height=</code><code class="s">"1"</code> <code class="na">fill=</code><code class="s">"url(#grad5)"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;/mask&gt;</code>
+    <code class="nt">&lt;/defs&gt;</code>
+    <code class="nt">&lt;image</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code> <code class="na">xlink:href=</code><code class="s">"TopHatKurt.jpg"</code><code class="nt">/&gt;</code>
+    <code class="nt">&lt;g</code> <code class="na">id=</code><code class="s">"layers"</code><code class="nt">&gt;</code>
+        <code class="nt">&lt;image</code> <code class="na">mask=</code><code class="s">"url(#mask1)"</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code>
+               <code class="na">xlink:href=</code><code class="s">"TopHatSkull.jpg"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;image</code> <code class="na">mask=</code><code class="s">"url(#mask2)"</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code>
+               <code class="na">xlink:href=</code><code class="s">"TopHatSkull.jpg"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;image</code> <code class="na">mask=</code><code class="s">"url(#mask3)"</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code>
+               <code class="na">xlink:href=</code><code class="s">"TopHatSkull.jpg"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;image</code> <code class="na">mask=</code><code class="s">"url(#mask4)"</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code>
+               <code class="na">xlink:href=</code><code class="s">"TopHatSkull.jpg"</code><code class="nt">/&gt;</code>
+        <code class="nt">&lt;image</code> <code class="na">mask=</code><code class="s">"url(#mask5)"</code> <code class="na">width=</code><code class="s">"100%"</code> <code class="na">height=</code><code class="s">"100%"</code>
+               <code class="na">xlink:href=</code><code class="s">"TopHatSkull.jpg"</code><code class="nt">/&gt;</code>
+    <code class="nt">&lt;/g&gt;</code>
+<code class="nt">&lt;/svg&gt;</code></pre></div>
+
+<p>The SVG code is a little longer this time, to define all the gradients, masks, and images.  But gradient cross-references keep it manageable, and the bytes of SVG markup are negligible compared to the JPEG image sizes, anyway.</p>
+
+<p>The performance is much better, and the final effect is even closer to how it was imagined.  The combination of linear and radial gradient masks, as well as the stronger cicada effect, create just the right random-flickering feel.</p>
+
+<p>This example demonstrates a theme we have been repeating since <a data-type="xref" href="../ch01-overview-files/">Chapter 1</a>: there are many ways to create a given visual appearance in SVG code.  If you are designing your SVG entirely in a visual editor, you won’t necessarily think about all the options.  But when you are creating a dynamic experience for the web, that underlying structure can have a big impact.</p>
+
+<p>So if you’re frustrated trying to create an SVG that works the way you want in web browsers, remember to step back and ask: how <em>else</em> could I create the same effect?</p>
+</section>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

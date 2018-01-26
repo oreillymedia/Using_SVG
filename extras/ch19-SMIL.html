@@ -5,6 +5,19 @@
   <title>Using SVG/SMIL Animation Elements
     — Using SVG with CSS3 and HTML5 — Supplementary Material</title>
   <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="../styles/extras.css" />
+  <link rel="stylesheet" href="../styles/solarized-dark.css" />
+
+  <meta name="twitter:title" property="og:title"
+        content="Using SVG/SMIL Animation Elements — Using SVG with CSS3 and HTML5">
+  <meta name="twitter:card"
+        content="summary">
+  <meta name="twitter:description" property="og:description"
+        content="SVG/SMIL elements can add complex animation effects with a few lines of code.  Too bad about the browser support. An online extra for the book Using SVG with CSS3 and HTML5.">
+  <meta name="twitter:image" property="og:image" 
+        content="https://oreillymedia.github.io/Using_SVG/using_svg_cover-square-small.png?v=1">
+  <meta name="twitter:image:alt" property="og:image:alt"
+        content="Using SVG book cover, featuring a blue-fronted lorikeet.">
 </head>
 <body>
   <header>
@@ -21,12 +34,449 @@
     <nav class="toc" aria-label="Page Contents">On this page:
       <ul class="columns narrow">
         <li><a href="#intro">Introduction</a></li>
+        <li><a href="animation-SMIL-syntax-section">All the attributes for declaring animations</a></li>
+        <li><a href="animation-SMIL-timeline-section">Synchronized animation timelines</a></li>
+        <li><a href="animation-SMIL-motion-section">Animating complex motion</a></li>
+        <li><a href="animation-SMIL-additive-section">Additive and accumulative animations</a></li>
       </ul>
     </nav>
-    <div id="intro" class="columns">
-      <p>(coming soon)
-      </p>
-    </div>
+<div id="intro">
+<p>Without cross-browser support, the SVG/SMIL animation elements are of limited use on the web.  But there are still numerous effects they can create that CSS animations and transitions can’t, so SVG/SMIL can be useful for quickly adding non-essential animations which don’t justify loading a JavaScript animation library.</p>
+
+<p>To recap our introduction from the book: Most SVG/SMIL animations will use the <code>&lt;animate&gt;</code> element.  Attributes on that element describe the changes you want to apply to an attribute or style property of another element in your SVG.</p>
+
+</div>
+
+
+<section>
+<h2 id="animation-SMIL-syntax-section">All the attributes for declaring animations<a href="#animation-SMIL-syntax-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>There are a <em>lot</em> of different attributes for controlling SVG/SMIL animations.  There is a more detailed reference, with all the syntax details, in <a data-type="xref" href="../guide/markup.html#animation">“Animation Elements” section of our markup guide</a>; this is a more conceptual overview.<sup><a data-type="noteref" id="idm140278995259712-marker" href="#idm140278995259712">1</a></sup>  The attributes can be grouped into the following categories:</p>
+<dl>
+<dt id="Setting the target element and attribute">Setting the target element and attribute<a href="#Setting the target element and attribute" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>The target element is identified with an <code>xlink:href</code> cross-reference; it defaults to the animation element’s parent (which could be a shape, group, <code>&lt;use&gt;</code> element or pretty much any other element in SVG).</p>
+
+<p>The target attribute or style property is set with <code>attributeName</code>.  By default, the animation will affect the <em>style property</em>, if one exists by that name.  You can use <code>attributeType="XML"</code> to force the browser to animate the XML attribute instead of a CSS property by the same name.  This is important for animating <code>width</code> and <code>height</code> and so on.</p>
+</dd>
+<dt id="Setting the new value">Setting the new value(s)<a href="#Setting the new value" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>The changed value(s) for your attribute or style is set with one of the <code>to</code>, <code>by</code>, <em>or</em> <code>values</code> attributes, and optionally with <code>from</code>:</p>
+<div class="openblock">
+<ul>
+<li>
+<p><code>to</code> is the final value of the property/attribute</p>
+</li>
+<li>
+<p><code>by</code> is an amount to increase or decrease the value</p>
+</li>
+<li>
+<p><code>from</code> is the initial value (which defaults to the base value on the element)</p>
+</li>
+<li>
+<p><code>values</code> is a sequence of keyframe values—including the “from” and “to” values—as a semicolon-separated list (if you use it, the other attributes are ignored)</p>
+</li>
+</ul>
+</div>
+
+
+<p>The <code>fill="freeze"</code> attribute forces the ending value to be preserved indefinitely, unless you set a different animation on the same element or restart this animation.</p>
+</dd>
+<dt id="Setting duration and repeats">Setting duration and repeats<a href="#Setting duration and repeats" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>The <code>dur</code> attribute sets the duration time of a single cycle of the animation; without a fixed duration, the animation won’t progress past the <code>from</code> value.  You can cause that cycle to repeat by setting <code>repeatCount</code> (a number of cycles) or <code>repeatDur</code> (a total duration time).  By default (without either <code>repeat*</code> attribute), the animation only runs once.</p>
+
+<p>Either <code>repeatCount</code> or <code>repeatDur</code>  can be <code>indefinite</code> (<em>not</em> “infinite”) for unlimited repeats.  If you set both repeat measurements, the first one to finish terminates the animation.  You can also set a <code>max</code> (maximum) total duration time or a <code>min</code> (minimum) time; however, <code>min</code> can’t cause extra repeats, it only affects indefinite animations ended with <code>end</code>.</p>
+</dd>
+<dt id="Setting beginning and ending times">Setting beginning and ending times<a href="#Setting beginning and ending times" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>Animations have a <code>begin</code> time and an <code>end</code> time, which causes all repeats to end.  <code>begin</code> is by default at <code>0s</code>, relative to the document loading time; <code>end</code> is by default determined by the duration and repeat attributes.  Both values can be a semicolon-separated list of multiple times.</p>
+
+<p>In addition to beginning or ending at a specified <em>time</em>, you can begin or end an animation in response to an <em>event</em>.  Events are specified using the DOM event name, like <code>mouseover</code> (for a mouseover event on the animation’s target element) or <code>button1.click</code> (for a click event on an element in the document with <code>id</code> of <code>button1</code>).  Animation elements create <code>begin</code> and <code>end</code> events, plus numbered repeat events like <code>repeat(1)</code>, so you can set one animation to begin or end in sync with another.  You can also set time offsets from an event, like <code>begin="otherAnimation.end - 1s"</code> to start this animation one second before the other animation is due to end.</p>
+
+<p>Multiple begin times or event triggers can cause an animation to interrupt itself; the <code>restart</code> attribute can limit restarts, to only <code>whenNotActive</code> (i.e., not currently running) or <code>never</code> at all.</p>
+</dd>
+<dt id="Setting pacing between keyframes">Setting pacing between keyframes<a href="#Setting pacing between keyframes" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>By default, multiple keyframe <code>values</code> are evenly distributed in the duration of an animation cycle, and the actual values are interpolated in a <em>linear</em> fashion between each keyframe.  You can change the keyframe positions with <code>keyTimes</code>, which take a semicolon-separated list of numbers between 0 and 1 (like the percentages in CSS keyframes, but converted to decimals).</p>
+
+<p>You can switch interpolation methods with the <code>calcMode</code> attribute, to <code>discrete</code>, <code>paced</code>, or <code>spline</code> (the default is <code>linear</code>).  “Spline” interpolation is cubic Bézier easing, and only works if you also set <code>keyTimes</code> and <code>keySplines</code>.  The values in <code>keySplines</code> are cubic Bézier control points (four numbers, like the ones in the CSS <code>cubic-bezier()</code> function), with multiple sets of four numbers (one for every pair of consecutive <code>values</code>) in a semicolon-separated list.</p>
+</dd>
+<dt id="Setting additive effects">Setting additive effects<a href="#Setting additive effects" class="hash-link" aria-label="Permalink">#</a></dt>
+<dd>
+<p>The <code>additive</code> and <code>accumulate</code> attributes allow animations or repeats to sum together; we’ll discuss them in <a data-type="xref" href="#animation-SMIL-additive-section">“Additive and accumulative animations”</a>.</p>
+</dd>
+</dl>
+
+<p>Are you confused yet?</p>
+
+<p>Learning SVG/SMIL takes a lot of practice and a lot of double-checking the specs.  There are so many possible options, but there are also lots of annoying cross-dependencies, like not being able to use <code>from</code> without either <code>to</code> or <code>by</code>, and not being able to use <code>keySplines</code> without <code>keyTimes</code>, even when you aren’t changing the <code>keyTimes</code> default!</p>
+
+<p>So why bother?</p>
+
+<p>Because there are some things that SVG/SMIL can do really easily that are currently difficult or impossible with CSS animations.  The next couple sections look at some of those cases.</p>
+</section>
+
+<section>
+<h2 id="animation-SMIL-timeline-section">Synchronized animation timelines<a href="#animation-SMIL-timeline-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>One of the biggest benefits of SVG/SMIL relative to CSS animations are the synchronized timing options.  These allow you to create an entire script of different short animations.</p>
+
+<p>To demonstrate, we’ll create an animated logo, similar to the “stingers” that movie and TV production studios use at the beginning or ends of films.  The logo is about as basic as a logo can get, as shown in <a data-type="xref" href="#animate-logo-static-figure">Figure 19-X1</a>: a circle, with the words “Circle Games” arranged in a circular <code>&lt;textPath&gt;</code>.</p>
+
+<figure class="page-float"><div id="animate-logo-static-figure" class="figure">
+<img src="../ch19-animation-files/animate-logo-static.svg" alt="The circle is purple with a lighter purple stroke.  The 'Circle Games' text is in a sans-serif font, inset from the edges of the circle and centered at the top, wrapping down on either side in a semi-circle shape." width="300"/>
+<figcaption><span class="label">Figure 19-X1. </span>A simple logo, ready for animation</figcaption>
+</div></figure>
+
+<p>To give this simple logo a little pizzazz, we’re going to:</p>
+
+<ul>
+<li>
+<p>animate the circle up from nothing (like we did in <a data-type="xref" href="../ch19-animation-files/">Example 19-2</a>), but then have it bounce bigger and smaller for a few seconds before settling down.</p>
+</li>
+<li>
+<p>Rotate the text into place around the circular text-path, fading it in to full opacity as the letters appear.</p>
+</li>
+<li>
+<p>Hold the full logo in place a few seconds.</p>
+</li>
+<li>
+<p>Fade the text out again, but without moving it.</p>
+</li>
+<li>
+<p>Shrink the circle down to a dot, with some easing effects to give it a jump at the end.</p>
+</li>
+<li>
+<p>Roll the dot off the side of the screen, accelerating as it goes.</p>
+</li>
+</ul>
+
+<p><a data-type="xref" href="#animate-logo-frames-figure">Figure 19-X2</a> shows the animation sequences as a series of stills, taken at one-second intervals for twenty seconds.  For something a little more exciting, <a href="../ch19-animation-files/animate-logo.svg">view the final live animation</a>.</p>
+
+<figure class="page-float"><div id="animate-logo-frames-figure" class="figure">
+<img src="../ch19-animation-files/animate-logo-frames.png" alt="Twenty squares arranged in rows of five.  Frame 1 is an empty white screens.  Frames 2 through 5 are purple circles alternating larger and smaller.  Frames 10 through 14 all have the same-sized circle, instead text is change.  Letters appear upside-down and curves 'ames' then 'cle Games' and finally 'Circle Games' as they wrap around the circle, eventually being positioned in a semi-circle at the top of the logo, where it stays for three frames before fading away.  After that, in Frames 15 to 18, the circle shrinks to a dot in the middle of the frame.  In frame 19, the dot is off to one side. In frame 20, it is gone, leaving behind the blank white screen."/>
+<figcaption><span class="label">Figure 19-X2. </span>Frames of a logo animation, at one-second intervals</figcaption>
+</div></figure>
+<div data-type="tip"><h6>Tip</h6>
+<p>The SVG DOM has methods for SVG/SMIL animations that can help with taking still screenshots—among other uses.</p>
+
+<p>Every <code>&lt;svg&gt;</code> element has <code>pauseAnimations()</code> and <code>unPauseAnimations()</code> methods, plus a <code>setCurrentTime()</code> method that accepts a time in seconds.  These all affect all animations in the document.</p>
+
+<p>Each animation element also has <code>beginElement()</code> and <code>endElement()</code> methods.</p>
+</div>
+
+<p>Before we get into the code, we’ll introduce one more animation element.</p>
+
+<p>Although the <code>&lt;animate&gt;</code> element is the general workhorse for most attribute animations, for simple discrete changes it is usually easier to use <code>&lt;set&gt;</code>.</p>
+
+<p>A <code>&lt;set&gt;</code> element applies the <code>to</code> value to the target attribute or property for as long as the animation is active.  In other words, it <em>sets</em> the attribute <em>to</em> the new value for a specified amount of time (<code>dur</code>) or until the <code>end</code> trigger.  There is no transition time—the change is always discrete—and there is no way to apply a sequence of values or to change the value by a relative amount.</p>
+
+<p>In other words, the main benefit of <code>&lt;set&gt;</code> is that it lets you avoid writing <code>calcMode="discrete"</code> over and over again.  Also, it makes your code a little more clear.</p>
+
+<p>So the following <code>&lt;set&gt;</code> element would ensure that its parent element disappears when the element with <code>id="button1"</code> is clicked, and isn’t displayed again until the element with <code>id="button2"</code> is clicked:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;set</code> <code class="na">attributeName=</code><code class="s">"display"</code> <code class="na">to=</code><code class="s">"none"</code>
+     <code class="na">begin=</code><code class="s">"button1.click"</code>
+     <code class="na">end=</code><code class="s">"button2.click"</code> <code class="nt">/&gt;</code></pre>
+
+<p>(Of course, for accessibility purposes you’d want make sure that <code>button1</code> and <code>button2</code> are actually <code>&lt;a&gt;</code> links that can be “clicked” with the keyboard, too.)</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>Theoretically, the event trigger elements could be other (non-SVG) elements in the same document. In other words, they could be HTML <code>&lt;button&gt;</code> elements in a document with inline SVG.  But that doesn’t work in Chrome, which only listens for these events on SVG elements.</p>
+</div>
+
+<p>In <a data-type="xref" href="#animate-logo-example">Example 19-X1</a>, we use a <code>&lt;set&gt;</code> to hide the logo text until it is ready to be animated in.  The remaining changes are all defined with <code>&lt;animate&gt;</code> elements, that modify the circle’s radius (<code>r</code>), or its horizontal position (<code>cx</code>), the text’s <code>opacity</code>, and the <code>&lt;textPath&gt;</code>’s <code>startOffset</code> position.</p>
+<div id="animate-logo-example" data-type="example">
+<h5><span class="label">Example 19-X1. </span>Creating a complex animation sequence from synchronized animation elements</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">width=</code><code class="s">"100%"</code><code> </code><code class="na">height=</code><code class="s">"100%"</code><code> </code><code class="na">viewBox=</code><code class="s">"-220 -220 440 440"</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>Reveal and Disappear Animated Logo</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;circle</code><code> </code><code class="na">id=</code><code class="s">"c"</code><code> </code><code class="na">r=</code><code class="s">"190"</code><code>
+            </code><code class="na">fill=</code><code class="s">"darkOrchid"</code><code> </code><code class="na">stroke=</code><code class="s">"plum"</code><code> </code><code class="na">stroke-width=</code><code class="s">"16"</code><code> </code><code class="nt">/&gt;</code><code> </code><a class="co" id="co_online_extras_CO23-1" href="#callout_online_extras_CO23-1"><img src="callouts/1.svg" alt="1"/></a><code>
+    </code><code class="nt">&lt;defs</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"p"</code><code> </code><code class="na">d=</code><code class="s">"M0,125 A125,125 0 0,1 0,-125
+                               A125,125 0 0,1 0, 125Z"</code><code> </code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;/defs&gt;</code><code>                                                      </code><a class="co" id="co_online_extras_CO23-2" href="#callout_online_extras_CO23-2"><img src="callouts/2.svg" alt="2"/></a><code>
+    </code><code class="nt">&lt;text</code><code> </code><code class="na">id=</code><code class="s">"t"</code><code> </code><code class="na">dy=</code><code class="s">"0.7ex"</code><code> </code><code class="na">text-anchor=</code><code class="s">"middle"</code><code>
+          </code><code class="na">font-size=</code><code class="s">"48pt"</code><code> </code><code class="na">font-family=</code><code class="s">"Verdana"</code><code>
+          </code><code class="na">fill=</code><code class="s">"white"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;textPath</code><code> </code><code class="na">id=</code><code class="s">"tp"</code><code> </code><code class="na">xlink:href=</code><code class="s">"#p"</code><code>
+                  </code><code class="na">startOffset=</code><code class="s">"50%"</code><code class="nt">&gt;</code><code>Circle Games</code><code class="nt">&lt;/textPath&gt;</code><code class="nt">&lt;/text&gt;</code><code>
+
+    </code><code class="nt">&lt;set</code><code>     </code><code class="na">id=</code><code class="s">"textHide"</code><code> </code><code class="na">xlink:href=</code><code class="s">"#t"</code><code>
+             </code><code class="na">attributeName=</code><code class="s">"visibility"</code><code> </code><code class="na">to=</code><code class="s">"hidden"</code><code>
+             </code><code class="na">end=</code><code class="s">"textFadeIn.begin"</code><code> </code><code class="nt">/&gt;</code><code>                   </code><a class="co" id="co_online_extras_CO23-3" href="#callout_online_extras_CO23-3"><img src="callouts/3.svg" alt="3"/></a><code>
+    </code><code class="nt">&lt;animate</code><code> </code><code class="na">id=</code><code class="s">"circleGrow"</code><code> </code><code class="na">xlink:href=</code><code class="s">"#c"</code><code>
+             </code><code class="na">attributeName=</code><code class="s">"r"</code><code>
+             </code><code class="na">values=</code><code class="s">"0;215;100;205;140;195;170;190"</code><code>
+             </code><code class="na">dur=</code><code class="s">"5s"</code><code class="nt">/&gt;</code><code>                                  </code><a class="co" id="co_online_extras_CO23-4" href="#callout_online_extras_CO23-4"><img src="callouts/4.svg" alt="4"/></a><code>
+    </code><code class="nt">&lt;animate</code><code> </code><code class="na">id=</code><code class="s">"textPathSlide"</code><code> </code><code class="na">xlink:href=</code><code class="s">"#tp"</code><code>
+             </code><code class="na">attributeName=</code><code class="s">"startOffset"</code><code>
+             </code><code class="na">from=</code><code class="s">"-20%"</code><code> </code><code class="na">to=</code><code class="s">"50%"</code><code>
+             </code><code class="na">dur=</code><code class="s">"4s"</code><code> </code><code class="na">begin=</code><code class="s">"circleGrow.end - 1s"</code><code> </code><code class="nt">/&gt;</code><code>     </code><a class="co" id="co_online_extras_CO23-5" href="#callout_online_extras_CO23-5"><img src="callouts/5.svg" alt="5"/></a><code>
+    </code><code class="nt">&lt;animate</code><code> </code><code class="na">id=</code><code class="s">"textFadeIn"</code><code> </code><code class="na">xlink:href=</code><code class="s">"#t"</code><code>
+             </code><code class="na">attributeName=</code><code class="s">"opacity"</code><code> </code><code class="na">from=</code><code class="s">"0"</code><code> </code><code class="na">to=</code><code class="s">"1"</code><code>
+             </code><code class="na">dur=</code><code class="s">"3s"</code><code> </code><code class="na">begin=</code><code class="s">"textPathSlide.begin"</code><code> </code><code class="nt">/&gt;</code><code>     </code><a class="co" id="co_online_extras_CO23-6" href="#callout_online_extras_CO23-6"><img src="callouts/6.svg" alt="6"/></a><code>
+    </code><code class="nt">&lt;animate</code><code> </code><code class="na">id=</code><code class="s">"textFadeOut"</code><code> </code><code class="na">xlink:href=</code><code class="s">"#t"</code><code>
+             </code><code class="na">attributeName=</code><code class="s">"opacity"</code><code> </code><code class="na">to=</code><code class="s">"0"</code><code> </code><code class="na">fill=</code><code class="s">"freeze"</code><code>
+             </code><code class="na">dur=</code><code class="s">"2s"</code><code> </code><code class="na">begin=</code><code class="s">"textPathSlide.end + 3s"</code><code> </code><code class="nt">/&gt;</code><code>  </code><a class="co" id="co_online_extras_CO23-7" href="#callout_online_extras_CO23-7"><img src="callouts/7.svg" alt="7"/></a><code>
+    </code><code class="nt">&lt;animate</code><code> </code><code class="na">id=</code><code class="s">"circleShrink"</code><code> </code><code class="na">xlink:href=</code><code class="s">"#c"</code><code>
+             </code><code class="na">attributeName=</code><code class="s">"r"</code><code> </code><code class="na">to=</code><code class="s">"8"</code><code> </code><code class="na">fill=</code><code class="s">"freeze"</code><code>
+             </code><code class="na">dur=</code><code class="s">"3s"</code><code> </code><code class="na">begin=</code><code class="s">"textFadeOut.end + 0.1s"</code><code>
+             </code><code class="na">calcMode=</code><code class="s">"spline"</code><code> </code><code class="na">keyTimes=</code><code class="s">"0;1"</code><code>
+             </code><code class="na">keySplines=</code><code class="s">"0.2,0.9,0.9,0.5"</code><code> </code><code class="nt">/&gt;</code><code>             </code><a class="co" id="co_online_extras_CO23-8" href="#callout_online_extras_CO23-8"><img src="callouts/8.svg" alt="8"/></a><code>
+    </code><code class="nt">&lt;animate</code><code> </code><code class="na">id=</code><code class="s">"circleMove"</code><code> </code><code class="na">xlink:href=</code><code class="s">"#c"</code><code>
+             </code><code class="na">attributeName=</code><code class="s">"cx"</code><code> </code><code class="na">by=</code><code class="s">"-500"</code><code> </code><code class="na">fill=</code><code class="s">"freeze"</code><code>
+             </code><code class="na">dur=</code><code class="s">"3s"</code><code> </code><code class="na">begin=</code><code class="s">"circleShrink.end"</code><code>
+             </code><code class="na">calcMode=</code><code class="s">"spline"</code><code> </code><code class="na">keyTimes=</code><code class="s">"0;1"</code><code>
+             </code><code class="na">keySplines=</code><code class="s">"0.5,0,0.8,0"</code><code> </code><code class="nt">/&gt;</code><code>                 </code><a class="co" id="co_online_extras_CO23-9" href="#callout_online_extras_CO23-9"><img src="callouts/9.svg" alt="9"/></a><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO23-1" href="#co_online_extras_CO23-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>To keep the file organized, all the code for drawing the shapes and text is given first, then all the animation elements are listed together, ordered by their start time.  We’ve also given all the animation elements <code>id</code> values for consistency (and to document the code), although only some of them are used to synchronize begin/end times.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO23-2" href="#co_online_extras_CO23-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>The graphic is a stroked circle and then a <code>&lt;textPath&gt;</code>.  The <code>&lt;path&gt;</code> for the <code>&lt;textPath&gt;</code> isn’t drawn itself; it describes a 125px-radius circle that starts and ends at the bottom.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO23-3" href="#co_online_extras_CO23-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>The first animation is the <code>&lt;set&gt;</code> that hides the text until it’s needed.  It starts at 0s (by default) and is ended by the beginning of the <code>textFadeIn</code> animation.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO23-4" href="#co_online_extras_CO23-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>The <code>circleGrow</code> animation also begins by default as soon as the document loads.  It modifies the circle’s <code>r</code> attribute, in an alternating series of values spread out over 5 seconds.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO23-5" href="#co_online_extras_CO23-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+<dd><p>The motion of the text on the path (<code>textPathSlide</code>), created by animating the <code>startOffset</code> attribute, starts one second before the circle animation has completely settled.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO23-6" href="#co_online_extras_CO23-6"><img src="callouts/6.svg" alt="6"/></a></dt>
+<dd><p>The <code>textFadeIn</code> animation (changing opacity) is synchronized to start with <code>textPathSlide</code>, and it in turn triggers the end of the <code>textHide</code> <code>&lt;set&gt;</code> element.  All of these timing connections are based on the logical dependencies of the content, so that if the timing of one step is tweaked later, other animations will adjust to match.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO23-7" href="#co_online_extras_CO23-7"><img src="callouts/7.svg" alt="7"/></a></dt>
+<dd><p>The fade-out starts three seconds after the end of the text motion, and freezes the text as transparent.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO23-8" href="#co_online_extras_CO23-8"><img src="callouts/8.svg" alt="8"/></a></dt>
+<dd><p>A mere tenth of a second after the text disappears, the circle starts shrinking down to the 8px radius that will mean that only the stroke is visible.  The motion uses a cubic Bézier spline that starts relatively fast, slows down, then speeds up again.  You can calculate these spline values using the same tools as for CSS <code>cubic-bezier()</code> timing functions.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO23-9" href="#co_online_extras_CO23-9"><img src="callouts/9.svg" alt="9"/></a></dt>
+<dd><p>The final animation, that moves the circle left by 500px, also uses spline easing, this time to create an accelerating effect.  The final position is frozen, well off screen (even if the <code>viewBox</code> doesn’t take up the full <code>&lt;svg&gt;</code> dimensions).</p></dd>
+</dl></div>
+
+<p>The base values for all those attributes are defined such that, without SVG/SMIL support, the static logo is shown, with the circle full size and the text neatly centered.</p>
+</section>
+
+<section>
+<h2 id="animation-SMIL-motion-section">Animating complex motion<a href="#animation-SMIL-motion-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>In addition to <code>&lt;animate&gt;</code> and <code>&lt;set&gt;</code>, there are two specialized SVG animation elements for creating animated transformations:</p>
+<dl>
+<dt><code>&lt;animateTransform&gt;</code></dt>
+<dd>
+<p>Applies one particular transformation function to the target element.  The <code>type</code> attribute specifies <em>which</em> type of transformation (<code>translate</code>, <code>scale</code>, <code>rotate</code>, etc.), while the <code>to</code>, <code>from</code>, <code>by</code>, or <code>values</code> attributes specify the parameters to the transformation.</p>
+</dd>
+<dt><code>&lt;animateMotion&gt;</code></dt>
+<dd>
+<p>Moves the target element, similar to translational (and rotational) transformations.  However, instead of defining the transformation using the normal syntax, you describe where you want the element to go.  The path of the motion can be defined as a series of translations, or as an SVG path through the coordinate system.</p>
+
+<p>You can optionally make the shape auto-rotate to match the angle of the path (similar to how the letters are rotated in a <code>&lt;textPath&gt;</code> layout), with <code>rotate="auto"</code>.</p>
+</dd>
+</dl>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>The SVG 1 spec also included the SMIL <code>&lt;animateColor&gt;</code> element, but it didn’t add any function, because <code>&lt;animate&gt;</code> could animate colors in SVG.  The element was deprecated in SVG 1.1 and is no longer supported in Chrome.  Use <code>&lt;animate&gt;</code> instead.</p>
+</div>
+
+<p>In SVG 1.1, <code>&lt;animateTransform&gt;</code> and <code>&lt;animateMotion&gt;</code> are the only way to get smooth transitions of tranformations: the spec did not define rules for animating the full transformation lists from one value to another.  Those rules are defined in the CSS Transforms Module, so you could theoretically animate transforms with <code>&lt;animate&gt;</code>, but only if any of the browsers had updated their implementations.</p>
+
+<p>We’ll show an example of <code>&lt;animateTransform&gt;</code> in the next section, when we discuss additive animations.  For this section, we’re focusing on <code>&lt;animateMotion&gt;</code>.</p>
+
+<p>In the original SMIL version of <code>&lt;animateMotion&gt;</code>, you specified <em>x</em> and <em>y</em> translation distances in the <code>to</code>, <code>from</code>, <code>by</code>, or <code>values</code> attributes.</p>
+
+<p>You can do that with SVG/SMIL, but it is mostly equivalent to an <code>&lt;animateTransform&gt;</code> with <code>type="translate"</code>.  The differences are:</p>
+
+<ul>
+<li>
+<p>You can rotate the shape to match the direction of the motion (but this isn’t supported in Chrome).</p>
+</li>
+<li>
+<p>You can use lengths with units in <code>&lt;animateMotion&gt;</code> values (but this isn’t supported in Chrome).</p>
+</li>
+<li>
+<p>The default <code>calcMode</code> is <code>paced</code> instead of <code>linear</code> (Chrome gets this part correct).</p>
+</li>
+</ul>
+
+<p>A <code>paced</code> animation means that the speed stays steady throughout the <em>entire</em> animation.  In contrast, with <code>linear</code> and <code>spline</code> modes, the total duration is divided up into separately-timed transitions for each value in the list.  Consider the following animation:</p>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;animateMotion</code> <code class="na">values=</code><code class="s">"0,30; 40,0; 80,30; 0,30"</code>
+               <code class="na">rotate=</code><code class="s">"auto"</code>
+               <code class="na">dur=</code><code class="s">"9s"</code> <code class="na">repeatCount=</code><code class="s">"indefinite"</code> <code class="nt">/&gt;</code></pre>
+
+<p>Those four (<em>x</em>,<em>y</em>) pairs in <code>values</code>, with the last pair repeating the first, create an isoceles triangle, as shown in <a data-type="xref" href="#calcMode-paced-linear-figure">Figure 19-X3</a>.  The sides of the triangle have lengths of 50, 50, and 80 units; the total path length is 180 units.</p>
+
+<figure class="page-float"><div id="calcMode-paced-linear-figure" class="figure">
+<img src="../ch19-animation-files/calcMode-paced-linear.png" alt="Two copies of a figure featuring a wide isoceles triangle drawn with a dashed line.  In the top version, labelled linear, each side is labelled 3s.  Bottom is labelled paced, and the sides are labelled 2.5s, 2.5s, and 4s.  A red arrow is positioned on each triangle.  In the top, it is approaching the corner from the second short side to the long base.  In the bottom, it is already partway along the base."/>
+<figcaption><span class="label">Figure 19-X3. </span>Timing of triangular motion with linear versus paced <code>calcMode</code></figcaption>
+</div></figure>
+
+<p>A <code>linear</code> mode would divide the total animation into 3 equal steps (unless you set <code>keyTimes</code>).  For the 9s animation, that would mean 3 seconds for each side of the triangle.  The shape would move more slowly on the shorter sides and faster on the long side.</p>
+
+<p>For the <code>paced</code> animation, the total 180-unit distance would be divided by the 9s total duration; any <code>keyTimes</code> attribute would be ignored.  The shape moves 20 units per second along the entire triangle.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>You can also set <code>calcMode="paced"</code> for any animation where the values are numbers or colors.  (The same types of properties that work with additive animations.)  The “distance” for colors is the distance across the RGB cube, as if each color channel was a different direction in 3D space.</p>
+
+<p>The animation will pass through all the values you specify, in the order you give them, but the overall rate of change will stay constant.</p>
+</div>
+
+<p>The most interesting use of <code>&lt;animateMotion&gt;</code> is to apply motion along an SVG path.  This allows you to define motion along curves which can’t be broken down into a series of linear translations.  It also means that Chrome will support auto-rotation.</p>
+
+<p>The motion path you use can be set two ways:</p>
+
+<ul>
+<li>
+<p>in the <code>path</code> attribute of the <code>&lt;animateMotion&gt;</code> element, using SVG path data syntax; or,</p>
+</li>
+<li>
+<p>as a cross reference to a <code>&lt;path&gt;</code> element, specified using the <code>xlink:href</code> attribute on an <code>&lt;mpath&gt;</code> element that is a child of the <code>&lt;animateMotion&gt;</code>.</p>
+</li>
+</ul>
+
+<p>The <code>&lt;mpath&gt;</code> element has no other attributes; it only exists because the main animation elements already had an <code>xlink:href</code> attribute for identifying the target element—and because SVG 1 insisted on using <code>xlink:href</code> for all cross references other than style properties.</p>
+
+<p><a data-type="xref" href="../ch19-animation-files/">Example 19-3</a>, in the book, used <code>&lt;animateMotion&gt;</code> and <code>&lt;mpath&gt;</code> to create an infinitely spinning loader, of multiple beads moving along the same path.</p>
+</section>
+
+<section>
+<h2 id="animation-SMIL-additive-section">Additive and accumulative animations<a href="#animation-SMIL-additive-section" class="hash-link" aria-label="Permalink">#</a></h2>
+
+<p>Compared to the complex patterns you can create with <code>&lt;animateMotion&gt;</code>, a single <code>&lt;animateTransform&gt;</code> element isn’t particularly interesting.  It can only apply a single transformation function: either a rotation <em>or</em> a translation <em>or</em> a scale <em>or</em> a skew.</p>
+
+<p>You <em>could</em> create complex motion with <code>&lt;animateTransform&gt;</code> by <em>nesting</em> elements with different transformations: an element with a translation inside a group with a rotation, for example.  Nesting elements like this is currently the recommended approach for animating complex transformations with CSS.</p>
+
+<p>But sometimes, you don’t want to add all those nested <code>&lt;g&gt;</code> elements.  And sometimes, it’s not even an option—for example, inside a <code>&lt;clipPath&gt;</code> where groups are still forbidden.</p>
+
+<p>SVG/SMIL has a solution: additive animations.  Multiple independent animation elements, animating the same property on the same element, that can add together in their effect.</p>
+<div data-type="tip"><h6>Tip</h6>
+<p>Additive animations are particularly useful for <code>&lt;animateTransform&gt;</code>, but can also be used for most numerical or length attributes, or for colors.</p>
+</div>
+
+<p>You define an additive animation by setting the <code>additive</code> attribute to <code>sum</code>.</p>
+
+<p>The default value for <code>additive</code> is <code>replace</code>: animations that start later <em>replace</em> earlier animations of the same property on the same element.  For multiple animations that start at the same time, the last element in the document wins (similar to CSS rules).</p>
+
+<p><a data-type="xref" href="#XRay-example">Example 19-X2</a> uses additive <code>&lt;animateTransform&gt;</code> animations to create a complex motion pattern.  The example creates the appearance of X-Ray glasses or goggles, seeing through a photograph (of one of the authors, Kurt).  <a data-type="xref" href="#XRay-figure">Figure 19-X4</a> shows sample screenshots.</p>
+
+<figure class="page-float"><div id="XRay-figure" class="figure">
+<img src="../ch19-animation-files/XRay.jpg" alt="Two copies of a photograph of Kurt in a top hat.  At different positions on each is a green outline of two side-by-side circles, like binoculars.  Through the binocular outline, the photograph is somewhat different: still a man in glasses and a top hat with a bushy white beard, but instead of rosy cheeks and crinkled eyes there is an empty skull with grinning teeth."/>
+<figcaption><span class="label">Figure 19-X4. </span>Two X-ray views into Kurt’s skull (oh my!)</figcaption>
+</div></figure>
+<div id="XRay-example" data-type="example">
+<h5><span class="label">Example 19-X2. </span>Creating complex transformation patterns with additive animations</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code><code> </code><code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code><code> </code><code class="na">xml:lang=</code><code class="s">"en"</code><code>
+     </code><code class="na">xmlns:xlink=</code><code class="s">"http://www.w3.org/1999/xlink"</code><code>
+     </code><code class="na">viewBox=</code><code class="s">"0 0 384 643"</code><code> </code><code class="na">width=</code><code class="s">"384px"</code><code> </code><code class="na">height=</code><code class="s">"643px"</code><code class="nt">&gt;</code><code>
+    </code><code class="nt">&lt;title</code><code class="nt">&gt;</code><code>X-Ray Scanner</code><code class="nt">&lt;/title&gt;</code><code>
+    </code><code class="nt">&lt;image</code><code> </code><code class="na">xlink:href=</code><code class="s">"TopHatKurt.jpg"</code><code> </code><code class="na">width=</code><code class="s">"100%"</code><code> </code><code class="na">height=</code><code class="s">"100%"</code><code class="nt">/&gt;</code><code>
+    </code><code class="nt">&lt;image</code><code> </code><code class="na">xlink:href=</code><code class="s">"TopHatSkull.jpg"</code><code> </code><code class="na">width=</code><code class="s">"100%"</code><code> </code><code class="na">height=</code><code class="s">"100%"</code><code>
+           </code><code class="na">clip-path=</code><code class="s">"url(#cp)"</code><code> </code><code class="nt">/&gt;</code><code>                         </code><a class="co" id="co_online_extras_CO24-1" href="#callout_online_extras_CO24-1"><img src="callouts/1.svg" alt="1"/></a><code>
+    </code><code class="nt">&lt;path</code><code> </code><code class="na">id=</code><code class="s">"goggles"</code><code>
+          </code><code class="na">d=</code><code class="s">"M0-30 A75,75 0 1,1 0,30 A75,75 0 1,1 0,-30Z"</code><code>
+          </code><code class="na">fill=</code><code class="s">"green"</code><code> </code><code class="na">fill-opacity=</code><code class="s">"0.4"</code><code>
+          </code><code class="na">stroke=</code><code class="s">"green"</code><code> </code><code class="na">stroke-width=</code><code class="s">"4"</code><code class="nt">&gt;</code><code>                 </code><a class="co" id="co_online_extras_CO24-2" href="#callout_online_extras_CO24-2"><img src="callouts/2.svg" alt="2"/></a><code>
+        </code><code class="nt">&lt;animateTransform</code><code> </code><code class="na">attributeName=</code><code class="s">"transform"</code><code>
+            </code><code class="na">type=</code><code class="s">"translate"</code><code> </code><code class="na">values=</code><code class="s">"200,40;200,600;200,40"</code><code>
+            </code><code class="na">dur=</code><code class="s">"10s"</code><code> </code><code class="na">repeatCount=</code><code class="s">"indefinite"</code><code> </code><code class="nt">/&gt;</code><code>          </code><a class="co" id="co_online_extras_CO24-3" href="#callout_online_extras_CO24-3"><img src="callouts/3.svg" alt="3"/></a><code>
+        </code><code class="nt">&lt;animateTransform</code><code> </code><code class="na">attributeName=</code><code class="s">"transform"</code><code>
+            </code><code class="na">type=</code><code class="s">"translate"</code><code> </code><code class="na">values=</code><code class="s">"-50,0;50,0;-50,0"</code><code>
+            </code><code class="na">dur=</code><code class="s">"3s"</code><code> </code><code class="na">repeatCount=</code><code class="s">"indefinite"</code><code>
+            </code><code class="na">additive=</code><code class="s">"sum"</code><code class="nt">/&gt;</code><code>                               </code><a class="co" id="co_online_extras_CO24-4" href="#callout_online_extras_CO24-4"><img src="callouts/4.svg" alt="4"/></a><code>
+        </code><code class="nt">&lt;animateTransform</code><code> </code><code class="na">attributeName=</code><code class="s">"transform"</code><code>
+            </code><code class="na">type=</code><code class="s">"rotate"</code><code> </code><code class="na">values=</code><code class="s">"-10;10;-10"</code><code>
+            </code><code class="na">dur=</code><code class="s">"7s"</code><code> </code><code class="na">repeatCount=</code><code class="s">"indefinite"</code><code>
+            </code><code class="na">additive=</code><code class="s">"sum"</code><code class="nt">/&gt;</code><code>                               </code><a class="co" id="co_online_extras_CO24-5" href="#callout_online_extras_CO24-5"><img src="callouts/5.svg" alt="5"/></a><code>
+    </code><code class="nt">&lt;/path&gt;</code><code>
+    </code><code class="nt">&lt;clipPath</code><code> </code><code class="na">id=</code><code class="s">"cp"</code><code class="nt">&gt;</code><code>
+        </code><code class="nt">&lt;use</code><code> </code><code class="na">xlink:href=</code><code class="s">"#goggles"</code><code> </code><code class="nt">/&gt;</code><code>                      </code><a class="co" id="co_online_extras_CO24-6" href="#callout_online_extras_CO24-6"><img src="callouts/6.svg" alt="6"/></a><code>
+    </code><code class="nt">&lt;/clipPath&gt;</code><code>
+</code><code class="nt">&lt;/svg&gt;</code></pre>
+<dl class="calloutlist columns">
+<dt><a class="co" id="callout_online_extras_CO24-1" href="#co_online_extras_CO24-1"><img src="callouts/1.svg" alt="1"/></a></dt>
+<dd><p>Most of the magic of this example comes from the two perfectly matched JPEG photographs, one of which has been edited to create a black-and-white “X-ray” view.  The X-ray photo is drawn on top, but is clipped to only be visible through the “goggles”.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO24-2" href="#co_online_extras_CO24-2"><img src="callouts/2.svg" alt="2"/></a></dt>
+<dd><p>The X-ray goggles are drawn with a path containing two large circular arcs, centered on the origin.  The path has a semi-transparent green fill—through which we’ll see the image below—and a solid green outline.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO24-3" href="#co_online_extras_CO24-3"><img src="callouts/3.svg" alt="3"/></a></dt>
+<dd><p>The first <code>&lt;animateTransform&gt;</code> element positions the goggles in the horizontal center of the SVG, and then moves them down and back up over 10 seconds, from <em>y</em>=40 to <em>y</em>=600, keeping the <em>x</em>-position constant at 200.  It (and the other animations) repeats indefinitely.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO24-4" href="#co_online_extras_CO24-4"><img src="callouts/4.svg" alt="4"/></a></dt>
+<dd><p>The second <code>&lt;animateTransform&gt;</code> translates the <em>x</em> values back and forth while keeping <em>y</em> steady.  The <code>additive="sum"</code> attribute is essential, so this translation is added to the previous one, instead of replacing it.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO24-5" href="#co_online_extras_CO24-5"><img src="callouts/5.svg" alt="5"/></a></dt>
+<dd><p>The third <code>&lt;animateTransform&gt;</code> is of type <code>rotate</code>, rocking the goggles 10° in either direction; again, this transformation adds on to the previous ones.</p></dd>
+<dt><a class="co" id="callout_online_extras_CO24-6" href="#co_online_extras_CO24-6"><img src="callouts/6.svg" alt="6"/></a></dt>
+<dd><p>The final, animated <code>&lt;path&gt;</code> is cloned into the <code>&lt;clipPath&gt;</code> which is used for the X-Ray photograph.  The clipping of the photograph therefore stays in sync with the visible goggle outline.</p></dd>
+</dl></div>
+
+<p><a data-type="xref" href="#XRay-example">Example 19-X2</a> demonstrates another limitation of the SMIL syntax: in order to create an alternating (back-and-forth) animation, you need to repeat values in an <code>a;b;a</code> sequence in the <code>values</code> attribute.</p>
+
+<p>Aslo note that the <code>attributeName</code> is required, even for <code>&lt;animateTransform&gt;</code>: the <code>&lt;animateTransform&gt;</code> element can also animate <code>gradientTransform</code> and <code>patternTransform</code> attributes.</p>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>The original version of <a data-type="xref" href="#XRay-example">Example 19-X2</a> animated a shape inside <code>&lt;defs&gt;</code>, and then drew the green outline with a <code>&lt;use&gt;</code>.  However, Firefox (since version 31) has a bug where the <code>&lt;use&gt;</code> doesn’t get updated with the animations—except for when the <code>&lt;use&gt;</code> is inside the <code>&lt;clipPath&gt;</code>, when it is strangely unaffected by the bug.</p>
+
+<p>Since the <code>&lt;clipPath&gt;</code> effect ignores strokes and fill, we were able to work around the bug by drawing the visible element directly and then re-<code>&lt;use&gt;</code>-ing it in the clipping path.</p>
+</div>
+
+<p>The motion of the X-ray goggles, as they scan the image, consists of three components:</p>
+
+<ul>
+<li>
+<p>a slow movement up and down,</p>
+</li>
+<li>
+<p>a much faster movement side-to-side, and</p>
+</li>
+<li>
+<p>rotational movements to angle the goggles first one way, then the other.</p>
+</li>
+</ul>
+
+<p>None of these animations would be particularly interesting on their own; it is the additive effect that creates the complex motion.</p>
+
+<p>Because none of the durations of the animations are even multiples of the other, the cumulative pattern appears imprecise and more natural.  It does not repeat exactly until three and a half minutes have passed (210s, the least common multiple of 10, 3, and 7).</p>
+<div data-type="note" epub:type="note"><h6>Note</h6>
+<p>Creating pseudo-random patterns by layering together multiple repeating elements that don’t match up precisely is known as the <em>cicada principle</em>.  Cicadas are insects with multi-year lifespans, most of which is spent underground.  Some species have very predictable lifespans, but because the cycles don’t line up from one species to another, you can get uneven bursts in the adult population numbers.</p>
+
+<p>Or something like that. It doesn’t really have anything to do with the insects, it’s just a name for the design technique.</p>
+
+<p>In addition to its use in animations, the cicada principle can be used in SVG to create complex visual patterns by layering together semi-transparent repeating patterns or gradients.  The sizes of the repeats—whether in visual space or in time—should not divide neatly one into the other.</p>
+</div>
+
+<p>In addition to <em>additive</em> animations, which is one animation element adding on to another, SVG/SMIL defines <em>accumulative</em> animations, where each subsequent repeat of an animation adds on to previous repeats.</p>
+
+<p>The relevant attribute is <code>accumulate</code> and the non-default value is once again <code>sum</code>.  (The default value is <code>none</code>.)</p>
+
+<p>This is most useful if you want to create an animation that proceeds in steps, instead of in a single smooth transition.  Without accumulation, this would require setting a large list of intermediary <code>values</code>, so you could set discrete transitions or individual easing curves for each setp.</p>
+
+<p>With accumulation, the animation describes the relative change for each step and the number of repeats required to reach the final sum.  The <code>calcMode</code> and related attributes describe how each step should progress.</p>
+
+<p><a data-type="xref" href="#accumulate-example">Example 19-X3</a> gives the code for an accumulative animation increasing the radius of a circle.  Each cycle uses <code>keySplines</code> easing to add a pauses, puffing out quickly and then slowing at the end of the repeat.  It’s not much to look at in a static screenshot, but you can view <a href="../ch19-animation-files/accumulate.svg">the live SVG</a> in a browser with SVG/SMIL support. The appearance is somewhat like a balloon being inflated by a series of big breaths.</p>
+<div id="accumulate-example" data-type="example">
+<h5><span class="label">Example 19-X3. </span>Using accumulative repeats and spline easing to create a pulsed animation</h5>
+
+<pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;svg</code> <code class="na">xmlns=</code><code class="s">"http://www.w3.org/2000/svg"</code> <code class="na">xml:lang=</code><code class="s">"en"</code>
+     <code class="na">viewBox=</code><code class="s">"-80 -80 160 160"</code> <code class="na">width=</code><code class="s">"4in"</code><code class="nt">&gt;</code>
+    <code class="nt">&lt;title&gt;</code>Accumulative Animations<code class="nt">&lt;/title&gt;</code>
+    <code class="nt">&lt;circle</code> <code class="na">r=</code><code class="s">"75"</code> <code class="na">fill=</code><code class="s">"crimson"</code><code class="nt">&gt;</code>
+        <code class="nt">&lt;animate</code> <code class="na">attributeName=</code><code class="s">"r"</code>
+                 <code class="na">from=</code><code class="s">"0"</code>
+                 <code class="na">by=</code><code class="s">"10"</code>
+                 <code class="na">calcMode=</code><code class="s">"spline"</code>
+                 <code class="na">keyTimes=</code><code class="s">"0;1"</code>
+                 <code class="na">keySplines=</code><code class="s">"0.1,1 0.9,0"</code>
+                 <code class="na">dur=</code><code class="s">"1s"</code>
+                 <code class="na">repeatCount=</code><code class="s">"7.5"</code>
+                 <code class="na">accumulate=</code><code class="s">"sum"</code> <code class="nt">/&gt;</code>
+    <code class="nt">&lt;/circle&gt;</code>
+<code class="nt">&lt;/svg&gt;</code></pre></div>
+<div data-type="warning" epub:type="warning"><h6>Warning</h6>
+<p>The original version of this demo used a <code>keySplines</code> value of <code>0.3,2,0.7,-1</code> to create a “bounce” effect on each repeat.  It worked in Chrome—and in CSS timing functions—but is contrary to the SMIL specs and not supported in Firefox. The <code>keySplines</code> values must all be between 0 and 1.</p>
+</div>
+
+<p><a data-type="xref" href="#accumulate-example">Example 19-X3</a> also demonstrates that <code>repeatCount</code> does not have to be an integer; here, it takes 7.5 repeats to sum up to the desired radius.</p>
+    </section>
+    <hr />
+    <section aria-label="footnotes">
+<p data-type="footnote" id="idm140278995259712"><sup><a href="#idm140278995259712-marker">1</a></sup> <em role="citetitle">SVG Essentials, Second Edition</em>, by J. David Eisenberg and Amelia Bellamy-Royds, has a slightly more comprehensive discussion.</p>
+    </section>
   </main>
   <footer>
     <p>This website is created and maintained by Amelia Bellamy-Royds, using material created by all three authors of the book.

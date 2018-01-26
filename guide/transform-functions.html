@@ -38,7 +38,7 @@
 
 <p>The following 2D transformations functions are defined in the original SVG specifications, and are well supported.  For best support when using them in the SVG <code>transform</code> attribute, the values should all be given as numbers, which are interpretted as user coordinates for lengths and as degrees for angles:</p>
 <dl class="columns">
-<dt><code>scale(<em>s</em>)</code></dt>
+<dt id="scale"><code>scale(<em>s</em>)</code><a href="#scale" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>Uniform scale by factor <em>s</em></p>
 <figure data-type="equation">
@@ -51,7 +51,7 @@
   </div>
 </figure>
 </dd>
-<dt><code>scale(<em>sx</em>, <em>sy</em>)</code></dt>
+<dt id="scale"><code>scale(<em>sx</em>, <em>sy</em>)</code><a href="#scale" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>Non-uniform scale (and/or reflection) by the specified horizontal and vertical factors</p>
 <figure data-type="equation">
@@ -64,7 +64,7 @@
   </div>
 </figure>
 </dd>
-<dt><code>translate(<em>tx</em>, <em>ty</em>)</code></dt>
+<dt id="translate"><code>translate(<em>tx</em>, <em>ty</em>)</code><a href="#translate" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>Translation by the specified horizontal and vertical offsets; the vertical offset may be omitted, and will default to 0</p>
 <figure data-type="equation">
@@ -77,7 +77,7 @@
   </div>
 </figure>
 </dd>
-<dt><code>rotate(<em>a</em>)</code></dt>
+<dt id="rotate"><code>rotate(<em>a</em>)</code><a href="#rotate" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>Rotation around the origin by the specified angle</p>
 <figure data-type="equation">
@@ -96,11 +96,11 @@
   </div>
 </figure>
 </dd>
-<dt><code>rotate(<em>a</em>, <em>cx</em>, <em>cy</em>)</code></dt>
+<dt id="rotate"><code>rotate(<em>a</em>, <em>cx</em>, <em>cy</em>)</code><a href="#rotate" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>Rotation around the point (<em>cx</em>, <em>cy</em>) by the specified angle, <em>a</em>; equivalent to <code>translate(<em>cx</em>, <em>cy</em>) rotate(<em>a</em>) translate(-<em>cx</em>, -<em>cy</em>)</code></p>
 </dd>
-<dt><code>skewX(<em>a</em>)</code></dt>
+<dt id="skewX"><code>skewX(<em>a</em>)</code><a href="#skewX" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>skew of the <em>x</em>-coordinates by the specified angle relative to the <em>y</em>-axis</p>
 <figure data-type="equation">
@@ -113,7 +113,7 @@
   </div>
 </figure>
 </dd>
-<dt><code>skewY(<em>a</em>)</code></dt>
+<dt id="skewY"><code>skewY(<em>a</em>)</code><a href="#skewY" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>Skew of the <em>y</em>-coordinates by the specified angle relative to the <em>x</em>-axis</p>
 <figure data-type="equation">
@@ -126,7 +126,7 @@
   </div>
 </figure>
 </dd>
-<dt><code>matrix(<em>a</em>,<em>b</em>,<em>c</em>,<em>d</em>,<em>e</em>,<em>f</em>)</code></dt>
+<dt id="matrix"><code>matrix(<em>a</em>,<em>b</em>,<em>c</em>,<em>d</em>,<em>e</em>,<em>f</em>)</code><a href="#matrix" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>Complex transformation based on the specified matrix parameters</p>
 <figure data-type="equation">
@@ -147,19 +147,19 @@
 
 <p>The following additional shorthand 2D transformation functions are defined in the <a href="https://drafts.csswg.org/css-transforms/#two-d-transform-functions">CSS transformations module</a>, allowing you to translate or scale along one axis without accidentally changing the other:</p>
 <dl class="columns">
-<dt><code>translateX(<em>tx</em>)</code></dt>
+<dt id="translateX"><code>translateX(<em>tx</em>)</code><a href="#translateX" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>equivalent to <code>translate(<em>tx</em>, 0)</code></p>
 </dd>
-<dt><code>translateY(<em>ty</em>)</code></dt>
+<dt id="translateY"><code>translateY(<em>ty</em>)</code><a href="#translateY" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>equivalent to <code>translate(0,<em>ty</em>)</code></p>
 </dd>
-<dt><code>scaleX(<em>sx</em>)</code></dt>
+<dt id="scaleX"><code>scaleX(<em>sx</em>)</code><a href="#scaleX" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>equivalent to <code>scale(<em>sx</em>, 1)</code></p>
 </dd>
-<dt><code>scaleY(<em>sy</em>)</code></dt>
+<dt id="scaleY"><code>scaleY(<em>sy</em>)</code><a href="#scaleY" class="hash-link" aria-label="Permalink">#</a></dt>
 <dd>
 <p>equivalent to <code>scale(1,<em>sy</em>)</code></p>
 </dd>

@@ -31,7 +31,7 @@ Depending on your browser, Javascript and external files might also be blocked i
 
 Links to the live versions of each SVG and HTML file are available from the companion website: https://oreillymedia.github.io/Using_SVG/
 
-If you want to jump straight to the live version of a particular file, add the folder & file name (from the repor or from the end of the GitHub preview URL) to that website URL. In other words:
+If you want to jump straight to the live version of a particular file, add the folder & file name (from the repo or from the end of the GitHub preview URL) to that website URL. In other words:
 
 - The file (from above) with the repo path: _ch05-shapes-files/basic-line.svg_
 - Can be viewed live at https://oreillymedia.github.io/Using_SVG/ch05-shapes-files/basic-line.svg
@@ -40,4 +40,4 @@ In some browsers, you can also right-click on the blank image in the Github prev
 
 If you have downloaded the examples and want them to work offline, you'll need to set up a local webserver (many options are available) for the example folder.
 
-In practice, to use SVG in a web page with JavaScript or external file resources, you need to either integrate it in the HTML as inline SVG or embed using an <object> or <iframe>.  We discuss this in Chapter 2, and look at the embed elements again in Chapter 9.
+In practice, to use SVG in a web page with JavaScript or external file resources, you need to either integrate it in the HTML as inline SVG or embed using an `<object>` or `<iframe>`.  We discuss this in Chapter 2, and look at the embed elements again in Chapter 9.

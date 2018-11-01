@@ -20,23 +20,19 @@ for (var i=0; i<nShapes; i++) {
     gem.setAttributeNS("http://www.w3.org/1999/xlink", 
                        "href", "#gem");
     gem.setAttribute("fill", randomColor() );
-    gem._position = {                                         //<1>
-        x: Math.random()*width,
-        y: Math.random()*height,
-        a: Math.random()*360 /* random angle in degrees */
-    }            
-    gem._velocity = {                                         //<2>
+    gem.setAttribute("transform", 
+            "translate(" + [Math.random()*width, Math.random()*height] + ")"
+            + "rotate(" + Math.random()*360 + ")");           //<1>
+    gem._transform = gem.transform.baseVal.consolidate();     //<2>
+        // convert to matrix form & store a reference for easy update
+    gem._velocity = {                                         //<3>
         x: 2*(0.5 - Math.random())*10, /* px per s */
         y: 2*(0.5 - Math.random())*10, /* px per s */
         a: 2*(0.5 - Math.random())*120 /* degrees per s */
     }
-    gem.setAttribute("transform", transformString(            //<3>
-            gem._position.x, gem._position.y, gem._position.a ) );
     gameboard.appendChild(gem);
 }
-function transformString(x,y,a){
-    return "translate(" + [x, y] + ")" + "rotate(" + a + ")"; //<3>
-}
+
 var oldT, nextFrame;
 if (requestAnimationFrame) {                                  //<4>
     nextFrame = requestAnimationFrame(moveGems);
@@ -46,21 +42,20 @@ function moveGems(t) {
     var delta = (t - oldT)/1000;                              //<5>
     for (var i=0, n=gems.length; i<n; i++) {                  //<6>
         var gem = gems[i];
-        gem._position.x += gem._velocity.x * delta;
-        if (gem._position.x > width || gem._position.x < 0)   //<7>
+        gem._transform.setMatrix(
+            gem._transform.matrix
+                .translate(gem._velocity.x*delta, gem._velocity.y*delta)
+                .rotate(gem._velocity.a*delta)                //<7>
+        );
+        if (gem._transform.matrix.e > width)                  //<8>
             gem._velocity.x *= -1;
-        gem._position.y += gem._velocity.y * delta;
-        if (gem._position.y > height || gem._position.y < 0)
+        if (gem._transform.matrix.f > height)
             gem._velocity.y *= -1;
-        gem._position.a += gem._velocity.a * delta;
-        
-        gem.setAttribute("transform", transformString(        //<8>
-            gem._position.x, gem._position.y, gem._position.a ) );
     }
     oldT = t;
     nextFrame = requestAnimationFrame(moveGems);              //<9>
 }
-    
+
 var endTime = Date.now() + timeLimit*1000;
 updateTime();
 var timerInterval = setInterval(updateTime, 100);

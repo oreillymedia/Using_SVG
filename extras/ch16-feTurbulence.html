@@ -69,6 +69,10 @@
 
 <p>While <code>type</code>, <code>numOctaves</code>, and <code>baseFrequency</code> describe the structure of the pattern, the <code>seed</code> determines which exact pattern you get.  It’s value can be any number, although any decimal part of the number will be ignored.</p>
 
+<div data-type="tip"><h6>Tip</h6>
+<p>Need a more mathematical explanation of how the colors are generated? <a href="https://eev.ee/blog/2016/05/29/perlin-noise/">This tutorial by Eevee</a> is a great explanation of Perlin noise functions for many applications (although it doesn't cover the specifics of the SVG filter).</p>
+</div>
+
 <p>The <code>&lt;feTurbulence&gt;</code> filter can be used to create all sorts of textures and color patterns within SVG.  But in <a data-type="xref" href="ch16.html#hawaii-water-example">Example 16-8</a>, we didn’t use the <code>&lt;feTurbulence&gt;</code> output to create <em>visible</em> wave patterns.  Instead, we used it to create <em>distortion</em> patterns in our text, by passing it as the second input to the <code>&lt;feDisplacementMap&gt;</code> filter:</p>
 
 <pre data-type="programlisting" data-code-language="svg"><code class="nt">&lt;feDisplacementMap</code> <code class="na">in=</code><code class="s">"SourceGraphic"</code> <code class="na">in2=</code><code class="s">"waves"</code>
